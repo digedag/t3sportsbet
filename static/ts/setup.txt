@@ -1,0 +1,99 @@
+# setup
+includeLibs.tx_t3sportsbet_controllers_main = EXT:t3sportsbet/controllers/class.tx_t3sportsbet_controllers_main.php
+
+
+plugin.tx_t3sportsbet_main                = USER_INT
+plugin.tx_t3sportsbet_main.flexform       = flexform_main.xml
+plugin.tx_t3sportsbet_main.userFunc       = tx_t3sportsbet_controllers_main->main
+plugin.tx_t3sportsbet_main.defaultAction  = tx_t3sportsbet_actions_Summary
+plugin.tx_t3sportsbet_main.qualifier      = t3sportsbet
+plugin.tx_t3sportsbet_main.templatePath   = EXT:t3sportsbet/templates
+plugin.tx_t3sportsbet_main.locallangFilename = EXT:t3sportsbet/locallang.xml
+
+
+tt_content.list.20.tx_t3sportsbet_main    =< plugin.tx_t3sportsbet_main
+
+# Ab hier Konfiguration der einzelnen Views 
+plugin.tx_t3sportsbet_main {
+  betlistTemplate = {$plugin.tx_t3sportsbet_main.betlistTemplate}
+  highscoreTemplate = {$plugin.tx_t3sportsbet_main.highscoreTemplate}
+  scopeTemplate = {$plugin.tx_t3sportsbet_main.scopeTemplate}
+
+  scope {
+    status = 1,2
+    betset {
+      # config for selectbox
+      links.scope.pid = 0
+      round_name.wrap = <b>|</b>
+      current.noLink = 1
+      isCurrent.if.value = 1
+      isCurrent.if.equals.field = isCurrent
+      isCurrent.override = selected="selected"
+    }
+    options {
+      orderby.BETSET.ROUND = asc
+    }
+  }
+  highscore {
+    feuser {
+      roll.value = 1
+      pagebrowser.limit = 20
+    }
+  }
+  betlist {
+    betset {
+      match {
+        roll.value = 1
+        bet {
+# Anzeige von - wenn nach Abgabeschluss kein Tip vorhanden ist. Sonst normale Ausgabe
+          goals_home = CASE
+          goals_home {
+            default = TEXT
+            default.field = goals_home
+#            default.debugData = 1
+            -1 = TEXT
+            -1.value = -
+            key = -1
+            key {
+              # uid == 0 und register:T3SPORTSBET_BETSTATUS != OPEN
+              if {
+                value = 0
+                equals.field = uid
+                isPositive = 1
+                isPositive.if {
+                  value.data = register:T3SPORTSBET_BETSTATUS
+                  equals = OPEN
+                  negate = 1
+                }
+              }
+            }
+          }
+          goals_guest < .goals_home
+          goals_guest.default.field = goals_guest
+          points = CASE
+          points {
+            1 = TEXT
+            1.field = points
+            default = TEXT
+            default.value = -
+            key.field = finished
+          }
+        }
+
+        date = CASE
+        date {
+          default = TEXT
+          default.field = date
+          default.strftime = %d. %B %Y %H:%M
+          2 = TEXT
+          2.value = -
+          key {
+            field = date
+            ifEmpty = 2
+          }
+        }
+	    }
+    }
+  }
+}
+

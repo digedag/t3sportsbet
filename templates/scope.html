@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Highscorelist</title>
+</head>
+<body>
+
+
+###SCOPE###
+
+<!-- Auswahl der Tiprunde -->
+###BETSETS###
+<div class="t3sportsbet-selection">
+  <select name="action" onchange="window.location=(this.options[this.selectedIndex].value);">
+###BETSET###
+    <option ###BETSET_ISCURRENT### value="/###BETSET_SCOPELINKURL###">###BETSET_ROUND_NAME###</option>
+###BETSET###
+	</select>
+</div>
+###BETSETS###
+
+###SCOPE###
+
+
+</body>
+</html>

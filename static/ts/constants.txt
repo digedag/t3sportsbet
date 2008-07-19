@@ -1,0 +1,12 @@
+#contants
+
+plugin.tx_t3sportsbet_main {
+  # cat=T3sports (Templates)/betlist; type=string;label=HTML Template for bet list
+  betlistTemplate = EXT:t3sportsbet/templates/betlist.html
+  # cat=T3sports (Templates)/highscore; type=string;label=HTML Template for highscore list
+  highscoreTemplate = EXT:t3sportsbet/templates/highscore.html
+  # cat=T3sports (Templates)/scope; type=string;label=HTML Template for scope selection
+  scopeTemplate = EXT:t3sportsbet/templates/scope.html
+
+
+}
