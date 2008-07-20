@@ -1,5 +1,11 @@
-(add new changes on top of this file)
+Changelog
+---------
 
-08-01-01 Rene Nitzsche  <rene@system25.de>
+v0.2.0 (20.07.2008)
+* GUI of backend module reorganized
+* It is now possible to reset bet results for matches
+* List of bets in backend
+* New scope view in FE with select boxes for betsets
 
-	* Initial release
+v0.1.0 (10.06.2008)
+* Initial release
