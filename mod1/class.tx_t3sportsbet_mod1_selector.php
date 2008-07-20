@@ -114,7 +114,7 @@ class tx_t3sportsbet_mod1_selector{
 		if($menu) {
 			$link = '';
 			if(!$empty)
-				$link .= $this->formTool->createEditLink('tx_t3sportsbet_betsets', $this->GAME_SETTINGS['betset'],'');
+				$link .= $this->formTool->createEditLink('tx_t3sportsbet_betsets', $this->ROUND_SETTINGS['betset'],'');
 			$link .= $this->formTool->createNewLink('tx_t3sportsbet_betsets', $pid,'');
 			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
 		}
