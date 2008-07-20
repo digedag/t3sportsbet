@@ -45,29 +45,25 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC {
 	 * @return string error msg or null
 	 */
 	function handleRequest(&$parameters,&$configurations, &$viewData){
-		$betgameUid = intval($configurations->get('betsetlist.betgame'));
-		if(!$betgameUid) tx_rnbase_util_Misc::mayday($configurations->getLL('error_nobetgame_defined'));
-		
 		$feuser = tx_t3users_models_feuser::getCurrent();
+		// TODO: Auch ohne Anmeldung sollte die Darstellung der Liste möglich sein. Dann aber ohne FORM
 		if(!$feuser)
 			return 'Please login!';
-		$betgame = tx_t3sportsbet_models_betgame::getInstance($betgameUid);
-		// Wir zeigen entweder die offenen oder die schon fertigen Tipps
-		// Dies wird per Config festgelegt
-		$options['betgame'] = $betgame;
+
 		$scopeArr = tx_t3sportsbet_util_ScopeController::handleCurrentScope($parameters,$configurations, $options);
+		$betgames = tx_t3sportsbet_util_ScopeController::getBetgamesFromScope($scopeArr['BETGAME_UIDS']);
 		$rounds = $this->getRoundsFromScope($scopeArr['BETSET_UIDS']);
 		
 		$this->handleSubmit($feuser);
 		
 		// Über die viewdata können wir Daten in den View transferieren
-		$viewData->offsetSet('betgame', $betgame);
+		$viewData->offsetSet('betgame', $betgames[0]);
 		$viewData->offsetSet('rounds', $rounds);
 		$viewData->offsetSet('feuser', $feuser);
 		
 		// Wenn wir hier direkt etwas zurückgeben, wird der View nicht
 		// aufgerufen. Eher für Abbruch im Fehlerfall gedacht.
-	  return null;
+		return null;
 	}
 
 	function getRoundsFromScope($uids) {
