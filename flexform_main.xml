@@ -185,7 +185,7 @@
 
         <type>array</type>
         <el>
-          <betsetTemplate>
+          <betlistTemplate>
             <TCEforms>
               <exclude>1</exclude>
               <label>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.template</label>
@@ -196,7 +196,7 @@
                 <eval>trim</eval>
               </config>
             </TCEforms>
-          </betsetTemplate>
+          </betlistTemplate>
         </el>
       </ROOT>
     </sBETSETLIST>
