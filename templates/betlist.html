@@ -9,6 +9,10 @@
 
 ###BETLIST###
 
+<!-- ###BETSET_SAVED### Ergebnis vor dem Spiel -->
+<p>Die Tips wurden erfolgreich gespeichert. Veränderte Tips: ###SAVECOUNT###</p>
+<!-- ###BETSET_SAVED### Ergebnis vor dem Spiel -->
+
 
 ###BETSETS###
 <div class="t3sbet">
@@ -19,7 +23,7 @@
 
 ###BETSET_MATCHS###
 <table cellspacing="0">
-<tr><th>###LABEL_MATCHDATE###</th><th>###LABEL_HOME###</th><th></th><th>###LABEL_GUEST###</th><th>###LABEL_SCORE###</th><th>###LABEL_BET###</th><th>###LABEL_POINTS###</th>
+<tr><th>###LABEL_MATCHDATE###</th><th>###LABEL_HOME###</th><th></th><th>###LABEL_GUEST###</th><th>###LABEL_SCORE###</th><th style="width:100px">###LABEL_BET###</th><th>###LABEL_POINTS###</th>
 
 ###BETSET_MATCH###
 <tr class="t3sbet-row###BETSET_MATCH_ROLL###"><td>###BETSET_MATCH_DATE###</td><td>###BETSET_MATCH_HOME_NAME###</td><td>-</td><td>###BETSET_MATCH_GUEST_NAME###</td>
@@ -46,7 +50,8 @@ verlegt
 
 <td>
 <!-- ###BETSTATUS_OPEN### -->
-<input type="text" name="betset[###BETSET_UID###][###BETSET_MATCH_UID###][###BETSET_MATCH_BET_UID###][home]" size="2" value="###BETSET_MATCH_BET_GOALS_HOME###" />&nbsp;:&nbsp;<input type="text" name="betset[###BETSET_UID###][###BETSET_MATCH_UID###][###BETSET_MATCH_BET_UID###][guest]" size="2" value="###BETSET_MATCH_BET_GOALS_GUEST###" />
+<input type="text" name="betset[###BETSET_UID###][###BETSET_MATCH_UID###][###BETSET_MATCH_BET_UID###][home]" size="1" maxlength="2" value="###BETSET_MATCH_BET_GOALS_HOME###" />
+:<input type="text" name="betset[###BETSET_UID###][###BETSET_MATCH_UID###][###BETSET_MATCH_BET_UID###][guest]" size="1" maxlength="2" value="###BETSET_MATCH_BET_GOALS_GUEST###" />
 <!-- ###BETSTATUS_OPEN### -->
 
 <!-- ###BETSTATUS_CLOSED### -->

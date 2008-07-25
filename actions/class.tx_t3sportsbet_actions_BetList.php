@@ -53,8 +53,7 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC {
 		$scopeArr = tx_t3sportsbet_util_ScopeController::handleCurrentScope($parameters,$configurations, $options);
 		$betgames = tx_t3sportsbet_util_ScopeController::getBetgamesFromScope($scopeArr['BETGAME_UIDS']);
 		$rounds = $this->getRoundsFromScope($scopeArr['BETSET_UIDS']);
-		
-		$this->handleSubmit($feuser);
+		$this->handleSubmit($feuser, $viewData);
 		
 		// Über die viewdata können wir Daten in den View transferieren
 		$viewData->offsetSet('betgame', $betgames[0]);
@@ -67,18 +66,20 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC {
 	}
 
 	function getRoundsFromScope($uids) {
-		$uids = t3lib_div::intExplode(',', $uids);
 		$rounds = array();
+		if(!$uids) return $rounds;
+		$uids = t3lib_div::intExplode(',', $uids);
 		for($i=0, $cnt=count($uids); $i <$cnt; $i++) {
 			$rounds[] = tx_t3sportsbet_models_betset::getInstance($uids[$i]);
 		}
 		return $rounds;
 	}
-	function handleSubmit($feuser) {
+	function handleSubmit($feuser, &$viewData) {
 		$srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
 		$data = t3lib_div::_GP('betset');
 		if(!is_array($data)) return;
 		tx_div::load('tx_cfcleaguefe_models_match');
+		$saveCnt = 0;
 		// Die Tips speichern
 		foreach($data As $betsetUid => $matchArr) {
 			$betset = tx_t3sportsbet_models_betset::getInstance($betsetUid);
@@ -86,9 +87,11 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC {
 			foreach($matchArr As $matchUid => $betArr) {
 				$match = tx_cfcleaguefe_models_match::getInstance($matchUid);
 				list($betUid, $betData) = each($betArr);
-				$srv->saveOrUpdateBet($betset, $match, $feuser, $betUid, $betData);
+				$saveCnt += $srv->saveOrUpdateBet($betset, $match, $feuser, $betUid, $betData);
 			}
 		}
+		// Vermerken, wieviele Spiele gespeichert wurden.
+		$viewData->offsetSet('saved', $saveCnt);
 	}
   function getTemplateName() { return 'betlist';}
 	function getViewClassName() { return 'tx_t3sportsbet_views_BetList';}

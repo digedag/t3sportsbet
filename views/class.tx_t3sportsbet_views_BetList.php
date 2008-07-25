@@ -35,6 +35,15 @@ tx_div::load('tx_rnbase_util_BaseMarker');
  */
 class tx_t3sportsbet_views_BetList extends tx_rnbase_view_Base {
 
+	/**
+	 * Erstellt die Ausgabe für die Liste der Tiprunden
+	 *
+	 * @param string $template
+	 * @param arrayObj $viewData
+	 * @param tx_rnbase_configurations $configurations
+	 * @param tx_rnbase_util_FormatUtil $formatter
+	 * @return string
+	 */
 	function createOutput($template, &$viewData, &$configurations, &$formatter) {
 		// Wir holen die Daten von der Action ab
 		$betgame =& $viewData->offsetGet('betgame');
@@ -43,10 +52,17 @@ class tx_t3sportsbet_views_BetList extends tx_rnbase_view_Base {
 		$params['confid'] = 'betlist.';
 		$params['betgame'] = $betgame;
 		$params['feuser'] = $feuser;
+		$markerArray = array();
 		$subpartArray = array();
-    $subpartArray['###BETSET_SELECTIONS###'] = '';
+		$subpartArray['###BETSET_SELECTIONS###'] = '';
 		$wrappedSubpartArray = array();
-
+		if($viewData->offsetExists('saved')) {
+			$wrappedSubpartArray['###BETSET_SAVED###'] = array('','');
+			$data['savecount'] = $viewData->offsetGet('saved');
+		}
+		else
+			$subpartArray['###BETSET_SAVED###'] = '';
+		
 		// Wenn Selectbox für Tiprunde gezeigt werden soll, dann Abschnitt erstellen
 		$selectItems = $viewData->offsetGet('betset_select');
 		$selectItems = is_array($selectItems) ? $selectItems : array();
@@ -59,7 +75,8 @@ class tx_t3sportsbet_views_BetList extends tx_rnbase_view_Base {
 			$template = $listBuilder->render($betsets,
 					$viewData, $template, 'tx_t3sportsbet_util_BetSetMarker',
 					'betlist.betset.', 'BETSET', $formatter, $params);
-			$markerArray['###ACTION_URI###'] = $this->createPageUri($configurations);
+			//$markerArray['###ACTION_URI###'] = $this->createPageUri($configurations);
+			$data['ACTION_URI'] = $this->createPageUri($configurations);
 			$matchState = $viewData->offsetGet('MATCH_STATE');
 			if($matchState == 'OPEN')
 				$wrappedSubpartArray['###SAVEBUTTON###'] = array('','');
@@ -70,6 +87,7 @@ class tx_t3sportsbet_views_BetList extends tx_rnbase_view_Base {
 			$subpartArray['###BETSETS###'] = $configurations->getLL('msg_no_betsets_found');
 //			$out = $formatter->cObj->substituteMarkerArrayCached($template, array(), $subpartArray);
 		}
+		$markerArray = $formatter->getItemMarkerArrayWrapped($data, 'betlist.');
 		tx_rnbase_util_BaseMarker::callModules($template, $markerArray, $subpartArray, $wrappedSubpartArray, $params, $formatter);
 		$out = $formatter->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray,$wrappedSubpartArray);
 		return $out;
