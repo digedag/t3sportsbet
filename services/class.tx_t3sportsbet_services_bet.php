@@ -251,12 +251,13 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 	 * @param tx_t3users_models_feuser $feuser
 	 * @param int $betUid
 	 * @param array $betData
+	 * @return int 0/1 whether the bet was saved or not
 	 */
 	public function saveOrUpdateBet($betset, $match, $feuser, $betUid, $betData) {
-		if($match->isRunning() || $match->isFinished()) return;
-		if($betset->getMatchState($match) != 'OPEN') return;
+		if($match->isRunning() || $match->isFinished()) return 0;
+		if($betset->getMatchState($match) != 'OPEN') return 0;
 
-		if(!(strlen(trim($betData['home'])) || strlen(trim($betData['guest'])))) return; // No values given
+		if(!(strlen(trim($betData['home'])) || strlen(trim($betData['guest'])))) return 0; // No values given
 		// Der Tip muss vom selben User stammen
 		$values = array();
 		$values['tstamp'] = time();
@@ -267,9 +268,9 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 			// Update bet
 			$clazz = tx_div::makeInstanceClassname('tx_t3sportsbet_models_bet');
 			$bet = new $clazz($betUid);
-			if($bet->record['fe_user'] != $feuser->uid) return;
+			if($bet->record['fe_user'] != $feuser->uid) return 0;
 			if($bet->record['goals_home'] == $values['goals_home'] && 
-					$bet->record['goals_guest'] == $values['goals_guest']) return;
+					$bet->record['goals_guest'] == $values['goals_guest']) return 0;
 			$where = 'uid=' . $betUid;
 			tx_rnbase_util_DB::doUpdate('tx_t3sportsbet_bets', $where, $values, 0);
 		}
@@ -277,7 +278,7 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 			// Create new bet instance
 			// Ein User darf pro Spiel nur einen Tip abgeben
 			$bet = $this->getBet($betset, $match, $feuser);
-			if($bet->isPersisted()) return; // There is already a bet for this match!
+			if($bet->isPersisted()) return 0; // There is already a bet for this match!
 			
 			$values['pid'] = $betset->record['pid'];
 			$values['crdate'] = $values['tstamp'];
@@ -286,6 +287,7 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 			$values['betset'] = $betset->uid;
 			tx_rnbase_util_DB::doInsert('tx_t3sportsbet_bets', $values, 0);
 		}
+		return 1;
 	}
 }
 
