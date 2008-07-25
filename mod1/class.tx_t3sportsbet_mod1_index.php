@@ -110,7 +110,6 @@ Vorgehen
 		$this->betset = $currentRound; // Nicht schön, aber so hat der Linker Zugriff
 		$content .= $this->handleShowBets($currentRound);
 		$content .= $this->handleResetBets($currentRound);
-		$content .= $this->handleAddMatches($currentRound);
 		$content .= $this->handleSaveBetSet($currentRound);
 		$content .= $this->handleAnalyzeBets($currentGame);
 		
@@ -119,12 +118,16 @@ Vorgehen
 				$content .= $this->showBetSet($currentRound);
 				break;
 			case 1:
-				$content .= $this->showAddMatches($currentRound);
+				$clazzName = tx_div::makeInstanceClassname('tx_t3sportsbet_mod1_addMatches');
+				$addMatches = new $clazzName($this);
+				$content .= $addMatches->handleRequest($currentRound);
 				break;
 			case 2:
 				$content .= $this->showBets($currentRound);
 				break;
 		}
+		$content .= $this->formTool->form->printNeededJSFunctions();
+		
 		return $content;
 	}
 	/**
@@ -136,12 +139,23 @@ Vorgehen
 		// Alle Tips für dieses Betset suchen
 		$fields['BET.BETSET'][OP_EQ_INT] = $currBetSet->uid;
 		$options['orderby']['BET.TSTAMP'] = 'desc';
+		$options['count'] = 1;
 		$srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
+		$cnt = $srv->searchBet($fields, $options);
+		unset($options['count']);
+
+		$pageTSconfig = t3lib_BEfunc::getPagesTSconfig($this->id);
+		$maxRecords = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_t3sportsbet.']['betlistCfg.'])) ?
+		  intval($pageTSconfig['tx_t3sportsbet.']['betlistCfg.']['maxRecords']) : 300;
+		$options['limit'] = $maxRecords;
 		$bets = $srv->searchBet($fields, $options);
 		$options = array();
 		$options['module'] = $this;
 		$searcher = $this->getBetSearcher($options);
 		$out .= $searcher->showBets($GLOBALS['LANG']->getLL('label_betlist'), $bets);
+		$out .= $GLOBALS['LANG']->getLL('label_betcount') .': ' . $cnt;
+		$out .= '<br/>'.sprintf($GLOBALS['LANG']->getLL('msg_betcountmax'), $maxRecords);
+		
 		return $out;
 	}
 	/**
@@ -163,8 +177,6 @@ Vorgehen
 			$match = new $clazzname($uid);
 			$bets = $service->getBets($currBetSet, $match);
 			$out .= $searcher->showBets($GLOBALS['LANG']->getLL('label_betlist'), $bets);
-			
-			t3lib_div::debug($bets, 'tx_t3sportsbet_mod1_index'); // TODO: remove me
 		}
 		return $out;
 	}
@@ -189,31 +201,6 @@ Vorgehen
 			$data = array($uid, $currBetSet->uid);
 			$tce->BE_USER->writelog(1,2,0,0,$details,$data);
 		}
-	}
-	
-	/**
-	 * Add matches to a betset
-	 *
-	 * @param tx_t3sportsbet_models_betset $currBetSet
-	 * @return string
-	 */
-	function handleAddMatches($currBetSet) {
-		$out = '';
-
-		$match2set = strlen(t3lib_div::_GP('match2betset')) > 0; // Wurde der Submit-Button gedrückt?
-		if($match2set) {
-			$matchUids = t3lib_div::_GP('checkMatch');
-			if(!is_array($matchUids) || ! count($matchUids)) {
-				$out = $GLOBALS['LANG']->getLL('msg_no_match_selected').'<br/>';
-			}
-			else {
-				// Die Spiele setzen
-				$service = tx_t3sportsbet_util_serviceRegistry::getBetService();
-				$cnt = $service->addMatchesTCE($currBetSet, $matchUids);
-				$out = $cnt.' '. $GLOBALS['LANG']->getLL('msg_matches_added');
-			}
-		}
-		return (strlen($out)) ? $this->doc->section($GLOBALS['LANG']->getLL('label_info').':',$out, 0, 1,ICON_INFO) : '';
 	}
 
 	/**
@@ -250,47 +237,8 @@ Vorgehen
 		}
 		return $out;
 	}
-	
-	/**
-	 * Show form to add matches to betset
-	 *
-	 * @param tx_t3sportsbet_models_betset $currBetSet
-	 * @return string
-	 */
-  function showAddMatches($currBetSet) {
 
-//		if(t3lib_div::_GP('show_addmatches')) $DATA['addmatches'] = 1;
-//		if(t3lib_div::_GP('hide_addmatches')) $DATA['addmatches'] = 0;
-//		$modValues = t3lib_BEfunc::getModuleData(array ('addmatches' => ''),$DATA,$this->MCONF['name'] );
-//		$tabValue = isset($modValues['addmatches']) ? $modValues['addmatches'] : '0';
-//		if($tabValue)
-//	  	$out .= '<hr />'.$this->formTool->createSubmit('hide_addmatches', $GLOBALS['LANG']->getLL('label_hide_add_matches'));
-//		else
-//  		$out .= '<hr />'.$this->formTool->createSubmit('show_addmatches', $GLOBALS['LANG']->getLL('label_add_matches'));
-//    
-//    if(!$tabValue) return $out;
 
-    $competitions = $currBetSet->getBetgame()->getCompetitions();
-    tx_div::load('tx_t3sportsbet_mod1_matchsearcher');
-		$options['checkbox'] = 1;
-		
-		$matches = $currBetSet->getMatches();
-		foreach($matches As $match) {
-			$options['dontcheck'][$match->uid] = $GLOBALS['LANG']->getLL('msg_match_already_joined');
-		}
-		$options['competitions'] = $competitions;
-		$options['ignoreDummies'] = 1;
-		$searcher = $this->getMatchSearcher($options);
-		$out .= $searcher->getSearchForm();
-		
-		$out.=$this->doc->spacer(15);
-		$out.= $searcher->getResultList();
-		if($searcher->getSize()) {
-			// Button für Zuordnung
-			$out .= $this->formTool->createSubmit('match2betset', $GLOBALS['LANG']->getLL('label_join_matches'), $GLOBALS['LANG']->getLL('msg_join_matches'));
-		}
-		return $out;
-	}
 	/**
 	 * Show betset
 	 *
@@ -368,5 +316,4 @@ class tx_t3sportsbet_mod1_MatchEditLink implements tx_cfcleague_mod1_Linker {
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_index.php'])	{
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_index.php']);
 }
-
 ?>

@@ -18,6 +18,7 @@
 			<label index="label_edit">Edit</label>
 			<label index="label_analyzebets">Analyze bets</label>
 			<label index="label_betlist">List of bets</label>
+			<label index="label_betcount">Number of bets found</label>
 			<label index="label_uid">UID</label>
 			<label index="label_tstamp">Last update</label>
 			<label index="label_match">Match</label>
@@ -30,7 +31,7 @@
 			<label index="label_resetbets">Reset bets</label>
 			<label index="msg_resetbets">Do you really want to reset these bets?</label>
 			<label index="label_join_matches">Join matches</label>
-			<label index="msg_join_matches">Do you really want to join these matches?</label>
+			<label index="msg_join_matches">Do you really want to add these matches?</label>
 			<label index="msg_betset_saved">Betset was saved.</label>
 
 			<label index="tab_control">Overview</label>
@@ -38,7 +39,7 @@
 			<label index="tab_bets">Show bets</label>
 
 
-			<label index="msg_no_competition_in_betgame">No competition in betgame found.</label>
+			<label index="msg_no_competition_in_betgame">No competition in betgame found. You have to add one or more competitions in your betgame to enable this function.</label>
 			<label index="msg_no_matches_in_betset">No matches in betset found.</label>
 			<label index="msg_no_bets_found">No bets found.</label>
 			<label index="msg_no_round_in_competition">No round in competition found.</label>
@@ -49,6 +50,10 @@
 			<label index="msg_matches_added">matches added to betset.</label>
 			<label index="msg_bets_finished">Number of finished bets</label>
 			<label index="msg_create_new_game">Create a new bet game at this page now!</label>
+			<label index="msg_betcountmax">Only a maximum number of %s bets is shown. 
+			You can change this value with TS-Setup: &lt;pre&gt; 
+  tx_t3sportsbet.betlistCfg.maxRecords = 400&lt;/pre&gt;
+			</label>
 
 
 		</languageKey>
@@ -65,6 +70,7 @@
 			<label index="label_edit">Bearbeiten</label>
 			<label index="label_analyzebets">Tips auswerten</label>
 			<label index="label_betlist">Liste von Tips</label>
+			<label index="label_betcount">Gesamtanzahl Tips</label>
 			<label index="label_showbets">Tips anzeigen</label>
 			<label index="label_result">Ergebnis</label>
 			<label index="label_tstamp">Letzte Änderung</label>
@@ -76,7 +82,7 @@
  			<label index="label_resetbets">Tips zurücksetzen</label>
 			<label index="msg_resetbets">Sollen die Tips für dieses Spiel wirklich zurückgesetzt werden?</label>
 			<label index="label_join_matches">Spiel zuordnen</label>
-			<label index="msg_join_matches">Sollen diese Spiele wirklich angemeldet werden?</label>
+			<label index="msg_join_matches">Sollen diese Spiele wirklich zugeordnet werden?</label>
 			<label index="msg_betset_saved">Die Tiprunde wurde gespeichert.</label>
 
 
@@ -84,7 +90,7 @@
 			<label index="tab_addmatches">Spiele hinzufügen</label>
 			<label index="tab_bets">Tips anzeigen</label>
 
-			<label index="msg_no_league_in_betgame">Dem Tipspiel sind keine Wettbewerbe zugeordnet.</label>
+			<label index="msg_no_competition_in_betgame">Dem Tipspiel sind keine Wettbewerbe zugeordnet. Um diese Funktion zu aktivieren, muss dem Tipspiel mindestens ein Wettbewerb zugeordnet sein.</label>
 			<label index="msg_no_matches_in_betset">Der Tiprunde sind noch keine Spiele zugeordnet.</label>
 			<label index="msg_no_bets_found">Es wurden keine Tips gefunden.</label>
 			<label index="msg_found_match">Spiel gefunden</label>
@@ -93,6 +99,10 @@
 			<label index="msg_matches_added">Spiel(e) zur Tiprunde hinzugefügt.</label>
 			<label index="msg_bets_finished">Anzahl ausgewerteter Tips</label>
 			<label index="msg_create_new_game">Auf dieser Seite ein neues Tipspiel erstellen!</label>
+			<label index="msg_betcountmax">Es wird nur eine maximale Anzahl von %s Tips angezeigt. 
+			Diesen Wert kann man über das TS-Setup anpassen: &lt;pre&gt; 
+  tx_t3sportsbet.betlistCfg.maxRecords = 400&lt;/pre&gt;
+			</label>
 
 		</languageKey>
 	</data>
