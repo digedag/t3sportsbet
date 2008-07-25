@@ -26,7 +26,8 @@
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="error">Fehler</label>
-			<label index="error_nobetgame_defined">Es wurde kein Tippspiel im Flexform oder Typoscript angegeben!</label>
+			<label index="error_nobetgame_defined">Es wurde kein Tipspiel im Flexform oder Typoscript angegeben!</label>
+			<label index="error_nobetsets_defined">Es wurden keine Tiprunden für das Tipspiel gefunden!</label>
 			<label index="label_savebets">Tips speichern</label>
 			<label index="msg_no_betsets_found">In dieser Ansicht wurden keine zu tippenden Spiele gefunden!</label>
 			<label index="label_rank">Position</label>
