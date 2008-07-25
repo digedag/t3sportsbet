@@ -4,6 +4,8 @@
 	<comment></comment>
 	<projects>
 		<project>cfc_league_fe</project>
+		<project>cfc_league</project>
+		<project>rn_base</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

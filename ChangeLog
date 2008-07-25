@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+v0.2.1 (??.07.2008)
+* Template key in flexform fixed for betlist template
+* Some code enhancements in BE modules
+* Info message for feuser when bets are saved. There is a new subpart in HTML template.
+
 v0.2.0 (20.07.2008)
 * GUI of backend module reorganized
 * It is now possible to reset bet results for matches
