@@ -104,13 +104,15 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base {
 	 * @return array of tx_cfcleaguefe_models_competition
 	 */
 	function getCompetitions() {
-		tx_div::load('tx_cfcleaguefe_models_competition');
-		$uids = t3lib_div::intExplode(',',$this->record['competition']);
 		$ret = array();
-		foreach($uids As $uid) {
-			$ret[] = tx_cfcleaguefe_models_competition::getInstance($uid);
+		tx_div::load('tx_cfcleaguefe_models_competition');
+		$uids = $this->record['competition'];
+		if($uids) {
+			$uids = t3lib_div::intExplode(',',$uids);
+			foreach($uids As $uid) {
+				$ret[] = tx_cfcleaguefe_models_competition::getInstance($uid);
+			}
 		}
-		
 		return $ret;
   }
   /**
