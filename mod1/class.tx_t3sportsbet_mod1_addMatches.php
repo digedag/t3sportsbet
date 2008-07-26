@@ -86,8 +86,7 @@ class tx_t3sportsbet_mod1_addMatches {
 		$options['ignoreDummies'] = 1;
 		$searcher = $this->getMatchSearcher($options);
 		$out .= $searcher->getSearchForm();
-		
-		$out.=$this->mod->doc->spacer(15);
+//		$out.=$this->mod->doc->spacer(15);
 		$out.= $searcher->getResultList();
 		if($searcher->getSize()) {
 			// Button für Zuordnung
@@ -146,6 +145,7 @@ class tx_t3sportsbet_mod1_addMatches {
 		$searcher = new $clazz($this->mod, $options);
 		return $searcher;
 	}
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_addMatches.php'])	{
