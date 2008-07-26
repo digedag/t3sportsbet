@@ -82,6 +82,27 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 		return $ret;
 	}
 	/**
+	 * Liefert das höchste und niedrigste Datum von Spielen in einem Tipspiel
+	 *
+	 * @param tx_t3sportsbet_models_betset $betset
+	 * @return array keys: high and low, values are timestamps or false if no match is set
+	 */
+	public function getBetsetDateRange(&$betset) {
+		$matches = $betset->getMatches();
+		if(!count($matches)) return false;
+		$today = time();
+		$high = $matches[0]->getDate();
+		$low = $matches[0]->getDate();
+		$next = $matches[0]->getDate() > $today ? $matches[0]->getDate() : 0;
+		for($i=1, $cnt = count($matches); $i < $cnt; $i++) {
+			$match = $matches[$i];
+			if($match->getDate() < $low) $low = array($match->getDate(),$match);
+			if($match->getDate() >= $high) $high = array($match->getDate(),$match);
+			if($match->getDate() < $next && $match->getDate() > $today) $next = array($match->getDate(),$match);
+		}
+		return array('high' => $high, 'low' => $low, 'next' => $next);
+	}
+	/**
 	 * Reset bets for a given match on a given betset
 	 *
 	 * @param tx_t3sportsbet_models_betset $betset
@@ -93,6 +114,16 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 		$values['points'] = 0;
 		$where = 'betset=' . $betset->uid . ' AND t3match=' . intval($matchUid);
 		tx_rnbase_util_DB::doUpdate('tx_t3sportsbet_bets', $where, $values, 0);
+	}
+	/**
+	 * Returns the number of bets for a betset
+	 *
+	 * @param tx_t3sportsbet_models_betset $betset
+	 */
+	public function getBetSize($betset) {
+		$fields['BET.BETSET'][OP_EQ_INT] = $betset->uid;
+		$options['count'] = 1;
+		return $this->searchBet($fields, $options);
 	}
 	/**
 	 * Returns the bet for a user on a single match
@@ -148,7 +179,6 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 		$options['distinct'] = 1;
 //		$options['debug'] = 1;
 		return $userSrv->search($fields, $options);
-		
 	}
 	/**
 	 * Returns the points and standing for a single user

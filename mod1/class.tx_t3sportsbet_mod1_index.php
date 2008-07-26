@@ -127,6 +127,7 @@ Vorgehen
 				break;
 		}
 		$content .= $this->formTool->form->printNeededJSFunctions();
+		$content .= $this->showInfobar($currentRound);
 		
 		return $content;
 	}
@@ -137,17 +138,15 @@ Vorgehen
 	 */
 	function showBets($currBetSet) {
 		// Alle Tips für dieses Betset suchen
-		$fields['BET.BETSET'][OP_EQ_INT] = $currBetSet->uid;
-		$options['orderby']['BET.TSTAMP'] = 'desc';
-		$options['count'] = 1;
 		$srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
-		$cnt = $srv->searchBet($fields, $options);
-		unset($options['count']);
+		$cnt = $srv->getBetSize($currBetSet);
 
 		$pageTSconfig = t3lib_BEfunc::getPagesTSconfig($this->id);
 		$maxRecords = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_t3sportsbet.']['betlistCfg.'])) ?
 		  intval($pageTSconfig['tx_t3sportsbet.']['betlistCfg.']['maxRecords']) : 300;
 		$options['limit'] = $maxRecords;
+		$fields['BET.BETSET'][OP_EQ_INT] = $currBetSet->uid;
+		$options['orderby']['BET.TSTAMP'] = 'desc';
 		$bets = $srv->searchBet($fields, $options);
 		$options = array();
 		$options['module'] = $this;
@@ -261,6 +260,35 @@ Vorgehen
 	}
 
 	/**
+	 * Shows some information about current betset
+	 *
+	 * @param tx_t3sportsbet_models_betset $currBetSet
+	 * @return string
+	 */
+	public function showInfoBar($currBetSet) {
+		$srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
+		$dates = $srv->getBetsetDateRange($currBetSet);
+		if(!$dates) return '';
+		$matchCnt = count($currBetSet->getMatches());
+		$row[] = array($GLOBALS['LANG']->getLL('label_betsetinfo'));
+		$date = $dates['low'][0];
+		$match = $dates['low'][1];
+		$row[] = array($GLOBALS['LANG']->getLL('label_betsetinfo_lowdate'), strftime('%d. %b %y %H:%M', $date) . ' (' . $match->getHomeNameShort() . '-' . $match->getGuestNameShort() .')');
+		$date = $dates['high'][0];
+		$match = $dates['high'][1];
+		$row[] = array($GLOBALS['LANG']->getLL('label_betsetinfo_highdate'), strftime('%d. %b %y %H:%M', $date) . ' (' . $match->getHomeNameShort() . '-' . $match->getGuestNameShort() .')');
+		$date = $dates['next'][0];
+		$match = $dates['next'][1];
+		$row[] = array($GLOBALS['LANG']->getLL('label_betsetinfo_nextdate'), strftime('%d. %b %y %H:%M', $date) . ' (' . $match->getHomeNameShort() . '-' . $match->getGuestNameShort() .')');
+		$row[] = array($GLOBALS['LANG']->getLL('label_betsetinfo_matchcount'), $matchCnt);
+		$row[] = array($GLOBALS['LANG']->getLL('label_betsetinfo_usercount'), $srv->getResultSize($currBetSet->uid));
+		$row[] = array($GLOBALS['LANG']->getLL('label_betsetinfo_betcount'), $srv->getBetSize($currBetSet));
+		$out .= $this->doc->table($row, $this->getTableLayout());
+		
+		return $out;
+	}
+
+	/**
 	 * Get a match searcher
 	 *
 	 * @param array $options
@@ -282,6 +310,27 @@ Vorgehen
 		$searcher = new $clazz($this, $options);
 		return $searcher;
 	}
+	/**
+	 * Liefert das Layout für die Infotabelle
+	 *
+	 * @return array
+	 */
+  function getTableLayout() {
+		$layout = Array (
+			'table' => Array('<table class="typo3-dblist" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+			'0' => Array( // Format für 1. Zeile
+				'defCol' => Array('<td valign="top" colspan="2" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format für jede Spalte in der 1. Zeile
+			),
+			'defRow' => Array ( // Formate für alle Zeilen
+				'0' => Array('<td valign="top"  class="c-headLineTable" style="padding:2px 5px;">','</td>'), // Format für 1. Spalte in jeder Zeile
+				'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+			),
+//			'defRowEven' => Array ( // Formate für alle Zeilen
+//				'defCol' => Array('<td valign="top" class="db_list_alt" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+//			)
+		);
+		return $layout;
+  }
 }
 
 class tx_t3sportsbet_mod1_MatchEditLink implements tx_cfcleague_mod1_Linker {

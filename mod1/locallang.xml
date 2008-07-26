@@ -25,6 +25,13 @@
 			<label index="label_feuser">User</label>
 			<label index="label_bet">Bet</label>
 			<label index="label_points">Points</label>
+			<label index="label_betsetinfo">Information about current betset</label>
+			<label index="label_betsetinfo_highdate">Last kickoff date</label>
+			<label index="label_betsetinfo_lowdate">First kickoff date</label>
+			<label index="label_betsetinfo_nextdate">Next kickoff date</label>
+			<label index="label_betsetinfo_matchcount">Number of selected matches</label>
+			<label index="label_betsetinfo_usercount">Number of users with bets</label>
+			<label index="label_betsetinfo_betcount">Number of bets</label>
 
 			<label index="label_showbets">Show bets</label>
 			<label index="label_result">Score</label>
@@ -78,6 +85,13 @@
 			<label index="label_feuser">FE-User</label>
 			<label index="label_bet">Tip</label>
 			<label index="label_points">Punkte</label>
+			<label index="label_betsetinfo">Informationen über die aktuelle Tiprunde</label>
+			<label index="label_betsetinfo_highdate">Letztes Spiel</label>
+			<label index="label_betsetinfo_lowdate">Erstes Spiel</label>
+			<label index="label_betsetinfo_nextdate">Nächstes Spiel</label>
+			<label index="label_betsetinfo_matchcount">Anzahl von Spielen</label>
+			<label index="label_betsetinfo_usercount">Anzahl Nutzer mit Tips</label>
+			<label index="label_betsetinfo_betcount">Anzahl Tips</label>
 
  			<label index="label_resetbets">Tips zurücksetzen</label>
 			<label index="msg_resetbets">Sollen die Tips für dieses Spiel wirklich zurückgesetzt werden?</label>
