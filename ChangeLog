@@ -1,6 +1,9 @@
 Changelog
 ---------
 
+v0.2.3 (27.07.2008)
+* Bug in information table fixed.
+
 v0.2.2 (26.07.2008)
 * There is a new information table in backend to have a better overview about the current betset.
 
