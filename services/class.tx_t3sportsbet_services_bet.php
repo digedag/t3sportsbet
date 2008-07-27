@@ -93,14 +93,14 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 		$today = time();
 		$high = array($matches[0]->getDate(), $matches[0]);
 		$low = array($matches[0]->getDate(), $matches[0]);
-		$next = $matches[0]->getDate() > $today ? array($matches[0]->getDate(), $matches[0]) : 0;
-		$next = 0;
+		$next = $matches[0]->getDate() > $today ? array($matches[0]->getDate(), $matches[0]) : array(0, 0);
 		for($i=1, $cnt = count($matches); $i < $cnt; $i++) {
 			$match = $matches[$i];
-			if($match->getDate() < $low) $low = array($match->getDate(),$match);
-			if($match->getDate() >= $high) $high = array($match->getDate(),$match);
-			if($match->getDate() < $next && $match->getDate() > $today) $next = array($match->getDate(),$match);
+			if($match->getDate() < $low[0]) $low = array($match->getDate(),$match);
+			if($match->getDate() >= $high[0]) $high = array($match->getDate(),$match);
+			if($match->getDate() < $next[0] && $match->getDate() > $today) $next = array($match->getDate(),$match);
 		}
+		$next = $next[0] > 0 ? $next : 0;
 		return array('high' => $high, 'low' => $low, 'next' => $next);
 	}
 	/**
