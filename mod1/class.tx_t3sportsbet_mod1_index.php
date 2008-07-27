@@ -277,9 +277,11 @@ Vorgehen
 		$date = $dates['high'][0];
 		$match = $dates['high'][1];
 		$row[] = array($GLOBALS['LANG']->getLL('label_betsetinfo_highdate'), strftime('%d. %b %y %H:%M', $date) . ' (' . $match->getHomeNameShort() . '-' . $match->getGuestNameShort() .')');
-		$date = $dates['next'][0];
-		$match = $dates['next'][1];
-		$row[] = array($GLOBALS['LANG']->getLL('label_betsetinfo_nextdate'), strftime('%d. %b %y %H:%M', $date) . ' (' . $match->getHomeNameShort() . '-' . $match->getGuestNameShort() .')');
+		if($dates['next']) {
+			$date = $dates['next'][0];
+			$match = $dates['next'][1];
+			$row[] = array($GLOBALS['LANG']->getLL('label_betsetinfo_nextdate'), strftime('%d. %b %y %H:%M', $date) . ' (' . $match->getHomeNameShort() . '-' . $match->getGuestNameShort() .')');
+		}
 		$row[] = array($GLOBALS['LANG']->getLL('label_betsetinfo_matchcount'), $matchCnt);
 		$row[] = array($GLOBALS['LANG']->getLL('label_betsetinfo_usercount'), $srv->getResultSize($currBetSet->uid));
 		$row[] = array($GLOBALS['LANG']->getLL('label_betsetinfo_betcount'), $srv->getBetSize($currBetSet));
