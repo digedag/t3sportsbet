@@ -59,8 +59,11 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker {
 		$GLOBALS['TSFE']->register['T3SPORTSBET_BETSETSTATUS'] = $betset->record['status'];
 		$GLOBALS['TSFE']->register['T3SPORTSBET_BETSTATUS'] = $betset->getMatchState($match);
 		
+		// Für T3sports muss der Qualifier geändert werden, damit die Verlinkung klappt
+		$formatter->configurations->_qualifier = 'cfc_league_fe';
 		$template = $this->matchMarker->parseTemplate($template, $match, $formatter, $confId, $marker);
-		
+		$formatter->configurations->_qualifier = $formatter->configurations->get('qualifier');
+
 		$this->pushTT('setForm');
 		$bet = $betset->getBet($match, $feuser);
 		$template = $this->setForm($template, $betset, $bet, $feuser, $formatter);

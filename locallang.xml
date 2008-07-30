@@ -19,6 +19,7 @@
 			<label index="label_matchdate">Date</label>
 			<label index="label_home">Home</label>
 			<label index="label_guest">Guest</label>
+			<label index="label_agegroup">Age group</label>
 			<label index="label_score">Score</label>
 			<label index="label_bet">Bet</label>
 			<label index="msg_no_betsets_found">No betsets found in this view!</label>
@@ -37,6 +38,7 @@
 			<label index="label_matchdate">Datum</label>
 			<label index="label_home">Heim</label>
 			<label index="label_guest">Gast</label>
+			<label index="label_agegroup">Altersklasse</label>
 			<label index="label_score">Resultat</label>
 			<label index="label_bet">Tip</label>
 			<label index="msg_no_betsets_found">In dieser Ansicht wurden leider keine Spiele gefunden!</label>

@@ -42,7 +42,9 @@ plugin.tx_t3sportsbet_main {
   }
   betlist {
     betset {
+      match =< lib.t3sports.match
       match {
+        links.report.removeIfDisabled = 1
         roll.value = 1
         bet {
 # Anzeige von - wenn nach Abgabeschluss kein Tip vorhanden ist. Sonst normale Ausgabe
