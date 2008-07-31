@@ -81,6 +81,7 @@ CREATE TABLE tx_t3sportsbet_bets (
 	finished tinyint(4) DEFAULT '0' NOT NULL,
 	
 	PRIMARY KEY (uid),
-	KEY parent (pid)
+	KEY parent (pid),
+	KEY idx_betusr (betset,fe_user)
 );
 
