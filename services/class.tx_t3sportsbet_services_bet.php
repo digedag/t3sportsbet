@@ -207,7 +207,7 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 			$row =& $rows[$i];
 			// Check rank
 			if($lastPoints != $row['betpoints']) {
-				$rank++;
+				$rank = $i + 1;
 				$lastPoints = $row['betpoints'];
 			}
 			$row['rank'] = $rank;
