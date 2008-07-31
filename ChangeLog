@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+v0.2.6 (31.07.2008)
+* The HTML template of betlist was changed. There is now an example on how to add an agegroup-marker. And more important, the is an example to demonstrate the disableIfEmpty flag for links.
+* User ranks in highscore list fixed.
+* New database index for table tx_t3sportsbet_bets
+
 v0.2.5 (27.07.2008)
 * Another bug in information table fixed. It is really hot weather these days. ;)
 
