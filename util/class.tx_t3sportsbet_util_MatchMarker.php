@@ -86,8 +86,10 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker {
 		$subpartArray['###BETSTATUS_OPEN###'] = '';
 		$subpartArray['###BETSTATUS_CLOSED###'] = '';
 		$subpartArray['###BETSTATUS_FINISHED###'] = '';
-
-		$state = $betset->getMatchState($bet->getMatch());
+		// Ohne FE-User setzen wir die Anzeige immer auf CLOSED
+		$state = 'CLOSED';
+		if($feuser)
+			$state = $betset->getMatchState($bet->getMatch());
 		// Hier benötigen wir eigentlich einen Observer, dem wir sagen, daß ein Spiel offen ist. Wir setzen das jetzt 
 		// einfach mal in die Config...
 		if($state == 'OPEN') $formatter->configurations->getViewData()->offsetSet('MATCH_STATE', 'OPEN');

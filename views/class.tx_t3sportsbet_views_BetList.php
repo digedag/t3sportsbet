@@ -67,7 +67,12 @@ class tx_t3sportsbet_views_BetList extends tx_rnbase_view_Base {
 		$selectItems = $viewData->offsetGet('betset_select');
 		$selectItems = is_array($selectItems) ? $selectItems : array();
 		$template = $this->addScope($template, $viewData, $selectItems, 'betlist.betset.', 'BETSET', $formatter);
-		
+
+		if(is_object($feuser))
+			$subpartArray['###LOGINMESSAGE###'] = '';
+		else
+			$wrappedSubpartArray['###LOGINMESSAGE###'] = '';
+
 		$betsets =& $viewData->offsetGet('rounds');
 		if(count($betsets)) {
 			$builderClass = tx_div::makeInstanceClassName('tx_rnbase_util_ListBuilder');

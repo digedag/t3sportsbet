@@ -137,11 +137,15 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 	 * @return tx_t3sportsbet_models_bet 
 	 */
 	public function getBet($betset, $match, $feuser) {
-		$fields['BET.BETSET'][OP_EQ_INT] = $betset->uid;
-		$fields['BET.T3MATCH'][OP_EQ_INT] = $match->uid;
-		$fields['BET.FE_USER'][OP_EQ_INT] = $feuser->uid;
-//		$options['debug'] = 1;
-		$ret = $this->searchBet($fields, $options);
+		$ret = array();
+		if($feuser) {
+			// Ohne FE-User kann die DB-Abfragen gespart werden
+			$fields['BET.BETSET'][OP_EQ_INT] = $betset->uid;
+			$fields['BET.T3MATCH'][OP_EQ_INT] = $match->uid;
+			$fields['BET.FE_USER'][OP_EQ_INT] = $feuser->uid;
+//			$options['debug'] = 1;
+			$ret = $this->searchBet($fields, $options);
+		}
 		
 		$bet = count($ret) ? $ret[0] : null;
 		if(!$bet) {

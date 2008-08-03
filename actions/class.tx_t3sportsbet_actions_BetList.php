@@ -47,21 +47,19 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC {
 	function handleRequest(&$parameters,&$configurations, &$viewData){
 		$feuser = tx_t3users_models_feuser::getCurrent();
 		// TODO: Auch ohne Anmeldung sollte die Darstellung der Liste möglich sein. Dann aber ohne FORM
-		if(!$feuser)
-			return 'Please login!';
+//		if(!$feuser)
+//			return 'Please login!';
 
 		$scopeArr = tx_t3sportsbet_util_ScopeController::handleCurrentScope($parameters,$configurations, $options);
 		$betgames = tx_t3sportsbet_util_ScopeController::getBetgamesFromScope($scopeArr['BETGAME_UIDS']);
 		$rounds = $this->getRoundsFromScope($scopeArr['BETSET_UIDS']);
 		$this->handleSubmit($feuser, $viewData);
-		
+
 		// Über die viewdata können wir Daten in den View transferieren
 		$viewData->offsetSet('betgame', $betgames[0]);
 		$viewData->offsetSet('rounds', $rounds);
 		$viewData->offsetSet('feuser', $feuser);
 		
-		// Wenn wir hier direkt etwas zurückgeben, wird der View nicht
-		// aufgerufen. Eher für Abbruch im Fehlerfall gedacht.
 		return null;
 	}
 
@@ -75,6 +73,7 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC {
 		return $rounds;
 	}
 	function handleSubmit($feuser, &$viewData) {
+		if(!$feuser) return; // Nicht angemeldet
 		$srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
 		$data = t3lib_div::_GP('betset');
 		if(!is_array($data)) return;
