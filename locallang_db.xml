@@ -9,6 +9,8 @@
 			<label index="tx_t3sportsbet_module.name">T3sports bet game</label>
 			<label index="plugin.t3sportsbet.label">T3sports bet system</label>
 			<label index="plugin.t3sportsbet.flexform.tab.common">Common</label>
+			<label index="plugin.t3sportsbet.flexform.tab.tssetup">Typoscript</label>
+			<label index="plugin.t3sportsbet.flexform.tssetup">plugin.tx_t3sportsbet_main.</label>
 
 			<label index="plugin.t3sportsbet.flexform.action">View</label>
 			<label index="plugin.t3sportsbet.flexform.action.HighScore">Highscore list</label>
