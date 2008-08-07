@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+v0.2.7 (07.08.2008)
+* Betlist can be displayed even if no feuser is logged in.
+* It is now possible to add typoscript code in flexform. rn_base 0.2.7 is required for this!
+
 v0.2.6 (31.07.2008)
 * The HTML template of betlist was changed. There is now an example on how to add an agegroup-marker. And more important, the is an example to demonstrate the disableIfEmpty flag for links.
 * User ranks in highscore list fixed.
