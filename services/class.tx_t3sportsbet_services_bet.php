@@ -171,6 +171,31 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 		return $this->searchBet($fields, $options);
 	}
 	/**
+	 * Returns the bet trend for a single match
+	 *
+	 * @param tx_t3sportsbet_models_betset $betset
+	 * @param tx_cfcleaguefe_models_match $match
+	 * @return array
+	 */
+	public function getBetTrend($betset, $match) {
+		// Wir suchen jeweils die Anzahl der Tips
+		$options['count'] = 1;
+		$fields['BET.BETSET'][OP_EQ_INT] = $betset->uid;
+		$fields['BET.T3MATCH'][OP_EQ_INT] = $match->uid;
+		$fields[SEARCH_FIELD_CUSTOM] = 'tx_t3sportsbet_bets.goals_home > tx_t3sportsbet_bets.goals_guest';
+		$ret['trendhome'] = $this->searchBet($fields, $options);
+		$fields[SEARCH_FIELD_CUSTOM] = 'tx_t3sportsbet_bets.goals_home = tx_t3sportsbet_bets.goals_guest';
+		$ret['trenddraw'] = $this->searchBet($fields, $options);
+		$fields[SEARCH_FIELD_CUSTOM] = 'tx_t3sportsbet_bets.goals_home < tx_t3sportsbet_bets.goals_guest';
+		$ret['trendguest'] = $this->searchBet($fields, $options);
+		$sum = $ret['trendhome'] + $ret['trenddraw'] + $ret['trendguest'];
+		$sum = $sum ? $sum : 1;
+		$ret['trendhomep'] = round($ret['trendhome'] / $sum * 100);
+		$ret['trenddrawp'] = round($ret['trenddraw'] / $sum * 100);
+		$ret['trendguestp'] = round($ret['trendguest'] / $sum * 100);
+		return $ret;
+	}
+	/**
 	 * Returns the number of users with bets for given bet rounds
 	 *
 	 * @param string $betsetUids comma separated uids of betsets
