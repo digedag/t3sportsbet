@@ -1,6 +1,9 @@
 Changelog
 ---------
 
+v0.2.8 (12.08.2008)
+* It is now possible to output a bet trend in betlist. So you can show how many user bet for the home team, guest team or a draw match. Have a look at betlist HTML template for markers.
+
 v0.2.7 (07.08.2008)
 * Betlist can be displayed even if no feuser is logged in.
 * It is now possible to add typoscript code in flexform. rn_base 0.2.7 is required for this!
