@@ -6,6 +6,22 @@
 </head>
 <body>
 
+<!-- 
+Some markers
+
+###BETSET_ROUND_NAME### - name of bet round
+
+###BETSET_MATCH_TRENDHOME### - bet count for winning home team
+###BETSET_MATCH_TRENDHOMEP### - bet count for winning home team in percent
+###BETSET_MATCH_TRENDDRAW### - bet count for draw match
+###BETSET_MATCH_TRENDDRAWP### - bet count for draw match in percent
+###BETSET_MATCH_TRENDGUEST### - bet count for winning guest team
+###BETSET_MATCH_TRENDGUESTP### - bet count for winning guest team in percent
+
+Please note: this templates is not indented to be used as it is. In a common bet game
+you will have several pages with bet list. Each will be created with a special html template.
+
+ -->
 
 ###BETLIST###
 
@@ -69,6 +85,9 @@ verlegt
 
 <td>###BETSET_MATCH_BET_POINTS###</td>
 </tr>
+<tr class="t3sbet-row###BETSET_MATCH_ROLL###">
+	<td colspan="5">###LABEL_TREND### (1-0-2): ###BETSET_MATCH_TRENDHOMEP### - ###BETSET_MATCH_TRENDDRAWP### - ###BETSET_MATCH_TRENDGUESTP###</td>
+</tr>
 ###BETSET_MATCH###
 </table>
 ###BETSET_MATCHS###
@@ -78,7 +97,7 @@ verlegt
 ###SAVEBUTTON###<input type="submit" value="###LABEL_SAVEBETS###">###SAVEBUTTON###
 
 ###LOGINMESSAGE###
-<div>Please login to make your bets!</div>
+<div>###LABEL_LOGIN###</div>
 ###LOGINMESSAGE###
 
 </form>

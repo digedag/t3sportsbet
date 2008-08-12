@@ -46,6 +46,9 @@ plugin.tx_t3sportsbet_main {
       match {
         links.report.removeIfDisabled = 1
         roll.value = 1
+        trendhomep.wrap = |%
+        trendguestp.wrap = |%
+        trenddrawp.wrap = |%
         bet {
 # Anzeige von - wenn nach Abgabeschluss kein Tip vorhanden ist. Sonst normale Ausgabe
           goals_home = CASE

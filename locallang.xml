@@ -22,6 +22,8 @@
 			<label index="label_agegroup">Age group</label>
 			<label index="label_score">Score</label>
 			<label index="label_bet">Bet</label>
+			<label index="label_login">Please login to make your bets!</label>
+			<label index="label_trend">Trend</label>
 			<label index="msg_no_betsets_found">No betsets found in this view!</label>
 
 		</languageKey>
@@ -41,6 +43,8 @@
 			<label index="label_agegroup">Altersklasse</label>
 			<label index="label_score">Resultat</label>
 			<label index="label_bet">Tip</label>
+			<label index="label_login">Bitte melden Sie sich an, um einen Tip abzugeben!</label>
+			<label index="label_trend">Toto-Trend</label>
 			<label index="msg_no_betsets_found">In dieser Ansicht wurden leider keine Spiele gefunden!</label>
 
 		</languageKey>
