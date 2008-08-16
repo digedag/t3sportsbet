@@ -59,7 +59,7 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base {
 		$lock = $this->getBetgame()->getLockMinutes() * 60;
 		
 		$matchDate = $match->record['date'];
-		if($matchDate <= ($now-$lock)) {
+		if($matchDate <= ($now+$lock)) {
 			// Das Spiel ist finished, wenn es ausgewertet und in die Tipstatistik des Users
 			// aufgenommen wurde -> Es hängt am User
 			// TODO: Wir sollten das über den Tip des Users ermitteln
