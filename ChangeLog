@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+v0.2.9 (16.08.2008)
+* Important: Match lock time was wrong in FE! Bets were possible even after kickoff date!
+* New info in highscore list: size of userbets and average point per bet. See html template for markers.
+
 v0.2.8 (12.08.2008)
 * It is now possible to output a bet trend in betlist. So you can show how many user bet for the home team, guest team or a draw match. Have a look at betlist HTML template for markers.
 
