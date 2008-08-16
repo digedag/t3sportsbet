@@ -220,7 +220,12 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 		if($betsetUids) $fields['BET.BETSET'][OP_IN_INT] = $betsetUids;
 		$fields['BET.FE_USER'][OP_GT_INT] = 0;
 		$options['distinct'] = 1;
-		$options['what'] = 'fe_users.uid, sum(tx_t3sportsbet_bets.points) AS betpoints';
+		$options['what'] = '
+		fe_users.uid, sum(tx_t3sportsbet_bets.points) AS betpoints,
+		count(tx_t3sportsbet_bets.uid) AS betcount,
+		(sum(tx_t3sportsbet_bets.points) / count(tx_t3sportsbet_bets.uid)) AS avgpoints
+		';
+
 		$options['orderby']['betpoints'] = 'desc';
 		$options['groupby'] = 'fe_users.uid';
 //		$options['debug'] = '1';

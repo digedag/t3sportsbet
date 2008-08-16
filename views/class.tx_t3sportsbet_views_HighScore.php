@@ -100,6 +100,8 @@ class tx_t3sportsbet_views_HighScore extends tx_rnbase_view_Base {
 		$feuser->record['betpoints'] = $data['betpoints'];
 		$feuser->record['betrank'] = $data['rank'];
 		$feuser->record['betmark'] = $data['mark'];
+		$feuser->record['betcount'] = $data['betcount'];
+		$feuser->record['avgpoints'] = $data['avgpoints'];
 	}
 	private function addScope($template, &$viewData, &$itemsArr, $confId, $markerName, &$formatter) {
 		if(count($itemsArr)) {

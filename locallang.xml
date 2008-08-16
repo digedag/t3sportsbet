@@ -14,7 +14,10 @@
 			<label index="label_savebets">Save bets</label>
 			<label index="label_rank">Rank</label>
 			<label index="label_name">Name</label>
+			<label index="label_city">City</label>
 			<label index="label_points">Points</label>
+			<label index="label_avgpoints">&amp;Oslash; Pts</label>
+			<label index="label_betcount">Bets</label>
 			<label index="label_page">Page</label>
 			<label index="label_matchdate">Date</label>
 			<label index="label_home">Home</label>
@@ -35,8 +38,11 @@
 			<label index="msg_no_betsets_found">In dieser Ansicht wurden keine zu tippenden Spiele gefunden!</label>
 			<label index="label_rank">Position</label>
 			<label index="label_points">Punkte</label>
+			<label index="label_avgpoints">&amp;Oslash;</label>
+			<label index="label_betcount">Tips</label>
 			<label index="label_page">Seite</label>
 			<label index="label_name">Name</label>
+			<label index="label_city">Wohnort</label>
 			<label index="label_matchdate">Datum</label>
 			<label index="label_home">Heim</label>
 			<label index="label_guest">Gast</label>

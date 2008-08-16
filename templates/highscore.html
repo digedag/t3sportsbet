@@ -6,6 +6,22 @@
 </head>
 <body>
 
+<!-- 
+Subparts:
+###CURRUSER### - is visible if a feuser is logged in. Show data about this user.
+###FEUSERS### - Subpart for user list
+
+Markers:
+###CURRUSER_...### - You can output each field from database
+###CURRUSER_BETPOINTS### - Total points of user
+###CURRUSER_BETRANK### - Current rank of user
+
+###FEUSER_BETPOINTS### - Total points of user
+###FEUSER_BETRANK### - Current rank of user
+###FEUSER_BETCOUNT### - Number of bets
+###FEUSER_AVGPOINTS### - Average points per bet
+
+ -->
 
 ###HIGHSCORE###
 <div class="t3sbet">
@@ -18,10 +34,13 @@
 
 ###FEUSERS###
 <table cellspacing="0">
-<tr><th>###LABEL_RANK###</th> <th>###LABEL_NAME###</th><th>###LABEL_POINTS###</th></tr>
+<tr><th>###LABEL_RANK###</th> <th>###LABEL_NAME###</th><th>###LABEL_CITY###</th><th>###LABEL_POINTS###</th>
+<th>###LABEL_BETCOUNT###</th><th>###LABEL_AVGPOINTS###</th></tr>
 ###FEUSER###
 <tr class="t3sbet-user###FEUSER_BETMARK### t3sbet-row###FEUSER_ROLL###">
-<td>###FEUSER_BETRANK###.</td><td>###FEUSER_USERNAME###</td><td> ###FEUSER_BETPOINTS###</td>
+<td>###FEUSER_BETRANK###.</td><td>###FEUSER_USERNAME###</td><td>###FEUSER_CITY###</td><td> ###FEUSER_BETPOINTS###</td>
+<td>###FEUSER_BETCOUNT###</td>
+<td>###FEUSER_AVGPOINTS###</td>
 </tr>
 ###FEUSER###
 
