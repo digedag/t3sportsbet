@@ -222,8 +222,7 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 		$options['distinct'] = 1;
 		$options['what'] = '
 		fe_users.uid, sum(tx_t3sportsbet_bets.points) AS betpoints,
-		count(tx_t3sportsbet_bets.uid) AS betcount,
-		(sum(tx_t3sportsbet_bets.points) / count(tx_t3sportsbet_bets.uid)) AS avgpoints
+		sum(tx_t3sportsbet_bets.finished) AS betcount
 		';
 
 		$options['orderby']['betpoints'] = 'desc';
