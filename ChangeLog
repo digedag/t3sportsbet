@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+v0.2.10 (19.08.2008)
+* Average points are calculated now for finished bets only
+* Separate score for correct goals difference is possible now. New option in betgame record.
+* Some unit tests for score calculation
+
 v0.2.9 (16.08.2008)
 * Important: Match lock time was wrong in FE! Bets were possible even after kickoff date!
 * New info in highscore list: size of userbets and average point per bet. See html template for markers.
