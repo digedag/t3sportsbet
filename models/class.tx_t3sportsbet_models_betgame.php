@@ -86,6 +86,14 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base {
 	 * Points for tendency bet
 	 * @return int
 	 */
+	function getPointsGoalsDiff() {
+		return intval($this->record['points_goalsdiff']);
+	}
+
+	/**
+	 * Points for tendency bet
+	 * @return int
+	 */
 	function getPointsTendency() {
 		return $this->record['points_tendency'];
 	}

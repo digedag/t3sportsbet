@@ -78,6 +78,21 @@ $TCA['tx_t3sportsbet_betgames'] = Array (
 				'default' => 0
 			)
 		),
+		'points_goalsdiff' => Array (
+			'exclude' => 0,
+			'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betgames.points_goalsdiff',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '4',
+				'max' => '4',
+				'eval' => 'int',
+				'range' => Array (
+					'upper' => '100',
+					'lower' => '0'
+				),
+				'default' => 0
+			)
+		),
 		'points_tendency' => Array (
 			'exclude' => 0,
 			'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betgames.points_tendency',
@@ -134,7 +149,7 @@ $TCA['tx_t3sportsbet_betgames'] = Array (
 //		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, dataprovider, competition, points_accurate, points_tendency, draw_if_extratime, draw_if_penalty, lockminutes')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, dataprovider, competition, points_accurate, points_goalsdiff, points_tendency, draw_if_extratime, draw_if_penalty, lockminutes')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => 'starttime, fe_group')

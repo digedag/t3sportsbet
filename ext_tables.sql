@@ -18,6 +18,7 @@ CREATE TABLE tx_t3sportsbet_betgames (
 	competition text NOT NULL,
 
 	points_accurate tinyint(4) DEFAULT '0' NOT NULL,
+	points_goalsdiff tinyint(4) DEFAULT '0' NOT NULL,
 	points_tendency tinyint(4) DEFAULT '0' NOT NULL,
 	draw_if_extratime tinyint(4) DEFAULT '0' NOT NULL,
 	draw_if_penalty tinyint(4) DEFAULT '0' NOT NULL,

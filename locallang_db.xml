@@ -38,6 +38,7 @@
 			<label index="tx_t3sportsbet_betgames.dataprovider">Type</label>
 
 			<label index="tx_t3sportsbet_betgames.points_accurate">Points for accurate bet</label>
+			<label index="tx_t3sportsbet_betgames.points_goalsdiff">Points for correct goals difference</label>
 			<label index="tx_t3sportsbet_betgames.points_tendency">Points for tendency bet</label>
 			<label index="tx_t3sportsbet_betgames.draw_if_extratime">Draw if extra time</label>
 			<label index="tx_t3sportsbet_betgames.draw_if_penalty">Draw if extra penalty</label>
@@ -84,6 +85,7 @@
 			<label index="tx_t3sportsbet_betgames.competition">Wettbewerb</label>
 			<label index="tx_t3sportsbet_betgames.dataprovider">Typ</label>
 			<label index="tx_t3sportsbet_betgames.points_accurate">Punkte für korrekten Tip</label>
+			<label index="tx_t3sportsbet_betgames.points_goalsdiff">Punkte für richtige Tordifferenz</label>
 			<label index="tx_t3sportsbet_betgames.points_tendency">Punkte für richtige Tendenz</label>
 			<label index="tx_t3sportsbet_betgames.draw_if_extratime">Unentschieden bei Verlängerung</label>
 			<label index="tx_t3sportsbet_betgames.draw_if_penalty">Unentschieden bei Elfmeterschiessen</label>

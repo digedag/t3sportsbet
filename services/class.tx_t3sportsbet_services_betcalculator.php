@@ -52,10 +52,16 @@ class tx_t3sportsbet_services_betcalculator extends t3lib_svbase  {
 		$goalsGuest = $match->getGoalsGuest($mpart);
 		
 		$ret = 0;
+		// Daten für Tordifferenz vorbereiten
+		$diffMatch = $goalsHome - $goalsGuest;
+		$diffBet = $bet->getGoalsHome() - $bet->getGoalsGuest();
 		// Auswertung nach
 		// Genauer Tip
 		if($bet->getGoalsHome() == $goalsHome && $bet->getGoalsGuest() == $goalsGuest) {
 			$ret = $betgame->getPointsAccurate();
+		}
+		elseif ($diffMatch == $diffBet && $betgame->getPointsGoalsDiff()) {
+			$ret = $betgame->getPointsGoalsDiff();
 		}
 		elseif ($bet->getToto() == $match->getToto($mpart)) {
 			// Tendency
