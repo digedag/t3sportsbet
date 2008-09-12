@@ -22,6 +22,7 @@
 			<label index="label_uid">UID</label>
 			<label index="label_tstamp">Last update</label>
 			<label index="label_match">Match</label>
+			<label index="label_group">Group</label>
 			<label index="label_feuser">User</label>
 			<label index="label_bet">Bet</label>
 			<label index="label_points">Points</label>
@@ -32,6 +33,10 @@
 			<label index="label_betsetinfo_matchcount">Number of selected matches</label>
 			<label index="label_betsetinfo_usercount">Number of users with bets</label>
 			<label index="label_betsetinfo_betcount">Number of bets</label>
+
+			<label index="tx_t3sportsbet_module.betStatus_0">Prepare</label>
+			<label index="tx_t3sportsbet_module.betStatus_1">Open</label>
+			<label index="tx_t3sportsbet_module.betStatus_2">Closed</label>
 
 			<label index="label_showbets">Show bets</label>
 			<label index="label_result">Score</label>
@@ -82,6 +87,7 @@
 			<label index="label_result">Ergebnis</label>
 			<label index="label_tstamp">Letzte Änderung</label>
 			<label index="label_match">Spiel</label>
+			<label index="label_group">Alterklasse</label>
 			<label index="label_feuser">FE-User</label>
 			<label index="label_bet">Tip</label>
 			<label index="label_points">Punkte</label>
@@ -92,6 +98,10 @@
 			<label index="label_betsetinfo_matchcount">Anzahl von Spielen</label>
 			<label index="label_betsetinfo_usercount">Anzahl Nutzer mit Tips</label>
 			<label index="label_betsetinfo_betcount">Anzahl Tips</label>
+
+			<label index="tx_t3sportsbet_module.betStatus_0">Vorb.</label>
+			<label index="tx_t3sportsbet_module.betStatus_1">Offen</label>
+			<label index="tx_t3sportsbet_module.betStatus_2">Geschl.</label>
 
  			<label index="label_resetbets">Tips zurücksetzen</label>
 			<label index="msg_resetbets">Sollen die Tips für dieses Spiel wirklich zurückgesetzt werden?</label>

@@ -72,7 +72,7 @@ class tx_t3sportsbet_mod1_matchsearcher {
     if(!$this->currComp) {
       return $out . $this->mod->doc->section('Info:',$LANG->getLL('msg_no_competition_in_betgame'),0,1,ICON_WARN);
     }
-    $out.=$this->mod->doc->spacer(5);
+//    $out.=$this->mod->doc->spacer(5);
 
     $rounds = $this->currComp->getRounds();
 		if(!count($rounds)){
@@ -81,7 +81,8 @@ class tx_t3sportsbet_mod1_matchsearcher {
 		}
 		// Jetzt den Spieltag wählen lassen
 		$this->current_round = $this->selector->showRoundSelector($out,$this->mod->id,$this->currComp);
-//t3lib_div::debug($this->currRound, 'tx_t3sportsbet_mod1_matchsearcher'); // TODO: Remove me!
+		$out .= '<div style="clear:both" />';
+		//t3lib_div::debug($this->currRound, 'tx_t3sportsbet_mod1_matchsearcher'); // TODO: Remove me!
 		return $out;
 	}
 	public function getResultList() {
@@ -124,6 +125,7 @@ class tx_t3sportsbet_mod1_matchsearcher {
 			'date' => array('decorator' => $decor),
 			'home' => array('method' => 'getHomeNameShort'),
 			'guest' => array('method' => 'getGuestNameShort'),
+			'competition' => array('title' => 'label_group', 'decorator' => $decor),
 			'status' => array('method' => 'getStateName'),
 			'result' => array('method' => 'getResult', 'title' => 'label_result'),
 		);

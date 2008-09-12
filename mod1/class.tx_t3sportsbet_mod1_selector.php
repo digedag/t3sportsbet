@@ -69,9 +69,11 @@ class tx_t3sportsbet_mod1_selector{
 		if($menu) {
 			$link = $this->formTool->createEditLink('tx_t3sportsbet_betgames', $this->GAME_SETTINGS['game'],'');
 			$link .= $this->formTool->createNewLink('tx_t3sportsbet_betgames', $pid,'');
-			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
+			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
+//			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
 		}
-		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
+		$content.=$menu;
+//		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
 
 		return $this->GAME_SETTINGS['game'] ? $idxGames[$this->GAME_SETTINGS['game']] :0;
 	}
@@ -98,7 +100,7 @@ class tx_t3sportsbet_mod1_selector{
 			$idxRounds = array();
 			foreach($rounds as $round){
 				$idxRounds[$round->uid] = $round;
-				$this->ROUND_MENU['betset'][$round->uid] = $round->getName();
+				$this->ROUND_MENU['betset'][$round->uid] = $round->getName() . ' (' . $GLOBALS['LANG']->getLL('tx_t3sportsbet_module.betStatus_'.$round->getStatus()) . ')';
 			}
 			$this->ROUND_SETTINGS = t3lib_BEfunc::getModuleData(
 				$this->ROUND_MENU,t3lib_div::_GP('SET'),$this->MCONF['name'] // Das ist der Name des Moduls
@@ -116,9 +118,11 @@ class tx_t3sportsbet_mod1_selector{
 			if(!$empty)
 				$link .= $this->formTool->createEditLink('tx_t3sportsbet_betsets', $this->ROUND_SETTINGS['betset'],'');
 			$link .= $this->formTool->createNewLink('tx_t3sportsbet_betsets', $pid,'');
-			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
+			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
+//			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
 		}
-		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
+		$content.=$menu;
+//		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
 		return $this->ROUND_SETTINGS['betset'] ? $idxRounds[$this->ROUND_SETTINGS['betset']] :0;
 	}
 

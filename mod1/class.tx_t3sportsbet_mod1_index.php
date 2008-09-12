@@ -86,17 +86,27 @@ Vorgehen
 		$this->selector = tx_div::makeInstance('tx_t3sportsbet_mod1_selector');
 		$this->selector->init($this->pObj->doc, $this->MCONF);
 
-		// Anzeige der vorhandenen Ligen
-		$currentGame = $this->selector->showGameSelector($content,$this->pObj->id);
+		$selector = '';
+		// Anzeige der vorhandenen Tipspiele
+		$currentGame = $this->selector->showGameSelector($selector,$this->pObj->id);
 		if(!$currentGame) {
 			$content .= $this->doc->section('Info:',$LANG->getLL('msg_no_game_in_page'),0,1,ICON_WARN);
 			$content .= '<p style="margin-top:5px; font-weight:bold;">'.$this->formTool->createNewLink('tx_t3sportsbet_betgames', $this->pObj->id,$LANG->getLL('msg_create_new_game')).'</p>';
-			
 			return $content;
 		}
-		$currentRound = $this->selector->showRoundSelector($content,$this->pObj->id, $currentGame);
-		if(!$currentRound)
+
+		$currentRound = $this->selector->showRoundSelector($selector,$this->pObj->id, $currentGame);
+		if(!$currentRound) {
+			if($this->pObj->isTYPO42())
+				$this->pObj->subselector = $selector;
+			else 
+				$content .= '<div class="cfcleague_selector">'.$selector.'</div><div style="clear:both"/>';
 			return $content;
+		}
+		if($this->pObj->isTYPO42())
+			$this->pObj->subselector = $selector;
+		else 
+			$content .= '<div class="cfcleague_selector">'.$selector.'</div><div style="clear:both"/>';
 
 		$menu = $this->formTool->showTabMenu($this->id, 'bettools', $this->MCONF['name'],
 				array('0' => $LANG->getLL('tab_control'), 
@@ -104,8 +114,7 @@ Vorgehen
 							'2' => $LANG->getLL('tab_bets')));
 		$content .= $menu['menu'];
 		$content .= $this->formTool->form->printNeededJSFunctions_top();
-		$content .= '<div style="display: block; border: 1px solid #a2aab8;">';
-		$content .= '</div>';
+		$content .= '<div style="display: block; border: 1px solid #a2aab8; clear:both;"></div>';
 
 		$this->betset = $currentRound; // Nicht schön, aber so hat der Linker Zugriff
 		$content .= $this->handleShowBets($currentRound);
