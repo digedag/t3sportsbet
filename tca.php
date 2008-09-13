@@ -59,6 +59,7 @@ $TCA['tx_t3sportsbet_betgames'] = Array (
 				'internal_type' => 'db',
 				'allowed' => 'tx_cfcleague_competition',
 				'size' => 5,
+				'autoSizeMax' => 30,
 				'minitems' => 0,
 				'maxitems' => 99,
 			)
