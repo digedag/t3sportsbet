@@ -33,7 +33,13 @@ class tx_t3sportsbet_util_MatchDecorator {
 	public function format($value, $colName) {
 		$ret = $value;
 		if($colName == 'date') {
-			$ret = date('H:i d.m.Y', $value);
+			$ret = date('H:i d.m.y', $value);
+		}
+		if($colName == 'competition') {
+			$comp = tx_cfcleaguefe_models_competition::getInstance($value);
+			$group = $comp->getGroup();
+			$name = (array_key_exists('shortname', $group->record)) ? $group->record['shortname'] : '';
+			$ret = strlen($name) ? $name : $group->getName();
 		}
 		return $ret;
 	}

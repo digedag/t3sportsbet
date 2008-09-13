@@ -330,15 +330,13 @@ Vorgehen
 		$layout = Array (
 			'table' => Array('<table class="typo3-dblist" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
 			'0' => Array( // Format für 1. Zeile
-				'defCol' => Array('<td valign="top" colspan="2" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format für jede Spalte in der 1. Zeile
+					'tr'		=> Array('<tr class="c-headLineTable">','</tr>'),
+					'defCol' => ($this->pObj->isTYPO42() ? Array('<td colspan="2">','</td>') : Array('<td colspan="2" class="c-headLineTable" style="font-weight:bold; color:white;">','</td>'))  // Format für jede Spalte in der 1. Zeile
 			),
 			'defRow' => Array ( // Formate für alle Zeilen
 				'0' => Array('<td valign="top"  class="c-headLineTable" style="padding:2px 5px;">','</td>'), // Format für 1. Spalte in jeder Zeile
 				'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
 			),
-//			'defRowEven' => Array ( // Formate für alle Zeilen
-//				'defCol' => Array('<td valign="top" class="db_list_alt" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
-//			)
 		);
 		return $layout;
   }

@@ -118,6 +118,9 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base {
 	function isFinished() {
 		return $this->record['status'] == 2;
 	}
+	function getStatus() {
+		return $this->record['status'];
+	}
 	/**
 	 * Liefert die Instance mit der übergebenen UID. Die Daten werden gecached, so daß
 	 * bei zwei Anfragen für die selbe UID nur ein DB Zugriff erfolgt.
