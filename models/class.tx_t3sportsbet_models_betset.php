@@ -52,22 +52,18 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base {
 	 * @param tx_cfcleaguefe_models_match $match
 	 */
 	function getMatchState($match) {
-		if($this->isFinished())
+		// Das Spiel ist finished, wenn es ausgewertet und in die Tipstatistik des Users
+		// aufgenommen wurde -> Es hängt am User
+		// TODO: Wir sollten das über den Tip des Users ermitteln
+		if($this->isFinished() || $match->isFinished())
 			return 'FINISHED';
 		$state = 'OPEN';
 		$now = tx_t3sportsbet_util_library::getNow();
 		$lock = $this->getBetgame()->getLockMinutes() * 60;
 		
 		$matchDate = $match->record['date'];
-		if($matchDate <= ($now+$lock)) {
-			// Das Spiel ist finished, wenn es ausgewertet und in die Tipstatistik des Users
-			// aufgenommen wurde -> Es hängt am User
-			// TODO: Wir sollten das über den Tip des Users ermitteln
-			$state = $match->isFinished() ? 'FINISHED' : 'CLOSED';
-		}
-		else {
-			if($match->isRunning()) $state = 'CLOSED';
-			elseif($match->isFinished()) $state = 'FINISHED';
+		if($matchDate <= ($now+$lock) || $match->isRunning()) {
+			$state = 'CLOSED';
 		}
 		return $state;
 	}
