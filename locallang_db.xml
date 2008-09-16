@@ -21,10 +21,12 @@
 			<label index="plugin.t3sportsbet.flexform.betgame">Betgame</label>
 			<label index="plugin.t3sportsbet.flexform.betset">Betsets</label>
 			<label index="plugin.t3sportsbet.flexform.betset.all">All</label>
+			<label index="plugin.t3sportsbet.flexform.betset.feuserFromRequestAllowed">Allow user from request</label>
 			<label index="plugin.t3sportsbet.flexform.betsetSelectionInput">Show Selectbox for betset</label>
 			<label index="plugin.t3sportsbet.flexform.betset.default">Default betset in selectbox (if any)</label>
 			<label index="plugin.t3sportsbet.flexform.betset.default.first">First</label>
 			<label index="plugin.t3sportsbet.flexform.betset.default.last">Last</label>
+			<label index="plugin.t3sportsbet.flexform.highscore.userbet_page">Reviewpage for user bets</label>
 			<label index="plugin.t3sportsbet.flexform.template">HTML-Template</label>
 
 			<label index="plugin.t3sportsbet.dp.competition">Complete competition</label>
@@ -71,11 +73,13 @@
 			<label index="plugin.t3sportsbet.flexform.betgame">Tipspiel</label>
 			<label index="plugin.t3sportsbet.flexform.betset">Tiprunden</label>
 			<label index="plugin.t3sportsbet.flexform.betset.all">Alle</label>
+			<label index="plugin.t3sportsbet.flexform.betset.feuserFromRequestAllowed">Nutzer aus Request erlauben</label>
 			<label index="plugin.t3sportsbet.flexform.betsetSelectionInput">Zeige Auswahlbox für Tiprunden</label>
 			<label index="plugin.t3sportsbet.dp.competition">Kompletter Wettbewerb</label>
 			<label index="plugin.t3sportsbet.flexform.betset.default">Default Tiprunde in Selectbox (wenn vorhanden)</label>
 			<label index="plugin.t3sportsbet.flexform.betset.default.first">Erste</label>
 			<label index="plugin.t3sportsbet.flexform.betset.default.last">Letzte</label>
+			<label index="plugin.t3sportsbet.flexform.highscore.userbet_page">Seite für beendete Tips eines Users</label>
 
 			<label index="tx_t3sportsbet_bets">T3sports Tip</label>
 

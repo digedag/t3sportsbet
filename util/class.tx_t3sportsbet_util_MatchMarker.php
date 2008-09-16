@@ -103,19 +103,25 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker {
 		$subpartArray['###BETSTATUS_CLOSED###'] = '';
 		$subpartArray['###BETSTATUS_FINISHED###'] = '';
 		// Ohne FE-User setzen wir die Anzeige immer auf CLOSED
+		// Gleiches gilt, wenn der aktuelle User != FE-User ist
 		$state = 'CLOSED';
-		if($feuser)
+		if($feuser) {
 			$state = $betset->getMatchState($bet->getMatch());
+			if($state == 'OPEN') {
+				// Prüfen, ob der aktuelle User seinen eigenen Tip bearbeiten will
+				tx_div::load('tx_t3users_models_feuser');
+				$currUser = tx_t3users_models_feuser::getCurrent();
+				if(!($currUser && $currUser->uid == $feuser->uid))
+					$state = 'CLOSED';
+			}
+		}
 		// Hier benötigen wir eigentlich einen Observer, dem wir sagen, daß ein Spiel offen ist. Wir setzen das jetzt 
 		// einfach mal in die Config...
 		if($state == 'OPEN') $formatter->configurations->getViewData()->offsetSet('MATCH_STATE', 'OPEN');
-
 		$subTemplate = $formatter->cObj->getSubpart($template,'###BETSTATUS_'.$state.'###');
 		$subpartArray['###BETSTATUS_'.$state.'###'] = $subTemplate;
-
     $out = $formatter->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray); //, $wrappedSubpartArray);
 
-//		t3lib_div::debug($state, 'tx_t3sportsbet_util_MatchMarker'); // TODO: Remove me!
 		return $out;
 	}
   

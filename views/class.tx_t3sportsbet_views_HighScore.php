@@ -52,7 +52,7 @@ class tx_t3sportsbet_views_HighScore extends tx_rnbase_view_Base {
 		$builderClass = tx_div::makeInstanceClassName('tx_rnbase_util_ListBuilder');
 		$listBuilder = new $builderClass();
 		$template = $listBuilder->render($users,
-					$viewData, $template, 'tx_t3users_util_FeUserMarker',
+					$viewData, $template, 'tx_t3sportsbet_util_FeUserMarker',
 					'highscore.feuser.', 'FEUSER', $formatter);
 
 		// Anzeige des aktuellen Users

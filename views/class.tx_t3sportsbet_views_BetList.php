@@ -26,7 +26,7 @@ require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
 
 
 tx_div::load('tx_rnbase_view_Base');
-tx_div::load('tx_rnbase_util_BaseMarker');
+tx_div::load('tx_t3sportsbet_util_FeUserMarker');
 
 
 
@@ -48,7 +48,8 @@ class tx_t3sportsbet_views_BetList extends tx_rnbase_view_Base {
 		// Wir holen die Daten von der Action ab
 		$betgame =& $viewData->offsetGet('betgame');
 		$feuser =& $viewData->offsetGet('feuser');
-
+		$currFeuser =& $viewData->offsetGet('currfeuser');
+		
 		$params['confid'] = 'betlist.';
 		$params['betgame'] = $betgame;
 		$params['feuser'] = $feuser;
@@ -68,7 +69,7 @@ class tx_t3sportsbet_views_BetList extends tx_rnbase_view_Base {
 		$selectItems = is_array($selectItems) ? $selectItems : array();
 		$template = $this->addScope($template, $viewData, $selectItems, 'betlist.betset.', 'BETSET', $formatter);
 
-		if(is_object($feuser))
+		if(is_object($currFeuser))
 			$subpartArray['###LOGINMESSAGE###'] = '';
 		else
 			$wrappedSubpartArray['###LOGINMESSAGE###'] = '';
@@ -92,11 +93,17 @@ class tx_t3sportsbet_views_BetList extends tx_rnbase_view_Base {
 			$subpartArray['###BETSETS###'] = $configurations->getLL('msg_no_betsets_found');
 //			$out = $formatter->cObj->substituteMarkerArrayCached($template, array(), $subpartArray);
 		}
+		
+		$userMarker = tx_div::makeInstance('tx_t3sportsbet_util_FeUserMarker');
+		if($feuser)
+			$template = $userMarker->parseTemplate($template, $feuser, $formatter, 'betlist.feuser.', 'FEUSER');
+		
 		$markerArray = $formatter->getItemMarkerArrayWrapped($data, 'betlist.');
 		tx_rnbase_util_BaseMarker::callModules($template, $markerArray, $subpartArray, $wrappedSubpartArray, $params, $formatter);
 		$out = $formatter->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray,$wrappedSubpartArray);
 		return $out;
 	}
+
 	function createPageUri(&$configurations, $params = array(), $nocache = true) {
 		$link = $configurations->createLink();
 		$link->destination($targetPid ? $targetPid : $GLOBALS['TSFE']->id);

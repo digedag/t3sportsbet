@@ -185,6 +185,15 @@
 
         <type>array</type>
         <el>
+          <betlist.feuserFromRequestAllowed>
+            <TCEforms>
+              <exclude>1</exclude>
+              <label>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.betset.feuserFromRequestAllowed</label>
+              <config>
+                <type>check</type>
+              </config>
+            </TCEforms>
+          </betlist.feuserFromRequestAllowed>
           <betlistTemplate>
             <TCEforms>
               <exclude>1</exclude>
@@ -208,6 +217,19 @@
 
         <type>array</type>
         <el>
+          <highscore.feuser.links.bets.pid>
+            <TCEforms>
+              <exclude>1</exclude>
+              <label>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.highscore.userbet_page</label>
+              <config>
+                <type>group</type>
+                <internal_type>db</internal_type>
+                <allowed>pages</allowed>
+                <multiple>0</multiple>
+                <size>1</size>
+              </config>
+            </TCEforms>
+          </highscore.feuser.links.bets.pid>
           <highscoreTemplate>
             <TCEforms>
               <exclude>1</exclude>

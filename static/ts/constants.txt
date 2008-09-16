@@ -8,5 +8,7 @@ plugin.tx_t3sportsbet_main {
   # cat=T3sports (Templates)/scope; type=string;label=HTML Template for scope selection
   scopeTemplate = EXT:t3sportsbet/templates/scope.html
 
+  # cat=T3sports (pages)/userpage; type=int+;label=PID of page to show finished bets of a feuser
+  userbetspage = 0
 
 }

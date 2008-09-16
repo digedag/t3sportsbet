@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<!-- 
+Some markers
+
+###BETSET_ROUND_NAME### - name of bet round
+
+###BETSET_MATCH_TRENDHOME### - bet count for winning home team
+###BETSET_MATCH_TRENDHOMEP### - bet count for winning home team in percent
+###BETSET_MATCH_TRENDDRAW### - bet count for draw match
+###BETSET_MATCH_TRENDDRAWP### - bet count for draw match in percent
+###BETSET_MATCH_TRENDGUEST### - bet count for winning guest team
+###BETSET_MATCH_TRENDGUESTP### - bet count for winning guest team in percent
+
+ -->
+
+###BETLIST###
+
+<h3>###LABEL_BETLISTOF### ###FEUSER_USERNAME###</h3>
+
+###BETSETS###
+<div class="t3sbet">
+
+###BETSET###
+<h2>###BETSET_ROUND_NAME###</h2>
+
+###BETSET_MATCHS###
+<table cellspacing="0">
+<tr><th>###LABEL_MATCHDATE###</th><th>###LABEL_HOME###</th><th></th><th>###LABEL_GUEST###</th><th>###LABEL_SCORE###</th><th style="width:100px">###LABEL_BET###</th><th>###LABEL_POINTS###</th>
+
+###BETSET_MATCH###
+<tr class="t3sbet-row###BETSET_MATCH_ROLL###">
+<td colspan="6">###LABEL_AGEGROUP###: ###BETSET_MATCH_COMPETITION_GROUP_NAME### ###BETSET_MATCH_REPORTLINK###Zum Spielbericht###BETSET_MATCH_REPORTLINK###</td>
+</tr>
+<tr class="t3sbet-row###BETSET_MATCH_ROLL###">
+<td>###BETSET_MATCH_DATE###</td><td>###BETSET_MATCH_HOME_NAME###</td><td>-</td><td>###BETSET_MATCH_GUEST_NAME###</td>
+<td>
+<!-- ###RESULT_STATUS_0### Ergebnis vor dem Spiel -->
+- : -
+<!-- ###RESULT_STATUS_0### Ergebnis vor dem Spiel -->
+
+<!-- ###RESULT_STATUS_-10### Ergebnis bei Spielverlegung -->
+verlegt
+<!-- ###RESULT_STATUS_-10### Ergebnis bei Spielverlegung -->
+
+<!-- ###RESULT_STATUS_1### Ergebnis während des Spiels -->
+###BETSET_MATCH_GOALS_HOME### : ###BETSET_MATCH_GOALS_GUEST###
+<!-- ###RESULT_STATUS_1### Ergebnis während des Spiels -->
+
+<!-- ###RESULT_STATUS_2### Ergebnis nach Spielende -->
+###BETSET_MATCH_GOALS_HOME### : ###BETSET_MATCH_GOALS_GUEST###
+<!-- ###RESULT_STATUS_2### Ergebnis nach Spielende -->
+</td>
+
+
+
+
+<td>
+<!-- ###BETSTATUS_OPEN### -->
+-:-
+<!-- ###BETSTATUS_OPEN### -->
+
+<!-- ###BETSTATUS_CLOSED### -->
+###LABEL_TOBESCORED###
+<!-- ###BETSTATUS_CLOSED### -->
+
+<!-- ###BETSTATUS_FINISHED### -->
+###BETSET_MATCH_BET_GOALS_HOME### : ###BETSET_MATCH_BET_GOALS_GUEST### 
+<!-- ###BETSTATUS_FINISHED### -->
+</td>
+
+<td>###BETSET_MATCH_BET_POINTS###</td>
+</tr>
+<tr class="t3sbet-row###BETSET_MATCH_ROLL###">
+	<td colspan="5">###LABEL_TREND### (1-0-2): ###BETSET_MATCH_TRENDHOMEP### - ###BETSET_MATCH_TRENDDRAWP### - ###BETSET_MATCH_TRENDGUESTP###</td>
+</tr>
+###BETSET_MATCH###
+</table>
+###BETSET_MATCHS###
+
+###BETSET###
+
+
+</div>
+###BETSETS###
+
+###BETLIST###
+
+
+</body>
+</html>

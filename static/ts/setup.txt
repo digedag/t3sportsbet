@@ -24,6 +24,7 @@ plugin.tx_t3sportsbet_main {
     betset {
       # config for selectbox
       links.scope.pid = 0
+      links.scope.useKeepVars = 1
       round_name.wrap = <b>|</b>
       current.noLink = 1
       isCurrent.if.value = 1
@@ -36,6 +37,7 @@ plugin.tx_t3sportsbet_main {
   }
   highscore {
     feuser {
+      links.bets.pid = {$plugin.tx_t3sportsbet_main.userbetspage}
       roll.value = 1
       pagebrowser.limit = 20
     }
