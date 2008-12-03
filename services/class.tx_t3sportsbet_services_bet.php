@@ -46,14 +46,31 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 	 * Returns all rounds with open matches
 	 *
 	 * @param tx_t3sportsbet_models_betgame $betgame
+	 * @return array[tx_t3sportsbet_models_betset]
 	 */
 	public function getOpenRounds(&$betgame) {
 		return $this->getRounds($betgame, T3SPORTSBET_OPEN);
 	}
+	/**
+	 * Returns all rounds with closed matches
+	 *
+	 * @param tx_t3sportsbet_models_betgame $betgame
+	 * @return array[tx_t3sportsbet_models_betset]
+	 */
 	public function getClosedRounds(&$betgame) {
 		return $this->getRounds($betgame, T3SPORTSBET_CLOSED);
 	}
 
+	/**
+	 * Returns an array with all uids of matches within a $betgame
+	 *
+	 * @param tx_t3sportsbet_models_betgame $betgame
+	 */
+	public function findMatchUids(&$betgame) {
+		$from = array('tx_t3sportsbet_betsets JOIN tx_t3sportsbet_betsets_mm ON tx_t3sportsbet_betsets_mm.uid_local = tx_t3sportsbet_betsets.uid', 'tx_t3sportsbet_betsets');
+		$options['where'] = 'tx_t3sportsbet_betsets.betgame = ' . intval($betgame->uid);
+		return tx_rnbase_util_DB::doSelect('tx_t3sportsbet_betsets_mm.uid_foreign as uid',$from, $options, 0);
+	}
 	/**
 	 * Analyze bets of a betgame
 	 *

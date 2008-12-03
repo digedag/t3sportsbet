@@ -73,14 +73,22 @@ class tx_t3sportsbet_mod1_addMatches {
 		return $this->mod->formTool;
 	}
 
+	/**
+	 * Shows a list of matches
+	 *
+	 * @param tx_t3sportsbet_models_betset $currBetSet
+	 * @param array $competitions
+	 * @return string
+	 */
 	function showAddMatches($currBetSet, $competitions) {
 		
 		tx_div::load('tx_t3sportsbet_mod1_matchsearcher');
 		$options['checkbox'] = 1;
 
-		$matches = $currBetSet->getMatches();
+		$srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
+		$matches = $srv->findMatchUids($currBetSet->getBetgame());
 		foreach($matches As $match) {
-			$options['dontcheck'][$match->uid] = $GLOBALS['LANG']->getLL('msg_match_already_joined');
+			$options['dontcheck'][$match['uid']] = $GLOBALS['LANG']->getLL('msg_match_already_joined');
 		}
 		$options['competitions'] = $competitions;
 		$options['ignoreDummies'] = 1;
