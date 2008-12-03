@@ -80,11 +80,11 @@ class tx_t3sportsbet_mod1_index extends t3lib_extobjbase {
 Vorgehen
 --------
 */
-    $this->doc = $this->pObj->doc;
+		$this->doc = $this->pObj->doc;
 		$this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
-		$this->formTool->init($this->pObj->doc);
+		$this->formTool->init($this->doc);
 		$this->selector = tx_div::makeInstance('tx_t3sportsbet_mod1_selector');
-		$this->selector->init($this->pObj->doc, $this->MCONF);
+		$this->selector->init($this->doc, $this->MCONF);
 
 		$selector = '';
 		// Anzeige der vorhandenen Tipspiele
