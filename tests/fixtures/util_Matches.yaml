@@ -62,4 +62,19 @@ matches:
       goals_guest_2: 0
       goals_home: 3
       goals_guest: 0
+  match_3_1_et: 
+    # T1-T4 - 3:1 n.V. (1:1)
+    record: 
+      uid: 16
+      home: 1
+      guest: 4
+      round: 3
+      status: 2
+      goals_home_2: 1
+      goals_guest_2: 1
+      goals_home_et: 3
+      goals_guest_et: 1
+      goals_home: 3
+      goals_guest: 1
+      is_extratime: 1
  
