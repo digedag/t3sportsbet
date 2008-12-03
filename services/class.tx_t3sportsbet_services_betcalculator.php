@@ -46,11 +46,10 @@ class tx_t3sportsbet_services_betcalculator extends t3lib_svbase  {
 		// TODO: GreenTable kann noch nicht ermittelt werden...
 		// 1. Schritt: Spielergebnis ermitteln
 		$mpart = '';
-		$mpart = ($match->isExtraTime() && $betgame->isDrawIfExtraTime()) ? 'et' : $mpart;
-		$mpart = ($match->isPenalty() && $betgame->isDrawIfPenalty()) ? 'ap' : $mpart;
+		$mpart = ($match->isExtraTime() && $betgame->isDrawIfExtraTime()) ? 'last' : $mpart;
+		$mpart = ($match->isPenalty() && $betgame->isDrawIfPenalty()) ? 'et' : $mpart;
 		$goalsHome = $match->getGoalsHome($mpart);
 		$goalsGuest = $match->getGoalsGuest($mpart);
-		
 		$ret = 0;
 		// Daten für Tordifferenz vorbereiten
 		$diffMatch = $goalsHome - $goalsGuest;
