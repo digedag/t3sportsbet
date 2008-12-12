@@ -129,8 +129,18 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base {
    */
   function getBetSets() {
 		$fields['BETSET.BETGAME'][OP_EQ_INT] = $this->uid;
-//		$options['debug'] = 1;
 		$options['orderby']['BETSET.ROUND'] = 'asc';
+
+		$service = tx_t3sportsbet_util_serviceRegistry::getBetService();
+		return $service->searchBetSet($fields, $options);
+  }
+  /**
+   * Returns the number of betsets
+   * @return int
+   */
+  function getBetSetSize() {
+		$fields['BETSET.BETGAME'][OP_EQ_INT] = $this->uid;
+		$options['count'] = '1';
 
 		$service = tx_t3sportsbet_util_serviceRegistry::getBetService();
 		return $service->searchBetSet($fields, $options);

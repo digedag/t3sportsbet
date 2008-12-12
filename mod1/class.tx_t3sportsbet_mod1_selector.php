@@ -67,8 +67,8 @@ class tx_t3sportsbet_mod1_selector{
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
 		if($menu) {
-			$link = $this->formTool->createEditLink('tx_t3sportsbet_betgames', $this->GAME_SETTINGS['game'],'');
-			$link .= $this->formTool->createNewLink('tx_t3sportsbet_betgames', $pid,'');
+			$links = $this->formTool->createEditLink('tx_t3sportsbet_betgames', $this->GAME_SETTINGS['game'],'');
+			$links .= $this->formTool->createNewLink('tx_t3sportsbet_betgames', $pid,'');
 			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
 //			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
 		}
@@ -112,14 +112,17 @@ class tx_t3sportsbet_mod1_selector{
 
 
 		// In den Content einbauen
-		// Spielrunden sind keine Objekt, die bearbeitet werden können
+		// Spielrunden sind keine Objekte, die bearbeitet werden können
 		if($menu) {
-			$link = '';
+			$links = '';
 			if(!$empty)
-				$link .= $this->formTool->createEditLink('tx_t3sportsbet_betsets', $this->ROUND_SETTINGS['betset'],'');
-			$link .= $this->formTool->createNewLink('tx_t3sportsbet_betsets', $pid,'');
+				$links .= $this->formTool->createEditLink('tx_t3sportsbet_betsets', $this->ROUND_SETTINGS['betset'],'');
+			$params['params'] = '&betgame='.$game->uid;
+			$params['params'] .= '&round='.($game->getBetSetSize()+1);
+			$links .= $this->formTool->createNewLink('tx_t3sportsbet_betsets', $pid,'',$params);
 			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
 //			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
+//t3lib_div::debug($link, 'tx_t3sportsbet_mod1_selector'); // TODO: remove me
 		}
 		$content.=$menu;
 //		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
