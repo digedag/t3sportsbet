@@ -124,6 +124,14 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base {
 		return $ret;
   }
   /**
+   * Returns the page UID
+   *
+   * @return int
+   */
+  function getPid() {
+  	return $this->record['pid'];
+  }
+  /**
    * Returns an array of existing bet sets
    * @return array of tx_t3sportsbet_models_betset
    */
