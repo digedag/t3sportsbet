@@ -119,6 +119,7 @@ class tx_t3sportsbet_mod1_selector{
 				$links .= $this->formTool->createEditLink('tx_t3sportsbet_betsets', $this->ROUND_SETTINGS['betset'],'');
 			$params['params'] = '&betgame='.$game->uid;
 			$params['params'] .= '&round='.($game->getBetSetSize()+1);
+			$params['title'] = $GLOBALS['LANG']->getLL('label_create_betset');
 			$links .= $this->formTool->createNewLink('tx_t3sportsbet_betsets', $pid,'',$params);
 			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
 //			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
