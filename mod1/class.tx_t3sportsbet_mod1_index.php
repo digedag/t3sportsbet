@@ -101,6 +101,9 @@ Vorgehen
 				$this->pObj->subselector = $selector;
 			else 
 				$content .= '<div class="cfcleague_selector">'.$selector.'</div><div style="clear:both"/>';
+			// Add competition wizard
+			$wizard = tx_div::makeInstance('tx_t3sportsbet_mod1_addCompetitionWizard');
+			$content .= $wizard->handleRequest($this, $currentGame);
 			return $content;
 		}
 		if($this->pObj->isTYPO42())

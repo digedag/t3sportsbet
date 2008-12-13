@@ -49,7 +49,6 @@ class tx_t3sportsbet_mod1_addMatches {
 			$out .= $this->handleAddMatches($currBetSet);
 			$out .= $this->showAddMatches($currBetSet, $competitions);
 		}
-		
 		return $out;
 	}
 	/**
@@ -58,9 +57,9 @@ class tx_t3sportsbet_mod1_addMatches {
 	 * @param tx_t3sportsbet_models_betset $currBetSet
 	 */
 	private function handleNoCompetitions($currBetSet) {
-    $out .= $this->mod->doc->section('Info:',$GLOBALS['LANG']->getLL('msg_no_competition_in_betgame'),0,1,ICON_WARN);
+		$out .= $this->mod->doc->section('Info:',$GLOBALS['LANG']->getLL('msg_no_competition_in_betgame'),0,1,ICON_WARN);
 		$out.=$this->mod->doc->spacer(15);
-    $out .= $this->getFormTool()->form->getSoloField('tx_t3sportsbet_betgames',$currBetSet->getBetgame()->record,'competition');
+		$out .= $this->getFormTool()->form->getSoloField('tx_t3sportsbet_betgames',$currBetSet->getBetgame()->record,'competition');
 		$out .= $this->getFormTool()->createSubmit('updateBetgame',$GLOBALS['LANG']->getLL('btn_update'));
 		return $out;
 	}
@@ -81,7 +80,7 @@ class tx_t3sportsbet_mod1_addMatches {
 	 * @return string
 	 */
 	function showAddMatches($currBetSet, $competitions) {
-		
+
 		tx_div::load('tx_t3sportsbet_mod1_matchsearcher');
 		$options['checkbox'] = 1;
 
@@ -94,7 +93,6 @@ class tx_t3sportsbet_mod1_addMatches {
 		$options['ignoreDummies'] = 1;
 		$searcher = $this->getMatchSearcher($options);
 		$out .= $searcher->getSearchForm();
-//		$out.=$this->mod->doc->spacer(15);
 		$out.= $searcher->getResultList();
 		if($searcher->getSize()) {
 			// Button für Zuordnung
@@ -125,7 +123,6 @@ class tx_t3sportsbet_mod1_addMatches {
 	 */
 	private function handleAddMatches($currBetSet) {
 		$out = '';
-
 		$match2set = strlen(t3lib_div::_GP('match2betset')) > 0; // Wurde der Submit-Button gedrückt?
 		if($match2set) {
 			$matchUids = t3lib_div::_GP('checkMatch');

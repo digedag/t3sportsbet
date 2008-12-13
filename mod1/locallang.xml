@@ -12,6 +12,7 @@
 			<label index="label_add_matches">Add matches to betset</label>
 			<label index="label_hide_add_matches">Hide match selection</label>
 			<label index="label_change_state">Change state</label>
+			<label index="label_create_betset">Create a new betset</label>
 			<label index="label_info">Info</label>
 			<label index="label_matchlist">List of matches</label>
 			<label index="label_save">Save</label>
@@ -44,6 +45,16 @@
 			<label index="msg_resetbets">Do you really want to reset these bets?</label>
 			<label index="label_join_matches">Join matches</label>
 			<label index="msg_join_matches">Do you really want to add these matches?</label>
+			<label index="label_editbetgame">Edit betgame</label>
+			<label index="label_roundnamedefault">. round</label>
+
+			<label index="label_join_competition">Create betgame from competition</label>
+			<label index="msg_add_competition">At this point you can add a complete competition to this betgame.
+			There will be a new betset created for each round. Alternatively you can create individual betsets 
+			by manually selecting matches to bet for.</label>
+			<label index="msg_join_competition">Do you really want to add the complete competition to current betgame? There will be a new betset created for each round.</label>
+			<label index="msg_add_competition_finished">All betsets were successfully created.</label>
+			<label index="msg_no_matchs_found">Current competition contains no matches.</label>
 			<label index="msg_betset_saved">Betset was saved.</label>
 
 			<label index="tab_control">Overview</label>
@@ -75,6 +86,7 @@
 			<label index="msg_no_betset_found">Keine Tiprunde gefunden.</label>
 			<label index="label_info">Hinweis</label>
 			<label index="label_change_state">Status ändern</label>
+			<label index="label_create_betset">Eine neue Tiprunde anlegen</label>
 			<label index="label_add_matches">Der Tiprunde Spiele hinzufügen</label>
 			<label index="label_hide_add_matches">Spielauswahl ausblenden</label>
 			<label index="label_matchlist">Liste der Spiele</label>
@@ -107,6 +119,15 @@
 			<label index="msg_resetbets">Sollen die Tips für dieses Spiel wirklich zurückgesetzt werden?</label>
 			<label index="label_join_matches">Spiel zuordnen</label>
 			<label index="msg_join_matches">Sollen diese Spiele wirklich zugeordnet werden?</label>
+			<label index="label_editbetgame">Tipspiel bearbeiten</label>
+			<label index="label_roundnamedefault">. Tiprunde</label>
+
+			<label index="label_join_competition">Tipspiel aus dem Wettbewerb erzeugen</label>
+			<label index="msg_add_competition">Zu diesem Zeitpunkt können Sie aus dem gewählten Wettbewerb ein komplettes Tipspiel generieren.
+			Für jeden Spieltag wird eine neue Tiprunde angelegt. Alternativ können Sie natürlich die Tiprunden natürlich auch individuell gestalten.</label>
+			<label index="msg_join_competition">Soll wirklich der komplette Wettbewerb dem Tipspiel hinzugefügt werden? Es wird für jeden Spieltag eine neue Tiprunde angelegt.</label>
+			<label index="msg_add_competition_finished">Das Tipspiel wurde erfolgreich angelegt.</label>
+			<label index="msg_no_matchs_found">Der Wettbewerb enthält keine Spiele.</label>
 			<label index="msg_betset_saved">Die Tiprunde wurde gespeichert.</label>
 
 
