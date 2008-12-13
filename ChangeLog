@@ -1,6 +1,14 @@
 Changelog
 ---------
 
+v0.3.0 (13.12.2008)
+* Backend modified for TYPO3 4.2
+* Bugfix: Calculation for matches with extra time or penalty failed. Update of cfc_league_fe is required too!
+* Matches can be added only once within a betgame
+* Predefined fields (betgame and round) in betset if created from within BE module
+* New wizard added to create a betgame for a complete competition
+* New links to betlists of other users.
+
 v0.2.10 (19.08.2008)
 * Average points are calculated now for finished bets only
 * Separate score for correct goals difference is possible now. New option in betgame record.
