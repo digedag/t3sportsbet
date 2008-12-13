@@ -282,7 +282,14 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_t3sportsbet_search_BetSet');
 		return $searcher->search($fields, $options);
   }
-  public function addMatchesTCE($betset, $matchUids) {
+  /**
+   * Adds new matches to an existing betset
+   *
+   * @param tx_t3sportsbet_models_betset $betset
+   * @param string $matchUids commaseparated uids
+   * @return string
+   */
+	public function addMatchesTCE($betset, $matchUids) {
 		$data = array();
 		tx_div::load('tx_cfcleaguefe_models_match');
 		$cnt=count($matchUids);
