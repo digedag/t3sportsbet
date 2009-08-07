@@ -24,10 +24,6 @@
 require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
 
 
-tx_div::load('tx_rnbase_util_BaseMarker');
-tx_div::load('tx_cfcleaguefe_controllers_report');
-
-
 /**
  * Make additional join for match search to table tx_t3sportsbet_betsets_mm
  * 
