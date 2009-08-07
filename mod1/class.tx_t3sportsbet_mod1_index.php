@@ -119,27 +119,35 @@ Vorgehen
 		$content .= $this->formTool->form->printNeededJSFunctions_top();
 		$content .= '<div style="display: block; border: 1px solid #a2aab8; clear:both;"></div>';
 
-		$this->betset = $currentRound; // Nicht schön, aber so hat der Linker Zugriff
-		$content .= $this->handleShowBets($currentRound);
-		$content .= $this->handleResetBets($currentRound);
-		$content .= $this->handleSaveBetSet($currentRound);
-		$content .= $this->handleAnalyzeBets($currentGame);
-		
-		switch($menu['value']) {
-			case 0:
-				$content .= $this->showBetSet($currentRound);
-				break;
-			case 1:
-				$clazzName = tx_div::makeInstanceClassname('tx_t3sportsbet_mod1_addMatches');
-				$addMatches = new $clazzName($this);
-				$content .= $addMatches->handleRequest($currentRound);
-				break;
-			case 2:
-				$content .= $this->showBets($currentRound);
-				break;
+		try {
+			$this->betset = $currentRound; // Nicht schön, aber so hat der Linker Zugriff
+			$content .= $this->handleShowBets($currentRound);
+			$content .= $this->handleResetBets($currentRound);
+			$content .= $this->handleSaveBetSet($currentRound);
+			$content .= $this->handleAnalyzeBets($currentGame);
+			
+			switch($menu['value']) {
+				case 0:
+					$content .= $this->showBetSet($currentRound);
+					break;
+				case 1:
+					$clazzName = tx_div::makeInstanceClassname('tx_t3sportsbet_mod1_addMatches');
+					$addMatches = new $clazzName($this);
+					$content .= $addMatches->handleRequest($currentRound);
+					break;
+				case 2:
+					$content .= $this->showBets($currentRound);
+					break;
+			}
+			$content .= $this->showInfobar($currentRound);
+		} catch (Exception $e) {
+			$msg = '<h2>FATAL ERROR: </h2><pre>';
+			$msg .= $e->getMessage();
+			$msg .= '</pre>';
+			$content .= $msg;
 		}
+		
 		$content .= $this->formTool->form->printNeededJSFunctions();
-		$content .= $this->showInfobar($currentRound);
 		
 		return $content;
 	}
