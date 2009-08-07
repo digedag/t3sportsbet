@@ -48,11 +48,10 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker {
 		}
 		$currItem = isset($this->options['currItem']) ? $this->options['currItem'] : false;
 		$betset->record['isCurrent'] = $currItem && $currItem->uid == $betset->uid;
-		// Es wird das MarkerArray mit den Daten des Spiels gefüllt.
-		$subpartArray['###'.$marker.'_MATCHS###'] = $this->_addMatches($betset,
-						$formatter->cObj->getSubpart($template,'###'.$marker.'_MATCHS###'),
-						$formatter, $confId.'match.', $marker.'_MATCH');
-		$template = $formatter->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
+		// Die Spiele einbinden.
+		if($this->containsMarker($template, $marker.'_MATCHS'))
+			$template = $this->_addMatches($template, $betset, $formatter, $confId.'match.', $marker.'_MATCH');
+		
 		$markerArray = $formatter->getItemMarkerArrayWrapped($betset->record, $confId , 0, $marker.'_',$betset->getColumnNames());
 		$subpartArray = array();
 		$wrappedSubpartArray = array();
@@ -81,24 +80,25 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker {
 	 * @param string $marker
 	 * @return string
 	 */
-	private function _addMatches(&$betset, $template, &$formatter, $confId, $marker) {
-		if(strlen(trim($template)) == 0) return '';
-		$matchArr = $betset->getMatches();
-		if(!$matchArr) return '';
-		$listMarker = $this->_getListMarker();
+	private function _addMatches($template, &$betset, &$formatter, $confId, $marker) {
+		$srv = tx_cfcleaguefe_util_ServiceRegistry::getMatchService();
+		$fields['BETSETMM.UID_LOCAL'][OP_EQ_INT] = $betset->getUid();
+		$options = array();
+		tx_rnbase_util_SearchBase::setConfigFields($fields, $formatter->configurations, $confId.'fields.');
+		tx_rnbase_util_SearchBase::setConfigOptions($options, $formatter->configurations, $confId.'options.');
+		$children = $srv->search($fields, $options);
 
-		$options = $this->options;
-		$options['betset'] = $betset;
-
-		// Da es eine Liste ist, müssen wir den Subpart für die Entries extra holen
-		$templateEntry = $formatter->cObj->getSubpart($template,'###'.$marker.'###');
-		$out = $listMarker->render($matchArr, $templateEntry, 'tx_t3sportsbet_util_MatchMarker',
-				$confId, $marker, $formatter, $options);
-		$subpartArray['###'.$marker.'###'] = $out;
-		$out = $formatter->cObj->substituteMarkerArrayCached($template, array(), $subpartArray);
-
+		$markerParams = $this->options;
+		$markerParams['betset'] = $betset;
+		
+		$builderClass = tx_div::makeInstanceClassName('tx_rnbase_util_ListBuilder');
+		$listBuilder = new $builderClass();
+		$out = $listBuilder->render($children,
+						tx_div::makeInstance('tx_lib_spl_arrayObject'), $template, 'tx_t3sportsbet_util_MatchMarker',
+						$confId, $marker, $formatter, $markerParams);
 		return $out;
 	}
+
 	/**
 	 * Links vorbereiten
 	 *
