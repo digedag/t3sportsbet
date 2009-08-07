@@ -1,10 +1,10 @@
 # setup
-includeLibs.tx_t3sportsbet_controllers_main = EXT:t3sportsbet/controllers/class.tx_t3sportsbet_controllers_main.php
+includeLibs.tx_rnbase_controller = EXT:rn_base/class.tx_rnbase_controller.php
 
 
 plugin.tx_t3sportsbet_main                = USER_INT
 plugin.tx_t3sportsbet_main.flexform       = flexform_main.xml
-plugin.tx_t3sportsbet_main.userFunc       = tx_t3sportsbet_controllers_main->main
+plugin.tx_t3sportsbet_main.userFunc       = tx_rnbase_controller->main
 plugin.tx_t3sportsbet_main.defaultAction  = tx_t3sportsbet_actions_Summary
 plugin.tx_t3sportsbet_main.qualifier      = t3sportsbet
 plugin.tx_t3sportsbet_main.templatePath   = EXT:t3sportsbet/templates
