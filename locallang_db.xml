@@ -8,6 +8,7 @@
 		<languageKey index="default" type="array">
 			<label index="tx_t3sportsbet_module.name">T3sports bet game</label>
 			<label index="plugin.t3sportsbet.label">T3sports bet system</label>
+			<label index="plugin.t3sportsbet.description">A powerful bet system for T3sports</label>
 			<label index="plugin.t3sportsbet.flexform.tab.common">Common</label>
 			<label index="plugin.t3sportsbet.flexform.tab.tssetup">Typoscript</label>
 			<label index="plugin.t3sportsbet.flexform.tssetup">plugin.tx_t3sportsbet_main.</label>
@@ -65,6 +66,7 @@
 		<languageKey index="de" type="array">
 			<label index="tx_t3sportsbet_module.name">T3sports Tipspiel</label>
 			<label index="plugin.t3sportsbet.label">T3sports Tipspiel</label>
+			<label index="plugin.t3sportsbet.description">Ein leistungsfähiges Tipspiel für T3sports</label>
 			<label index="plugin.t3sportsbet.flexform.action.Summary">Status Infos zum Tipspiel</label>
 			<label index="plugin.t3sportsbet.flexform.action.HighScore">Bestenliste</label>
 			<label index="plugin.t3sportsbet.flexform.action.GameList">Liste von Tipspielen</label>
