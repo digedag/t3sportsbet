@@ -35,6 +35,14 @@ require_once(PATH_t3lib.'class.t3lib_svbase.php');
  */
 class tx_t3sportsbet_services_betcalculator extends t3lib_svbase  {
 
+	public function getGoals($betgame, $match) {
+		$mpart = '';
+		$mpart = ($match->isExtraTime() && $betgame->isDrawIfExtraTime()) ? 'last' : $mpart;
+		$mpart = ($match->isPenalty() && $betgame->isDrawIfPenalty()) ? 'et' : $mpart;
+		$goalsHome = $match->getGoalsHome($mpart);
+		$goalsGuest = $match->getGoalsGuest($mpart);
+		return array($goalsHome, $goalsGuest);
+	}
 	/**
 	 * Calculates the points for a bet
 	 *
@@ -45,11 +53,7 @@ class tx_t3sportsbet_services_betcalculator extends t3lib_svbase  {
 		$match = $bet->getMatch();
 		// TODO: GreenTable kann noch nicht ermittelt werden...
 		// 1. Schritt: Spielergebnis ermitteln
-		$mpart = '';
-		$mpart = ($match->isExtraTime() && $betgame->isDrawIfExtraTime()) ? 'last' : $mpart;
-		$mpart = ($match->isPenalty() && $betgame->isDrawIfPenalty()) ? 'et' : $mpart;
-		$goalsHome = $match->getGoalsHome($mpart);
-		$goalsGuest = $match->getGoalsGuest($mpart);
+		list($goalsHome, $goalsGuest) = $this->getGoals($betgame, $match);
 		$ret = 0;
 		// Daten für Tordifferenz vorbereiten
 		$diffMatch = $goalsHome - $goalsGuest;

@@ -213,6 +213,26 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 		return $ret;
 	}
 	/**
+	 * Returns the bet statistics for a single match
+	 *
+	 * @param tx_t3sportsbet_models_betset $betset
+	 * @param tx_cfcleaguefe_models_match $match
+	 * @return array
+	 */
+	public function getBetStats($betset, $match) {
+		// Wieviele Tipper haben das Ergebnis richtig
+		$calcSrv = tx_t3sportsbet_util_serviceRegistry::getCalculatorService();
+		list($goalsHome, $goalsGuest) = $calcSrv->getGoals($betset->getBetgame(), $match);
+		//		$goalsHome = $match->
+		$options['count'] = 1;
+		$fields['BET.BETSET'][OP_EQ_INT] = $betset->uid;
+		$fields['BET.T3MATCH'][OP_EQ_INT] = $match->uid;
+		$fields[SEARCH_FIELD_CUSTOM] = 'tx_t3sportsbet_bets.goals_home = ' . $goalsHome;
+		$fields[SEARCH_FIELD_CUSTOM] .= ' AND tx_t3sportsbet_bets.goals_guest = ' . $goalsGuest;
+		$ret['stats_accurate'] = $this->searchBet($fields, $options);
+		return $ret;
+	}
+	/**
 	 * Returns the number of users with bets for given bet rounds
 	 *
 	 * @param string $betsetUids comma separated uids of betsets
