@@ -40,6 +40,8 @@ class tx_t3sportsbet_search_BetSet extends tx_rnbase_util_SearchBase {
 	protected function getTableMappings() {
 		$tableMapping['BETSET'] = 'tx_t3sportsbet_betsets';
 		$tableMapping['BETGAME'] = 'tx_t3sportsbet_betgames';
+		$tableMapping['BETSETMM'] = 'tx_t3sportsbet_betsets_mm';
+		$tableMapping['MATCH'] = 'tx_cfcleague_games';
 		return $tableMapping;
 	}
 
@@ -54,6 +56,12 @@ class tx_t3sportsbet_search_BetSet extends tx_rnbase_util_SearchBase {
 		$join = '';
 		if(isset($tableAliases['BETGAME'])) {
 			$join .= ' JOIN tx_t3sportsbet_betgames ON tx_t3sportsbet_betsets.betgame = tx_t3sportsbet_betgames.uid ';
+		}
+		if(isset($tableAliases['BETSETMM']) || isset($tableAliases['MATCH'])) {
+			$join .= ' INNER JOIN tx_t3sportsbet_betsets_mm ON tx_t3sportsbet_betsets.uid = tx_t3sportsbet_betsets_mm.uid_local ';
+		}
+		if(isset($tableAliases['MATCH'])) {
+			$join .= ' INNER JOIN tx_cfcleague_games ON tx_cfcleague_games.uid = tx_t3sportsbet_betsets_mm.uid_foreign ';
 		}
 		return $join;
 	}

@@ -66,7 +66,7 @@ class tx_t3sportsbet_util_ScopeController {
 		$viewData =& $configurations->getViewData();
 		$betsetUids = $configurations->get($configKey.'betset');
 		$betsetStatus = $configurations->get($configKey.'betsetStatus');
-		$rounds = self::getBetsets($betgame, $betsetStatus, $betsetUids, $configurations);
+		$rounds = self::getBetsets($betgame, $betsetStatus, $betsetUids, $configurations, $configKey);
 		$ret = tx_rnbase_util_Misc::objImplode(',', $rounds);
 		
 		// Soll eine SelectBox für die Tiprunde gezeigt werden?
@@ -82,12 +82,13 @@ class tx_t3sportsbet_util_ScopeController {
 		}
 		return $ret;
 	}
-	private static function getBetsets($betgameUid, $betsetStatus, $betsetUids, &$configurations) {
+	private static function getBetsets($betgameUid, $betsetStatus, $betsetUids, &$configurations, $confId = 'scope.') {
 		$fields = array();
 		$options = array();
+		$options['distinct'] = 1;
 		tx_div::load('tx_rnbase_util_SearchBase');
-		tx_rnbase_util_SearchBase::setConfigFields($fields, $configurations, 'scope.fields.');
-		tx_rnbase_util_SearchBase::setConfigOptions($options, $configurations, 'scope.options.');
+		tx_rnbase_util_SearchBase::setConfigFields($fields, $configurations, $confId.'fields.');
+		tx_rnbase_util_SearchBase::setConfigOptions($options, $configurations, $confId.'options.');
 		$srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
 		if(strlen(trim($betgameUid)))
 			$fields['BETSET.BETGAME'][OP_IN_INT] = $betgameUid;
