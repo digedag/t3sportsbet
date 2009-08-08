@@ -60,9 +60,11 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker {
 		$GLOBALS['TSFE']->register['T3SPORTSBET_BETSTATUS'] = $betset->getMatchState($match);
 		
 		// Die Tipptendenz mit einblenden
-  	if((self::containsMarker($template, $marker .'_TREND')))
+		if((self::containsMarker($template, $marker .'_TREND')))
 			$this->addBetTrend($betset, $match);
-		
+		if((self::containsMarker($template, $marker .'_STATS')))
+			$this->addBetStats($betset, $match);
+
 		// Für T3sports muss der Qualifier geändert werden, damit die Verlinkung klappt
 		$formatter->configurations->_qualifier = 'cfc_league_fe';
 		$template = $this->matchMarker->parseTemplate($template, $match, $formatter, $confId, $marker);
@@ -75,18 +77,30 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker {
 		$template = $this->betMarker->parseTemplate($template, $bet, $formatter, $confId.'bet.', $marker.'_BET');
 		return $template;
   }
-  /**
-   * Tiptrend für das Spiel einsetzen
-   *
-   * @param tx_t3sportsbet_models_betset $betset
-   * @param tx_cfcleaguefe_models_match $match
-   */
-  public function addBetTrend(&$betset, &$match) {
-  	$srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
-  	$trend = $srv->getBetTrend($betset, $match);
-  	$match->record = array_merge($match->record, $trend);
-//  	t3lib_div::debug($trend, 'tx_t3sportsbet_util_MatchMarker'); // TODO: remove me
-  }
+	/**
+	 * Tiptrend für das Spiel einsetzen
+	 *
+	 * @param tx_t3sportsbet_models_betset $betset
+	 * @param tx_cfcleaguefe_models_match $match
+	 */
+	public function addBetTrend(&$betset, &$match) {
+		$srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
+		$trend = $srv->getBetTrend($betset, $match);
+		$match->record = array_merge($match->record, $trend);
+	}
+	/**
+	 * Tipstatistik für das Spiel einsetzen. Diese Daten sind erst nach der Auswertung des Spiels möglich.
+	 *
+	 * @param tx_t3sportsbet_models_betset $betset
+	 * @param tx_cfcleaguefe_models_match $match
+	 */
+	public function addBetStats(&$betset, &$match) {
+		$srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
+		$trend = $srv->getBetStats($betset, $match);
+		
+		$match->record = array_merge($match->record, $trend);
+		t3lib_div::debug($trend, 'tx_t3sportsbet_util_MatchMarker'); // TODO: remove me
+	}
   /**
    * Render form
    *
