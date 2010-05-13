@@ -65,14 +65,14 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base {
 	 * @return boolean
 	 */
 	function isDrawIfPenalty() {
-		return $this->record['draw_if_penalty '] > 0;
+		return $this->record['draw_if_penalty'] > 0;
 	}
 	/**
 	 *
 	 * @return boolean
 	 */
 	function isIgnoreGreenTable() {
-		return $this->record['ignore_greentable '] > 0;
+		return $this->record['ignore_greentable'] > 0;
 	}
 
 	/**

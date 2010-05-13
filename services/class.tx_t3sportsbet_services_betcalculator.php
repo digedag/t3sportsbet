@@ -35,8 +35,14 @@ require_once(PATH_t3lib.'class.t3lib_svbase.php');
  */
 class tx_t3sportsbet_services_betcalculator extends t3lib_svbase  {
 
+	/**
+	 * 
+	 * @param tx_t3sportsbet_models_betgame $betgame
+	 * @param tx_cfcleaguefe_models_match $match
+	 */
 	public function getGoals($betgame, $match) {
 		$mpart = '';
+		// last bedeutet nach Ende der regulären Spielzeit
 		$mpart = ($match->isExtraTime() && $betgame->isDrawIfExtraTime()) ? 'last' : $mpart;
 		$mpart = ($match->isPenalty() && $betgame->isDrawIfPenalty()) ? 'et' : $mpart;
 		$goalsHome = $match->getGoalsHome($mpart);
@@ -66,11 +72,17 @@ class tx_t3sportsbet_services_betcalculator extends t3lib_svbase  {
 		elseif ($diffMatch == $diffBet && $betgame->getPointsGoalsDiff()) {
 			$ret = $betgame->getPointsGoalsDiff();
 		}
-		elseif ($bet->getToto() == $match->getToto($mpart)) {
+		elseif ($bet->getToto() == $this->getToto($goalsHome, $goalsGuest)) {
 			// Tendency
 			$ret = $betgame->getPointsTendency();
 		}
 		return $ret;
+	}
+	public function getToto($goalsHome, $goalsGuest) {
+		$goalsDiff = $goalsHome - $goalsGuest;
+		if($goalsDiff == 0)
+			return 0;
+		return ($goalsDiff < 0) ? 2 : 1;
 	}
 }
 

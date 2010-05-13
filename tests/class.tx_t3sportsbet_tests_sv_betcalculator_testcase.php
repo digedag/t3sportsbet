@@ -70,11 +70,12 @@ class tx_t3sportsbet_tests_sv_betcalculator_testcase extends tx_phpunit_testcase
 	function test_betCalculationCup() {
 		$betgame = $this->getBetgame(5,0,1,1);
 		$betgame2 = $this->getBetgame(5,0,1,0);
+		$betgame3 = $this->getBetgame(5,2,1,0,1);
 		$calculator = tx_div::makeInstance('tx_t3sportsbet_services_betcalculator');
 		$matches = $this->getMatches();
-		
 		$bet = $this->getBet(3,1);
 		$bet->record['t3match'] = $matches['match_3_1_et']->uid;
+		// 3:1 n.V., Da Unentschieden bei Verlängerung aktiviert ist, gibt es keinen Punkt
 		$result = $calculator->calculatePoints($betgame, $bet);
 		$this->assertEquals(0, $result, 'Match 3:1 et (1:1) Bet 3:1 Points: ' . $result);
 		$result = $calculator->calculatePoints($betgame2, $bet);
@@ -91,6 +92,11 @@ class tx_t3sportsbet_tests_sv_betcalculator_testcase extends tx_phpunit_testcase
 		$bet->record['t3match'] = $matches['match_3_1_et']->uid;
 		$result = $calculator->calculatePoints($betgame, $bet);
 		$this->assertEquals(5, $result, 'Match 3:1 et (1:1) Bet 1:1 Points: ' . $result);
+
+		$bet = $this->getBet(2,2);
+		$bet->record['t3match'] = $matches['match_7_6_ap']->uid;
+		$result = $calculator->calculatePoints($betgame3, $bet);
+		$this->assertEquals(2, $result, 'Match 7:6 et (4:4, 3:3) Bet 2:2 Points: ' . $result);
 	}
 	function test_betCalculationWoDiff() {
 		// Ohne Tordiff testen
@@ -112,7 +118,15 @@ class tx_t3sportsbet_tests_sv_betcalculator_testcase extends tx_phpunit_testcase
 		$result = $calculator->calculatePoints($betgame, $bet);
 		$this->assertEquals(5, $result, 'Match 3:0 Bet 3:0 Points: ' . $result);
 	}
-
+	function test_getGoals() {
+		$betgame3 = $this->getBetgame(5,2,1,0,1);
+		$calculator = tx_div::makeInstance('tx_t3sportsbet_services_betcalculator');
+		$matches = $this->getMatches();
+		list($goalsHome, $goalsGuest) = $calculator->getGoals($betgame3, $matches['match_7_6_ap']);
+		$this->assertEquals('4:4', $goalsHome.':'.$goalsGuest, '7:6 n.E. (3:3, 4:4) Tipspiel (Unentschieden nach Elfm.) sollte 4:4 sein');
+		
+	}
+	
 	private function getBetgame($p1, $p2, $p3, $drawIfET=0, $drawIfPenalty=0) {
 		$clazzname = tx_div::makeInstanceClassname('tx_t3sportsbet_models_betgame');
 		$record = array();
