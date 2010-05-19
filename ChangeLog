@@ -2,12 +2,16 @@ Changelog
 ---------
 
 TODO: Exception im BE bei Spiel ohne zugeordnetem Team!!
+v0.3.2 (19.05.2010)
+ * Bugfix of point calculator for matches with penalty shooting
+ * All references to tx_div removed
+
 v0.3.1 (08.08.2009)
-* Controller class removed
-* Wizicon for plugin added
-* BE module will now handle exceptions. This will keep the module useable even if a exception occurs.
-* Searching of betsets can be joined to table tx_cfcleague_games. This makes it possible to betsets with finished matches only.
-* Search matches of a betset with SearchBase. This enables a lot of options by Typoscript.
+ * Controller class removed
+ * Wizicon for plugin added
+ * BE module will now handle exceptions. This will keep the module useable even if a exception occurs.
+ * Searching of betsets can be joined to table tx_cfcleague_games. This makes it possible to betsets with finished matches only.
+ * Search matches of a betset with SearchBase. This enables a lot of options by Typoscript.
 This will output finished matches ordered by date:
 betlist.betset.match {
   fields.MATCH.STATUS.OP_EQ_INT = 2
@@ -16,28 +20,28 @@ betlist.betset.match {
 }
 
 v0.3.0 (13.12.2008)
-* Backend modified for TYPO3 4.2
-* Bugfix: Calculation for matches with extra time or penalty failed. Update of cfc_league_fe is required too!
-* Matches can be added only once within a betgame
-* Predefined fields (betgame and round) in betset if created from within BE module
-* New wizard added to create a betgame for a complete competition
-* New links to betlists of other users.
+ * Backend modified for TYPO3 4.2
+ * Bugfix: Calculation for matches with extra time or penalty failed. Update of cfc_league_fe is required too!
+ * Matches can be added only once within a betgame
+ * Predefined fields (betgame and round) in betset if created from within BE module
+ * New wizard added to create a betgame for a complete competition
+ * New links to betlists of other users.
 
 v0.2.10 (19.08.2008)
-* Average points are calculated now for finished bets only
-* Separate score for correct goals difference is possible now. New option in betgame record.
-* Some unit tests for score calculation
+ * Average points are calculated now for finished bets only
+ * Separate score for correct goals difference is possible now. New option in betgame record.
+ * Some unit tests for score calculation
 
 v0.2.9 (16.08.2008)
-* Important: Match lock time was wrong in FE! Bets were possible even after kickoff date!
-* New info in highscore list: size of userbets and average point per bet. See html template for markers.
+ * Important: Match lock time was wrong in FE! Bets were possible even after kickoff date!
+ * New info in highscore list: size of userbets and average point per bet. See html template for markers.
 
 v0.2.8 (12.08.2008)
-* It is now possible to output a bet trend in betlist. So you can show how many user bet for the home team, guest team or a draw match. Have a look at betlist HTML template for markers.
+ * It is now possible to output a bet trend in betlist. So you can show how many user bet for the home team, guest team or a draw match. Have a look at betlist HTML template for markers.
 
 v0.2.7 (07.08.2008)
-* Betlist can be displayed even if no feuser is logged in.
-* It is now possible to add typoscript code in flexform. rn_base 0.2.7 is required for this!
+ * Betlist can be displayed even if no feuser is logged in.
+ * It is now possible to add typoscript code in flexform. rn_base 0.2.7 is required for this!
 
 v0.2.6 (31.07.2008)
 * The HTML template of betlist was changed. There is now an example on how to add an agegroup-marker. And more important, the is an example to demonstrate the disableIfEmpty flag for links.
