@@ -32,8 +32,8 @@ t3lib_extMgm::addService($_EXTKEY,  't3sportsbet' /* sv type */,  'tx_t3sportsbe
 );
 
 // always load service registry
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
-tx_div::load('tx_t3sportsbet_util_serviceRegistry');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+tx_rnbase::load('tx_t3sportsbet_util_serviceRegistry');
 
 
 ?>
