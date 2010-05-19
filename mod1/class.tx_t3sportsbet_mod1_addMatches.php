@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,8 +22,8 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
-tx_div::load('tx_rnbase_util_Misc');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
  * Spiele einer Tiprunde hinzufügen.
@@ -81,7 +81,7 @@ class tx_t3sportsbet_mod1_addMatches {
 	 */
 	function showAddMatches($currBetSet, $competitions) {
 
-		tx_div::load('tx_t3sportsbet_mod1_matchsearcher');
+		tx_rnbase::load('tx_t3sportsbet_mod1_matchsearcher');
 		$options['checkbox'] = 1;
 
 		$srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
@@ -146,8 +146,7 @@ class tx_t3sportsbet_mod1_addMatches {
 	 * @return tx_t3sportsbet_mod1_matchsearcher
 	 */
 	private function getMatchSearcher(&$options) {
-		$clazz = tx_div::makeInstanceClassname('tx_t3sportsbet_mod1_matchsearcher');
-		$searcher = new $clazz($this->mod, $options);
+		$searcher = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_matchsearcher', $this->mod, $options);
 		return $searcher;
 	}
 

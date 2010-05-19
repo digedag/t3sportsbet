@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Rene Nitzsche <rene@system25.de>
+*  (c) 2008-2010 Rene Nitzsche <rene@system25.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 require_once(PATH_t3lib.'class.t3lib_extobjbase.php');
 require_once (PATH_t3lib.'class.t3lib_basicfilefunc.php');
@@ -30,7 +30,7 @@ require_once(PATH_t3lib.'class.t3lib_extfilefunc.php');
 
 require_once(t3lib_extMgm::extPath('cfc_league').'class.tx_cfcleague.php');
 
-tx_div::load('tx_cfcleague_mod1_decorator');
+tx_rnbase::load('tx_cfcleague_mod1_decorator');
 
 // Mögliche Icons im BE für die Funktion doc->icons()
 define('ICON_OK', -1);
@@ -81,9 +81,9 @@ Vorgehen
 --------
 */
 		$this->doc = $this->pObj->doc;
-		$this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
+		$this->formTool = tx_rnbase::makeInstance('tx_rnbase_util_FormTool');
 		$this->formTool->init($this->doc);
-		$this->selector = tx_div::makeInstance('tx_t3sportsbet_mod1_selector');
+		$this->selector = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_selector');
 		$this->selector->init($this->doc, $this->MCONF);
 
 		$selector = '';
@@ -102,7 +102,7 @@ Vorgehen
 			else 
 				$content .= '<div class="cfcleague_selector">'.$selector.'</div><div style="clear:both"/>';
 			// Add competition wizard
-			$wizard = tx_div::makeInstance('tx_t3sportsbet_mod1_addCompetitionWizard');
+			$wizard = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_addCompetitionWizard');
 			$content .= $wizard->handleRequest($this, $currentGame);
 			return $content;
 		}
@@ -131,8 +131,7 @@ Vorgehen
 					$content .= $this->showBetSet($currentRound);
 					break;
 				case 1:
-					$clazzName = tx_div::makeInstanceClassname('tx_t3sportsbet_mod1_addMatches');
-					$addMatches = new $clazzName($this);
+					$addMatches = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_addMatches', $this);
 					$content .= $addMatches->handleRequest($currentRound);
 					break;
 				case 2:
@@ -142,8 +141,11 @@ Vorgehen
 			$content .= $this->showInfobar($currentRound);
 		} catch (Exception $e) {
 			$msg = '<h2>FATAL ERROR: </h2><pre>';
-			$msg .= $e->getMessage();
+//			$e->getMessage();
+			$msg .= $e->__toString();
 			$msg .= '</pre>';
+			tx_rnbase::load('tx_rnbase_util_Logger');
+			tx_rnbase_util_Logger::warn('Exception in BE module.', 't3sportsbet', array('Exception' => $e->getMessage()));
 			$content .= $msg;
 		}
 		
@@ -189,11 +191,10 @@ Vorgehen
 		$options['module'] = $this;
 		$searcher = $this->getBetSearcher($options);
 		$service = tx_t3sportsbet_util_serviceRegistry::getBetService();
-		$clazzname = tx_div::makeInstanceClassname('tx_cfcleaguefe_models_match');
 		$matchUids = array_keys($matchUids);
 		$out = '';
 		foreach($matchUids As $uid) {
-			$match = new $clazzname($uid);
+			$match = tx_rnbase::makeInstance('tx_cfcleaguefe_models_match', $uid);
 			$bets = $service->getBets($currBetSet, $match);
 			$out .= $searcher->showBets($GLOBALS['LANG']->getLL('label_betlist'), $bets);
 		}
@@ -266,7 +267,7 @@ Vorgehen
 	 */
 	function showBetSet($currBetSet) {
 		$matches = $currBetSet->getMatches();
-		$options['linker'][] = tx_div::makeInstance('tx_t3sportsbet_mod1_MatchEditLink');
+		$options['linker'][] = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_MatchEditLink');
 		$options['module'] = $this;
 		$searcher = $this->getMatchSearcher($options);
 		$searcher->showMatches($out, $GLOBALS['LANG']->getLL('label_matchlist'), $currBetSet->getMatches());
@@ -317,8 +318,7 @@ Vorgehen
 	 * @return tx_t3sportsbet_mod1_matchsearcher
 	 */
 	function getMatchSearcher(&$options) {
-		$clazz = tx_div::makeInstanceClassname('tx_t3sportsbet_mod1_matchsearcher');
-		$searcher = new $clazz($this, $options);
+		$searcher = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_matchsearcher', $this, $options);
 		return $searcher;
 	}
 	/**
@@ -328,8 +328,7 @@ Vorgehen
 	 * @return tx_t3sportsbet_mod1_betsearcher
 	 */
 	function getBetSearcher(&$options) {
-		$clazz = tx_div::makeInstanceClassname('tx_t3sportsbet_mod1_betsearcher');
-		$searcher = new $clazz($this, $options);
+		$searcher = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_betsearcher', $this, $options);
 		return $searcher;
 	}
 	/**

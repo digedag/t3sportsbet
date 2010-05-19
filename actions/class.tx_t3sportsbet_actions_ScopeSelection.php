@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,12 +22,12 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
-tx_div::load('tx_rnbase_action_BaseIOC');
-tx_div::load('tx_t3sportsbet_models_betgame');
-tx_div::load('tx_t3users_models_feuser');
-tx_div::load('tx_t3sportsbet_util_ScopeController');
+tx_rnbase::load('tx_rnbase_action_BaseIOC');
+tx_rnbase::load('tx_t3sportsbet_models_betgame');
+tx_rnbase::load('tx_t3users_models_feuser');
+tx_rnbase::load('tx_t3sportsbet_util_ScopeController');
 
 
 
@@ -72,7 +72,7 @@ class tx_t3sportsbet_actions_ScopeSelection extends tx_rnbase_action_BaseIOC {
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/actions/class.tx_t3sportsbet_actions_ScopeSelection.php'])	{
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/actions/class.tx_t3sportsbet_actions_ScopeSelection.php']);
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/actions/class.tx_t3sportsbet_actions_ScopeSelection.php']);
 }
 
 ?>

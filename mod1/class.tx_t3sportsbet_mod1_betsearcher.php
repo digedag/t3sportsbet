@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,9 +22,9 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
-//tx_div::load('tx_t3sportsbet_mod1_decorator');
+//tx_rnbase::load('tx_t3sportsbet_mod1_decorator');
 
 
 
@@ -117,8 +117,8 @@ class tx_t3sportsbet_mod1_betsearcher {
 	}
 
 	function showBets($headline, &$bets) {
-		tx_div::load('tx_t3sportsbet_mod1_decorator');
-		$decor = tx_div::makeInstance('tx_t3sportsbet_util_BetDecorator');
+		tx_rnbase::load('tx_t3sportsbet_mod1_decorator');
+		$decor = tx_rnbase::makeInstance('tx_t3sportsbet_util_BetDecorator');
 		$decor->setFormTool($this->formTool);
 		$columns = array(
 			'uid' => array('decorator' => $decor, 'title' => 'label_uid'),
@@ -146,7 +146,7 @@ class tx_t3sportsbet_mod1_betsearcher {
 	 * @return tx_cfcleaguefe_util_MatchTable
 	 */
 	private function getMatchTable() {
-		return tx_div::makeInstance('tx_cfcleaguefe_util_MatchTable');
+		return tx_rnbase::makeInstance('tx_cfcleaguefe_util_MatchTable');
 	}
   
 }

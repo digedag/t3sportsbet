@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,8 +22,8 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
-tx_div::load('tx_rnbase_util_Misc');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
  * Die Klasse zeigt Objekte im Backend an.
@@ -128,7 +128,7 @@ class tx_t3sportsbet_mod1_addCompetitionWizard {
 	}
 
 	private function loadMatches($compId) {
-		$matchTable = tx_div::makeInstance('tx_cfcleaguefe_util_MatchTable');
+		$matchTable = tx_rnbase::makeInstance('tx_cfcleaguefe_util_MatchTable');
 		$matchTable->setCompetitions($compId);
 		$matchTable->setIgnoreDummy();
 		$fields = array();
