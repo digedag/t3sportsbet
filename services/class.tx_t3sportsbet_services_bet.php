@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,10 +22,10 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 require_once(PATH_t3lib.'class.t3lib_svbase.php');
 
-tx_div::load('tx_t3sportsbet_util_library');
+tx_rnbase::load('tx_t3sportsbet_util_library');
 
 define('T3SPORTSBET_OPEN',1);
 define('T3SPORTSBET_CLOSED',2);
@@ -167,8 +167,7 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 		$bet = count($ret) ? $ret[0] : null;
 		if(!$bet) {
 			// No bet in database found. Create dummy instance
-			$clazz = tx_div::makeInstanceClassname('tx_t3sportsbet_models_bet');
-			$bet = new $clazz(array('uid' => 0,
+			$bet = tx_rnbase::makeInstance('tx_t3sportsbet_models_bet', array('uid' => 0,
 						'betset' => $betset->uid,
 						'fe_user' => $feuser->uid,
 						't3match' => $match->uid));
@@ -293,12 +292,12 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 		);
 	}
   function searchBet($fields, $options) {
-  	tx_div::load('tx_rnbase_util_SearchBase');
+  	tx_rnbase::load('tx_rnbase_util_SearchBase');
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_t3sportsbet_search_Bet');
 		return $searcher->search($fields, $options);
   }
 	function searchBetSet($fields, $options) {
-  	tx_div::load('tx_rnbase_util_SearchBase');
+  	tx_rnbase::load('tx_rnbase_util_SearchBase');
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_t3sportsbet_search_BetSet');
 		return $searcher->search($fields, $options);
   }
@@ -311,7 +310,7 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
    */
 	public function addMatchesTCE($betset, $matchUids) {
 		$data = array();
-		tx_div::load('tx_cfcleaguefe_models_match');
+		tx_rnbase::load('tx_cfcleaguefe_models_match');
 		$cnt=count($matchUids);
 		$existingUids = $this->getMatchUids($betset);
 		$matchUids = array_merge($existingUids,$matchUids);
@@ -374,8 +373,7 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 		$betUid = intval($betUid);
 		if($betUid) {
 			// Update bet
-			$clazz = tx_div::makeInstanceClassname('tx_t3sportsbet_models_bet');
-			$bet = new $clazz($betUid);
+			$bet = tx_rnbase::makeInstance('tx_t3sportsbet_models_bet', $betUid);
 			if($bet->record['fe_user'] != $feuser->uid) return 0;
 			if($bet->record['goals_home'] == $values['goals_home'] && 
 					$bet->record['goals_guest'] == $values['goals_guest']) return 0;
@@ -401,7 +399,7 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/services/class.tx_t3sportsbet_services_bet.php']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/services/class.tx_t3sportsbet_services_bet.php']);
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/services/class.tx_t3sportsbet_services_bet.php']);
 }
 
 ?>

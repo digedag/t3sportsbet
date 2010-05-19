@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,15 +22,15 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 
-tx_div::load('tx_rnbase_configurations');
-tx_div::load('tx_rnbase_util_Spyc');
-//tx_div::load('tx_cfcleaguefe_models_team');
-tx_div::load('tx_cfcleaguefe_util_league_DefaultTableProvider');
-tx_div::load('tx_cfcleaguefe_models_competition');
-tx_div::load('tx_cfcleaguefe_util_LeagueTable');
+tx_rnbase::load('tx_rnbase_configurations');
+tx_rnbase::load('tx_rnbase_util_Spyc');
+//tx_rnbase::load('tx_cfcleaguefe_models_team');
+tx_rnbase::load('tx_cfcleaguefe_util_league_DefaultTableProvider');
+tx_rnbase::load('tx_cfcleaguefe_models_competition');
+tx_rnbase::load('tx_cfcleaguefe_util_LeagueTable');
 
 class tx_t3sportsbet_tests_sv_betcalculator_testcase extends tx_phpunit_testcase {
 	function test_betCalculation() {
@@ -41,7 +41,7 @@ class tx_t3sportsbet_tests_sv_betcalculator_testcase extends tx_phpunit_testcase
 		// bet
 		$bet = $this->getBet(2,1);
 		// srv
-		$calculator = tx_div::makeInstance('tx_t3sportsbet_services_betcalculator');
+		$calculator = tx_rnbase::makeInstance('tx_t3sportsbet_services_betcalculator');
 		// Matches
 		$matches = $this->getMatches();
 
@@ -71,7 +71,7 @@ class tx_t3sportsbet_tests_sv_betcalculator_testcase extends tx_phpunit_testcase
 		$betgame = $this->getBetgame(5,0,1,1);
 		$betgame2 = $this->getBetgame(5,0,1,0);
 		$betgame3 = $this->getBetgame(5,2,1,0,1);
-		$calculator = tx_div::makeInstance('tx_t3sportsbet_services_betcalculator');
+		$calculator = tx_rnbase::makeInstance('tx_t3sportsbet_services_betcalculator');
 		$matches = $this->getMatches();
 		$bet = $this->getBet(3,1);
 		$bet->record['t3match'] = $matches['match_3_1_et']->uid;
@@ -102,7 +102,7 @@ class tx_t3sportsbet_tests_sv_betcalculator_testcase extends tx_phpunit_testcase
 		// Ohne Tordiff testen
 		$betgame = $this->getBetgame(5,0,1);
 		$bet = $this->getBet(2,1);
-		$calculator = tx_div::makeInstance('tx_t3sportsbet_services_betcalculator');
+		$calculator = tx_rnbase::makeInstance('tx_t3sportsbet_services_betcalculator');
 		$matches = $this->getMatches();
 
 		$bet->record['t3match'] = $matches['match_1_0']->uid;
@@ -120,7 +120,7 @@ class tx_t3sportsbet_tests_sv_betcalculator_testcase extends tx_phpunit_testcase
 	}
 	function test_getGoals() {
 		$betgame3 = $this->getBetgame(5,2,1,0,1);
-		$calculator = tx_div::makeInstance('tx_t3sportsbet_services_betcalculator');
+		$calculator = tx_rnbase::makeInstance('tx_t3sportsbet_services_betcalculator');
 		$matches = $this->getMatches();
 		list($goalsHome, $goalsGuest) = $calculator->getGoals($betgame3, $matches['match_7_6_ap']);
 		$this->assertEquals('4:4', $goalsHome.':'.$goalsGuest, '7:6 n.E. (3:3, 4:4) Tipspiel (Unentschieden nach Elfm.) sollte 4:4 sein');
@@ -128,7 +128,6 @@ class tx_t3sportsbet_tests_sv_betcalculator_testcase extends tx_phpunit_testcase
 	}
 	
 	private function getBetgame($p1, $p2, $p3, $drawIfET=0, $drawIfPenalty=0) {
-		$clazzname = tx_div::makeInstanceClassname('tx_t3sportsbet_models_betgame');
 		$record = array();
 		$record['uid'] = 1;
 		$record['points_accurate'] = $p1;
@@ -136,15 +135,14 @@ class tx_t3sportsbet_tests_sv_betcalculator_testcase extends tx_phpunit_testcase
 		$record['points_tendency'] = $p3;
 		$record['draw_if_extratime'] = $drawIfET;
 		$record['draw_if_penalty'] = $drawIfPenalty;
-		return new $clazzname($record);
+		return tx_rnbase::makeInstance('tx_t3sportsbet_models_betgame', $record);
 	}
 	private function getBet($home, $guest) {
-		$clazzname = tx_div::makeInstanceClassname('tx_t3sportsbet_models_bet');
 		$record = array();
 		$record['uid'] = 1;
 		$record['goals_home'] = $home;
 		$record['goals_guest'] = $guest;
-		return new $clazzname($record);
+		return tx_rnbase::makeInstance('tx_t3sportsbet_models_bet', $record);
 	}
 	private function getMatches() {
 		$data = tx_rnbase_util_Spyc::YAMLLoad($this->getFixturePath('util_Matches.yaml'));
@@ -159,7 +157,7 @@ class tx_t3sportsbet_tests_sv_betcalculator_testcase extends tx_phpunit_testcase
 	}
 	private function makeInstances($yamlData, $clazzName) {
 		// Sicherstellen, daß die Klasse geladen wurde
-		tx_div::load($clazzName);
+		tx_rnbase::load($clazzName);
 		foreach($yamlData As $key => $arr) {
 			if(is_array($arr['record']))
 				$ret[$key] = new $clazzName($arr['record']);

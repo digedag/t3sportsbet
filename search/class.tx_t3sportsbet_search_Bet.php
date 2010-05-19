@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2006 Rene Nitzsche
+ *  (c) 2008-2010 Rene Nitzsche
  *  Contact: rene@system25.de
  *  All rights reserved
  *
@@ -21,9 +21,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
-tx_div::load('tx_rnbase_util_SearchBase');
+tx_rnbase::load('tx_rnbase_util_SearchBase');
 
 
 /**
@@ -65,7 +65,7 @@ class tx_t3sportsbet_search_Bet extends tx_rnbase_util_SearchBase {
 
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/search/class.tx_t3sportsbet_search_Bet.php']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/search/class.tx_t3sportsbet_search_Bet.php']);
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/search/class.tx_t3sportsbet_search_Bet.php']);
 }
 
 ?>
