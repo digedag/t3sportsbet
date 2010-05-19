@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 /**
  * Auswahl des Scopes im FE bereitstellen.
@@ -86,7 +86,7 @@ class tx_t3sportsbet_util_ScopeController {
 		$fields = array();
 		$options = array();
 		$options['distinct'] = 1;
-		tx_div::load('tx_rnbase_util_SearchBase');
+		tx_rnbase::load('tx_rnbase_util_SearchBase');
 		tx_rnbase_util_SearchBase::setConfigFields($fields, $configurations, $confId.'fields.');
 		tx_rnbase_util_SearchBase::setConfigOptions($options, $configurations, $confId.'options.');
 		$srv = tx_t3sportsbet_util_serviceRegistry::getBetService();

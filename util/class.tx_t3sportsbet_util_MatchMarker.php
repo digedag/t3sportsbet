@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2008 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,10 +22,10 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
-tx_div::load('tx_rnbase_util_BaseMarker');
-tx_div::load('tx_cfcleaguefe_util_MatchMarker');
+tx_rnbase::load('tx_rnbase_util_BaseMarker');
+tx_rnbase::load('tx_cfcleaguefe_util_MatchMarker');
 
 /**
  * Diese Klasse ist für die Erstellung von Markerarrays der Tipprunden verantwortlich
@@ -33,10 +33,8 @@ tx_div::load('tx_cfcleaguefe_util_MatchMarker');
 class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker {
 	function tx_t3sportsbet_util_MatchMarker($options = array()) {
 		$this->options = $options;
-		$markerClass = tx_div::makeInstanceClassName('tx_cfcleaguefe_util_MatchMarker');
-    $this->matchMarker = new $markerClass;
-		$markerClass = tx_div::makeInstanceClassName('tx_t3sportsbet_util_BetMarker');
-    $this->betMarker = new $markerClass;
+		$this->matchMarker = tx_rnbase::makeInstance('tx_cfcleaguefe_util_MatchMarker');
+		$this->betMarker = tx_rnbase::makeInstance('tx_t3sportsbet_util_BetMarker');
 	}
 
   /**
@@ -123,7 +121,7 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker {
 			$state = $betset->getMatchState($bet->getMatch());
 			if($state == 'OPEN') {
 				// Prüfen, ob der aktuelle User seinen eigenen Tip bearbeiten will
-				tx_div::load('tx_t3users_models_feuser');
+				tx_rnbase::load('tx_t3users_models_feuser');
 				$currUser = tx_t3users_models_feuser::getCurrent();
 				if(!($currUser && $currUser->uid == $feuser->uid))
 					$state = 'CLOSED';

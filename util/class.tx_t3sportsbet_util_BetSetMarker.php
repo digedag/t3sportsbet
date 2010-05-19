@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2008 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,15 +22,15 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
-tx_div::load('tx_rnbase_util_BaseMarker');
+tx_rnbase::load('tx_rnbase_util_BaseMarker');
 
 /**
  * Diese Klasse ist für die Erstellung von Markerarrays der Tipprunden verantwortlich
  */
 class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker {
-	function tx_t3sportsbet_util_BetSetMarker($options = array()) {
+	function __construct($options = array()) {
 		$this->options = $options;
 	}
 
@@ -56,7 +56,7 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker {
 		$subpartArray = array();
 		$wrappedSubpartArray = array();
 		$this->prepareLinks($betset, $marker, $markerArray, $subpartArray, $wrappedSubpartArray, $confId, $formatter);
-		$template = $formatter->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
+		$template = tx_rnbase_util_BaseMarker::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
 
 		$markerArray = array();
 		$subpartArray = array();
@@ -66,7 +66,7 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker {
 		$params['marker'] = $marker;
 		$params['betset'] = $betset;
 		self::callModules($template, $markerArray, $subpartArray, $wrappedSubpartArray, $params, $formatter);
-		$out = $formatter->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray,$wrappedSubpartArray);
+		$out = tx_rnbase_util_BaseMarker::substituteMarkerArrayCached($template, $markerArray, $subpartArray,$wrappedSubpartArray);
 		
 		return $out;
 	}
@@ -87,14 +87,11 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker {
 		tx_rnbase_util_SearchBase::setConfigFields($fields, $formatter->configurations, $confId.'fields.');
 		tx_rnbase_util_SearchBase::setConfigOptions($options, $formatter->configurations, $confId.'options.');
 		$children = $srv->search($fields, $options);
-
 		$markerParams = $this->options;
 		$markerParams['betset'] = $betset;
 		
-		$builderClass = tx_div::makeInstanceClassName('tx_rnbase_util_ListBuilder');
-		$listBuilder = new $builderClass();
-		$out = $listBuilder->render($children,
-						tx_div::makeInstance('tx_lib_spl_arrayObject'), $template, 'tx_t3sportsbet_util_MatchMarker',
+		$listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
+		$out = $listBuilder->render($children, new ArrayObject(), $template, 'tx_t3sportsbet_util_MatchMarker',
 						$confId, $marker, $formatter, $markerParams);
 		return $out;
 	}
@@ -137,8 +134,7 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker {
 	 * @return tx_rnbase_util_ListMarker
 	 */
 	private function _getListMarker() {
-		$markerClass = tx_div::makeInstanceClassName('tx_rnbase_util_ListMarker');
-		return new $markerClass;
+		return tx_rnbase::makeInstance('tx_rnbase_util_ListMarker');
 	}
 }
 

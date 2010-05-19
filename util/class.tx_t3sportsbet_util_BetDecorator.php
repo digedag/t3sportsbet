@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2008 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 
 /**
@@ -40,19 +40,19 @@ class tx_t3sportsbet_util_BetDecorator {
 		}
 		elseif($colName == 't3matchresult') {
 			if(is_object($value)) {
-				tx_div::load('tx_cfcleaguefe_models_match');
+				tx_rnbase::load('tx_cfcleaguefe_models_match');
 				$match = tx_cfcleaguefe_models_match::getInstance($value->record['t3match']);
 				$ret = $match->getResult();
 			}
 		}
 		elseif($colName == 't3match') {
-			tx_div::load('tx_cfcleaguefe_models_match');
+			tx_rnbase::load('tx_cfcleaguefe_models_match');
 			$match = tx_cfcleaguefe_models_match::getInstance($value);
 			$ret = $match->getHomeNameShort() . ' - ' . $match->getGuestNameShort();
 			$ret .= $this->formTool->createEditLink('tx_cfcleague_games', $match->uid, '');
 		}
 		elseif($colName == 'fe_user') {
-			tx_div::load('tx_t3users_models_feuser');
+			tx_rnbase::load('tx_t3users_models_feuser');
 			$feuser = tx_t3users_models_feuser::getInstance($value);
 			$ret = $feuser->record['username'];
 			$ret .= $this->formTool->createEditLink('fe_users', $feuser->uid, '');

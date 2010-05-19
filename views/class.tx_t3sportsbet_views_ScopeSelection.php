@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,12 +22,12 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 
-tx_div::load('tx_rnbase_view_Base');
-tx_div::load('tx_rnbase_util_BaseMarker');
-tx_div::load('tx_rnbase_util_ListBuilder');
+tx_rnbase::load('tx_rnbase_view_Base');
+tx_rnbase::load('tx_rnbase_util_BaseMarker');
+tx_rnbase::load('tx_rnbase_util_ListBuilder');
 
 
 /**
@@ -55,8 +55,7 @@ class tx_t3sportsbet_views_ScopeSelection extends tx_rnbase_view_Base {
 			// Die Betsets liegen in einem Hash, sie müssen aber in ein einfaches Array
 			$betsets = array_values($betsets);
 		}
-		$builderClass = tx_div::makeInstanceClassName('tx_rnbase_util_ListBuilder');
-		$listBuilder = new $builderClass();
+		$listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
 		$template = $listBuilder->render($betsets,
 				$viewData, $template, 'tx_t3sportsbet_util_BetSetMarker',
 				$confId, $markerName , $formatter, array('currItem' => $currItem));

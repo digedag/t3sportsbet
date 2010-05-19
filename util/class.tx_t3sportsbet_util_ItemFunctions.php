@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2008 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2010 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 /**
  * Diese Klasse ist für die Erstellung von Auswahllisten in TCEforms verantwortlich
@@ -41,7 +41,7 @@ class tx_t3sportsbet_util_ItemFunctions {
 		if(!$betgameUid) return;
 
 		$options['where'] = 'tx_t3sportsbet_betsets.betgame = ' . $betgameUid;
-		tx_div::load('tx_rnbase_util_Misc');
+		tx_rnbase::load('tx_rnbase_util_Misc');
 		tx_rnbase_util_Misc::prepareTSFE();
 		$records = tx_rnbase_util_DB::doSelect('round_name, uid', 'tx_t3sportsbet_betsets', $options, 0);
 		foreach($records As $record) {
