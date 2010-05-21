@@ -64,42 +64,38 @@
 
 		</languageKey>
 		<languageKey index="de" type="array">
-			<label index="tx_t3sportsbet_module.name">T3sports Tipspiel</label>
-			<label index="plugin.t3sportsbet.label">T3sports Tipspiel</label>
-			<label index="plugin.t3sportsbet.description">Ein leistungsfähiges Tipspiel für T3sports</label>
-			<label index="plugin.t3sportsbet.flexform.action.Summary">Status Infos zum Tipspiel</label>
+			<label index="tx_t3sportsbet_module.name">T3sports Tippspiel</label>
+			<label index="plugin.t3sportsbet.label">T3sports Tippspiel</label>
+			<label index="plugin.t3sportsbet.description">Ein leistungsfähiges Tippspiel für T3sports</label>
+			<label index="plugin.t3sportsbet.flexform.action.Summary">Status Infos zum Tippspiel</label>
 			<label index="plugin.t3sportsbet.flexform.action.HighScore">Bestenliste</label>
-			<label index="plugin.t3sportsbet.flexform.action.GameList">Liste von Tipspielen</label>
-			<label index="plugin.t3sportsbet.flexform.action.BetList">Liste von Tip-Runden</label>
+			<label index="plugin.t3sportsbet.flexform.action.GameList">Liste von Tippspielen</label>
+			<label index="plugin.t3sportsbet.flexform.action.BetList">Liste von Tipp-Runden</label>
 			<label index="plugin.t3sportsbet.flexform.action.ScopeSelection">Scope Auswahl</label>
-			<label index="plugin.t3sportsbet.flexform.betgame">Tipspiel</label>
-			<label index="plugin.t3sportsbet.flexform.betset">Tiprunden</label>
+			<label index="plugin.t3sportsbet.flexform.betgame">Tippspiel</label>
+			<label index="plugin.t3sportsbet.flexform.betset">Tipprunden</label>
 			<label index="plugin.t3sportsbet.flexform.betset.all">Alle</label>
 			<label index="plugin.t3sportsbet.flexform.betset.feuserFromRequestAllowed">Nutzer aus Request erlauben</label>
 			<label index="plugin.t3sportsbet.flexform.betsetSelectionInput">Zeige Auswahlbox für Tiprunden</label>
 			<label index="plugin.t3sportsbet.dp.competition">Kompletter Wettbewerb</label>
-			<label index="plugin.t3sportsbet.flexform.betset.default">Default Tiprunde in Selectbox (wenn vorhanden)</label>
+			<label index="plugin.t3sportsbet.flexform.betset.default">Default Tipprunde in Selectbox (wenn vorhanden)</label>
 			<label index="plugin.t3sportsbet.flexform.betset.default.first">Erste</label>
 			<label index="plugin.t3sportsbet.flexform.betset.default.last">Letzte</label>
-			<label index="plugin.t3sportsbet.flexform.highscore.userbet_page">Seite für beendete Tips eines Users</label>
-
-			<label index="tx_t3sportsbet_bets">T3sports Tip</label>
-
-
-			<label index="tx_t3sportsbet_betgames">T3sports Tipspiel</label>
+			<label index="plugin.t3sportsbet.flexform.highscore.userbet_page">Seite für beendete Tipps eines Users</label>
+			<label index="tx_t3sportsbet_bets">T3sports Tipp</label>
+			<label index="tx_t3sportsbet_betgames">T3sports Tippspiel</label>
 			<label index="tx_t3sportsbet_betgames.name">Name</label>
 			<label index="tx_t3sportsbet_betgames.competition">Wettbewerb</label>
 			<label index="tx_t3sportsbet_betgames.dataprovider">Typ</label>
-			<label index="tx_t3sportsbet_betgames.points_accurate">Punkte für korrekten Tip</label>
+			<label index="tx_t3sportsbet_betgames.points_accurate">Punkte für korrekten Tipp</label>
 			<label index="tx_t3sportsbet_betgames.points_goalsdiff">Punkte für richtige Tordifferenz</label>
 			<label index="tx_t3sportsbet_betgames.points_tendency">Punkte für richtige Tendenz</label>
 			<label index="tx_t3sportsbet_betgames.draw_if_extratime">Unentschieden bei Verlängerung</label>
 			<label index="tx_t3sportsbet_betgames.draw_if_penalty">Unentschieden bei Elfmeterschiessen</label>
 			<label index="tx_t3sportsbet_betgames.ignore_greentable">Spiele mit Sportsgerichtsentscheidung ignorieren</label>
-			<label index="tx_t3sportsbet_betgames.lockminutes">Tipsperre vor Anstoss (in Minuten)</label>
-
-			<label index="tx_t3sportsbet_betsets">T3sports Tiprunde</label>
-			<label index="tx_t3sportsbet_betsets.round">Tip-Runde</label>
+			<label index="tx_t3sportsbet_betgames.lockminutes">Tippsperre vor Anstoss (in Minuten)</label>
+			<label index="tx_t3sportsbet_betsets">T3sports Tipprunde</label>
+			<label index="tx_t3sportsbet_betsets.round">Tipp-Runde</label>
 			<label index="tx_t3sportsbet_betsets.round_name">Rundenname</label>
 			<label index="tx_t3sportsbet_betsets.status">Status</label>
 			<label index="tx_t3sportsbet_betsets.status.prepare">Vorbereitung</label>
@@ -109,9 +105,7 @@
 			<label index="tx_t3sportsbet_bets.goals_home">Heimtore</label>
 			<label index="tx_t3sportsbet_bets.goals_guest">Gasttore</label>
 			<label index="tx_t3sportsbet_bets.points">Punkte</label>
-
 			<label index="tx_t3sportsbet_bets.finished">Ausgewertet</label>
-
 		</languageKey>
 	</data>
 </T3locallang>

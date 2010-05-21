@@ -2,6 +2,9 @@ Changelog
 ---------
 
 TODO: Exception im BE bei Spiel ohne zugeordnetem Team!!
+v0.3.3 (??.05.2010)
+ * New german language marker. Thanks to Christian Platt!
+
 v0.3.2 (19.05.2010)
  * Bugfix of point calculator for matches with penalty shooting
  * All references to tx_div removed

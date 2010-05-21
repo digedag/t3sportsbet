@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <T3locallang>
 	<meta type="array">
-		<description>language labels for dsag_misc frontend strings</description>
+		<description>language labels for T3sportsbet frontend strings</description>
 		<type>database</type>
 		<csh_table></csh_table>
-		<fileId>EXT:dsag_misc/locallang.xml</fileId>
+		<fileId>EXT:t3sportsbet/locallang.xml</fileId>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
@@ -35,14 +35,14 @@
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="error">Fehler</label>
-			<label index="error_nobetgame_defined">Es wurde kein Tipspiel im Flexform oder Typoscript angegeben!</label>
-			<label index="error_nobetsets_defined">Es wurden keine Tiprunden für das Tipspiel gefunden!</label>
-			<label index="label_savebets">Tips speichern</label>
+			<label index="error_nobetgame_defined">Es wurde kein Tippspiel im Flexform oder Typoscript angegeben!</label>
+			<label index="error_nobetsets_defined">Es wurden keine Tipprunden für das Tipspiel gefunden!</label>
+			<label index="label_savebets">Tipps speichern</label>
 			<label index="msg_no_betsets_found">In dieser Ansicht wurden keine zu tippenden Spiele gefunden!</label>
 			<label index="label_rank">Position</label>
 			<label index="label_points">Punkte</label>
 			<label index="label_avgpoints">&amp;Oslash;</label>
-			<label index="label_betcount">Tips</label>
+			<label index="label_betcount">Tipps</label>
 			<label index="label_page">Seite</label>
 			<label index="label_name">Name</label>
 			<label index="label_city">Wohnort</label>
@@ -51,11 +51,11 @@
 			<label index="label_guest">Gast</label>
 			<label index="label_agegroup">Altersklasse</label>
 			<label index="label_score">Resultat</label>
-			<label index="label_bet">Tip</label>
-			<label index="label_login">Bitte melden Sie sich an, um einen Tip abzugeben!</label>
+			<label index="label_bet">Tipp</label>
+			<label index="label_login">Bitte melden Sie sich an, um einen Tipp abzugeben!</label>
 			<label index="label_trend">Toto-Trend</label>
 			<label index="label_stats">Statistik</label>
-			<label index="label_betlistof">Die Tips von:</label>
+			<label index="label_betlistof">Die Tipps von:</label>
 			<label index="label_tobescored">Auswertung folgt</label>
 			<label index="msg_no_betsets_found">In dieser Ansicht wurden leider keine Spiele gefunden!</label>
 
