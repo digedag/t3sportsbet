@@ -47,6 +47,7 @@
 			<label index="tx_t3sportsbet_betgames.draw_if_penalty">Draw if extra penalty</label>
 			<label index="tx_t3sportsbet_betgames.ignore_greentable">Ignore matches judged by court</label>
 			<label index="tx_t3sportsbet_betgames.lockminutes">Lock bets before kick off (minutes)</label>
+			<label index="tx_t3sportsbet_betgames_comment">Comment</label>
 
 			<label index="tx_t3sportsbet_betsets">T3sports bet set</label>
 			<label index="tx_t3sportsbet_betsets.round">Bet round</label>
@@ -59,6 +60,10 @@
 			<label index="tx_t3sportsbet_bets.goals_home">Goals home</label>
 			<label index="tx_t3sportsbet_bets.goals_guest">Goals guest</label>
 			<label index="tx_t3sportsbet_bets.points">Points</label>
+
+			<label index="tx_t3sportsbet_teamquestions">T3sports team question</label>
+			<label index="tx_t3sportsbet_teamquestions_question">Question</label>
+			<label index="tx_t3sportsbet_teambets">T3sports team bet</label>
 
 			<label index="tx_t3sportsbet_bets.finished">Finished</label>
 

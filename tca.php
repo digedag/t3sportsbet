@@ -140,6 +140,16 @@ $TCA['tx_t3sportsbet_betgames'] = Array (
 				'default' => 30
 			)
 		),
+		'comment' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betgames_comment',
+			'config' => Array (
+				'type' => 'text',
+				'cols' => '30',	
+				'rows' => '5',
+				'eval' => 'trim',
+			)
+		),
 //		'ignore_greentable' => Array (
 //			'exclude' => 0,
 //			'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betgames.ignore_greentable',
@@ -150,7 +160,7 @@ $TCA['tx_t3sportsbet_betgames'] = Array (
 //		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, dataprovider, competition, points_accurate, points_goalsdiff, points_tendency, draw_if_extratime, draw_if_penalty, lockminutes')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, dataprovider, competition, points_accurate, points_goalsdiff, points_tendency, draw_if_extratime, draw_if_penalty, lockminutes, comment')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => 'starttime, fe_group')
@@ -243,9 +253,19 @@ $TCA['tx_t3sportsbet_betsets'] = Array (
 				),
 			)
 		),
+		'comment' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betgames_comment',
+			'config' => Array (
+				'type' => 'text',
+				'cols' => '30',	
+				'rows' => '5',
+				'eval' => 'trim',
+			)
+		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, betgame, round, round_name, status, t3matches')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, betgame, round, round_name, status, comment, t3matches')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => '')

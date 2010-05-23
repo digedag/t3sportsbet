@@ -66,6 +66,43 @@ $TCA['tx_t3sportsbet_bets'] = Array (
 	)
 );
 
+$TCA['tx_t3sportsbet_teamquestions'] = Array (
+	'ctrl' => Array (
+		'title' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_teamquestions',
+		'label' => 'question',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'sortby' => 'sorting',
+		'delete' => 'deleted',
+		'enablecolumns' => Array (
+		),
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca_teamquest.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_table.gif',
+	),
+	'feInterface' => Array (
+		'fe_admin_fieldList' => '',
+	)
+);
+
+$TCA['tx_t3sportsbet_teambets'] = Array (
+	'ctrl' => Array (
+		'title' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_teambets',
+		'label' => 'question',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'sortby' => 'sorting',
+		'delete' => 'deleted',
+		'enablecolumns' => Array (
+		),
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca_teamquest.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_table.gif',
+	),
+	'feInterface' => Array (
+		'fe_admin_fieldList' => '',
+	)
+);
 
 ////////////////////////////////
 // Plugin anmelden
