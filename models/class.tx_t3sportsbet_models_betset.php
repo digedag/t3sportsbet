@@ -26,6 +26,7 @@
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 tx_rnbase::load('tx_rnbase_model_base');
+tx_rnbase::load('tx_t3sportsbet_models_betgame');
 
 
 /**

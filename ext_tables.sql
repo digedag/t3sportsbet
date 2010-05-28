@@ -96,6 +96,7 @@ CREATE TABLE tx_t3sportsbet_teamquestions (
 	pid int(11) DEFAULT '0' NOT NULL,
 	tstamp int(11) DEFAULT '0' NOT NULL,
 	crdate int(11) DEFAULT '0' NOT NULL,
+	cruser_id int(11) DEFAULT '0' NOT NULL,
 	deleted tinyint(4) DEFAULT '0' NOT NULL,
 	hidden tinyint(4) DEFAULT '0' NOT NULL,
 
@@ -103,6 +104,7 @@ CREATE TABLE tx_t3sportsbet_teamquestions (
 	question text NOT NULL,
 	points tinyint(11) DEFAULT '0' NOT NULL,
 	openuntil datetime DEFAULT '0000-00-00 00:00:00'
+	teams int(11) DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),

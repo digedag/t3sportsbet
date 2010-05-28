@@ -34,7 +34,7 @@ class tx_t3sportsbet_util_ItemFunctions {
 	 *
 	 * @param array $config
 	 */
-	function getBetSet4BetGame($config) {
+	public function getBetSet4BetGame($config) {
 		if(!$config['row']['pi_flexform']) return;
 		$flex = t3lib_div::xml2array($config['row']['pi_flexform']);
 		$betgameUid = $flex['data']['sDEF']['lDEF']['scope.betgame']['vDEF'];
@@ -47,6 +47,36 @@ class tx_t3sportsbet_util_ItemFunctions {
 		foreach($records As $record) {
 			$config['items'][] = array_values($record);
 		}
+	}
+
+	/**
+	 * Used in TCA. Return all teams of a betsets betgame.
+	 * @param array $PA
+	 * @param t3lib_TCEforms $fobj
+	 */
+	public function getTeams4Betset($PA, $fobj) {
+		if($PA['row']['betset']) {
+			$betset = $this->loadBetset($PA['row']['betset']);
+			if(!$betset) return;
+			$betgame = $betset->getBetgame();
+			$srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
+			$teams = $srv->getTeams4Betgame($betgame);
+			
+    	foreach ($teams As $team) {
+    		$PA['items'][] = array($team->getName(), $team->getUid());
+    	}
+    }
+	}
+	/**
+	 * Load a betset from database
+	 * @param int $uid
+	 * @return tx_t3sportsbet_models_betset
+	 */
+	private function loadBetset($fieldString) {
+		$arr = t3lib_div::trimExplode('|', $fieldString);
+		$arr = t3lib_div::trimExplode('_',$arr[0]);
+		$uid = intval($arr[count($arr)-1]); 
+		return $uid ? tx_rnbase::makeInstance('tx_t3sportsbet_models_betset', $uid) : false;
 	}
 }
 

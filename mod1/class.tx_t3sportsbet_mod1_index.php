@@ -114,7 +114,8 @@ Vorgehen
 		$menu = $this->formTool->showTabMenu($this->id, 'bettools', $this->MCONF['name'],
 				array('0' => $LANG->getLL('tab_control'), 
 							'1' => $LANG->getLL('tab_addmatches'),
-							'2' => $LANG->getLL('tab_bets')));
+							'2' => $LANG->getLL('tab_addteambets'),
+							'3' => $LANG->getLL('tab_bets')));
 		$content .= $menu['menu'];
 		$content .= $this->formTool->form->printNeededJSFunctions_top();
 		$content .= '<div style="display: block; border: 1px solid #a2aab8; clear:both;"></div>';
@@ -131,10 +132,14 @@ Vorgehen
 					$content .= $this->showBetSet($currentRound);
 					break;
 				case 1:
-					$addMatches = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_addMatches', $this);
-					$content .= $addMatches->handleRequest($currentRound);
+					$handler = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_addMatches', $this);
+					$content .= $handler->handleRequest($currentRound);
 					break;
 				case 2:
+					$handler = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_addTeamBets', $this);
+					$content .= $handler->showScreen($currentRound);
+					break;
+				case 3:
 					$content .= $this->showBets($currentRound);
 					break;
 			}

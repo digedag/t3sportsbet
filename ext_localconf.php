@@ -9,6 +9,8 @@ $GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['search_Match_getJoins_
 $GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['t3users']['search_feuser_getTableMapping_hook'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_searchFeuser.php:&tx_t3sportsbet_hooks_searchFeuser->getTableMapping';
 $GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['t3users']['search_feuser_getJoins_hook'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_searchFeuser.php:&tx_t3sportsbet_hooks_searchFeuser->getJoins';
 
+
+$GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_tce.php:tx_t3sportsbet_hooks_tce';
 $GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms.php']['getMainFieldsClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_tce.php:tx_t3sportsbet_hooks_tce';
 
 t3lib_extMgm::addService($_EXTKEY,  't3sportsbet' /* sv type */,  'tx_t3sportsbet_services_bet' /* sv key */,

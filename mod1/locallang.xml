@@ -48,6 +48,8 @@
 			<label index="label_editbetgame">Edit betgame</label>
 			<label index="label_roundnamedefault">. round</label>
 
+			<label index="label_btn_newteambet">Create new teambet</label>
+
 			<label index="label_join_competition">Create betgame from competition</label>
 			<label index="msg_add_competition">At this point you can add a complete competition to this betgame.
 			There will be a new betset created for each round. Alternatively you can create individual betsets 
@@ -59,6 +61,7 @@
 
 			<label index="tab_control">Overview</label>
 			<label index="tab_addmatches">Add matches</label>
+			<label index="tab_addteambets">Manage teambets</label>
 			<label index="tab_bets">Show bets</label>
 
 
@@ -133,6 +136,7 @@
 
 			<label index="tab_control">Überblick</label>
 			<label index="tab_addmatches">Spiele hinzufügen</label>
+			<label index="tab_addteambets">Team Tipps</label>
 			<label index="tab_bets">Tips anzeigen</label>
 
 			<label index="msg_no_competition_in_betgame">Dem Tipspiel sind keine Wettbewerbe zugeordnet. Um diese Funktion zu aktivieren, muss dem Tipspiel mindestens ein Wettbewerb zugeordnet sein.</label>

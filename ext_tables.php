@@ -73,7 +73,7 @@ $TCA['tx_t3sportsbet_teamquestions'] = Array (
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
-		'sortby' => 'sorting',
+		'sortby' => 'tstamp',
 		'delete' => 'deleted',
 		'enablecolumns' => Array (
 		),
