@@ -51,7 +51,9 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker {
 		// Die Spiele einbinden.
 		if($this->containsMarker($template, $marker.'_MATCHS'))
 			$template = $this->_addMatches($template, $betset, $formatter, $confId.'match.', $marker.'_MATCH');
-		
+		if($this->containsMarker($template, $marker.'_TEAMBETS'))
+			$template = $this->_addTeamBets($template, $betset, $formatter, $confId.'teambet.', $marker.'_TEAMBET');
+
 		$markerArray = $formatter->getItemMarkerArrayWrapped($betset->record, $confId , 0, $marker.'_',$betset->getColumnNames());
 		$subpartArray = array();
 		$wrappedSubpartArray = array();
@@ -80,6 +82,29 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker {
 	 * @param string $marker
 	 * @return string
 	 */
+	private function _addTeamBets($template, &$betset, &$formatter, $confId, $marker) {
+		$srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
+		$fields['TEAMQUESTION.BETSET'][OP_EQ_INT] = $betset->getUid();
+		$options = array();
+		tx_rnbase_util_SearchBase::setConfigFields($fields, $formatter->configurations, $confId.'fields.');
+		tx_rnbase_util_SearchBase::setConfigOptions($options, $formatter->configurations, $confId.'options.');
+		$children = $srv->searchTeamQuestion($fields, $options);
+		$listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
+		$out = $listBuilder->render($children, false, $template, 'tx_t3sportsbet_util_TeamQuestionMarker',
+						$confId, $marker, $formatter, $markerParams);
+		return $out;
+
+	}
+	/**
+	 * Add matches of betset
+	 *
+	 * @param tx_t3sportsbet_models_betset $betset
+	 * @param string $template
+	 * @param tx_rnbase_util_FormatUtil $formatter
+	 * @param string $confId
+	 * @param string $marker
+	 * @return string
+	 */
 	private function _addMatches($template, &$betset, &$formatter, $confId, $marker) {
 		$srv = tx_cfcleaguefe_util_ServiceRegistry::getMatchService();
 		$fields['BETSETMM.UID_LOCAL'][OP_EQ_INT] = $betset->getUid();
@@ -91,7 +116,7 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker {
 		$markerParams['betset'] = $betset;
 		
 		$listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
-		$out = $listBuilder->render($children, new ArrayObject(), $template, 'tx_t3sportsbet_util_MatchMarker',
+		$out = $listBuilder->render($children, false, $template, 'tx_t3sportsbet_util_MatchMarker',
 						$confId, $marker, $formatter, $markerParams);
 		return $out;
 	}

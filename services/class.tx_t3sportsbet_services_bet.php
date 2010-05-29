@@ -291,7 +291,7 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 			1 => $userIdx,
 		);
 	}
-  function searchBet($fields, $options) {
+	function searchBet($fields, $options) {
   	tx_rnbase::load('tx_rnbase_util_SearchBase');
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_t3sportsbet_search_Bet');
 		return $searcher->search($fields, $options);
@@ -394,22 +394,6 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 			tx_rnbase_util_DB::doInsert('tx_t3sportsbet_bets', $values, 0);
 		}
 		return 1;
-	}
-
-	/**
-	 * Load all teams for a given betgame
-	 * @param tx_t3sportsbet_models_betgame $betgame
-	 */
-	public function getTeams4Betgame($betgame) {
-		//$betgame->getCompetitions();
-		// Search for teams
-		$fields = array();
-		$fields['COMPETITION.UID'][OP_IN_INT] = $betgame->record['competition'];
-		$options = array();
-		$options['distinct'] = 1;
-		$options['orderby']['TEAM.NAME'] = 'asc';
-		$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
-		return $srv->searchTeams($fields, $options);
 	}
 }
 

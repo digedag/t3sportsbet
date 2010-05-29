@@ -23,6 +23,16 @@ t3lib_extMgm::addService($_EXTKEY,  't3sportsbet' /* sv type */,  'tx_t3sportsbe
   )
 );
 
+t3lib_extMgm::addService($_EXTKEY,  't3sportsbet' /* sv type */,  'tx_t3sportsbet_services_teambet' /* sv key */,
+  array(
+    'title' => 'Teambets', 'description' => 'Working with team bets', 'subtype' => 'teambet',
+    'available' => TRUE, 'priority' => 50, 'quality' => 50,
+    'os' => '', 'exec' => '',
+    'classFile' => t3lib_extMgm::extPath($_EXTKEY).'services/class.tx_t3sportsbet_services_teambet.php',
+    'className' => 'tx_t3sportsbet_services_teambet',
+  )
+);
+
 t3lib_extMgm::addService($_EXTKEY,  't3sportsbet' /* sv type */,  'tx_t3sportsbet_services_betcalculator' /* sv key */,
   array(
     'title' => 'Bet calculator', 'description' => 'Calculate points for a bet', 'subtype' => 'calculator',

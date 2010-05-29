@@ -42,10 +42,17 @@ class tx_t3sportsbet_util_serviceRegistry {
 	}
 
 	/**
+	 * Returns the teambet service
+	 * @return tx_t3sportsbet_services_teambet
+	 */
+	public static function getTeamBetService() {
+		return self::getService('t3sportsbet', 'teambet');
+	}
+	/**
 	 * Returns the bet service
 	 * @return tx_t3sportsbet_services_bet
 	 */
-	static function getBetService() {
+	public static function getBetService() {
 		return self::getService('t3sportsbet', 'bet');
 	}
 	/**

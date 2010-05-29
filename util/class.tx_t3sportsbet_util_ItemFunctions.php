@@ -59,7 +59,7 @@ class tx_t3sportsbet_util_ItemFunctions {
 			$betset = $this->loadBetset($PA['row']['betset']);
 			if(!$betset) return;
 			$betgame = $betset->getBetgame();
-			$srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
+			$srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
 			$teams = $srv->getTeams4Betgame($betgame);
 			
     	foreach ($teams As $team) {
