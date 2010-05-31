@@ -355,6 +355,15 @@ Vorgehen
 		);
 		return $layout;
   }
+  /**
+   * @return tx_rnbase_util_FormTool
+   */
+  public function getFormTool() {
+  	return $this->formTool;
+  }
+  public function getName() {
+  	return $this->MCONF['name'];
+  }
 }
 
 class tx_t3sportsbet_mod1_MatchEditLink implements tx_cfcleague_mod1_Linker {

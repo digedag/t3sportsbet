@@ -27,6 +27,7 @@
 			<label index="label_feuser">User</label>
 			<label index="label_bet">Bet</label>
 			<label index="label_points">Points</label>
+			<label index="label_openuntil">Open until</label>
 			<label index="label_betsetinfo">Information about current betset</label>
 			<label index="label_betsetinfo_highdate">Last kickoff date</label>
 			<label index="label_betsetinfo_lowdate">First kickoff date</label>
@@ -64,6 +65,7 @@
 			<label index="tab_addteambets">Manage teambets</label>
 			<label index="tab_bets">Show bets</label>
 
+			<label index="label_question">Question</label>
 
 			<label index="msg_no_competition_in_betgame">No competition in betgame found. You have to add one or more competitions in your betgame to enable this function.</label>
 			<label index="msg_no_matches_in_betset">No matches in betset found.</label>
@@ -106,6 +108,7 @@
 			<label index="label_feuser">FE-User</label>
 			<label index="label_bet">Tip</label>
 			<label index="label_points">Punkte</label>
+			<label index="label_openuntil">Offen bis</label>
 			<label index="label_betsetinfo">Informationen über die aktuelle Tiprunde</label>
 			<label index="label_betsetinfo_highdate">Letztes Spiel</label>
 			<label index="label_betsetinfo_lowdate">Erstes Spiel</label>
@@ -138,6 +141,8 @@
 			<label index="tab_addmatches">Spiele hinzufügen</label>
 			<label index="tab_addteambets">Team Tipps</label>
 			<label index="tab_bets">Tips anzeigen</label>
+
+			<label index="label_question">Frage</label>
 
 			<label index="msg_no_competition_in_betgame">Dem Tipspiel sind keine Wettbewerbe zugeordnet. Um diese Funktion zu aktivieren, muss dem Tipspiel mindestens ein Wettbewerb zugeordnet sein.</label>
 			<label index="msg_no_matches_in_betset">Der Tiprunde sind noch keine Spiele zugeordnet.</label>

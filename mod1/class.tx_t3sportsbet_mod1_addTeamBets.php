@@ -40,10 +40,15 @@ class tx_t3sportsbet_mod1_addTeamBets {
 	 * @return string
 	 */
 	public function showScreen($currBetSet) {
-		$out = 'Test <br/>';
 		$options['title'] = $GLOBALS['LANG']->getLL('label_btn_newteambet');
 		$options['params'] = '&defVals[tx_t3sportsbet_teamquestions][betset]=tx_t3sportsbet_betsets_'.$currBetSet->getUid();
+		$lister = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_lister_TeamQuestion', $this->mod, $options);
+		$lister->setBetSetUid($currBetSet->getUid());
+
+		$list = $lister->getResultList();
+		$out .= $list['pager']."\n".$list['table'];
 		$out .= $this->getFormTool()->createNewButton('tx_t3sportsbet_teamquestions', $currBetSet->record['pid'], $options);
+
 		return $out;
 	}
 
