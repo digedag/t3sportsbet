@@ -2,8 +2,12 @@
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 // Hook for match search
-$GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['search_Match_getTableMapping_hook'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_searchMatch.php:&tx_t3sportsbet_hooks_searchMatch->getTableMapping';
-$GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['search_Match_getJoins_hook'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_searchMatch.php:&tx_t3sportsbet_hooks_searchMatch->getJoins';
+$GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['search_Match_getTableMapping_hook'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_Search.php:&tx_t3sportsbet_hooks_Search->getTableMappingMatch';
+$GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['search_Match_getJoins_hook'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_Search.php:&tx_t3sportsbet_hooks_Search->getJoinsMatch';
+
+// Hook for team search
+$GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['search_Team_getTableMapping_hook'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_Search.php:&tx_t3sportsbet_hooks_Search->getTableMappingTeam';
+$GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['search_Team_getJoins_hook'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_Search.php:&tx_t3sportsbet_hooks_Search->getJoinsTeam';
 
 // Hook for feuser search
 $GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['t3users']['search_feuser_getTableMapping_hook'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_searchFeuser.php:&tx_t3sportsbet_hooks_searchFeuser->getTableMapping';

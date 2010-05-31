@@ -29,14 +29,23 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
  * 
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_hooks_searchMatch {
+class tx_t3sportsbet_hooks_Search {
 
-	function getTableMapping($params, $parent) {
+	function getTableMappingMatch($params, $parent) {
 		$params['tableMapping']['BETSETMM'] = 'tx_t3sportsbet_betsets_mm';
 	}
-	function getJoins($params, $parent) {
+	function getJoinsMatch($params, $parent) {
 		if(isset($params['tableAliases']['BETSETMM'])) {
 			$params['join'] .= ' INNER JOIN tx_t3sportsbet_betsets_mm ON tx_cfcleague_games.uid = tx_t3sportsbet_betsets_mm.uid_foreign ';
+		}
+	}
+
+	function getTableMappingTeam($params, $parent) {
+		$params['tableMapping']['TEAMQUESTIONMM'] = 'tx_t3sportsbet_teamquestions_mm';
+	}
+	function getJoinsTeam($params, $parent) {
+		if(isset($params['tableAliases']['TEAMQUESTIONMM'])) {
+			$params['join'] .= ' INNER JOIN tx_t3sportsbet_teamquestions_mm AS TEAMQUESTIONMM ON TEAM.uid = TEAMQUESTIONMM.uid_foreign ';
 		}
 	}
 }
