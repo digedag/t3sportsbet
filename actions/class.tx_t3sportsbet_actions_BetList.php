@@ -90,6 +90,12 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC {
 			$betset = tx_t3sportsbet_models_betset::getInstance($betsetUid);
 			if(!$betset->isValid() || $betset->isFinished()) continue;
 			foreach($matchArr As $matchUid => $betArr) {
+
+				if($matchUid == 'teambet') {
+					$saveCnt += $this->saveTeamBet($betArr, $feuser);
+					continue;
+				}
+				
 				$match = tx_cfcleaguefe_models_match::getInstance($matchUid);
 				list($betUid, $betData) = each($betArr);
 				$saveCnt += $srv->saveOrUpdateBet($betset, $match, $feuser, $betUid, $betData);
@@ -97,6 +103,16 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC {
 		}
 		// Vermerken, wieviele Spiele gespeichert wurden.
 		$viewData->offsetSet('saved', $saveCnt);
+	}
+	private function saveTeamBet($betArr, $feuser) {
+		list($betQuestionUid, $betData) = each($betArr);
+		$betQuestion = tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', intval($betQuestionUid));
+		if(!$betQuestion->isValid()) return 0;
+
+		list($betUid, $team) = each($betData);
+
+		$srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
+		return $srv->saveOrUpdateBet($betQuestion, $feuser, $betUid, $team);
 	}
   function getTemplateName() { return 'betlist';}
 	function getViewClassName() { return 'tx_t3sportsbet_views_BetList';}

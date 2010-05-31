@@ -31,6 +31,7 @@ tx_rnbase::load('tx_rnbase_util_Templates');
  * Handle team questions
  */
 class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
+	static $simpleMarker = null;
 	function __construct($options = array()) {
 		$this->options = $options;
 	}
@@ -46,17 +47,36 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
 	public function parseTemplate($template, $item, $formatter, $confId, $marker = 'TEAMBET') {
 		if(!is_object($item)) {
 			// Ist kein Verein vorhanden wird ein leeres Objekt verwendet.
-			$bet = self::getEmptyInstance('tx_t3sportsbet_models_teamquestion');
+			$item = self::getEmptyInstance('tx_t3sportsbet_models_teamquestion');
 		}
+		$feuser = $this->options['feuser'];
+
 		$this->prepare($item, $template, $marker);
 		// Es wird das MarkerArray mit den Daten des Tips gefüllt.
-		$markerArray = $formatter->getItemMarkerArrayWrapped($item->record, $confId , 0, $marker.'_',$item->getColumnNames());
+		$ignore = self::findUnusedCols($item->record, $template, $marker);
+		$markerArray = $formatter->getItemMarkerArrayWrapped($item->record, $confId , $ignore, $marker.'_',$item->getColumnNames());
 
-		$template = $this->addTeamPart($template, $item, $formatter, $confId.'match.', $marker.'_MATCH');
+		$template = $this->handleStatePart($template, $item, $feuser, $formatter);
 
+		if($this->containsMarker($template, $marker.'_TEAMS'))
+			$template = $this->addTeams($template, $item, $formatter, $confId.'team.', $marker.'_TEAM');
+
+		$srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
+		$bet = $srv->getTeamBet($item, $feuser);
+		$template = self::getSimpleMarker()->parseTemplate($template, $bet, $formatter, $confId.'bet.', $marker.'_BET');
+		
 		$out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
 		return $out;
 	}
+	/**
+	 * @return tx_rnbase_util_SimpleMarker
+	 */
+	private static function getSimpleMarker() {
+		if(!self::$simpleMarker)
+			self::$simpleMarker = tx_rnbase::makeInstance('tx_rnbase_util_SimpleMarker');
+		return self::$simpleMarker;
+	}
+
 	/**
 	 * Add team selection
 	 *
@@ -67,8 +87,43 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
 	 * @param string $marker
 	 * @return string
 	 */
-	private function addTeamPart($template, $teamQuestion, $formatter, $confId, $marker) {
+	private function handleStatePart($template, $teamQuestion, $feuser, $formatter) {
 		// 
+		$subpartArray['###BETSTATUS_OPEN###'] = '';
+		$subpartArray['###BETSTATUS_CLOSED###'] = '';
+		$subpartArray['###BETSTATUS_FINISHED###'] = '';
+		$srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
+		$state = $srv->getTeamQuestionStatus($teamQuestion, $feuser);
+
+		$subTemplate = tx_rnbase_util_Templates::getSubpart($template,'###BETSTATUS_'.$state.'###');
+		$subpartArray['###BETSTATUS_'.$state.'###'] = $subTemplate;
+    $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray); //, $wrappedSubpartArray);
+		return $out;
+	}
+	/**
+	 * Hinzufügen der Teams.
+	 * @param string $template HTML-Template
+	 * @param tx_t3sportsbet_models_teamquestion $item
+	 * @param tx_rnbase_util_FormatUtil $formatter
+	 * @param string $confId Config-String
+	 * @param string $markerPrefix
+	 */
+	private function addTeams($template, $item, $formatter, $confId, $markerPrefix) {
+		$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+		$fields = array();
+		$fields['TEAMQUESTIONMM.UID_LOCAL'][OP_EQ_INT] = $item->getUid();
+		$fields['TEAMQUESTIONMM.TABLENAMES'][OP_EQ] = 'tx_cfcleague_teams';
+
+		$options = array();
+		tx_rnbase_util_SearchBase::setConfigFields($fields, $formatter->configurations, $confId.'fields.');
+		tx_rnbase_util_SearchBase::setConfigOptions($options, $formatter->configurations, $confId.'options.');
+		$children = $srv->searchTeams($fields, $options);
+
+		$listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
+		$out = $listBuilder->render($children,
+						false, $template, 'tx_cfcleaguefe_util_TeamMarker',
+						$confId, $markerPrefix, $formatter, $options);
+		return $out;
 	}
 	/**
 	 * 

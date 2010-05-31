@@ -103,13 +103,15 @@ class tx_t3sportsbet_views_BetList extends tx_rnbase_view_Base {
 		return $out;
 	}
 
-	function createPageUri(&$configurations, $params = array(), $nocache = true) {
+	/**
+	 * 
+	 * @param tx_rnbase_configurations $configurations
+	 */
+	function createPageUri($configurations, $params = array()) {
 		$link = $configurations->createLink();
-		$link->destination($targetPid ? $targetPid : $GLOBALS['TSFE']->id);
-		if(count($params))
-			$link->parameters($params);
-		if($nocache)
-			$link->nocache();
+		$link->initByTS($configurations, $this->getController()->getConfId().'formUrl.', $params);
+		if($configurations->get($this->getController()->getConfId().'formUrl.noCache'))
+			$link->noCache();
 		return $link->makeUrl(false);
 	}
 

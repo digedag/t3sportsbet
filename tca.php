@@ -253,6 +253,23 @@ $TCA['tx_t3sportsbet_betsets'] = Array (
 				),
 			)
 		),
+		'teamquestions' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_teamquestions',
+			'config' => Array (
+				'type' => 'inline',
+				'foreign_table' => 'tx_t3sportsbet_teamquestions',
+				'foreign_field' => 'betset',
+				'foreign_sortby' => 'sorting',
+				'foreign_label' => 'question',
+				'minitems' => 0,
+				'maxitems' => 20,
+				'appearance' => Array(
+					'collapseAll' => '1',
+					'expandSingle' => '1',
+				),
+			)
+		),
 		'comment' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betgames_comment',
@@ -265,7 +282,7 @@ $TCA['tx_t3sportsbet_betsets'] = Array (
 		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, betgame, round, round_name, status, comment, t3matches')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, betgame, round, round_name, status, comment, t3matches, teamquestions')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => '')

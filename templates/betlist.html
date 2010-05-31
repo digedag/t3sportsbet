@@ -33,13 +33,33 @@ you will have several pages with bet list. Each will be created with a special h
 ###BETSETS###
 <div class="t3sbet">
 <form action="###ACTION_URI###" method="POST">
-
 ###BETSET###
 <h2>###BETSET_ROUND_NAME###</h2>
 
 ###BETSET_TEAMBETS###
+Zusatz-Tipp:<br />
 ###BETSET_TEAMBET###
-###BETSET_TEAMBET_QUESTION###
+Frage: ###BETSET_TEAMBET_QUESTION###<br />
+<!-- ###BETSTATUS_CLOSED### -->
+Tippabgabe derzeit nicht möglich
+<!-- ###BETSTATUS_CLOSED### -->
+
+<!-- ###BETSTATUS_OPEN### -->
+###BETSET_TEAMBET_TEAMS###
+<select name="betset[###BETSET_UID###][teambet][###BETSET_TEAMBET_UID###][###BETSET_TEAMBET_BET_UID###]">
+###BETSET_TEAMBET_TEAM###
+<option value="###BETSET_TEAMBET_TEAM_UID###">###BETSET_TEAMBET_TEAM_NAME###</option>
+###BETSET_TEAMBET_TEAM###
+</select>
+###BETSET_TEAMBET_TEAMS###
+Tippabgabe derzeit möglich
+<!-- ###BETSTATUS_OPEN### -->
+
+<!-- ###BETSTATUS_FINISHED### -->
+Tippabgabe nicht mehr möglich
+<!-- ###BETSTATUS_FINISHED### -->
+
+
 ###BETSET_TEAMBET###
 ###BETSET_TEAMBETS###
 

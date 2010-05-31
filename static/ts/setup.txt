@@ -43,6 +43,10 @@ plugin.tx_t3sportsbet_main {
     }
   }
   betlist {
+    formUrl {
+      absurl = 1
+#      noCache = 1
+    }
     betset {
       match =< lib.t3sports.match
       match {

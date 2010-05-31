@@ -121,7 +121,7 @@ $TCA['tx_t3sportsbet_teambets'] = Array (
 				'maxitems' => 1,
 			)
 		),
-		'fe_user' => Array (
+		'feuser' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cms/locallang_tca.php:fe_users',
 			'config' => Array (
@@ -186,7 +186,7 @@ $TCA['tx_t3sportsbet_teambets'] = Array (
 		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'question,fe_user,team,finished,possiblepoints,points')
+		'0' => Array('showitem' => 'question,feuser,team,finished,possiblepoints,points')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => '')

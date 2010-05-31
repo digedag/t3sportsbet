@@ -47,6 +47,7 @@ CREATE TABLE tx_t3sportsbet_betsets (
 	betgame int(11) DEFAULT '0' NOT NULL,
 	status tinyint(4) DEFAULT '0' NOT NULL,
 	t3matches int(11) DEFAULT '0' NOT NULL,
+	teamquestions int(11) DEFAULT '0' NOT NULL,
 	comment text NOT NULL,
 
 	PRIMARY KEY (uid),
@@ -95,6 +96,7 @@ CREATE TABLE tx_t3sportsbet_teamquestions (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 	tstamp int(11) DEFAULT '0' NOT NULL,
+	sorting int(10) DEFAULT '0' NOT NULL,
 	crdate int(11) DEFAULT '0' NOT NULL,
 	cruser_id int(11) DEFAULT '0' NOT NULL,
 	deleted tinyint(4) DEFAULT '0' NOT NULL,
@@ -134,7 +136,7 @@ CREATE TABLE tx_t3sportsbet_teambets (
 	deleted tinyint(4) DEFAULT '0' NOT NULL,
 
 	question int(11) DEFAULT '0' NOT NULL,
-	fe_user int(11) DEFAULT '0' NOT NULL,
+	feuser int(11) DEFAULT '0' NOT NULL,
 	team int(11) DEFAULT '0' NOT NULL,
 	possiblepoints tinyint(11) DEFAULT '0' NOT NULL,
 	points tinyint(11) DEFAULT '0' NOT NULL,

@@ -89,6 +89,7 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker {
 		tx_rnbase_util_SearchBase::setConfigFields($fields, $formatter->configurations, $confId.'fields.');
 		tx_rnbase_util_SearchBase::setConfigOptions($options, $formatter->configurations, $confId.'options.');
 		$children = $srv->searchTeamQuestion($fields, $options);
+		$markerParams = $this->options;
 		$listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
 		$out = $listBuilder->render($children, false, $template, 'tx_t3sportsbet_util_TeamQuestionMarker',
 						$confId, $marker, $formatter, $markerParams);

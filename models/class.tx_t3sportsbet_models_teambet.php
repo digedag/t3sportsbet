@@ -26,45 +26,50 @@
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 tx_rnbase::load('tx_rnbase_model_base');
-tx_rnbase::load('tx_rnbase_util_Dates');
-
 
 
 /**
- * Model for a team question.
+ * Model for a bet.
  */
-class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base {
-	function getTableName(){return 'tx_t3sportsbet_teamquestions';}
-
+class tx_t3sportsbet_models_teambet extends tx_rnbase_model_base {
+	function getTableName(){return 'tx_t3sportsbet_teambets';}
+	
 	/**
 	 * Returns the betgame
 	 *
-	 * @return tx_t3sportsbet_models_betset
+	 * @return tx_t3sportsbet_models_teamquestion
 	 */
-	public function getBetSet() {
-		return tx_t3sportsbet_models_betset::getInstance($this->record['betset']);
+	public function getTeamQuestion() {
+		return tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', $this->record['question']);
 	}
-
+	public function getTeamQuestionUid() {
+		return $this->record['question'];
+	}
 	/**
-	 * Whether or not this team question is still open
-	 * @return boolean
+	 * Possible points
+	 * @return int
 	 */
-	public function isOpen() {
-		return $this->getOpenUntilTstamp() > time();
+	public function getPossiblePoints() {
+		return intval($this->record['possiblepoints']);
 	}
-	public function getOpenUntil() {
-		return $this->record['openuntil'];
+	/**
+	 * Team
+	 * @return int
+	 */
+	public function getTeamUid() {
+		return intval($this->record['team']);
 	}
-	public function getPoints() {
-		return $this->record['points'];
-	}
-	public function getOpenUntilTstamp() {
-		return tx_rnbase_util_Dates::datetime_mysql2tstamp($this->getOpenUntil());
+	/**
+	 * Team
+	 * @return int
+	 */
+	public function getTeam() {
+		return tx_rnbase::makeInstance('tx_cfcleague_models_Team', $this->record['team']);
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/models/class.tx_t3sportsbet_models_teamquestion.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/models/class.tx_t3sportsbet_models_teamquestion.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/models/class.tx_t3sportsbet_models_teambet.php']) {
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/models/class.tx_t3sportsbet_models_teambet.php']);
 }
 
 ?>

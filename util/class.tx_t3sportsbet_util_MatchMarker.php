@@ -26,17 +26,28 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 tx_rnbase::load('tx_rnbase_util_BaseMarker');
 tx_rnbase::load('tx_cfcleaguefe_util_MatchMarker');
+tx_rnbase::load('tx_rnbase_util_Templates');
+
 
 /**
  * Diese Klasse ist für die Erstellung von Markerarrays der Tipprunden verantwortlich
  */
 class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker {
-	function tx_t3sportsbet_util_MatchMarker($options = array()) {
+	static $betMarker = null;
+	function __construct($options = array()) {
 		$this->options = $options;
 		$this->matchMarker = tx_rnbase::makeInstance('tx_cfcleaguefe_util_MatchMarker');
-		$this->betMarker = tx_rnbase::makeInstance('tx_t3sportsbet_util_BetMarker');
+//		$this->betMarker = tx_rnbase::makeInstance('tx_t3sportsbet_util_BetMarker');
 	}
 
+	/**
+	 * @return tx_t3sportsbet_util_BetMarker
+	 */
+	private static function getBetMarker() {
+		if(!self::$betMarker)
+			self::$betMarker = tx_rnbase::makeInstance('tx_t3sportsbet_util_BetMarker');
+		return self::$betMarker;
+	}
   /**
    * @param string $template das HTML-Template
    * @param tx_cfcleaguefe_models_match $match das Spiel
@@ -72,7 +83,7 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker {
 		$bet = $betset->getBet($match, $feuser);
 		$template = $this->setForm($template, $betset, $bet, $feuser, $formatter);
 		$this->pullTT();
-		$template = $this->betMarker->parseTemplate($template, $bet, $formatter, $confId.'bet.', $marker.'_BET');
+		$template = self::getBetMarker()->parseTemplate($template, $bet, $formatter, $confId.'bet.', $marker.'_BET');
 		return $template;
   }
 	/**
@@ -97,7 +108,6 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker {
 		$trend = $srv->getBetStats($betset, $match);
 		
 		$match->record = array_merge($match->record, $trend);
-		t3lib_div::debug($trend, 'tx_t3sportsbet_util_MatchMarker'); // TODO: remove me
 	}
   /**
    * Render form
@@ -106,7 +116,7 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker {
    * @param tx_t3sportsbet_models_betset $betset
    * @param tx_t3sportsbet_models_bet $bet
    * @param tx_t3users_models_feuser $feuser
-   * @param tx_rnbase_util_FormUtil $formatter
+   * @param tx_rnbase_util_FormatUtil $formatter
    * @return string
    */
 	function setForm($template, $betset, $bet, $feuser, &$formatter) {
@@ -129,10 +139,10 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker {
 		}
 		// Hier benötigen wir eigentlich einen Observer, dem wir sagen, daß ein Spiel offen ist. Wir setzen das jetzt 
 		// einfach mal in die Config...
-		if($state == 'OPEN') $formatter->configurations->getViewData()->offsetSet('MATCH_STATE', 'OPEN');
-		$subTemplate = $formatter->cObj->getSubpart($template,'###BETSTATUS_'.$state.'###');
+		if($state == 'OPEN') $formatter->getConfigurations()->getViewData()->offsetSet('MATCH_STATE', 'OPEN');
+		$subTemplate = tx_rnbase_util_Templates::getSubpart($template,'###BETSTATUS_'.$state.'###');
 		$subpartArray['###BETSTATUS_'.$state.'###'] = $subTemplate;
-    $out = $formatter->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray); //, $wrappedSubpartArray);
+    $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray); //, $wrappedSubpartArray);
 
 		return $out;
 	}
