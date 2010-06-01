@@ -48,6 +48,12 @@ plugin.tx_t3sportsbet_main {
 #      noCache = 1
     }
     betset {
+      teambet {
+        team =< lib.t3sports.team
+        team.currentbet = TEXT
+        team.currentbet.value = selected="selected"
+        team.currentbet.fieldRequired = currentbet
+      }
       match =< lib.t3sports.match
       match {
         links.report.removeIfDisabled = 1

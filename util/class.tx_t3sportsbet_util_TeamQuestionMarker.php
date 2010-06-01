@@ -61,10 +61,9 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
 		if($this->containsMarker($template, $marker.'_TEAMS'))
 			$template = $this->addTeams($template, $item, $formatter, $confId.'team.', $marker.'_TEAM');
 
-		$srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
-		$bet = $srv->getTeamBet($item, $feuser);
-		$template = self::getSimpleMarker()->parseTemplate($template, $bet, $formatter, $confId.'bet.', $marker.'_BET');
-		
+		if($this->containsMarker($template, $marker.'_BET_'))
+			$template = $this->addBet($template, $item, $feuser, $formatter, $confId.'bet.', $marker.'_BET');
+
 		$out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
 		return $out;
 	}
@@ -77,6 +76,23 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
 		return self::$simpleMarker;
 	}
 
+	/**
+	 * Add team selection
+	 *
+	 * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+	 * @param string $template
+	 * @param tx_rnbase_util_FormatUtil $formatter
+	 * @param string $confId
+	 * @param string $marker
+	 * @return string
+	 */
+	private function addBet($template, $item, $feuser, $formatter, $confId, $marker) {
+		$srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
+		$bet = $srv->getTeamBet($item, $feuser);
+		$template = self::getSimpleMarker()->parseTemplate($template, $bet, $formatter, $confId, $marker);
+		return $template;
+	}
+	
 	/**
 	 * Add team selection
 	 *
@@ -119,11 +135,24 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
 		tx_rnbase_util_SearchBase::setConfigOptions($options, $formatter->configurations, $confId.'options.');
 		$children = $srv->searchTeams($fields, $options);
 
+		// Den aktuellen Tip des Users mitgeben
+		$options = array();
+		$options['teambet'] = $this->findCurrentBet($item, $this->options['feuser']);
 		$listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
 		$out = $listBuilder->render($children,
 						false, $template, 'tx_cfcleaguefe_util_TeamMarker',
 						$confId, $markerPrefix, $formatter, $options);
 		return $out;
+	}
+	/**
+	 * Returns the UID of current teambet for given user
+	 * @param tx_t3users_models_feuser $feuser
+	 * @param tx_t3sportsbet_models_teamquestion $item
+	 */
+	private function findCurrentBet($item, $feuser) {
+		if(!$feuser) return 0;
+		$bet = tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->getTeamBet($item, $feuser);
+		return $bet->isPersisted() ? $bet->getTeamUid() : 0;
 	}
 	/**
 	 * 

@@ -13,6 +13,9 @@ $GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['search_Team_getJoins_hook
 $GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['t3users']['search_feuser_getTableMapping_hook'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_searchFeuser.php:&tx_t3sportsbet_hooks_searchFeuser->getTableMapping';
 $GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['t3users']['search_feuser_getJoins_hook'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_searchFeuser.php:&tx_t3sportsbet_hooks_searchFeuser->getJoins';
 
+// Hook for team marker
+$GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['teamMarker_initRecord'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_Marker.php:&tx_t3sportsbet_hooks_Marker->initTeam';
+
 
 $GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_tce.php:tx_t3sportsbet_hooks_tce';
 $GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms.php']['getMainFieldsClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_tce.php:tx_t3sportsbet_hooks_tce';

@@ -36,8 +36,8 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase  {
 
 
 	/**
-	 * Returns the bet for a user on a single match
-	 * If no bet is found this method return a dummy instance of tx_t3sportsbet_models_bet
+	 * Returns the teambet for a user 
+	 * If no bet is found this method return a dummy instance of tx_t3sportsbet_models_teambet
 	 * with uid=0.
 	 *
 	 * @param tx_t3sportsbet_models_teamquestion $teamQuestion
