@@ -125,16 +125,8 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
 	 * @param string $markerPrefix
 	 */
 	private function addTeams($template, $item, $formatter, $confId, $markerPrefix) {
-		$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
-		$fields = array();
-		$fields['TEAMQUESTIONMM.UID_LOCAL'][OP_EQ_INT] = $item->getUid();
-		$fields['TEAMQUESTIONMM.TABLENAMES'][OP_EQ] = 'tx_cfcleague_teams';
 
-		$options = array();
-		tx_rnbase_util_SearchBase::setConfigFields($fields, $formatter->configurations, $confId.'fields.');
-		tx_rnbase_util_SearchBase::setConfigOptions($options, $formatter->configurations, $confId.'options.');
-		$children = $srv->searchTeams($fields, $options);
-
+		$children = tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->getTeams4TeamQuestion($item);
 		// Den aktuellen Tip des Users mitgeben
 		$options = array();
 		$options['teambet'] = $this->findCurrentBet($item, $this->options['feuser']);

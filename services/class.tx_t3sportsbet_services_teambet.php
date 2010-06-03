@@ -34,6 +34,34 @@ tx_rnbase::load('tx_t3sportsbet_util_library');
  */
 class tx_t3sportsbet_services_teambet extends t3lib_svbase  {
 
+	/**
+	 * Analyze bets of a betgame
+	 *
+	 * @param tx_t3sportsbet_models_betgame $betGame
+	 * @return int number of finished bets
+	 */
+	public function analyzeBets($betGame) {
+		// Ablauf
+		// Tips ohne Auswertung, deren Spiele beendet sind
+		$fields['BETSET.BETGAME'][OP_EQ_INT] = $betGame->uid;
+		$fields['TEAMBET.FINISHED'][OP_EQ_INT] = 0;
+		$fields['TEAMQUESTION.TEAM'][OP_GT_INT] = 0; // Team ist gesetzt
+		
+//		$options['debug'] = 1;
+		// This could be memory consuming...
+		$bets = $this->searchTeamBet($fields, $options);
+		// Für jeden Tip die TeamQuestion holen. Danach die Teams vergleichen
+		$ret = 0;
+		for($i=0, $cnt = count($bets); $i < $cnt; $i++) {
+			$bet = $bets[$i];
+			$values['finished'] = 1;
+			$values['points'] = $bet->record['possiblepoints'] ;
+			$where = 'uid=' . $bet->uid;
+			tx_rnbase_util_DB::doUpdate('tx_t3sportsbet_teambets', $where, $values, 0);
+			$ret++;
+		}
+		return $ret;
+	}
 
 	/**
 	 * Returns the teambet for a user 
@@ -81,6 +109,20 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase  {
 			}
 		}
 		return $state;
+	}
+	/**
+	 * Load all possible teams for a given teamquestion
+	 * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+	 */
+	public function getTeams4TeamQuestion($teamQuestion) {
+		$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+		$fields = array();
+		$fields['TEAMQUESTIONMM.UID_LOCAL'][OP_EQ_INT] = $teamQuestion->getUid();
+		$fields['TEAMQUESTIONMM.TABLENAMES'][OP_EQ] = 'tx_cfcleague_teams';
+
+		$options = array();
+		$options['orderby']['TEAMQUESTIONMM.SORTING'] = 'asc';
+		return $srv->searchTeams($fields, $options);
 	}
 	/**
 	 * Load all teams for a given betgame

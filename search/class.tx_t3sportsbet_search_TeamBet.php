@@ -50,7 +50,7 @@ class tx_t3sportsbet_search_TeamBet extends tx_rnbase_util_SearchBase {
 
 	protected function getJoins($tableAliases) {
 		$join = '';
-		if(isset($tableAliases['TEAMQUESTION']) || isset($tableAliases['BETSET'])) {
+		if(isset($tableAliases['TEAMQUESTION']) || isset($tableAliases['BETSET']) || isset($tableAliases['BETGAME'])) {
 			$join .= ' JOIN tx_t3sportsbet_teamquestions ON tx_t3sportsbet_teambets.question = tx_t3sportsbet_teamquestions.uid ';
 		}
 		if(isset($tableAliases['BETSET']) || isset($tableAliases['BETGAME'])) {
@@ -58,9 +58,6 @@ class tx_t3sportsbet_search_TeamBet extends tx_rnbase_util_SearchBase {
 		}
 		if(isset($tableAliases['BETGAME'])) {
 			$join .= ' JOIN tx_t3sportsbet_betgames ON tx_t3sportsbet_betsets.betgame = tx_t3sportsbet_betgames.uid ';
-		}
-		if(isset($tableAliases['MATCH'])) {
-			$join .= ' JOIN tx_cfcleague_games ON tx_t3sportsbet_bets.t3match = tx_cfcleague_games.uid ';
 		}
 		return $join;
 	}

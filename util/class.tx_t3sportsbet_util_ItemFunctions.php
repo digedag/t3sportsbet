@@ -54,14 +54,13 @@ class tx_t3sportsbet_util_ItemFunctions {
 	 * @param array $PA
 	 * @param t3lib_TCEforms $fobj
 	 */
-	public function getTeams4Betset($PA, $fobj) {
+	public function getTeams4TeamBet($PA, $fobj) {
 		if($PA['row']['betset']) {
 			$betset = $this->loadBetset($PA['row']['betset']);
-			if(!$betset) return;
+			if(!$PA['row']['uid']) return;
+			$teamQuestion = tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', $PA['row']['uid']);
 			$betgame = $betset->getBetgame();
-			$srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
-			$teams = $srv->getTeams4Betgame($betgame);
-			
+			$teams = tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->getTeams4TeamQuestion($teamQuestion);
     	foreach ($teams As $team) {
     		$PA['items'][] = array($team->getName(), $team->getUid());
     	}

@@ -256,9 +256,9 @@ Vorgehen
 		$out = '';
 		$button = strlen(t3lib_div::_GP('analyzebets')) > 0;
 		if($button) {
-			$service = tx_t3sportsbet_util_serviceRegistry::getBetService();
-			$ret = $service->analyzeBets($betGame);
-			$out .= $GLOBALS['LANG']->getLL('msg_bets_finished') . ':' . $ret;
+			$betsUpdated = tx_t3sportsbet_util_serviceRegistry::getBetService()->analyzeBets($betGame);
+			$betsUpdated += tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->analyzeBets($betGame);
+			$out .= $GLOBALS['LANG']->getLL('msg_bets_finished') . ':' . $betsUpdated;
 		}
 		return $out;
 	}
