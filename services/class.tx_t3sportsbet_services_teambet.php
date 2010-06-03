@@ -56,7 +56,7 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase  {
 			$bet = $bets[$i];
 			$question = $this->loadTeamQuestion($bet->getTeamQuestionUid());
 			$values['finished'] = 1;
-			$values['points'] = $question->getTeamUid() == $bet->getTeamUid() ? $bet->record['possiblepoints'] : 0;
+			$values['points'] = $question->isWinningBet($bet) ? $bet->record['possiblepoints'] : 0;
 			$where = 'uid=' . $bet->uid;
 			tx_rnbase_util_DB::doUpdate('tx_t3sportsbet_teambets', $where, $values, 0);
 			$ret++;

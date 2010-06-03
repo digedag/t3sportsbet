@@ -26,7 +26,7 @@ you will have several pages with bet list. Each will be created with a special h
 ###BETLIST###
 
 <!-- ###BETSET_SAVED### -->
-<p>Die Tips wurden erfolgreich gespeichert. Veränderte Tips: ###SAVECOUNT###</p>
+<p>###LABEL_BETS_SAVED### ###LABEL_CHANGED_BETS###: ###SAVECOUNT###</p>
 <!-- ###BETSET_SAVED### -->
 
 
@@ -37,11 +37,15 @@ you will have several pages with bet list. Each will be created with a special h
 <h2>###BETSET_ROUND_NAME###</h2>
 
 ###BETSET_TEAMBETS###
-Zusatz-Tipp:<br />
+<h3>###LABEL_SPECIALBET###:</h3>
 ###BETSET_TEAMBET###
-Frage: ###BETSET_TEAMBET_QUESTION###<br />
+<b>###BETSET_TEAMBET_QUESTION###</b><br />
+
 <!-- ###BETSTATUS_CLOSED### -->
-Tippabgabe derzeit nicht möglich
+<p>
+###LABEL_YOUR_BET###: ###BETSET_TEAMBET_BET_TEAM_NAME###<br />
+<b>###BETSET_TEAMBET_BET_DCPOINTS###</b> <br />
+</p>
 <!-- ###BETSTATUS_CLOSED### -->
 
 <!-- ###BETSTATUS_OPEN### -->
@@ -52,14 +56,15 @@ Tippabgabe derzeit nicht möglich
 ###BETSET_TEAMBET_TEAM###
 </select>
 ###BETSET_TEAMBET_TEAMS###
-Tippabgabe derzeit möglich
+<p>
+###LABEL_POSSIBLE_POINTS_FOR_BET###: ###BETSET_TEAMBET_BET_DCPOSSIBLEPOINTS###<br />
+###LABEL_POSSIBLE_POINTS_FOR_NEWBET###: ###BETSET_TEAMBET_POINTS### <br />
+###LABEL_OPEN_UNTIL###: ###BETSET_TEAMBET_OPENUNTILTSTAMP###
+</p>
 <!-- ###BETSTATUS_OPEN### -->
 
-<!-- ###BETSTATUS_FINISHED### -->
-Tippabgabe nicht mehr möglich
-<!-- ###BETSTATUS_FINISHED### -->
 
-
+<br />
 ###BETSET_TEAMBET###
 ###BETSET_TEAMBETS###
 

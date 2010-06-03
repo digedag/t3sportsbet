@@ -53,6 +53,28 @@ plugin.tx_t3sportsbet_main {
         team.currentbet = TEXT
         team.currentbet.value = selected="selected"
         team.currentbet.fieldRequired = currentbet
+        openuntiltstamp.strftime = %d.%m.%Y %H:%M
+        bet {
+          dcpossiblepoints = CASE
+          dcpossiblepoints {
+            key.field = uid
+            0 = TEXT
+            0.value = ###LABEL_NOBETFOUND###
+            default = TEXT
+            default.field = possiblepoints
+          }
+          dcpoints < .dcpossiblepoints
+          dcpoints {
+            default = CASE
+            default.key.field = finished
+            default.1 = TEXT
+            default.1.field = points
+            default.1.noTrimWrap = |###LABEL_POINTS###: ||
+            default.default = TEXT
+            default.default.field = possiblepoints
+            default.default.noTrimWrap = |###LABEL_POSSIBLE_POINTS_FOR_BET###: ||
+          }
+        }
       }
       match =< lib.t3sports.match
       match {

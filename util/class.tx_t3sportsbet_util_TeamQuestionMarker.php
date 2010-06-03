@@ -32,6 +32,7 @@ tx_rnbase::load('tx_rnbase_util_Templates');
  */
 class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
 	static $simpleMarker = null;
+	static $teamMarker = null;
 	function __construct($options = array()) {
 		$this->options = $options;
 	}
@@ -75,6 +76,14 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
 			self::$simpleMarker = tx_rnbase::makeInstance('tx_rnbase_util_SimpleMarker');
 		return self::$simpleMarker;
 	}
+	/**
+	 * @return tx_cfcleaguefe_util_TeamMarker
+	 */
+	private static function getTeamMarker() {
+		if(!self::$teamMarker)
+			self::$teamMarker = tx_rnbase::makeInstance('tx_cfcleaguefe_util_TeamMarker');
+		return self::$teamMarker;
+	}
 
 	/**
 	 * Add team selection
@@ -90,6 +99,9 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
 		$srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
 		$bet = $srv->getTeamBet($item, $feuser);
 		$template = self::getSimpleMarker()->parseTemplate($template, $bet, $formatter, $confId, $marker);
+		if($this->containsMarker($template, $marker.'_TEAM_')) {
+			$template = self::getTeamMarker()->parseTemplate($template, $bet->getTeam(), $formatter, $confId.'team.', $marker.'_TEAM');
+		}
 		return $template;
 	}
 	
@@ -107,7 +119,6 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
 		// 
 		$subpartArray['###BETSTATUS_OPEN###'] = '';
 		$subpartArray['###BETSTATUS_CLOSED###'] = '';
-		$subpartArray['###BETSTATUS_FINISHED###'] = '';
 		$srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
 		$state = $srv->getTeamQuestionStatus($teamQuestion, $feuser);
 

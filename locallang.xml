@@ -31,6 +31,15 @@
 			<label index="label_betlistof">Bets of:</label>
 			<label index="label_tobescored">To be scored</label>
 			<label index="msg_no_betsets_found">No betsets found in this view!</label>
+			<label index="label_bets_saved">Bets successfully saved.</label>
+			<label index="label_changed_bets">Changed bets</label>
+
+			<label index="label_specialbet">Special bet</label>
+			<label index="label_nobetfound">No bet found.</label>
+			<label index="label_possible_points_for_bet">Possible points for bet</label>
+			<label index="label_possible_points_for_newbet">Possible points for new bet</label>
+			<label index="label_open_until">Open until</label>
+			<label index="label_your_bet">Your bet</label>
 
 		</languageKey>
 		<languageKey index="de" type="array">
@@ -58,7 +67,15 @@
 			<label index="label_betlistof">Die Tipps von:</label>
 			<label index="label_tobescored">Auswertung folgt</label>
 			<label index="msg_no_betsets_found">In dieser Ansicht wurden leider keine Spiele gefunden!</label>
+			<label index="label_bets_saved">Die Tips wurden erfolgreich gespeichert.</label>
+			<label index="label_changed_bets">Veränderte Tips</label>
 
+			<label index="label_specialbet">Zusatz-Tipp</label>
+			<label index="label_nobetfound">Es wurde noch kein Tipp abgegeben.</label>
+			<label index="label_possible_points_for_bet">Mögliche Punkte für vorhandenen Tipp</label>
+			<label index="label_possible_points_for_newbet">Mögliche Punkte für neuen Tipp</label>
+			<label index="label_open_until">Letzte Tippabgabe bis</label>
+			<label index="label_your_bet">Ihr Tipp</label>
 		</languageKey>
 	</data>
 </T3locallang>
