@@ -97,13 +97,13 @@ FROM tx_cfcleague_teams t
 			'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_teamquestions_team',
 			'config' => Array (
 				'type' => 'select',
-				'items' => Array (
-					Array(' ', '0'),
-				),
+//				'items' => Array (
+//					Array(' ', '0'),
+//				),
 				'itemsProcFunc' => 'tx_t3sportsbet_util_ItemFunctions->getTeams4TeamBet',
-				'size' => 1,
+				'size' => 5,
 				'minitems' => 0,
-				'maxitems' => 1,
+				'maxitems' => 10,
 			)
 		),
 	),

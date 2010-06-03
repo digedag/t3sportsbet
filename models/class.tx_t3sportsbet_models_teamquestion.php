@@ -58,7 +58,7 @@ class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base {
 	 * @return boolean
 	 */
 	public function isOpen() {
-		return $this->getOpenUntilTstamp() > time();
+		return $this->getOpenUntilTstamp() > time() && !$this->getTeamUid();
 	}
 	/**
 	 * Return the question string
@@ -75,13 +75,25 @@ class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base {
 	}
 	/**
 	 * Returns the uid of winning team
-	 * @return int
+	 * @return string comma separated uids
 	 */
 	public function getTeamUid() {
 		return $this->record['team'];
 	}
 	public function getOpenUntilTstamp() {
 		return tx_rnbase_util_Dates::datetime_mysql2tstamp($this->getOpenUntil());
+	}
+	/**
+	 * Whether or not the given bet wins.
+	 * @param tx_t3sportsbet_models_teambet $bet
+	 * @return boolean
+	 */
+	public function isWinningBet($bet) {
+		if(!is_array($this->teamUids)) {
+			$this->teamUids = t3lib_div::intExplode(',', $this->getTeamUid());
+			$this->teamUids = array_flip($this->teamUids);
+		}
+		return array_key_exists($bet->getTeamUid(), $this->teamUids);
 	}
 }
 

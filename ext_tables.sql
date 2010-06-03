@@ -107,7 +107,7 @@ CREATE TABLE tx_t3sportsbet_teamquestions (
 	points tinyint(11) DEFAULT '0' NOT NULL,
 	openuntil datetime DEFAULT '0000-00-00 00:00:00'
 	teams int(11) DEFAULT '0' NOT NULL,
-	team int(11) DEFAULT '0' NOT NULL,
+	team tinytext NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
