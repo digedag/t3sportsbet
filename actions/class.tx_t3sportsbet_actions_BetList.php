@@ -105,14 +105,15 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC {
 		$viewData->offsetSet('saved', $saveCnt);
 	}
 	private function saveTeamBet($betArr, $feuser) {
-		list($betQuestionUid, $betData) = each($betArr);
-		$betQuestion = tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', intval($betQuestionUid));
-		if(!$betQuestion->isValid()) return 0;
-
-		list($betUid, $team) = each($betData);
-
-		$srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
-		return $srv->saveOrUpdateBet($betQuestion, $feuser, $betUid, $team);
+		$ret = 0;
+		foreach($betArr As $betQuestionUid => $betData) {
+			$betQuestion = tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', intval($betQuestionUid));
+			if(!$betQuestion->isValid()) return 0;
+			list($betUid, $team) = each($betData);
+			$srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
+			$ret += $srv->saveOrUpdateBet($betQuestion, $feuser, $betUid, $team);
+		}
+		return $ret;
 	}
   function getTemplateName() { return 'betlist';}
 	function getViewClassName() { return 'tx_t3sportsbet_views_BetList';}
