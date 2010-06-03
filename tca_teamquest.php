@@ -82,7 +82,6 @@ FROM tx_cfcleague_teams t
   WHERE q.uid = ###THIS_UID###
 )
 				',
-//				'itemsProcFunc' => 'tx_t3sportsbet_util_ItemFunctions->getTeams4Betset',
 				'size' => 10,
 				'autoSizeMax' => 50,
 				'minitems' => 0,
@@ -93,9 +92,23 @@ FROM tx_cfcleague_teams t
 				),
 			),
 		),
+		'team' => Array (
+			'exclude' => 0,
+			'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_teamquestions_team',
+			'config' => Array (
+				'type' => 'select',
+				'items' => Array (
+					Array(' ', '0'),
+				),
+				'itemsProcFunc' => 'tx_t3sportsbet_util_ItemFunctions->getTeams4TeamBet',
+				'size' => 1,
+				'minitems' => 0,
+				'maxitems' => 1,
+			)
+		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, betset, question, openuntil, points, teams')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, betset, question, openuntil, points, teams, team')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => '')
