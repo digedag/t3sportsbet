@@ -159,30 +159,18 @@ Vorgehen
 		return $content;
 	}
 	/**
-	 * Show a list of bets for a betset
+	 * Show a list of all bets for a betset
 	 *
 	 * @param tx_t3sportsbet_models_betset $currBetSet
 	 */
 	function showBets($currBetSet) {
 		// Alle Tips für dieses Betset suchen
-		$srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
-		$cnt = $srv->getBetSize($currBetSet);
+		$lister = $this->getBetSearcher($options);
+		$lister->setBetSetUid($currBetSet->getUid());
+		$list = $lister->getResultList();
+		$out .= $list['pager']."\n".$list['table'];
 
-		$pageTSconfig = t3lib_BEfunc::getPagesTSconfig($this->id);
-		$maxRecords = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_t3sportsbet.']['betlistCfg.'])) ?
-		  intval($pageTSconfig['tx_t3sportsbet.']['betlistCfg.']['maxRecords']) : 300;
-		$options['limit'] = $maxRecords;
-		$fields['BET.BETSET'][OP_EQ_INT] = $currBetSet->uid;
-		$options['orderby']['BET.TSTAMP'] = 'desc';
-		$bets = $srv->searchBet($fields, $options);
-		$options = array();
-		$options['module'] = $this;
-		$searcher = $this->getBetSearcher($options);
-		$out .= $searcher->showBets($GLOBALS['LANG']->getLL('label_betlist'), $bets);
-		$out .= $GLOBALS['LANG']->getLL('label_betcount') .': ' . $cnt;
-		$out .= '<br/>'.sprintf($GLOBALS['LANG']->getLL('msg_betcountmax'), $maxRecords);
-		
-		return $out;
+		return $this->doc->section($GLOBALS['LANG']->getLL('label_betlist').':',$out,0,1,ICON_INFO);
 	}
 	/**
 	 * Show a list of bets for a match
@@ -190,19 +178,31 @@ Vorgehen
 	 * @param tx_t3sportsbet_models_betset $currBetSet
 	 */
 	function handleShowBets($currBetSet) {
-		$matchUids = t3lib_div::_GP('showBets');
-		if(!is_array($matchUids)) return;
+		$matchUids = $this->getFormTool()->getStoredRequestData('showBets', array(), $this->getName());
+		if($matchUids == 0) return '';
+		
+//		$matchUids = t3lib_div::_GP('showBets');
+//		if(!is_array($matchUids)) return;
 
 		$options['module'] = $this;
-		$searcher = $this->getBetSearcher($options);
+		$lister = $this->getBetSearcher($options);
 		$service = tx_t3sportsbet_util_serviceRegistry::getBetService();
-		$matchUids = array_keys($matchUids);
+		$lister->setMatchUids($matchUids);
+		$lister->setBetSetUid($currBetSet->getUid());
+
+		$list = $lister->getResultList();
+		$out .= $list['pager']."\n".$list['table'];
+		$out .= $this->getFormTool()->createSubmit('showBets[0]', $GLOBALS['LANG']->getLL('label_close'));
+		return $this->doc->section($GLOBALS['LANG']->getLL('label_betlist').':',$out,0,1,ICON_INFO);
+		
+		
 		$out = '';
 		foreach($matchUids As $uid) {
 			$match = tx_rnbase::makeInstance('tx_cfcleaguefe_models_match', $uid);
 			$bets = $service->getBets($currBetSet, $match);
 			$out .= $searcher->showBets($GLOBALS['LANG']->getLL('label_betlist'), $bets);
 		}
+//		return $this->doc->section($GLOBALS['LANG']->getLL('label_betlist').':',$out,0,1,ICON_INFO);
 		return $out;
 	}
 	/**
@@ -272,7 +272,7 @@ Vorgehen
 	 */
 	function showBetSet($currBetSet) {
 		$matches = $currBetSet->getMatches();
-		$options['linker'][] = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_MatchEditLink');
+		$options['linker'][] = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_link_MatchBets');
 		$options['module'] = $this;
 		$searcher = $this->getMatchSearcher($options);
 		$searcher->showMatches($out, $GLOBALS['LANG']->getLL('label_matchlist'), $currBetSet->getMatches());
@@ -330,10 +330,10 @@ Vorgehen
 	 * Get a bet searcher
 	 *
 	 * @param array $options
-	 * @return tx_t3sportsbet_mod1_betsearcher
+	 * @return tx_t3sportsbet_mod1_lister_MatchBet
 	 */
 	function getBetSearcher(&$options) {
-		$searcher = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_betsearcher', $this, $options);
+		$searcher = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_lister_MatchBet', $this, $options);
 		return $searcher;
 	}
 	/**
@@ -364,36 +364,11 @@ Vorgehen
   public function getName() {
   	return $this->MCONF['name'];
   }
+  public function getPid() {
+  	return $this->id;
+  }
 }
 
-class tx_t3sportsbet_mod1_MatchEditLink implements tx_cfcleague_mod1_Linker {
-	/**
-	 * Bearbeitung von Spielen
-	 *
-	 * @param tx_cfcleaguefe_models_match $match
-	 * @param tx_rnbase_util_FormTool $formTool
-	 * @param int $currentPid
-	 * @param array $options
-	 * @return string
-	 */
-	function makeLink($match, $formTool, $currentPid, $options) {
-		$out = $formTool->createEditLink('tx_cfcleague_games', $match->uid, $GLOBALS['LANG']->getLL('label_edit'));
-		if(isset($options['module'])) {
-			$out .= '<br />';
-			$mod = $options['module'];
-			$betset = $mod->betset;
-			$cnt = $betset->getBetCount($match);
-			if($cnt)
-				$out .= $formTool->createSubmit('showBets['.$match->uid.']', $GLOBALS['LANG']->getLL('label_showbets') . ' (' . $cnt. ')');
-//			$out .= $GLOBALS['LANG']->getLL('label_numberOfBets').': ' . $cnt;
-			// Wenn das Spiel ausgewertet wurde und die Tiprunde noch offen ist
-			if(!$betset->isFinished() && ($betset->getMatchState($match) == 'FINISHED' ))
-				$out .= '<br />'.$formTool->createSubmit('resetBets['.$match->uid.']', $GLOBALS['LANG']->getLL('label_resetbets'), $GLOBALS['LANG']->getLL('msg_resetbets'));
-		}
-
-		return $out;
-	}
-}
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_index.php'])	{
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_index.php']);

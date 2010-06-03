@@ -35,7 +35,7 @@ tx_rnbase::load('tx_t3sportsbet_util_library');
 class tx_t3sportsbet_services_teambet extends t3lib_svbase  {
 
 	/**
-	 * Analyze bets of a betgame
+	 * Analyze teambets of a betgame
 	 *
 	 * @param tx_t3sportsbet_models_betgame $betGame
 	 * @return int number of finished bets
@@ -54,13 +54,54 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase  {
 		$ret = 0;
 		for($i=0, $cnt = count($bets); $i < $cnt; $i++) {
 			$bet = $bets[$i];
+			$question = $this->loadTeamQuestion($bet->getTeamQuestionUid());
 			$values['finished'] = 1;
-			$values['points'] = $bet->record['possiblepoints'] ;
+			$values['points'] = $question->getTeamUid() == $bet->getTeamUid() ? $bet->record['possiblepoints'] : 0;
 			$where = 'uid=' . $bet->uid;
 			tx_rnbase_util_DB::doUpdate('tx_t3sportsbet_teambets', $where, $values, 0);
 			$ret++;
 		}
 		return $ret;
+	}
+	/**
+	 * Reset all bets for team questions
+	 * @param mixed $teamQuestionUids commaseparated uids of team questions
+	 * @return int number of bets
+	 */
+	public function resetTeamBets($teamQuestionUids) {
+		$teamQuestionUids = implode(',',t3lib_div::intExplode(',', $teamQuestionUids));
+		if(!$teamQuestionUids) return;
+		$values['finished'] = 0;
+		$values['points'] = 0;
+		$where = 'question IN (' . $teamQuestionUids . ')';
+		return tx_rnbase_util_DB::doUpdate('tx_t3sportsbet_teambets', $where, $values, 0);
+	}
+	
+	/**
+	 * Load a teamquestion from database. This access is cached.
+	 * @param int $uid
+	 * @return tx_t3sportsbet_models_teamquestion
+	 */
+	public function loadTeamQuestion($uid) {
+		tx_rnbase::load('tx_rnbase_cache_Manager');
+		$cache = tx_rnbase_cache_Manager::getCache('t3sports');
+		$question = $cache->get('t3sbet_tq_'.$uid);
+		if(!$question) {
+			$question = tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', $uid);
+			$cache->set('t3sbet_tq_'.$uid, $question);
+		}
+		return $question;
+	}
+	/**
+	 * Returns the number of bets for a teamquestion
+	 *
+	 * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+	 * @return int
+	 */
+	public function getBetCount($teamQuestion) {
+		$fields['TEAMBET.QUESTION'][OP_EQ_INT] = $teamQuestion->getUid();
+		$options['count'] = 1;
+		return $this->searchTeamBet($fields, $options);;
 	}
 
 	/**

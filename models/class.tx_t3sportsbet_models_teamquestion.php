@@ -37,12 +37,20 @@ class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base {
 	function getTableName(){return 'tx_t3sportsbet_teamquestions';}
 
 	/**
-	 * Returns the betgame
+	 * Returns the betset
 	 *
 	 * @return tx_t3sportsbet_models_betset
 	 */
 	public function getBetSet() {
-		return tx_t3sportsbet_models_betset::getInstance($this->record['betset']);
+		return tx_t3sportsbet_models_betset::getInstance($this->getBetSetUid());
+	}
+	/**
+	 * Returns the uid of betset
+	 *
+	 * @return int
+	 */
+	public function getBetSetUid() {
+		return $this->record['betset'];
 	}
 
 	/**
@@ -52,11 +60,25 @@ class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base {
 	public function isOpen() {
 		return $this->getOpenUntilTstamp() > time();
 	}
+	/**
+	 * Return the question string
+	 * @return string
+	 */
+	public function getQuestion() {
+		return $this->record['question'];
+	}
 	public function getOpenUntil() {
 		return $this->record['openuntil'];
 	}
 	public function getPoints() {
 		return $this->record['points'];
+	}
+	/**
+	 * Returns the uid of winning team
+	 * @return int
+	 */
+	public function getTeamUid() {
+		return $this->record['team'];
 	}
 	public function getOpenUntilTstamp() {
 		return tx_rnbase_util_Dates::datetime_mysql2tstamp($this->getOpenUntil());

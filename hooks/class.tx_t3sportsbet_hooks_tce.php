@@ -42,7 +42,7 @@ class tx_t3sportsbet_hooks_tce {
 		}
 		if($table == 'tx_t3sportsbet_teamquestions') {
 			tx_rnbase::load('tx_rnbase_util_Dates');
-			$row['openuntil'] = tx_rnbase_util_Dates::datetime_mysql2tstamp($row['openuntil']);
+			$row['openuntil'] = $row['openuntil'] ? tx_rnbase_util_Dates::datetime_mysql2tstamp($row['openuntil']) : time();
 		}
 	}
 

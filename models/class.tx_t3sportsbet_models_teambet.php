@@ -35,12 +35,12 @@ class tx_t3sportsbet_models_teambet extends tx_rnbase_model_base {
 	function getTableName(){return 'tx_t3sportsbet_teambets';}
 	
 	/**
-	 * Returns the betgame
+	 * Returns the team question
 	 *
 	 * @return tx_t3sportsbet_models_teamquestion
 	 */
 	public function getTeamQuestion() {
-		return tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', $this->record['question']);
+		return tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->loadTeamQuestion($this->record['question']);
 	}
 	public function getTeamQuestionUid() {
 		return $this->record['question'];

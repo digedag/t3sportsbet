@@ -14,6 +14,7 @@
 			<label index="label_change_state">Change state</label>
 			<label index="label_create_betset">Create a new betset</label>
 			<label index="label_info">Info</label>
+			<label index="label_close">Close</label>
 			<label index="label_matchlist">List of matches</label>
 			<label index="label_save">Save</label>
 			<label index="label_edit">Edit</label>
@@ -50,6 +51,13 @@
 			<label index="label_roundnamedefault">. round</label>
 
 			<label index="label_btn_newteambet">Create new teambet</label>
+			<label index="label_possiblepoints">Possible points</label>
+			<label index="label_team">Team</label>
+			<label index="label_finished">Finished</label>
+			<label index="label_yes">Yes</label>
+			<label index="label_no">No</label>
+
+
 
 			<label index="label_join_competition">Create betgame from competition</label>
 			<label index="msg_add_competition">At this point you can add a complete competition to this betgame.
@@ -78,10 +86,6 @@
 			<label index="msg_matches_added">matches added to betset.</label>
 			<label index="msg_bets_finished">Number of finished bets</label>
 			<label index="msg_create_new_game">Create a new bet game at this page now!</label>
-			<label index="msg_betcountmax">Only a maximum number of %s bets is shown. 
-			You can change this value with TS-Setup: &lt;pre&gt; 
-  tx_t3sportsbet.betlistCfg.maxRecords = 400&lt;/pre&gt;
-			</label>
 
 
 		</languageKey>
@@ -90,6 +94,7 @@
 			<label index="msg_no_game_in_page">Es wurde kein Tipspiel auf der Seite gefunden.</label>
 			<label index="msg_no_betset_found">Keine Tiprunde gefunden.</label>
 			<label index="label_info">Hinweis</label>
+			<label index="label_close">Schließen</label>
 			<label index="label_change_state">Status ändern</label>
 			<label index="label_create_betset">Eine neue Tiprunde anlegen</label>
 			<label index="label_add_matches">Der Tiprunde Spiele hinzufügen</label>
@@ -128,6 +133,13 @@
 			<label index="label_editbetgame">Tipspiel bearbeiten</label>
 			<label index="label_roundnamedefault">. Tiprunde</label>
 
+			<label index="label_btn_newteambet">Neue Teamfrage anlegen</label>
+			<label index="label_possiblepoints">Mögliche Punkte</label>
+			<label index="label_team">Team</label>
+			<label index="label_finished">Beendet</label>
+			<label index="label_yes">Ja</label>
+			<label index="label_no">Nein</label>
+
 			<label index="label_join_competition">Tipspiel aus dem Wettbewerb erzeugen</label>
 			<label index="msg_add_competition">Zu diesem Zeitpunkt können Sie aus dem gewählten Wettbewerb ein komplettes Tipspiel generieren.
 			Für jeden Spieltag wird eine neue Tiprunde angelegt. Alternativ können Sie natürlich die Tiprunden natürlich auch individuell gestalten.</label>
@@ -153,10 +165,6 @@
 			<label index="msg_matches_added">Spiel(e) zur Tiprunde hinzugefügt.</label>
 			<label index="msg_bets_finished">Anzahl ausgewerteter Tips</label>
 			<label index="msg_create_new_game">Auf dieser Seite ein neues Tipspiel erstellen!</label>
-			<label index="msg_betcountmax">Es wird nur eine maximale Anzahl von %s Tips angezeigt. 
-			Diesen Wert kann man über das TS-Setup anpassen: &lt;pre&gt; 
-  tx_t3sportsbet.betlistCfg.maxRecords = 400&lt;/pre&gt;
-			</label>
 
 		</languageKey>
 	</data>

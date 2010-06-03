@@ -27,12 +27,12 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 /**
  * List team bets
  */
-class tx_t3sportsbet_mod1_lister_TeamQuestion {
+class tx_t3sportsbet_mod1_lister_TeamBet {
 	private $mod;
 	private $data;
 	private $SEARCH_SETTINGS;
-	private $betsetUid;
-	
+	private $teamQuestionUid;
+
 	/**
 	 * Constructor
 	 * 
@@ -77,15 +77,14 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion {
 		return $this->mod;
 	}
 
-	public function setBetsetUid($uid) {
-		$this->betsetUid = $uid;
+	public function setTeamQuestionUid($uid) {
+		$this->teamQuestionUid = $uid;
 	}
 	/**
 	 * 
 	 */
 	public function getResultList() {
-		$pager = tx_rnbase::makeInstance('tx_rnbase_util_BEPager', 'teamQuestionPager', $this->getMod()->getName(), $this->getMod()->getPid());
-		// Get company service
+		$pager = tx_rnbase::makeInstance('tx_rnbase_util_BEPager', 'teamBetPager', $this->getMod()->getName(), $this->getMod()->getPid());
 		$srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
 		
 		// Set options
@@ -93,24 +92,24 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion {
 
 		$fields = array();		
 		// Set filter		
-		if ($this->betsetUid)
-			$fields['TEAMQUESTION.BETSET'] = array(OP_EQ_INT => $this->betsetUid);
+		if ($this->teamQuestionUid)
+			$fields['TEAMBET.QUESTION'] = array(OP_EQ_INT => $this->teamQuestionUid);
 
 		// Set more options
-		$options['orderby']['TEAMQUESTION.SORTING'] = 'ASC';
+		$options['orderby']['TEAMBET.TSTAMP'] = 'DESC';
 //		$options['enablefieldsfe'] = 1;
 
 		// Get counted data
-		$cnt = $srv->searchTeamQuestion($fields, $options);
+		$cnt = $srv->searchTeamBet($fields, $options);
 		unset($options['count']);
 		$pager->setListSize($cnt);
 		$pager->setOptions($options);
 
 		// Get data
-		$items = $srv->searchTeamQuestion($fields, $options);
+		$items = $srv->searchTeamBet($fields, $options);
 		$ret = array();
 		$content = '';
-		$this->showTeamQuestions($content, $items);
+		$this->showTeamBets($content, $items);
 		$ret['table'] = $content;
 		$ret['totalsize'] = $cnt;
 		$pagerData = $pager->render();
@@ -123,13 +122,16 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion {
 	 * @param string $content
 	 * @param array $items
 	 */
-	private function showTeamQuestions(&$content, $items) {
-		$decor = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_decorator_TeamQuestion', $this->getModule());
+	private function showTeamBets(&$content, $items) {
+		$decor = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_decorator_TeamBet', $this->getModule());
 		$columns = array(
 			'uid' => array('title' => 'label_uid', 'decorator' => $decor),
-			'question' => array('title' => 'label_question'),
+			'tstamp' => array('decorator' => $decor, 'title' => 'label_tstamp'),
+			'team' => array('title' => 'label_team', 'decorator' => $decor),
+			'possiblepoints' => array('title' => 'label_possiblepoints'),
 			'points' => array('title' => 'label_points'),
-			'openuntil' => array('title' => 'label_openuntil'),
+			'finished' => array('title' => 'label_finished', 'decorator' => $decor),
+			'feuser' => array('decorator' => $decor, 'title' => 'label_feuser'),
 		);
 
 		if($items) {
@@ -165,7 +167,7 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion {
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/beutil/class.tx_t3sportsbet_mod1_lister_TeamQuestion.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/beutil/class.tx_t3sportsbet_mod1_lister_TeamQuestion.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/beutil/class.tx_t3sportsbet_mod1_lister_TeamBet.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/beutil/class.tx_t3sportsbet_mod1_lister_TeamBet.php']);
 }
 ?>
