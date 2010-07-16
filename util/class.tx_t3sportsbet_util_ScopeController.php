@@ -67,6 +67,7 @@ class tx_t3sportsbet_util_ScopeController {
 		$betsetUids = $configurations->get($configKey.'betset');
 		$betsetStatus = $configurations->get($configKey.'betsetStatus');
 		$rounds = self::getBetsets($betgame, $betsetStatus, $betsetUids, $configurations, $configKey);
+		tx_rnbase::load('tx_rnbase_util_Misc');
 		$ret = tx_rnbase_util_Misc::objImplode(',', $rounds);
 		
 		// Soll eine SelectBox für die Tiprunde gezeigt werden?
@@ -101,18 +102,20 @@ class tx_t3sportsbet_util_ScopeController {
 
 	}
 
-	static function getBetgamesFromScope($uids) {
+	public static function getBetgamesFromScope($uids) {
 		$uids = t3lib_div::intExplode(',', $uids);
 		$rounds = array();
+		tx_rnbase::load('tx_t3sportsbet_models_betgame');
 		for($i=0, $cnt=count($uids); $i <$cnt; $i++) {
 			$rounds[] = tx_t3sportsbet_models_betgame::getInstance($uids[$i]);
 		}
 		return $rounds;
 	}
 	
-	static function getRoundsFromScope($uids) {
+	public static function getRoundsFromScope($uids) {
 		$uids = t3lib_div::intExplode(',', $uids);
 		$rounds = array();
+		tx_rnbase::load('tx_t3sportsbet_models_betset');
 		for($i=0, $cnt=count($uids); $i <$cnt; $i++) {
 			$rounds[] = tx_t3sportsbet_models_betset::getInstance($uids[$i]);
 		}
