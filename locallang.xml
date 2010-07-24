@@ -45,7 +45,7 @@
 		<languageKey index="de" type="array">
 			<label index="error">Fehler</label>
 			<label index="error_nobetgame_defined">Es wurde kein Tippspiel im Flexform oder Typoscript angegeben!</label>
-			<label index="error_nobetsets_defined">Es wurden keine Tipprunden für das Tipspiel gefunden!</label>
+			<label index="error_nobetsets_defined">Es wurden keine Tipprunden für das Tippspiel gefunden!</label>
 			<label index="label_savebets">Tipps speichern</label>
 			<label index="msg_no_betsets_found">In dieser Ansicht wurden keine zu tippenden Spiele gefunden!</label>
 			<label index="label_rank">Position</label>
@@ -67,7 +67,7 @@
 			<label index="label_betlistof">Die Tipps von:</label>
 			<label index="label_tobescored">Auswertung folgt</label>
 			<label index="msg_no_betsets_found">In dieser Ansicht wurden leider keine Spiele gefunden!</label>
-			<label index="label_bets_saved">Die Tips wurden erfolgreich gespeichert.</label>
+			<label index="label_bets_saved">Die Tipps wurden erfolgreich gespeichert.</label>
 			<label index="label_changed_bets">Veränderte Tips</label>
 
 			<label index="label_specialbet">Zusatz-Tipp</label>
