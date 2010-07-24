@@ -140,7 +140,8 @@ class tx_t3sportsbet_mod1_lister_TeamBet {
 			$out = $this->mod->doc->table($arr[0]);
 		}
 		else {
-	  	$out = '<p><strong>###LABEL_MSG_NO_ITEMS_FOUND###</strong></p><br/>';
+	  	$out = '<p><strong>'.$GLOBALS['LANG']->getLL('label_msg_no_items_found').'</strong></p><br/>';
+			//$out = '<p><strong>###LABEL_MSG_NO_ITEMS_FOUND###</strong></p><br/>';
 		}
 		$content .= $out;
 	}
@@ -167,7 +168,7 @@ class tx_t3sportsbet_mod1_lister_TeamBet {
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/beutil/class.tx_t3sportsbet_mod1_lister_TeamBet.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/beutil/class.tx_t3sportsbet_mod1_lister_TeamBet.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/lister/class.tx_t3sportsbet_mod1_lister_TeamBet.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/lister/class.tx_t3sportsbet_mod1_lister_TeamBet.php']);
 }
 ?>

@@ -86,6 +86,7 @@
 			<label index="msg_matches_added">matches added to betset.</label>
 			<label index="msg_bets_finished">Number of finished bets</label>
 			<label index="msg_create_new_game">Create a new bet game at this page now!</label>
+			<label index="label_msg_no_items_found">No items found.</label>
 
 
 		</languageKey>
@@ -151,7 +152,7 @@
 
 			<label index="tab_control">Überblick</label>
 			<label index="tab_addmatches">Spiele hinzufügen</label>
-			<label index="tab_addteambets">Team Tipps</label>
+			<label index="tab_addteambets">Team Tips</label>
 			<label index="tab_bets">Tips anzeigen</label>
 
 			<label index="label_question">Frage</label>
@@ -165,6 +166,7 @@
 			<label index="msg_matches_added">Spiel(e) zur Tiprunde hinzugefügt.</label>
 			<label index="msg_bets_finished">Anzahl ausgewerteter Tips</label>
 			<label index="msg_create_new_game">Auf dieser Seite ein neues Tipspiel erstellen!</label>
+			<label index="label_msg_no_items_found">Keine Einträge gefunden.</label>
 
 		</languageKey>
 	</data>
