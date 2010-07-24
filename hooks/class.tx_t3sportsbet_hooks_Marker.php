@@ -45,8 +45,8 @@ class tx_t3sportsbet_hooks_Marker {
 }
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/hooks/class.tx_t3sportsbet_hooks_searchMatch.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/hooks/class.tx_t3sportsbet_hooks_searchMatch.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/hooks/class.tx_t3sportsbet_hooks_Marker.php']) {
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/hooks/class.tx_t3sportsbet_hooks_Marker.php']);
 }
 
 ?>
