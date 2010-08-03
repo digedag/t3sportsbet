@@ -2,6 +2,9 @@ Changelog
 ---------
 
 TODO: Exception im BE bei Spiel ohne zugeordnetem Team!!
+v0.4.1 (??.08.2010)
+ * action_BetList: Missing include of betset added.
+
 v0.4.0 (23.07.2010)
  * New german language marker. Thanks to Christian Platt!
  * Team bets are possible (requires TYPO3 4.2 because of IRRE)

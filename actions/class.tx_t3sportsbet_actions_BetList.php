@@ -26,8 +26,10 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 tx_rnbase::load('tx_rnbase_action_BaseIOC');
 tx_rnbase::load('tx_t3sportsbet_models_betgame');
+tx_rnbase::load('tx_t3sportsbet_models_betset');
 tx_rnbase::load('tx_t3users_models_feuser');
 tx_rnbase::load('tx_t3sportsbet_util_ScopeController');
+
 
 
 
