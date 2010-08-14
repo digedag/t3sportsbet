@@ -182,6 +182,30 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase  {
 	}
 
 	/**
+	 * Returns the bet trend for a single teambet
+	 *
+	 * @param tx_cfcleaguefe_models_teambet $teambet
+	 * @return array
+	 */
+	public function getBetTrend($teambet) {
+		// Wir suchen jeweils die Anzahl der Tips pro Team
+		// SELECT count(team), team FROM `tx_t3sportsbet_teambets` WHERE question=1 GROUP BY team
+
+		$options['what'] = 'count(team) AS betcount, team';
+		$options['groupby'] = 'team';
+		$options['orderby']['betcount'] = 'desc';
+		$ret = $this->searchTeamBet($fields, $options);
+		$sum = 0;
+		foreach($ret As $row) {
+			$sum += $row['betcount'];
+		}
+		for($i=0, $cnt=count($ret); $i < $cnt; $i++) {
+			$ret[$i]['betcountp'] = round($ret[$i]['betcount'] / $sum * 100);
+		}
+		return $ret;
+	}
+
+	/**
 	 * Save or update a teambet from fe request.
 	 *
 	 * @param tx_t3sportsbet_models_teamquestion $teamQuestion

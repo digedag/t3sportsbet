@@ -64,6 +64,8 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
 
 		if($this->containsMarker($template, $marker.'_BET_'))
 			$template = $this->addBet($template, $item, $feuser, $formatter, $confId.'bet.', $marker.'_BET');
+		if($this->containsMarker($template, $marker.'_TREND_'))
+			$template = $this->addTrend($template, $item, $feuser, $formatter, $confId.'trend.', $marker.'_TREND');
 
 		$out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
 		return $out;
@@ -104,9 +106,67 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
 		}
 		return $template;
 	}
-	
 	/**
-	 * Add team selection
+	 * Add bet trend
+	 *
+	 * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+	 * @param string $template
+	 * @param tx_rnbase_util_FormatUtil $formatter
+	 * @param string $confId
+	 * @param string $marker
+	 * @return string
+	 */
+	private function addTrend($template, $item, $feuser, $formatter, $confId, $markerPrefix) {
+		$trendData = tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->getBetTrend($item);
+		// Jetzt die TeamDaten einbauen
+		$teams = array();
+		for($i=0, $cnt=count($trendData); $i < $cnt; $i++) {
+			$teamId = $trendData[$i]['team'];
+			$team = tx_cfcleague_util_ServiceRegistry::getTeamService()->getTeam($teamId);
+			if(!$team) continue;
+			$team->record = array_merge($team->record, $trendData[$i]);
+			$teams[] = $team;
+		}
+		if($this->containsMarker($template, $markerPrefix.'_TEAM_')) {
+			$listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
+			$template = $listBuilder->render($teams,
+							false, $template, 'tx_cfcleaguefe_util_TeamMarker',
+							$confId.'team.', $markerPrefix.'_TEAM', $formatter, $options);
+		}
+
+		if($this->containsMarker($template, $markerPrefix.'_CHART')) {
+			try {
+				tx_rnbase::load('tx_rnbase_plot_Builder');
+				$tsConf = $formatter->getConfigurations()->get($confId.'chart.');
+				$dp = $this->makeChartDataProvider($teams);
+				$markerArray['###'.$markerPrefix.'_CHART###'] = tx_rnbase_plot_Builder::getInstance()->make($tsConf, $dp);
+				$template = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray); //, $wrappedSubpartArray);
+			}
+			catch(Exception $e) {
+				$chart = 'Not possible';
+				tx_rnbase::load('tx_rnbase_util_Logger');
+				tx_rnbase_util_Logger::warn('Chart creation failed!', 'cfc_league_fe', array('Exception' => $e->getMessage()));
+			}
+		}
+		
+		return $template;
+	}
+	private function makeChartDataProvider($teams) {
+		$dp =tx_rnbase::makeInstance('tx_rnbase_plot_DataProvider');
+		$dataSet = array();
+		foreach($teams As $team) {
+			$data = array();
+			$data['x'] = $team->record['name'];
+			$data['y'] = $team->record['betcount'];
+			$dataSet[] = $data;
+		}
+		$plotId = $dp->addPlot();
+		$dp->addDataSet($plotId, $dataSet);
+		return $dp;
+	}
+
+	/**
+	 * Set state subpart
 	 *
 	 * @param tx_t3sportsbet_models_teamquestion $teamQuestion
 	 * @param string $template

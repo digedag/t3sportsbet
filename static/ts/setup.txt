@@ -75,6 +75,10 @@ plugin.tx_t3sportsbet_main {
             default.default.noTrimWrap = |###LABEL_POSSIBLE_POINTS_FOR_BET###: ||
           }
         }
+        trend {
+          team =< lib.t3sports.team
+          chart =< lib.t3sports.piechart
+        }
       }
       match =< lib.t3sports.match
       match {
@@ -136,3 +140,96 @@ plugin.tx_t3sportsbet_main {
   }
 }
 
+# Default config for pie chart
+lib.t3sports.piechart {
+	factory = png
+	width = 400
+	height = 300
+	font.default = typo3conf/ext/cfc_league_fe/res/nimbus.ttf
+	font.default {
+		size = 8
+	}
+	borderColor = black
+	10 = VERTICAL
+	10 {
+		percentage = 5
+		10 = TITLE
+		10 {
+			text = Meat Export
+			font {
+				size = 12
+			}
+		}
+		20 = HORIZONTAL
+		20 {
+			percentage = 70
+			10 = PLOTAREA
+			10 {
+				id = plotarea1
+				hideAxis = 0
+				10 = PIE
+				10 {
+					dataset {
+						10 = trivial
+						10 {
+							10 = point
+							10 {
+								x = Beef
+								y = 4
+							}
+							20 = point
+							20 {
+								x = Pork
+								y = 7
+							}
+						}
+					}
+					# dataset end
+					fillStyle = fill_array
+					fillStyle {
+						1 = gradient
+						1 {
+							direction = radial
+							startColor = white
+							endColor = green
+						}
+						2 = gradient
+						2 {
+							direction = radial
+							startColor = white
+							endColor = blue
+						}
+					}
+					# fillstyle end
+					marker = value
+					marker {
+						useValue = pct_y_total
+						pointing = angular
+						pointing {
+							radius = 20
+						}
+						dataPreProcessor = formatted
+						dataPreProcessor {
+							format = %0.1f%%
+						}
+					}
+					explode {
+						radius = 5
+					}
+					startingAngle {
+						angle = 90
+					}
+				}
+				# PIE end
+
+			}
+			# PLOTAREA end
+			20 = LEGEND
+			20 {
+				plotarea.1 = plotarea1
+			}
+		}
+		# HORIZONTAL end
+	}
+	# VERTICAL end
+}
