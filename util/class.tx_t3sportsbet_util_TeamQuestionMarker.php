@@ -109,7 +109,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
 	/**
 	 * Add bet trend
 	 *
-	 * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+	 * @param tx_t3sportsbet_models_teamquestion $item
 	 * @param string $template
 	 * @param tx_rnbase_util_FormatUtil $formatter
 	 * @param string $confId
@@ -138,7 +138,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
 			try {
 				tx_rnbase::load('tx_rnbase_plot_Builder');
 				$tsConf = $formatter->getConfigurations()->get($confId.'chart.');
-				$dp = $this->makeChartDataProvider($teams);
+				$dp = $this->makeChartDataProvider($item, $teams);
 				$markerArray['###'.$markerPrefix.'_CHART###'] = tx_rnbase_plot_Builder::getInstance()->make($tsConf, $dp);
 				$template = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray); //, $wrappedSubpartArray);
 			}
@@ -151,8 +151,14 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
 		
 		return $template;
 	}
-	private function makeChartDataProvider($teams) {
+	/**
+	 * 
+	 * @param tx_t3sportsbet_models_teamquestion $item
+	 * @param array[tx_cfcleaguefe_models_Team] $teams
+	 */
+	private function makeChartDataProvider($item, $teams) {
 		$dp =tx_rnbase::makeInstance('tx_rnbase_plot_DataProvider');
+		$dp->setChartTitle($item->getQuestion());
 		$dataSet = array();
 		foreach($teams As $team) {
 			$data = array();
