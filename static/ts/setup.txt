@@ -185,20 +185,32 @@ lib.t3sports.piechart {
 						}
 					}
 					# dataset end
-					fillStyle = fill_array
-					fillStyle {
+#					fillStyle = fill_array
+#					fillStyle {
+	 				dataStyle {
+	 				  # default mit mehreren Farben
+						0 = gradient
+						0 {
+							direction = radial
+							startColor = white
+							endColor = aqua,red,blue,yellow,green,fuchsia,lime,gray,navy,olive,black,maroon,silver,purple,teal,brown,white
+						}
+						# Rest nur noch für Testzwecke
+/*
 						1 = gradient
 						1 {
 							direction = radial
 							startColor = white
 							endColor = green
 						}
-						2 = gradient
+						2 = addColor
 						2 {
 							direction = radial
 							startColor = white
 							endColor = blue
+							color = blue
 						}
+*/
 					}
 					# fillstyle end
 					marker = value
