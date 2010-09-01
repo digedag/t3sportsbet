@@ -184,13 +184,15 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase  {
 	/**
 	 * Returns the bet trend for a single teambet
 	 *
-	 * @param tx_cfcleaguefe_models_teambet $teambet
+	 * @param tx_t3sportsbet_models_teamquestion $teamQuestion
 	 * @return array
 	 */
-	public function getBetTrend($teambet) {
+	public function getBetTrend($teamQuestion) {
 		// Wir suchen jeweils die Anzahl der Tips pro Team
 		// SELECT count(team), team FROM `tx_t3sportsbet_teambets` WHERE question=1 GROUP BY team
 
+		$fields = array();
+		$fields['TEAMBET.QUESTION'][OP_EQ_INT] = $teamQuestion->getUid();
 		$options['what'] = 'count(team) AS betcount, team';
 		$options['groupby'] = 'team';
 		$options['orderby']['betcount'] = 'desc';
