@@ -67,6 +67,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
 		if($this->containsMarker($template, $marker.'_TREND_'))
 			$template = $this->addTrend($template, $item, $feuser, $formatter, $confId.'trend.', $marker.'_TREND');
 
+		$wrappedSubpartArray['###'.$marker.'_TREND###'] = array('','');
 		$out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
 		return $out;
 	}
