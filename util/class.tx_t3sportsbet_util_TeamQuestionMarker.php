@@ -189,6 +189,9 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker {
 		$srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
 		$state = $srv->getTeamQuestionStatus($teamQuestion, $feuser);
 
+		// Notwendig, damit der Submit-Button eingeblendet wird. Wird im View ausgewertet.
+		if($state == 'OPEN') $formatter->getConfigurations()->getViewData()->offsetSet('MATCH_STATE', 'OPEN');
+
 		$subTemplate = tx_rnbase_util_Templates::getSubpart($template,'###BETSTATUS_'.$state.'###');
 		$subpartArray['###BETSTATUS_'.$state.'###'] = $subTemplate;
     $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray); //, $wrappedSubpartArray);

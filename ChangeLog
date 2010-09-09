@@ -2,7 +2,11 @@ Changelog
 ---------
 
 v0.4.2 (03.09.2010)
+ * Bugfix: Show submit button for teambets
+
+v0.4.1 (03.09.2010)
  * action_BetList: Missing include of betset added.
+ * Trend for team bets with pie chart
 
 v0.4.0 (23.07.2010)
  * New german language marker. Thanks to Christian Platt!
