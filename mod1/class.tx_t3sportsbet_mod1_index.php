@@ -31,6 +31,8 @@ require_once(PATH_t3lib.'class.t3lib_extfilefunc.php');
 require_once(t3lib_extMgm::extPath('cfc_league').'class.tx_cfcleague.php');
 
 tx_rnbase::load('tx_cfcleague_mod1_decorator');
+tx_rnbase::load('tx_rnbase_util_TYPO3');
+
 
 // Mögliche Icons im BE für die Funktion doc->icons()
 define('ICON_OK', -1);
@@ -97,7 +99,7 @@ Vorgehen
 
 		$currentRound = $this->selector->showRoundSelector($selector,$this->pObj->id, $currentGame);
 		if(!$currentRound) {
-			if($this->pObj->isTYPO42())
+			if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
 				$this->pObj->subselector = $selector;
 			else 
 				$content .= '<div class="cfcleague_selector">'.$selector.'</div><div style="clear:both"/>';
@@ -106,7 +108,7 @@ Vorgehen
 			$content .= $wizard->handleRequest($this, $currentGame);
 			return $content;
 		}
-		if($this->pObj->isTYPO42())
+		if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
 			$this->pObj->subselector = $selector;
 		else 
 			$content .= '<div class="cfcleague_selector">'.$selector.'</div><div style="clear:both"/>';
@@ -346,7 +348,7 @@ Vorgehen
 			'table' => Array('<table class="typo3-dblist" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
 			'0' => Array( // Format für 1. Zeile
 					'tr'		=> Array('<tr class="c-headLineTable">','</tr>'),
-					'defCol' => ($this->pObj->isTYPO42() ? Array('<td colspan="2">','</td>') : Array('<td colspan="2" class="c-headLineTable" style="font-weight:bold; color:white;">','</td>'))  // Format für jede Spalte in der 1. Zeile
+					'defCol' => (tx_rnbase_util_TYPO3::isTYPO42OrHigher() ? Array('<td colspan="2">','</td>') : Array('<td colspan="2" class="c-headLineTable" style="font-weight:bold; color:white;">','</td>'))  // Format für jede Spalte in der 1. Zeile
 			),
 			'defRow' => Array ( // Formate für alle Zeilen
 				'0' => Array('<td valign="top"  class="c-headLineTable" style="padding:2px 5px;">','</td>'), // Format für 1. Spalte in jeder Zeile
