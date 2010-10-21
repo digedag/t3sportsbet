@@ -1,8 +1,9 @@
 Changelog
 ---------
 
-v0.4.2 (03.09.2010)
+v0.4.2 (21.10.2010)
  * Bugfix: Show submit button for teambets
+ * Modifications for BE module refactoring in cfc_league
 
 v0.4.1 (03.09.2010)
  * action_BetList: Missing include of betset added.
