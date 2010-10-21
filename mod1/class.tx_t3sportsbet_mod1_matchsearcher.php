@@ -33,11 +33,18 @@ class tx_t3sportsbet_mod1_matchsearcher {
 	private $mod;
 	private $data;
 	private $SEARCH_SETTINGS;
+	/** @var tx_cfcleague_selector */
+	private $selector;
 
-	public function tx_t3sportsbet_mod1_matchsearcher(&$mod, $options = array()) {
+	public function __construct(&$mod, $options = array()) {
 		$this->init($mod, $options);
 	}
 
+	/**
+	 * 
+	 * @param unknown_type $mod
+	 * @param array $options
+	 */
 	private function init($mod, $options) {
 		$this->options = $options;
 		$this->mod = $mod;
@@ -48,12 +55,12 @@ class tx_t3sportsbet_mod1_matchsearcher {
 		$this->competitions = $options['competitions'];
 
 		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-		$this->selector->init($mod->doc, $mod->MCONF);
-
+		$this->selector->init($mod->doc, $mod->MCONF['name']);
 		if(!isset($options['nopersist']))
 			$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''),$this->data,$this->mod->MCONF['name'] );
 		else
 			$this->SEARCH_SETTINGS = $this->data;
+			
 	}
 	/**
 	 * Liefert das Suchformular. Hier die beiden Selectboxen anzeigen
@@ -70,7 +77,7 @@ class tx_t3sportsbet_mod1_matchsearcher {
       return $out . $this->mod->doc->section('Info:',$LANG->getLL('msg_no_competition_in_betgame'),0,1,ICON_WARN);
     }
 //    $out.=$this->mod->doc->spacer(5);
-
+    
     $rounds = $this->currComp->getRounds();
 		if(!count($rounds)){
 			$out .= $LANG->getLL('msg_no_round_in_competition');
