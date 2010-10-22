@@ -1,6 +1,9 @@
 Changelog
 ---------
 
+v0.4.3 (22.10.2010)
+ * Dependency fixed to cfc_league_fe fixed.
+
 v0.4.2 (21.10.2010)
  * Bugfix: Show submit button for teambets
  * Modifications for BE module refactoring in cfc_league
