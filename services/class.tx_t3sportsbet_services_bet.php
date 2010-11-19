@@ -121,6 +121,18 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 		return array('high' => $high, 'low' => $low, 'next' => $next);
 	}
 	/**
+	 * Move a match and all bets from one betset to another
+	 * @param int $newBetsetUid
+	 * @param int $oldBetsetUid
+	 * @param int $matchUid
+	 */
+	public function moveMatch($newBetsetUid, $oldBetsetUid, $matchUid) {
+		// Zuordnung Spiel im neuen Betset anlegen -> Exception, wenn schon vorhanden
+		// Zuordnung Spiel im alten Betset entfernen
+		// Alle Bets auf das neue Betset umstellen
+		t3lib_div::debug(array($newBetsetUid, $oldBetsetUid, $matchUid), 'class.tx_t3sportsbet_services_bet.php '); // TODO: remove me
+	}
+	/**
 	 * Reset bets for a given match on a given betset
 	 *
 	 * @param tx_t3sportsbet_models_betset $betset

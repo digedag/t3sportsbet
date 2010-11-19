@@ -64,12 +64,12 @@ class tx_t3sportsbet_util_MatchDecorator {
 	 */
 	private function createMatchCutLink($item) {
 		tx_rnbase::load('tx_t3sportsbet_mod1_handler_MatchMove');
-		return tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->makeCutLink($item, $this->getModule());
+		return tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->makeCutLink($item, $this->getModule()->getCurrentBetset(), $this->getModule());
 	}
 }
 
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/util/class.tx_t3sportsbet_util_MatchDecorator.php'])	{
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/util/class.tx_t3sportsbet_util_MatchDecorator.php']);
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/util/class.tx_t3sportsbet_util_MatchDecorator.php']);
 }
 ?>

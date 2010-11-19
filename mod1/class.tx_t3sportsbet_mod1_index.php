@@ -32,6 +32,7 @@ require_once(t3lib_extMgm::extPath('cfc_league').'class.tx_cfcleague.php');
 
 tx_rnbase::load('tx_cfcleague_mod1_decorator');
 tx_rnbase::load('tx_rnbase_util_TYPO3');
+tx_rnbase::load('tx_t3sportsbet_mod1_handler_MatchMove');
 
 
 // Mögliche Icons im BE für die Funktion doc->icons()
@@ -114,7 +115,6 @@ Vorgehen
 			$content .= '<div class="cfcleague_selector">'.$selector.'</div><div style="clear:both"/>';
 
 		// RequestHandler aufrufen.
-		tx_rnbase::load('tx_t3sportsbet_mod1_handler_MatchMove');
 		tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->handleRequest($this);
 
 		$menu = $this->formTool->showTabMenu($this->id, 'bettools', $this->MCONF['name'],
@@ -163,6 +163,12 @@ Vorgehen
 		$content .= $this->formTool->form->printNeededJSFunctions();
 		
 		return $content;
+	}
+	/**
+	 * @return tx_t3sportsbet_models_betset
+	 */
+	public function getCurrentBetset() {
+		return $this->betset;
 	}
 	/**
 	 * Show a list of all bets for a betset
@@ -280,6 +286,11 @@ Vorgehen
 		$matches = $currBetSet->getMatches();
 		$options['linker'][] = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_link_MatchBets');
 		$options['module'] = $this;
+
+		$pasteButton = tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->makePasteButton($currBetSet, $this);
+		if($pasteButton)
+			$out .= $this->doc->section('Info:',$pasteButton,0,1,ICON_INFO);
+		
 		$searcher = $this->getMatchSearcher($options);
 		$searcher->showMatches($out, $GLOBALS['LANG']->getLL('label_matchlist'), $currBetSet->getMatches());
 		$this->formTool->addTCEfield2Stack('tx_t3sportsbet_betsets', $currBetSet->record, 'status','<strong>'.$GLOBALS['LANG']->getLL('label_change_state') . ':</strong>&nbsp;');

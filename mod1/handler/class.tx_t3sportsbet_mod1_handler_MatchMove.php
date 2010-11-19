@@ -46,7 +46,25 @@ class tx_t3sportsbet_mod1_handler_MatchMove {
 			return $this->handleCut('', $mod);
 		}
 		// Jetzt noch der Insert
-
+		$isPasted = t3lib_div::_GP('doPasteMatch');
+		if($isPasted) {
+			return $this->handlePaste($isPasted, $mod);
+		}
+	}
+	/**
+	 * 
+	 * @param int $betset
+	 * @param tx_rnbase_mod_IModule $mod
+	 */
+	private function handlePaste($betsetUid, $mod) {
+		$currentMatch = $this->getCurrentMatch($mod);
+		$data = t3lib_div::intExplode('_', $currentMatch);
+		try {
+			tx_t3sportsbet_util_serviceRegistry::getBetService()->moveMatch($betsetUid, $data[1], $data[0]);
+		}
+		catch(Exception $e) {
+			t3lib_div::debug($e, 'class.tx_t3sportsbet_mod1_handler_MatchMove.php '); // TODO: remove me			
+		}
 	}
 	/**
 	 * 
@@ -61,32 +79,43 @@ class tx_t3sportsbet_mod1_handler_MatchMove {
 	private function getCurrentMatch($mod) {
 		$key = 'doCutMatch';
 		$arr = t3lib_BEfunc::getModuleData(array ($key => ''), array(), $mod->getName() );
-		return intval($arr[$key]);
+		return $arr[$key];
 	}
 	/**
 	 * 
 	 * @param unknown_type $item
 	 * @param tx_rnbase_mod_IModule $mod
 	 */
-	public function makeCutLink($item, $mod) {
-		$currentMatchUid = $this->getCurrentMatch($mod);
+	public function makeCutLink($item, $betset, $mod) {
+		$currentMatch = $this->getCurrentMatch($mod);
 		$options = array();
-		if($currentMatchUid != $item->getUid()) {
+		$key = $item->getUid().'_'.$betset->getUid();
+		if($currentMatch != $key) {
 			$options['icon'] = 'clip_cut.gif';
-			$ret .= $mod->getFormTool()->createSubmit('doCutMatch', $item->getUid(),'',$options);
+			$ret .= $mod->getFormTool()->createSubmit('doCutMatch', $key,'',$options);
 		}
 		else {
 			$label = '<span class="t3-icon t3-icon-actions t3-icon-actions-edit t3-icon-edit-cut-release"></span>';
-			$ret .= $mod->getFormTool()->createLink('&doReleaseMatch='.$item->getUid(), $mod->getPid(),$label,$options);
+			$ret .= $mod->getFormTool()->createLink('&doReleaseMatch=0', $mod->getPid(),$label,$options);
 		}
 
 		return $ret;
 	}
+	/**
+	 * 
+	 * @param tx_t3sportsbet_models_betset $item
+	 * @param tx_rnbase_mod_IModule $mod
+	 */
 	public function makePasteButton($item, $mod) {
 		$ret = '';
 		$currentMatchUid = $this->getCurrentMatch($mod);
 		if($currentMatchUid) {
-			$ret = '<b>Paste '. $currentMatchUid .'</b><br />';
+			$options = array();
+			$options['confirm'] = $GLOBALS['LANG']->getLL('label_msg_paste_match');
+			$options['hover'] = '###LABEL_PASTE_MATCH###';
+			$label = '<span class="t3-icon t3-icon-actions t3-icon-actions-document t3-icon-document-paste-after"></span>';
+			$label .= '###LABEL_PASTE_MATCH###<br />';
+			$ret .= $mod->getFormTool()->createLink('&doPasteMatch='.$item->getUid(), $mod->getPid(),$label,$options);
 		}
 		return $ret;
 	}

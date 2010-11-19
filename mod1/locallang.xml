@@ -50,6 +50,9 @@
 			<label index="label_editbetgame">Edit betgame</label>
 			<label index="label_roundnamedefault">. round</label>
 
+			<label index="label_paste_match">Paste selected match to current betset</label>
+			<label index="label_msg_paste_match">Do you really want to paste the currently selected match to this betset?</label>
+
 			<label index="label_btn_newteambet">Create new teambet</label>
 			<label index="label_possiblepoints">Possible points</label>
 			<label index="label_team">Team</label>
