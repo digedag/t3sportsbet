@@ -38,9 +38,12 @@ class tx_t3sportsbet_mod1_handler_MatchMove {
 	 */
 	public function handleRequest($mod) {
 		$isCutted = t3lib_div::_GP('doCutMatch');
-		if(!$isCutted) return '';
 		if($isCutted) {
-			$this->handleCut($isCutted, $mod);
+			return $this->handleCut($isCutted, $mod);
+		}
+		$isReleased = t3lib_div::_GP('doReleaseMatch');
+		if($isReleased) {
+			return $this->handleCut('', $mod);
 		}
 		// Jetzt noch der Insert
 
@@ -55,10 +58,31 @@ class tx_t3sportsbet_mod1_handler_MatchMove {
 		$changed[$key] = $matchUid;
 		t3lib_BEfunc::getModuleData(array ($key => ''), $changed, $mod->getName() );
 	}
-	public function makeLink($item, $mod) {
+	private function getCurrentMatch($mod) {
+		$key = 'doCutMatch';
+		$arr = t3lib_BEfunc::getModuleData(array ($key => ''), array(), $mod->getName() );
+		return intval($arr[$key]);
+	}
+	/**
+	 * 
+	 * @param unknown_type $item
+	 * @param tx_rnbase_mod_IModule $mod
+	 */
+	public function makeCutLink($item, $mod) {
+		$currentMatchUid = $this->getCurrentMatch($mod);
 		$options = array();
-		$options['icon'] = 'clip_cut.gif';
-		$ret .= $mod->getFormTool()->createSubmit('doCutMatch', $item->getUid(),'',$options);
+		if($currentMatchUid != $item->getUid()) {
+			$options['icon'] = 'clip_cut.gif';
+			$ret .= $mod->getFormTool()->createSubmit('doCutMatch', $item->getUid(),'',$options);
+		}
+		else {
+			$label = '<span class="t3-icon t3-icon-actions t3-icon-actions-edit t3-icon-edit-cut-release"></span>';
+			$ret .= $mod->getFormTool()->createLink('&doReleaseMatch='.$item->getUid(), $mod->getPid(),$label,$options);
+		}
+
+		return $ret;
+	}
+	public function makePasteButton($item, $mod) {
 		return $ret;
 	}
 }

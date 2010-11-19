@@ -64,7 +64,7 @@ class tx_t3sportsbet_util_MatchDecorator {
 	 */
 	private function createMatchCutLink($item) {
 		tx_rnbase::load('tx_t3sportsbet_mod1_handler_MatchMove');
-		return tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->makeLink($item, $this->getModule());
+		return tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->makeCutLink($item, $this->getModule());
 	}
 }
 
