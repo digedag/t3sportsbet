@@ -83,6 +83,11 @@ class tx_t3sportsbet_mod1_handler_MatchMove {
 		return $ret;
 	}
 	public function makePasteButton($item, $mod) {
+		$ret = '';
+		$currentMatchUid = $this->getCurrentMatch($mod);
+		if($currentMatchUid) {
+			$ret = '<b>Paste '. $currentMatchUid .'</b><br />';
+		}
 		return $ret;
 	}
 }
