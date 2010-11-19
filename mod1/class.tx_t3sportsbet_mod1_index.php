@@ -55,9 +55,9 @@ class tx_t3sportsbet_mod1_index extends t3lib_extobjbase {
 	 * @return	Array with menuitems
 	 */
 	function modMenu()	{
-	  global $LANG;
+		global $LANG;
 		return Array (
-//      "tx_lmo2cfcleague_modfunc1_check" => "",
+//			"tx_lmo2cfcleague_modfunc1_check" => "",
 		);
 	}
 	function init(&$pObj, $MCONF) {
@@ -112,6 +112,10 @@ Vorgehen
 			$this->pObj->subselector = $selector;
 		else 
 			$content .= '<div class="cfcleague_selector">'.$selector.'</div><div style="clear:both"/>';
+
+		// RequestHandler aufrufen.
+		tx_rnbase::load('tx_t3sportsbet_mod1_handler_MatchMove');
+		tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->handleRequest($this);
 
 		$menu = $this->formTool->showTabMenu($this->id, 'bettools', $this->MCONF['name'],
 				array('0' => $LANG->getLL('tab_control'), 

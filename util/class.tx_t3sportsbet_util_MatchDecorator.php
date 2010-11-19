@@ -32,6 +32,9 @@ class tx_t3sportsbet_util_MatchDecorator {
 	public function __construct($module) {
 		$this->module = $module;
 	}
+	/**
+	 * @return tx_rnbase_mod_IModule
+	 */
 	private function getModule() {
 		return $this->module;
 	}
@@ -57,16 +60,11 @@ class tx_t3sportsbet_util_MatchDecorator {
 
 	/**
 	 * 
-	 * @param tx_t3sportsbet_models_teamquestion $item
+	 * @param tx_cfcleague_models_Match $item
 	 */
 	private function createMatchCutLink($item) {
-		$options = array();
-		$options['icon'] = 'clip_cut.gif';
-		$ret .= $this->getModule()->getFormTool()->createSubmit('moveMatch', $item->getUid(),'',$options);
-
-//		"<a href=\"#\" onclick=\"return jumpSelf('/typo3/db_list.php?id=". $currentPid ."&amp;CB[el][" . $editTable
-//		. "%7C" . $recordUid . "]=1');\"><img " .t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/clip_cut.gif','width="16" height="16"'). ' title="UID: '. $recordUid . '" alt="" />' . $label .'</a>';
-		return $ret;
+		tx_rnbase::load('tx_t3sportsbet_mod1_handler_MatchMove');
+		return tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->makeLink($item, $this->getModule());
 	}
 }
 
