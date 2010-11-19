@@ -29,13 +29,22 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
  * Diese Klasse ist für die Darstellung von Spielen im Backend verantwortlich
  */
 class tx_t3sportsbet_util_MatchDecorator {
+	public function __construct($module) {
+		$this->module = $module;
+	}
+	private function getModule() {
+		return $this->module;
+	}
 
-	public function format($value, $colName) {
+	public function format($value, $colName, $record, $item) {
 		$ret = $value;
-		if($colName == 'date') {
+		if($colName == 'uid') {
+			$ret .= $this->createMatchCutLink($item);
+		}
+		elseif($colName == 'date') {
 			$ret = date('H:i d.m.y', $value);
 		}
-		if($colName == 'competition') {
+		elseif($colName == 'competition') {
 			$comp = tx_cfcleaguefe_models_competition::getInstance($value);
 			if(!is_object($comp) || !$comp->isValid()) return '';
 			$group = $comp->getGroup();
@@ -43,6 +52,20 @@ class tx_t3sportsbet_util_MatchDecorator {
 			$name = (array_key_exists('shortname', $group->record)) ? $group->record['shortname'] : '';
 			$ret = strlen($name) ? $name : $group->getName();
 		}
+		return $ret;
+	}
+
+	/**
+	 * 
+	 * @param tx_t3sportsbet_models_teamquestion $item
+	 */
+	private function createMatchCutLink($item) {
+		$options = array();
+		$options['icon'] = 'clip_cut.gif';
+		$ret .= $this->getModule()->getFormTool()->createSubmit('moveMatch', $item->getUid(),'',$options);
+
+//		"<a href=\"#\" onclick=\"return jumpSelf('/typo3/db_list.php?id=". $currentPid ."&amp;CB[el][" . $editTable
+//		. "%7C" . $recordUid . "]=1');\"><img " .t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/clip_cut.gif','width="16" height="16"'). ' title="UID: '. $recordUid . '" alt="" />' . $label .'</a>';
 		return $ret;
 	}
 }

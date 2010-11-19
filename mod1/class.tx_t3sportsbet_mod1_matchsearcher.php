@@ -122,21 +122,24 @@ class tx_t3sportsbet_mod1_matchsearcher {
 	}
 
 	function showMatches(&$content, $headline, &$matches) {
-		tx_rnbase::load('tx_cfcleague_mod1_decorator');
-		$decor = tx_rnbase::makeInstance('tx_t3sportsbet_util_MatchDecorator');
+		tx_rnbase::load('tx_rnbase_mod_Tables');
+		$decor = tx_rnbase::makeInstance('tx_t3sportsbet_util_MatchDecorator', $this->mod);
 		$columns = array(
-			'uid' => array('title' => 'label_uid'),
-			'date' => array('decorator' => $decor),
-			'home' => array('method' => 'getHomeNameShort'),
-			'guest' => array('method' => 'getGuestNameShort'),
+			'uid' => array('title' => 'label_uid', 'decorator' => $decor),
+			'date' => array('title' => 'tx_cfcleague_games.date', 'decorator' => $decor),
+			'home' => array('title' => 'tx_cfcleague_games.home', 'method' => 'getHomeNameShort'),
+			'guest' => array('title' => 'tx_cfcleague_games.guest', 'method' => 'getGuestNameShort'),
 			'competition' => array('title' => 'label_group', 'decorator' => $decor),
-			'status' => array('method' => 'getStateName'),
+			'status' => array('title' => 'tx_cfcleague_games.status', 'method' => 'getStateName'),
 			'result' => array('method' => 'getResult', 'title' => 'label_result'),
 		);
 
 		if($matches) {
-			$comp = null; // PHP ist ja sowas von erbärmlich...
-			$arr = tx_cfcleague_mod1_decorator::prepareMatches($matches, $comp, $columns, $this->formTool, $this->options);
+			global $LANG;
+			$tableName = isset($options['tablename']) ? $options['tablename'] : 'tx_cfcleague_games';
+			$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
+			tx_rnbase::load('tx_rnbase_mod_Tables');
+			$arr = tx_rnbase_mod_Tables::prepareTable($matches, $columns, $this->formTool, $this->options);
 			$out .= $this->mod->doc->table($arr[0]);
 		}
 		else {
