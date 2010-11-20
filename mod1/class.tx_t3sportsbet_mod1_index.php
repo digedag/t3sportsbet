@@ -115,7 +115,7 @@ Vorgehen
 			$content .= '<div class="cfcleague_selector">'.$selector.'</div><div style="clear:both"/>';
 
 		// RequestHandler aufrufen.
-		tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->handleRequest($this);
+		$content .= tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->handleRequest($this);
 
 		$menu = $this->formTool->showTabMenu($this->id, 'bettools', $this->MCONF['name'],
 				array('0' => $LANG->getLL('tab_control'), 
@@ -383,6 +383,9 @@ Vorgehen
   }
   public function getPid() {
   	return $this->id;
+  }
+  public function getDoc() {
+  	return $this->doc;
   }
 }
 

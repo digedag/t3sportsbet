@@ -73,7 +73,7 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base {
 	 *
 	 * @return array of tx_cfcleaguefe_models_match
 	 */
-	function getMatches() {
+	public function getMatches() {
 		$service = tx_cfcleaguefe_util_ServiceRegistry::getMatchService();
 		$fields['BETSETMM.UID_LOCAL'][OP_EQ_INT] = $this->uid;
 		$options['orderby']['BETSETMM.SORTING'] = 'asc';

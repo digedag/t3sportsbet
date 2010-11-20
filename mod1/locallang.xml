@@ -14,6 +14,7 @@
 			<label index="label_change_state">Change state</label>
 			<label index="label_create_betset">Create a new betset</label>
 			<label index="label_info">Info</label>
+			<label index="label_error">Error</label>
 			<label index="label_close">Close</label>
 			<label index="label_matchlist">List of matches</label>
 			<label index="label_save">Save</label>
@@ -52,6 +53,7 @@
 
 			<label index="label_paste_match">Paste selected match to current betset</label>
 			<label index="label_msg_paste_match">Do you really want to paste the currently selected match to this betset?</label>
+			<label index="label_msg_matchmoved">Match successfully moved to new betset.</label>
 
 			<label index="label_btn_newteambet">Create new teambet</label>
 			<label index="label_possiblepoints">Possible points</label>
@@ -98,6 +100,7 @@
 			<label index="msg_no_game_in_page">Es wurde kein Tipspiel auf der Seite gefunden.</label>
 			<label index="msg_no_betset_found">Keine Tiprunde gefunden.</label>
 			<label index="label_info">Hinweis</label>
+			<label index="label_error">Fehler</label>
 			<label index="label_close">Schließen</label>
 			<label index="label_change_state">Status ändern</label>
 			<label index="label_create_betset">Eine neue Tiprunde anlegen</label>
@@ -136,6 +139,10 @@
 			<label index="msg_join_matches">Sollen diese Spiele wirklich zugeordnet werden?</label>
 			<label index="label_editbetgame">Tipspiel bearbeiten</label>
 			<label index="label_roundnamedefault">. Tiprunde</label>
+
+			<label index="label_paste_match">Ausgewähltes Spiel in aktuelle Tipprunde einfügen.</label>
+			<label index="label_msg_paste_match">Wollen Sie das ausgewählte Spiel wirklich in aktuelle Tipprunde einfügen?</label>
+			<label index="label_msg_matchmoved">Das Spiel wurde erfolgreich in die neue Tipprunde eingefügt.</label>
 
 			<label index="label_btn_newteambet">Neue Teamfrage anlegen</label>
 			<label index="label_possiblepoints">Mögliche Punkte</label>

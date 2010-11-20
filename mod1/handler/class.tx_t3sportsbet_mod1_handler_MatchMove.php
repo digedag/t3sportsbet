@@ -56,24 +56,27 @@ class tx_t3sportsbet_mod1_handler_MatchMove {
 	 * @param int $betset
 	 * @param tx_rnbase_mod_IModule $mod
 	 */
-	private function handlePaste($betsetUid, $mod) {
-		$currentMatch = $this->getCurrentMatch($mod);
-		$data = t3lib_div::intExplode('_', $currentMatch);
+	private function handlePaste($newBetsetUid, $mod) {
+		$currentToken = $this->getCurrentMatch($mod);
+		list($oldBetsetUid, $matchUid) = t3lib_div::intExplode('_', $currentToken);
 		try {
-			tx_t3sportsbet_util_serviceRegistry::getBetService()->moveMatch($betsetUid, $data[1], $data[0]);
+			tx_t3sportsbet_util_serviceRegistry::getBetService()->moveMatch($newBetsetUid, $oldBetsetUid, $matchUid);
 		}
 		catch(Exception $e) {
-			t3lib_div::debug($e, 'class.tx_t3sportsbet_mod1_handler_MatchMove.php '); // TODO: remove me			
+			return $mod->getDoc()->section('###LABEL_ERROR###',$e->getMessage(),0,1,ICON_FATAL);
 		}
+		// Reset cutted matches
+		$this->handleCut(0, $mod);
+		return $mod->getDoc()->section('###LABEL_MSG_MATCHMOVED###','',0,1,ICON_INFO);
 	}
 	/**
 	 * 
 	 * @param tx_rnbase_mod_IModule $mod
 	 */
-	private function handleCut($matchUid, $mod) {
+	private function handleCut($matchToken, $mod) {
 		// Dieses Spiel in den Speicher legen
 		$key = 'doCutMatch';
-		$changed[$key] = $matchUid;
+		$changed[$key] = $matchToken;
 		t3lib_BEfunc::getModuleData(array ($key => ''), $changed, $mod->getName() );
 	}
 	private function getCurrentMatch($mod) {
@@ -89,14 +92,14 @@ class tx_t3sportsbet_mod1_handler_MatchMove {
 	public function makeCutLink($item, $betset, $mod) {
 		$currentMatch = $this->getCurrentMatch($mod);
 		$options = array();
-		$key = $item->getUid().'_'.$betset->getUid();
+		$key = $betset->getUid().'_'.$item->getUid();
 		if($currentMatch != $key) {
 			$options['icon'] = 'clip_cut.gif';
 			$ret .= $mod->getFormTool()->createSubmit('doCutMatch', $key,'',$options);
 		}
 		else {
 			$label = '<span class="t3-icon t3-icon-actions t3-icon-actions-edit t3-icon-edit-cut-release"></span>';
-			$ret .= $mod->getFormTool()->createLink('&doReleaseMatch=0', $mod->getPid(),$label,$options);
+			$ret .= $mod->getFormTool()->createLink('&doReleaseMatch=true', $mod->getPid(),$label,$options);
 		}
 
 		return $ret;
@@ -108,15 +111,19 @@ class tx_t3sportsbet_mod1_handler_MatchMove {
 	 */
 	public function makePasteButton($item, $mod) {
 		$ret = '';
-		$currentMatchUid = $this->getCurrentMatch($mod);
-		if($currentMatchUid) {
-			$options = array();
-			$options['confirm'] = $GLOBALS['LANG']->getLL('label_msg_paste_match');
-			$options['hover'] = '###LABEL_PASTE_MATCH###';
-			$label = '<span class="t3-icon t3-icon-actions t3-icon-actions-document t3-icon-document-paste-after"></span>';
-			$label .= '###LABEL_PASTE_MATCH###<br />';
-			$ret .= $mod->getFormTool()->createLink('&doPasteMatch='.$item->getUid(), $mod->getPid(),$label,$options);
-		}
+		$currentToken = $this->getCurrentMatch($mod);
+		if(!$currentToken) return $ret;
+		list($currentBetsetUid, $currentMatchUid) = t3lib_div::intExplode('_', $currentToken);
+
+		$uids = tx_t3sportsbet_util_serviceRegistry::getBetService()->findMatchUidsByBetSet($item);
+		if(t3lib_div::inArray($uids, $currentMatchUid)) return $ret;
+
+		$options = array();
+		$options['confirm'] = $GLOBALS['LANG']->getLL('label_msg_paste_match');
+		$options['hover'] = '###LABEL_PASTE_MATCH###';
+		$label = '<span class="t3-icon t3-icon-actions t3-icon-actions-document t3-icon-document-paste-after"></span>';
+		$label .= '###LABEL_PASTE_MATCH###<br />';
+		$ret .= $mod->getFormTool()->createLink('&doPasteMatch='.$item->getUid(), $mod->getPid(),$label,$options);
 		return $ret;
 	}
 }

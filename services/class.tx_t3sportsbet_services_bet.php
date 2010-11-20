@@ -125,12 +125,40 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 	 * @param int $newBetsetUid
 	 * @param int $oldBetsetUid
 	 * @param int $matchUid
+	 * @return int number of bets moved
 	 */
 	public function moveMatch($newBetsetUid, $oldBetsetUid, $matchUid) {
 		// Zuordnung Spiel im neuen Betset anlegen -> Exception, wenn schon vorhanden
+		$newBetSet = tx_rnbase::makeInstance('tx_t3sportsbet_models_betset', $newBetsetUid);
+		$matchesInNewBetSet = $this->findMatchUidsByBetSet($newBetSet);
+		if(t3lib_div::inArray($matchesInNewBetSet, $matchUid)) {
+			throw new Exception('Match is already in betset');
+		}
 		// Zuordnung Spiel im alten Betset entfernen
+		$where = 'uid_local='.$oldBetsetUid. ' AND uid_foreign='.$matchUid .' AND tablenames=\'tx_cfcleague_games\'';
+		$rows = tx_rnbase_util_DB::doUpdate('tx_t3sportsbet_betsets_mm', $where, array('uid_local'=>$newBetsetUid));
+		if($rows == 0)
+			throw new Exception('Match ('.$matchUid.') not found in old betset ('.$oldBetsetUid.')!');
 		// Alle Bets auf das neue Betset umstellen
-		t3lib_div::debug(array($newBetsetUid, $oldBetsetUid, $matchUid), 'class.tx_t3sportsbet_services_bet.php '); // TODO: remove me
+		$where = 'betset='.$oldBetsetUid. ' AND t3match='.$matchUid;
+		$rows = tx_rnbase_util_DB::doUpdate('tx_t3sportsbet_bets', $where, array('betset'=>$newBetsetUid));
+		return $rows;
+	}
+	/**
+	 * Return an array with all match uids of a betset
+	 * @param tx_t3sportsbet_models_betset $betset
+	 */
+	public function findMatchUidsByBetSet($betset) {
+		$betsetUid = is_object($betset) ? $betset->getUid() : intval($betset);
+		$service = tx_cfcleaguefe_util_ServiceRegistry::getMatchService();
+		$fields['BETSETMM.UID_LOCAL'][OP_EQ_INT] = $betsetUid;
+		$options['orderby']['BETSETMM.SORTING'] = 'asc';
+		$options['what'] = 'uid';
+		$result = $service->search($fields, $options);
+		$ret = array();
+		for($i=0, $cnt=count($result); $i < $cnt; $i++)
+			$ret[] = $result[$i]['uid'];
+		return $ret;
 	}
 	/**
 	 * Reset bets for a given match on a given betset
