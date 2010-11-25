@@ -118,11 +118,14 @@ class tx_t3sportsbet_mod1_handler_MatchMove {
 		$uids = tx_t3sportsbet_util_serviceRegistry::getBetService()->findMatchUidsByBetSet($item);
 		if(t3lib_div::inArray($uids, $currentMatchUid)) return $ret;
 
+		$match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $currentMatchUid);
+		$matchInfo = $match->getHome()->getName() . '-' . $match->getGuest()->getName();
+		$matchInfo = sprintf($GLOBALS['LANG']->getLL('label_paste_match'), $matchInfo);
 		$options = array();
 		$options['confirm'] = $GLOBALS['LANG']->getLL('label_msg_paste_match');
-		$options['hover'] = '###LABEL_PASTE_MATCH###';
+		$options['hover'] = $matchInfo;
 		$label = '<span class="t3-icon t3-icon-actions t3-icon-actions-document t3-icon-document-paste-after"></span>';
-		$label .= '###LABEL_PASTE_MATCH###<br />';
+		$label .= $matchInfo.'<br />';
 		$ret .= $mod->getFormTool()->createLink('&doPasteMatch='.$item->getUid(), $mod->getPid(),$label,$options);
 		return $ret;
 	}

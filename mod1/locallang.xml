@@ -51,7 +51,7 @@
 			<label index="label_editbetgame">Edit betgame</label>
 			<label index="label_roundnamedefault">. round</label>
 
-			<label index="label_paste_match">Paste selected match to current betset</label>
+			<label index="label_paste_match">Paste selected match %s to current betset</label>
 			<label index="label_msg_paste_match">Do you really want to paste the currently selected match to this betset?</label>
 			<label index="label_msg_matchmoved">Match successfully moved to new betset.</label>
 
