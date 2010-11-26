@@ -140,7 +140,7 @@
 			<label index="label_editbetgame">Tipspiel bearbeiten</label>
 			<label index="label_roundnamedefault">. Tiprunde</label>
 
-			<label index="label_paste_match">Ausgewähltes Spiel in aktuelle Tipprunde einfügen.</label>
+			<label index="label_paste_match">Ausgewähltes Spiel %s in aktuelle Tipprunde einfügen.</label>
 			<label index="label_msg_paste_match">Wollen Sie das ausgewählte Spiel wirklich in aktuelle Tipprunde einfügen?</label>
 			<label index="label_msg_matchmoved">Das Spiel wurde erfolgreich in die neue Tipprunde eingefügt.</label>
 
