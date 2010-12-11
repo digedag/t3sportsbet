@@ -1,6 +1,9 @@
 Changelog
 ---------
 
+v0.4.5 (11.12.2010)
+ * Bugfix: Adding matches to betset fixed
+
 v0.4.4 (23.11.2010)
  * It is possible to move a match from one betset to another
 
