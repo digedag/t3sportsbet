@@ -270,6 +270,7 @@ Vorgehen
 		if($button) {
 			$betsUpdated = tx_t3sportsbet_util_serviceRegistry::getBetService()->analyzeBets($betGame);
 			$betsUpdated += tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->analyzeBets($betGame);
+			tx_t3sportsbet_util_serviceRegistry::getBetService()->updateBetsetResultsByGame($betGame);
 			$out .= $GLOBALS['LANG']->getLL('msg_bets_finished') . ':' . $betsUpdated;
 		}
 		return $out;

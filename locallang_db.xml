@@ -62,6 +62,8 @@
 			<label index="tx_t3sportsbet_bets.points">Points</label>
 			<label index="tx_t3sportsbet_bets.finished">Finished</label>
 
+			<label index="tx_t3sportsbet_betsetresults">T3sports bet set result</label>
+
 			<label index="tx_t3sportsbet_teamquestions">T3sports team question</label>
 			<label index="tx_t3sportsbet_teamquestions_question">Question</label>
 			<label index="tx_t3sportsbet_teamquestions_openuntil">Open until</label>

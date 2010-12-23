@@ -71,6 +71,86 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 		$options['where'] = 'tx_t3sportsbet_betsets.betgame = ' . intval($betgame->uid);
 		return tx_rnbase_util_DB::doSelect('tx_t3sportsbet_betsets_mm.uid_foreign as uid',$from, $options, 0);
 	}
+
+	/**
+	 * Fill table betsetresults with values for all bets of a betgame
+	 * @param tx_t3sportsbet_betgame $betGame
+	 */
+	public function updateBetsetResultsByGame(tx_t3sportsbet_models_betgame $betGame) {
+
+		$betgameWhere = 'tx_t3sportsbet_betsets.betgame='.$betGame->getUid(). 
+			' AND (tx_t3sportsbet_betsets.status = 1 OR (tx_t3sportsbet_betsets.status = 2 AND tx_t3sportsbet_betsets.hasresults = 0))';
+
+		// Remove old data
+		$delWhere = 'tx_t3sportsbet_betsetresults.betset IN('.
+			'SELECT uid FROM tx_t3sportsbet_betsets WHERE '.$betgameWhere.' )';
+		
+		tx_rnbase_util_DB::doDelete('tx_t3sportsbet_betsetresults', $delWhere);
+
+		$sqlQuery = '
+INSERT INTO tx_t3sportsbet_betsetresults (feuser,points,betset,bets,pid,tstamp,crdate) 
+SELECT feuser, sum(points), betset, count(bets),'.$betGame->record['pid'].', UNIX_TIMESTAMP(),UNIX_TIMESTAMP() FROM (
+  SELECT b.fe_user AS feuser, b.points, b.betset, b.uid AS bets
+   FROM `tx_t3sportsbet_bets` As b 
+     JOIN tx_t3sportsbet_betsets ON tx_t3sportsbet_betsets.UID = b.betset
+   WHERE '.$betgameWhere.'
+  UNION
+  SELECT tb.feuser, tb.points, tq.betset, tb.uid AS bets
+   FROM `tx_t3sportsbet_teambets` tb 
+     JOIN tx_t3sportsbet_teamquestions tq ON tb.question = tq.uid
+     JOIN tx_t3sportsbet_betsets ON tx_t3sportsbet_betsets.UID = tq.betset
+   WHERE '.$betgameWhere.' '.tx_rnbase_util_DB::enableFields('tx_t3sportsbet_teamquestions', 0, 'tq').'
+) AS dt 
+GROUP BY feuser, betset
+';
+		$ok = tx_rnbase_util_DB::doQuery($sqlQuery, 1);
+/*
+
+
+SELECT feuser, sum(points), betset FROM (
+  SELECT b.fe_user AS feuser, b.points, b.betset
+   FROM `tx_t3sportsbet_bets` As b
+  UNION
+  SELECT tb.feuser, tb.points, tq.betset
+   FROM `tx_t3sportsbet_teambets` tb JOIN tx_t3sportsbet_teamquestions tq ON tb.question = tq.uid
+) AS dt
+
+GROUP BY feuser, betset
+
+*/
+	}
+
+	/**
+	 * Fill table betsetresults with values for all bets of a single betset
+	 * @param tx_t3sportsbet_betgame $betGame
+	 */
+	public function updateBetsetResultsByBetset(tx_t3sportsbet_models_betset $betset) {
+
+		$betgameWhere = 'tx_t3sportsbet_betsets.betgame='.$betGame->getUid(). 
+			' AND (tx_t3sportsbet_betsets.status = 1 OR (tx_t3sportsbet_betsets.status = 2 AND tx_t3sportsbet_betsets.hasresults = 0))';
+
+		// Remove old data
+		$delWhere = 'tx_t3sportsbet_betsetresults.betset = '.$betset->getUid();
+		
+		tx_rnbase_util_DB::doDelete('tx_t3sportsbet_betsetresults', $delWhere);
+
+		$sqlQuery = '
+INSERT INTO tx_t3sportsbet_betsetresults (feuser,points,betset,bets,pid,tstamp,crdate) 
+SELECT feuser, sum(points), betset, count(bets),'.$betset->record['pid'].', UNIX_TIMESTAMP(),UNIX_TIMESTAMP() FROM (
+  SELECT b.fe_user AS feuser, b.points, b.betset, b.uid AS bets
+   FROM `tx_t3sportsbet_bets` As b 
+   WHERE b.betset='.$betGame->getUid().'
+  UNION
+  SELECT tb.feuser, tb.points, tq.betset, tb.uid AS bets
+   FROM `tx_t3sportsbet_teambets` tb 
+     JOIN tx_t3sportsbet_teamquestions tq ON tb.question = tq.uid
+   WHERE tq.betset='.$betGame->getUid().' AND '.tx_rnbase_util_DB::enableFields('tx_t3sportsbet_teamquestions', 0, 'tq').'
+) AS dt 
+GROUP BY feuser, betset
+';
+		$ok = tx_rnbase_util_DB::doQuery($sqlQuery, 0);
+	}
+
 	/**
 	 * Analyze bets of a betgame
 	 *

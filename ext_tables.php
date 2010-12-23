@@ -47,6 +47,28 @@ $TCA['tx_t3sportsbet_betsets'] = Array (
 	)
 );
 
+$TCA['tx_t3sportsbet_betsetresults'] = Array (
+	'ctrl' => Array (
+		'title' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsetresults',
+		'label' => 'uid',
+		'label_alt' => 'betset, feuser',
+		'label_alt_force' => 1,
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'sortby' => 'crdate desc',
+		'delete' => 'deleted',
+		'enablecolumns' => Array (
+			'disabled' => 'hidden',
+		),
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_table.gif',
+	),
+	'feInterface' => Array (
+		'fe_admin_fieldList' => '',
+	)
+);
+
 $TCA['tx_t3sportsbet_bets'] = Array (
 	'ctrl' => Array (
 		'title' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_bets',
@@ -76,6 +98,7 @@ $TCA['tx_t3sportsbet_teamquestions'] = Array (
 		'sortby' => 'tstamp',
 		'delete' => 'deleted',
 		'enablecolumns' => Array (
+			'disabled' => 'hidden',
 		),
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca_teamquest.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_table.gif',
