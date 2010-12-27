@@ -32,10 +32,14 @@ class tx_t3sportsbet_hooks_searchFeuser {
 
 	function getTableMapping($params, $parent) {
 		$params['tableMapping']['BET'] = 'tx_t3sportsbet_bets';
+		$params['tableMapping']['BETSETRESULT'] = 'tx_t3sportsbet_betsetresults';
 	}
 	function getJoins($params, $parent) {
 		if(isset($params['tableAliases']['BET'])) {
 			$params['join'] .= ' INNER JOIN tx_t3sportsbet_bets ON fe_users.uid = tx_t3sportsbet_bets.fe_user ';
+		}
+		if(isset($params['tableAliases']['BETSETRESULT'])) {
+			$params['join'] .= ' INNER JOIN tx_t3sportsbet_betsetresults ON fe_users.uid = tx_t3sportsbet_betsetresults.feuser ';
 		}
 	}
 }

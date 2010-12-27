@@ -372,18 +372,26 @@ GROUP BY feuser, betset
 	 * @param string $betsetUids comma separated uids of betsets
 	 * @param string $feuserUids comma separated uids of feuserUids to mark
 	 */
-	function getResults($betsetUids, $feuserUids='0') {
-		if($betsetUids) $fields['BET.BETSET'][OP_IN_INT] = $betsetUids;
-		$fields['BET.FE_USER'][OP_GT_INT] = 0;
+	public function getResults($betsetUids, $feuserUids='0') {
+//		if($betsetUids) $fields['BET.BETSET'][OP_IN_INT] = $betsetUids;
+//		$fields['BET.FE_USER'][OP_GT_INT] = 0;
+
+		if($betsetUids) $fields['BETSETRESULT.BETSET'][OP_IN_INT] = $betsetUids;
+		$fields['BETSETRESULT.FEUSER'][OP_GT_INT] = 0;
+
 		$options['distinct'] = 1;
+//		$options['what'] = '
+//		fe_users.uid, sum(tx_t3sportsbet_bets.points) AS betpoints,
+//		sum(tx_t3sportsbet_bets.finished) AS betcount
+//		';
 		$options['what'] = '
-		fe_users.uid, sum(tx_t3sportsbet_bets.points) AS betpoints,
-		sum(tx_t3sportsbet_bets.finished) AS betcount
+		fe_users.uid, sum(tx_t3sportsbet_betsetresults.points) AS betpoints,
+		sum(tx_t3sportsbet_betsetresults.bets) AS betcount
 		';
 
 		$options['orderby']['betpoints'] = 'desc';
 		$options['groupby'] = 'fe_users.uid';
-//		$options['debug'] = '1';
+		$options['debug'] = '1';
 		$userSrv = tx_t3users_util_ServiceRegistry::getFeUserService();
 		$rows = $userSrv->search($fields, $options);
 
@@ -411,14 +419,19 @@ GROUP BY feuser, betset
 			1 => $userIdx,
 		);
 	}
-	function searchBet($fields, $options) {
+	public function searchBet($fields, $options) {
   	tx_rnbase::load('tx_rnbase_util_SearchBase');
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_t3sportsbet_search_Bet');
 		return $searcher->search($fields, $options);
   }
-	function searchBetSet($fields, $options) {
+	public function searchBetSet($fields, $options) {
   	tx_rnbase::load('tx_rnbase_util_SearchBase');
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_t3sportsbet_search_BetSet');
+		return $searcher->search($fields, $options);
+  }
+	public function searchBetSetResult($fields, $options) {
+  	tx_rnbase::load('tx_rnbase_util_SearchBase');
+		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_t3sportsbet_search_BetSetResult');
 		return $searcher->search($fields, $options);
   }
   /**
