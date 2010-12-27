@@ -391,7 +391,7 @@ GROUP BY feuser, betset
 
 		$options['orderby']['betpoints'] = 'desc';
 		$options['groupby'] = 'fe_users.uid';
-		$options['debug'] = '1';
+//		$options['debug'] = '1';
 		$userSrv = tx_t3users_util_ServiceRegistry::getFeUserService();
 		$rows = $userSrv->search($fields, $options);
 
