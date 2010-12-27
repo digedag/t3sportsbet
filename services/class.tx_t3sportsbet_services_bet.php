@@ -78,24 +78,26 @@ class tx_t3sportsbet_services_bet extends t3lib_svbase  {
 	 */
 	public function updateBetsetResultsByGame(tx_t3sportsbet_models_betgame $betGame) {
 
+		// Die Spalte hasresults ist für den Update von älteren Daten vor Einführung der Tabelle
+		// tx_t3sportsbet_betsetresults notwendig.
 		$betgameWhere = 'tx_t3sportsbet_betsets.betgame='.$betGame->getUid(). 
 			' AND (tx_t3sportsbet_betsets.status = 1 OR (tx_t3sportsbet_betsets.status = 2 AND tx_t3sportsbet_betsets.hasresults = 0))';
 
 		// Remove old data
 		$delWhere = 'tx_t3sportsbet_betsetresults.betset IN('.
 			'SELECT uid FROM tx_t3sportsbet_betsets WHERE '.$betgameWhere.' )';
-		
+
 		tx_rnbase_util_DB::doDelete('tx_t3sportsbet_betsetresults', $delWhere);
 
 		$sqlQuery = '
 INSERT INTO tx_t3sportsbet_betsetresults (feuser,points,betset,bets,pid,tstamp,crdate) 
 SELECT feuser, sum(points), betset, count(bets),'.$betGame->record['pid'].', UNIX_TIMESTAMP(),UNIX_TIMESTAMP() FROM (
-  SELECT b.fe_user AS feuser, b.points, b.betset, b.uid AS bets
+  SELECT b.uid, b.fe_user AS feuser, b.points, b.betset, b.uid AS bets
    FROM `tx_t3sportsbet_bets` As b 
      JOIN tx_t3sportsbet_betsets ON tx_t3sportsbet_betsets.UID = b.betset
    WHERE '.$betgameWhere.'
   UNION
-  SELECT tb.feuser, tb.points, tq.betset, tb.uid AS bets
+  SELECT tb.uid, tb.feuser, tb.points, tq.betset, tb.uid AS bets
    FROM `tx_t3sportsbet_teambets` tb 
      JOIN tx_t3sportsbet_teamquestions tq ON tb.question = tq.uid
      JOIN tx_t3sportsbet_betsets ON tx_t3sportsbet_betsets.UID = tq.betset
@@ -104,6 +106,11 @@ SELECT feuser, sum(points), betset, count(bets),'.$betGame->record['pid'].', UNI
 GROUP BY feuser, betset
 ';
 		$ok = tx_rnbase_util_DB::doQuery($sqlQuery);
+
+		// Jetzt die Spalte hasresults füllen
+		$values = array('hasresults' => 1);
+		tx_rnbase_util_DB::doUpdate('tx_t3sportsbet_betsets', $betgameWhere, $values);
+
 /*
 
 
@@ -136,12 +143,12 @@ GROUP BY feuser, betset
 
 		$sqlQuery = '
 INSERT INTO tx_t3sportsbet_betsetresults (feuser,points,betset,bets,pid,tstamp,crdate) 
-SELECT feuser, sum(points), betset, count(bets),'.$betset->record['pid'].', UNIX_TIMESTAMP(),UNIX_TIMESTAMP() FROM (
-  SELECT b.fe_user AS feuser, b.points, b.betset, b.uid AS bets
+SELECT feuser, sum(points), betset, sum(bets),'.$betset->record['pid'].', UNIX_TIMESTAMP(),UNIX_TIMESTAMP() FROM (
+  SELECT b.uid, b.fe_user AS feuser, b.points, b.betset, b.finished AS bets
    FROM `tx_t3sportsbet_bets` As b 
    WHERE b.betset='.$betGame->getUid().'
   UNION
-  SELECT tb.feuser, tb.points, tq.betset, tb.uid AS bets
+  SELECT tb.uid, tb.feuser, tb.points, tq.betset, tb.finished AS bets
    FROM `tx_t3sportsbet_teambets` tb 
      JOIN tx_t3sportsbet_teamquestions tq ON tb.question = tq.uid
    WHERE tq.betset='.$betGame->getUid().' AND '.tx_rnbase_util_DB::enableFields('tx_t3sportsbet_teamquestions', 0, 'tq').'
@@ -149,6 +156,10 @@ SELECT feuser, sum(points), betset, count(bets),'.$betset->record['pid'].', UNIX
 GROUP BY feuser, betset
 ';
 		$ok = tx_rnbase_util_DB::doQuery($sqlQuery);
+
+		// Jetzt die Spalte hasresults füllen
+		$values = array('hasresults' => 1);
+		tx_rnbase_util_DB::doUpdate('tx_t3sportsbet_betsets', $betgameWhere, $values);
 	}
 
 	/**
@@ -373,22 +384,24 @@ GROUP BY feuser, betset
 	 * @param string $feuserUids comma separated uids of feuserUids to mark
 	 */
 	public function getResults($betsetUids, $feuserUids='0') {
-//		if($betsetUids) $fields['BET.BETSET'][OP_IN_INT] = $betsetUids;
-//		$fields['BET.FE_USER'][OP_GT_INT] = 0;
-
-		if($betsetUids) $fields['BETSETRESULT.BETSET'][OP_IN_INT] = $betsetUids;
-		$fields['BETSETRESULT.FEUSER'][OP_GT_INT] = 0;
+		if($_GET['resultmode'] == 'old') {
+			if($betsetUids) $fields['BET.BETSET'][OP_IN_INT] = $betsetUids;
+			$fields['BET.FE_USER'][OP_GT_INT] = 0;
+				$options['what'] = '
+				fe_users.uid, sum(tx_t3sportsbet_bets.points) AS betpoints,
+				sum(tx_t3sportsbet_bets.finished) AS betcount
+				';
+		}
+		else {
+			if($betsetUids) $fields['BETSETRESULT.BETSET'][OP_IN_INT] = $betsetUids;
+			$fields['BETSETRESULT.FEUSER'][OP_GT_INT] = 0;
+			$options['what'] = '
+			fe_users.uid, sum(tx_t3sportsbet_betsetresults.points) AS betpoints,
+			sum(tx_t3sportsbet_betsetresults.bets) AS betcount
+			';
+		}
 
 		$options['distinct'] = 1;
-//		$options['what'] = '
-//		fe_users.uid, sum(tx_t3sportsbet_bets.points) AS betpoints,
-//		sum(tx_t3sportsbet_bets.finished) AS betcount
-//		';
-		$options['what'] = '
-		fe_users.uid, sum(tx_t3sportsbet_betsetresults.points) AS betpoints,
-		sum(tx_t3sportsbet_betsetresults.bets) AS betcount
-		';
-
 		$options['orderby']['betpoints'] = 'desc';
 		$options['groupby'] = 'fe_users.uid';
 //		$options['debug'] = '1';
