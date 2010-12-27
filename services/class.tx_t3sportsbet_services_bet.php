@@ -103,7 +103,7 @@ SELECT feuser, sum(points), betset, count(bets),'.$betGame->record['pid'].', UNI
 ) AS dt 
 GROUP BY feuser, betset
 ';
-		$ok = tx_rnbase_util_DB::doQuery($sqlQuery, 1);
+		$ok = tx_rnbase_util_DB::doQuery($sqlQuery);
 /*
 
 
@@ -148,7 +148,7 @@ SELECT feuser, sum(points), betset, count(bets),'.$betset->record['pid'].', UNIX
 ) AS dt 
 GROUP BY feuser, betset
 ';
-		$ok = tx_rnbase_util_DB::doQuery($sqlQuery, 0);
+		$ok = tx_rnbase_util_DB::doQuery($sqlQuery);
 	}
 
 	/**
