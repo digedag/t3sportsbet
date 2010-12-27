@@ -1,8 +1,8 @@
 Changelog
 ---------
 
-v0.4.6 (??.12.2010)
- * Teambet results will be included in highscore list.
+v0.4.6 (27.12.2010)
+ * Teambet results will be included in highscore list. It is necessary to reanalyze all betgames!
 
 v0.4.5 (11.12.2010)
  * Bugfix: Adding matches to betset fixed
