@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2012 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,6 +26,8 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 require_once(PATH_t3lib.'class.t3lib_svbase.php');
 
 tx_rnbase::load('tx_t3sportsbet_util_library');
+tx_rnbase::load('tx_rnbase_util_Misc');
+
 
 define('T3SPORTSBET_OPEN',1);
 define('T3SPORTSBET_CLOSED',2);
@@ -187,6 +189,9 @@ GROUP BY feuser, betset
 			tx_rnbase_util_DB::doUpdate('tx_t3sportsbet_bets', $where, $values, 0);
 			$ret++;
 		}
+		// Hook to inform about updated bets
+		tx_rnbase_util_Misc::callHook('t3sportsbet','srv_Bet_analysebets_finished_hook',
+			array('calculatedBets' => $ret, 'betgame'=>$betGame), $this);
 		return $ret;
 	}
 	/**
