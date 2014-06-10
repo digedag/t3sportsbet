@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2014 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,6 +28,7 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_view_Base');
 tx_rnbase::load('tx_rnbase_util_BaseMarker');
 tx_rnbase::load('tx_rnbase_util_ListBuilder');
+tx_rnbase::load('tx_rnbase_util_Templates');
 
 
 /**
@@ -46,7 +47,7 @@ class tx_t3sportsbet_views_HighScore extends tx_rnbase_view_Base {
 		$selectItems = $viewData->offsetGet('betset_select');
 		$selectItems = is_array($selectItems) ? $selectItems : array();
 		$template = $this->addScope($template, $viewData, $selectItems, 'highscore.betset.', 'BETSET', $formatter);
-		
+
 		// Wir haben jetzt erstmal nur die UIDs und die Punktezahl. Die Nutzerdaten müssen erst geladen werden
 		$users = $this->getUsers($userPoints, $userSize);
 		$listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
@@ -58,23 +59,26 @@ class tx_t3sportsbet_views_HighScore extends tx_rnbase_view_Base {
 		$subpartArray['###CURRUSER###'] = $this->_addCurrUser($currUserPoints,
 						$formatter->cObj->getSubpart($template,'###CURRUSER###'),
 						$formatter, 'currUser.', 'CURRUSER');
-		$template = $formatter->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray,$wrappedSubpartArray);
+		$template = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray,$wrappedSubpartArray);
 
 		$params['confid'] = 'highscore.';
 		$params['betgame'] = $betgame;
 		$markerArray = array();	$subpartArray = array();	$wrappedSubpartArray = array();
-		
+
 		tx_rnbase_util_BaseMarker::callModules($template, $markerArray, $subpartArray, $wrappedSubpartArray, $params, $formatter);
-		$out = $formatter->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray,$wrappedSubpartArray);
+		$out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray,$wrappedSubpartArray);
 		return $out;
 	}
-	function _addCurrUser($currUserPoints, $template, &$formatter, $confId, $marker) {
+	protected function _addCurrUser($currUserPoints, $template, &$formatter, $confId, $marker) {
+		if(!isset($currUserPoints['uid']) || !$currUserPoints['uid'])
+			return '';
 		$feuser = tx_t3users_models_feuser::getInstance($currUserPoints['uid']);
-		if(!$feuser->isValid()) return '';
+		if(!$feuser->isValid())
+			return '';
 		$this->setAddUserData($feuser, $currUserPoints);
 
 		$markerArray = $formatter->getItemMarkerArrayWrapped($feuser->record, $confId , 0, $marker.'_',$feuser->getColumnNames());
-		$template = $formatter->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray,$wrappedSubpartArray);
+		$template = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray,$wrappedSubpartArray);
 		return $template;
 	}
 	/**
@@ -83,9 +87,10 @@ class tx_t3sportsbet_views_HighScore extends tx_rnbase_view_Base {
 	 * @param array $userPoints
 	 * @return array
 	 */
-	function getUsers($userPoints, $userSize) {
+	protected function getUsers($userPoints, $userSize) {
 		$users = array();
 		for($i=0, $cnt=count($userPoints); $i < $cnt; $i++) {
+			// Wenn hier ein User gelöscht wurde, dann... :-(
 			$feuser = tx_t3users_models_feuser::getInstance($userPoints[$i]['uid']);
 			$this->setAddUserData($feuser, $userPoints[$i]);
 //			$feuser->record['betpoints'] = $userPoints[$i]['betpoints'];
@@ -95,7 +100,7 @@ class tx_t3sportsbet_views_HighScore extends tx_rnbase_view_Base {
 		}
 		return $users;
 	}
-	function setAddUserData(&$feuser, $data) {
+	protected function setAddUserData(&$feuser, $data) {
 		$feuser->record['betpoints'] = $data['betpoints'];
 		$feuser->record['betrank'] = $data['rank'];
 		$feuser->record['betmark'] = $data['mark'];
@@ -118,7 +123,7 @@ class tx_t3sportsbet_views_HighScore extends tx_rnbase_view_Base {
 
 	/**
 	 * Subpart der im HTML-Template geladen werden soll. Dieser wird der Methode
-	 * createOutput automatisch als $template übergeben. 
+	 * createOutput automatisch als $template übergeben.
 	 *
 	 * @return string
 	 */
@@ -130,4 +135,3 @@ class tx_t3sportsbet_views_HighScore extends tx_rnbase_view_Base {
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/views/class.tx_t3sportsbet_views_HighScore.php']){
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/views/class.tx_t3sportsbet_views_HighScore.php']);
 }
-?>
