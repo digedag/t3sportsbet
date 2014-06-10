@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2014 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,6 +24,7 @@
 
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_t3users_util_FeUserMarker');
+tx_rnbase::load('tx_rnbase_util_Templates');
 
 
 /**
@@ -47,7 +48,7 @@ class tx_t3sportsbet_util_FeUserMarker extends tx_t3users_util_FeUserMarker {
 		$subpartArray = array();
 		$this->prepareLinks($feuser, $marker, $markerArray, $subpartArray, $wrappedSubpartArray, $confId, $formatter);
 
-		$out = $formatter->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
+		$out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
 		return $out;
 	}
 
@@ -61,7 +62,7 @@ class tx_t3sportsbet_util_FeUserMarker extends tx_t3users_util_FeUserMarker {
 	 * @param string $confId
 	 * @param tx_rnbase_util_FormatUtil $formatter
 	 */
-	private function prepareLinks(&$feuser, $marker, &$markerArray, &$subpartArray, &$wrappedSubpartArray, $confId, &$formatter) {
+	protected function prepareLinks(&$feuser, $marker, &$markerArray, &$subpartArray, &$wrappedSubpartArray, $confId, &$formatter) {
 		$this->initLink($markerArray, $subpartArray, $wrappedSubpartArray, $formatter, $confId, 'bets', $marker, array('feuserId' => $feuser->uid));
 	}
 
