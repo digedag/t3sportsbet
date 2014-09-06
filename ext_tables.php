@@ -144,7 +144,10 @@ t3lib_extMgm::addStaticFile($_EXTKEY,'static/ts/', 'T3sports Bet-System');
 t3lib_extMgm::addStaticFile($_EXTKEY,'static/css/', 'T3sports Bet-System (CSS)');
 
 # Add plugin wizard
-if (TYPO3_MODE=='BE')	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_t3sportsbet_util_Wizicon'] = t3lib_extMgm::extPath($_EXTKEY).'util/class.tx_t3sportsbet_util_Wizicon.php';
+if (TYPO3_MODE=='BE')	{
+	tx_rnbase::load('tx_rnbase_util_Wizicon');
+	tx_rnbase_util_Wizicon::addWizicon('tx_t3sportsbet_util_Wizicon', t3lib_extMgm::extPath($_EXTKEY).'util/class.tx_t3sportsbet_util_Wizicon.php');
+}
 
 ////////////////////////////////
 // Submodul anmelden

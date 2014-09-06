@@ -24,8 +24,6 @@
 
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
-require_once (PATH_t3lib.'class.t3lib_basicfilefunc.php');
-
 require_once(t3lib_extMgm::extPath('cfc_league').'class.tx_cfcleague.php');
 
 tx_rnbase::load('tx_cfcleague_mod1_decorator');
