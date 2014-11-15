@@ -107,7 +107,7 @@ class tx_t3sportsbet_mod1_addMatches {
 	 */
 	private function handleAddCompetition() {
 //		$out = '';
-		
+
 		$buttonPressed = strlen(t3lib_div::_GP('updateBetgame')) > 0; // Wurde der Submit-Button gedrückt?
 		if($buttonPressed) {
 			$data = t3lib_div::_GP('data');
@@ -126,7 +126,6 @@ class tx_t3sportsbet_mod1_addMatches {
 		$match2set = strlen(t3lib_div::_GP('match2betset')) > 0; // Wurde der Submit-Button gedrückt?
 		if($match2set) {
 			$matchUids = t3lib_div::_GP('checkEntry');
-	t3lib_div::debug(array($_GET, $_POST), 'class.tx_t3sportsbet_mod1_addMatches.php '); // TODO: remove me
 			if(!is_array($matchUids) || ! count($matchUids)) {
 				$out = $GLOBALS['LANG']->getLL('msg_no_match_selected').'<br/>';
 			}
@@ -139,7 +138,7 @@ class tx_t3sportsbet_mod1_addMatches {
 		}
 		return (strlen($out)) ? $this->mod->doc->section($GLOBALS['LANG']->getLL('label_info').':',$out, 0, 1,ICON_INFO) : '';
 	}
-	
+
 	/**
 	 * Get a match searcher
 	 *
