@@ -157,10 +157,20 @@ class tx_t3sportsbet_tests_sv_betcalculator_testcase extends tx_phpunit_testcase
 	}
 	private function makeInstances($yamlData, $clazzName) {
 		// Sicherstellen, daß die Klasse geladen wurde
+		$competition = tx_rnbase::makeInstance('tx_cfcleague_models_Competition', 
+				array('uid'=>1, 'name'=>'dummy', 'match_parts'=>2, 'addparts'=>0));
 		tx_rnbase::load($clazzName);
 		foreach($yamlData As $key => $arr) {
-			if(is_array($arr['record']))
-				$ret[$key] = new $clazzName($arr['record']);
+			if(isset($arr['record']) && is_array($arr['record'])) {
+				$mock = $this->getMockBuilder($clazzName)
+				->disableOriginalConstructor()
+				->setMethods(array('getCompetition'))
+				->getMock();
+				$mock->expects($this->any())->method('getCompetition')
+				->will($this->returnValue($competition));
+				$mock->__construct($arr['record']);
+				$ret[$key] = $mock;
+			}
 		}
 		return $ret;
 	}
