@@ -22,8 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 
 class tx_t3sportsbet_mod1_link_MatchBets implements tx_cfcleague_mod1_Linker {
 	/**
@@ -36,18 +34,19 @@ class tx_t3sportsbet_mod1_link_MatchBets implements tx_cfcleague_mod1_Linker {
 	 * @return string
 	 */
 	function makeLink($match, $formTool, $currentPid, $options) {
-		$out = $formTool->createEditLink('tx_cfcleague_games', $match->uid, $GLOBALS['LANG']->getLL('label_edit'));
+		$out = $formTool->createEditLink('tx_cfcleague_games', $match->getUid(), $GLOBALS['LANG']->getLL('label_edit'));
+		$options = is_object($options) ? $options->getRecord() : $options;
 		if(isset($options['module'])) {
 			$out .= '<br />';
 			$mod = $options['module'];
 			$betset = $mod->betset;
 			$cnt = $betset->getBetCount($match);
 			if($cnt)
-				$out .= $formTool->createSubmit('showBets['.$match->uid.']', $GLOBALS['LANG']->getLL('label_showbets') . ' (' . $cnt. ')');
+				$out .= $formTool->createSubmit('showBets['.$match->getUid().']', $GLOBALS['LANG']->getLL('label_showbets') . ' (' . $cnt. ')');
 //			$out .= $GLOBALS['LANG']->getLL('label_numberOfBets').': ' . $cnt;
 			// Wenn das Spiel ausgewertet wurde und die Tiprunde noch offen ist
 			if(!$betset->isFinished() && ($betset->getMatchState($match) == 'FINISHED' ))
-				$out .= '<br />'.$formTool->createSubmit('resetBets['.$match->uid.']', $GLOBALS['LANG']->getLL('label_resetbets'), $GLOBALS['LANG']->getLL('msg_resetbets'));
+				$out .= '<br />'.$formTool->createSubmit('resetBets['.$match->getUid().']', $GLOBALS['LANG']->getLL('label_resetbets'), $GLOBALS['LANG']->getLL('msg_resetbets'));
 		}
 
 		return $out;
@@ -57,4 +56,3 @@ class tx_t3sportsbet_mod1_link_MatchBets implements tx_cfcleague_mod1_Linker {
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/link/class.tx_t3sportsbet_mod1_link_MatchBets.php'])	{
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/link/class.tx_t3sportsbet_mod1_link_MatchBets.php']);
 }
-?>
