@@ -22,9 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
-require_once(t3lib_extMgm::extPath('cfc_league').'class.tx_cfcleague.php');
 
 tx_rnbase::load('tx_cfcleague_mod1_decorator');
 tx_rnbase::load('tx_rnbase_util_TYPO3');
@@ -45,6 +42,7 @@ define('ICON_FATAL', 3);
  * @subpackage	tx_lmo2cfcleague
  */
 class tx_t3sportsbet_mod1_index extends t3lib_extobjbase {
+	protected $mod;
 
 	/**
 	 * Returns the module menu
@@ -59,14 +57,18 @@ class tx_t3sportsbet_mod1_index extends t3lib_extobjbase {
 	}
 	function init(&$pObj, $MCONF) {
 		parent::init($pObj, $MCONF);
+		$this->mod = $pObj;
 		$this->MCONF = $pObj->MCONF;
 		$this->id = $pObj->id;
 		$GLOBALS['LANG']->includeLLFile('EXT:t3sportsbet/mod1/locallang.xml');
-		
-//    $this->pObj->doc->form = '<form action="index.php" method="post" enctype="multipart/form-data" >';
-
 	}
 
+	/**
+	 * @return tx_rnbase_module
+	 */
+	public function getModule() {
+		return $this->mod;
+	}
 	/**
 	 * Main method of the module
 	 *
@@ -81,9 +83,9 @@ Vorgehen
 */
 		$this->doc = $this->pObj->doc;
 		$this->formTool = tx_rnbase::makeInstance('tx_rnbase_util_FormTool');
-		$this->formTool->init($this->doc);
+		$this->formTool->init($this->doc, $this->mod);
 		$this->selector = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_selector');
-		$this->selector->init($this->doc, $this->MCONF);
+		$this->selector->init($this->doc, $this->mod);
 
 		$selector = '';
 		// Anzeige der vorhandenen Tipspiele
@@ -98,7 +100,7 @@ Vorgehen
 		if(!$currentRound) {
 			if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
 				$this->pObj->subselector = $selector;
-			else 
+			else
 				$content .= '<div class="cfcleague_selector">'.$selector.'</div><div style="clear:both"/>';
 			// Add competition wizard
 			$wizard = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_addCompetitionWizard');
@@ -107,17 +109,18 @@ Vorgehen
 		}
 		if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
 			$this->pObj->subselector = $selector;
-		else 
+		else
 			$content .= '<div class="cfcleague_selector">'.$selector.'</div><div style="clear:both"/>';
 
 		// RequestHandler aufrufen.
 		$content .= tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->handleRequest($this);
 
-		$menu = $this->formTool->showTabMenu($this->id, 'bettools', $this->MCONF['name'],
-				array('0' => $LANG->getLL('tab_control'), 
+		$menu = $this->getFormTool()->showTabMenu($this->id, 'bettools', $this->MCONF['name'],
+				array('0' => $LANG->getLL('tab_control'),
 							'1' => $LANG->getLL('tab_addmatches'),
 							'2' => $LANG->getLL('tab_addteambets'),
 							'3' => $LANG->getLL('tab_bets')));
+
 		$content .= $menu['menu'];
 		$content .= $this->formTool->form->printNeededJSFunctions_top();
 		$content .= '<div style="display: block; border: 1px solid #a2aab8; clear:both;"></div>';
@@ -128,7 +131,7 @@ Vorgehen
 			$content .= $this->handleResetBets($currentRound);
 			$content .= $this->handleSaveBetSet($currentRound);
 			$content .= $this->handleAnalyzeBets($currentGame);
-			
+
 			switch($menu['value']) {
 				case 0:
 					$content .= $this->showBetSet($currentRound);
@@ -155,9 +158,9 @@ Vorgehen
 			tx_rnbase_util_Logger::warn('Exception in BE module.', 't3sportsbet', array('Exception' => $e->getMessage()));
 			$content .= $msg;
 		}
-		
+
 		$content .= $this->formTool->form->printNeededJSFunctions();
-		
+
 		return $content;
 	}
 	/**
@@ -188,9 +191,6 @@ Vorgehen
 	function handleShowBets($currBetSet) {
 		$matchUids = $this->getFormTool()->getStoredRequestData('showBets', array(), $this->getName());
 		if($matchUids == 0) return '';
-		
-//		$matchUids = t3lib_div::_GP('showBets');
-//		if(!is_array($matchUids)) return;
 
 		$options['module'] = $this;
 		$lister = $this->getBetSearcher($options);
@@ -202,15 +202,14 @@ Vorgehen
 		$out .= $list['pager']."\n".$list['table'];
 		$out .= $this->getFormTool()->createSubmit('showBets[0]', $GLOBALS['LANG']->getLL('label_close'));
 		return $this->doc->section($GLOBALS['LANG']->getLL('label_betlist').':',$out,0,1,ICON_INFO);
-		
-		
+
+
 		$out = '';
 		foreach($matchUids As $uid) {
 			$match = tx_rnbase::makeInstance('tx_cfcleaguefe_models_match', $uid);
 			$bets = $service->getBets($currBetSet, $match);
 			$out .= $searcher->showBets($GLOBALS['LANG']->getLL('label_betlist'), $bets);
 		}
-//		return $this->doc->section($GLOBALS['LANG']->getLL('label_betlist').':',$out,0,1,ICON_INFO);
 		return $out;
 	}
 	/**
@@ -218,7 +217,7 @@ Vorgehen
 	 *
 	 * @param tx_t3sportsbet_models_betset $currBetSet
 	 */
-	function handleResetBets($currBetSet) {
+	protected function handleResetBets($currBetSet) {
 		$matchUids = t3lib_div::_GP('resetBets');
 		if(!is_array($matchUids)) return;
 
@@ -229,7 +228,7 @@ Vorgehen
 			// Jetzt alle Tips für das Spiel suchen in dieser Tiprunde suchen und zurücksetzen
 			$srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
 			$srv->resetBets($currBetSet, $uid);
-			
+
 			//$tce->BE_USER->writelog($type,$action,$error,$details_nr,$details,$data,$table,$recuid,$recpid,$event_pid,$NEWid);
 			$data = array($uid, $currBetSet->uid);
 			$tce->BE_USER->writelog(1,2,0,0,$details,$data);
@@ -242,7 +241,7 @@ Vorgehen
 	 * @param tx_t3sportsbet_models_betset $currBetSet
 	 * @return string
 	 */
-	function handleSaveBetSet($currBetSet) {
+	protected function handleSaveBetSet($currBetSet) {
 		$out = '';
 		$button = strlen(t3lib_div::_GP('savebetset')) > 0;
 		if($button) {
@@ -259,7 +258,7 @@ Vorgehen
 	 * @param tx_t3sportsbet_models_betgame $betGame
 	 * @return string
 	 */
-	function handleAnalyzeBets($betGame) {
+	protected function handleAnalyzeBets($betGame) {
 		//
 		$out = '';
 		$button = strlen(t3lib_div::_GP('analyzebets')) > 0;
@@ -279,7 +278,7 @@ Vorgehen
 	 * @param tx_t3sportsbet_models_betset $currBetSet
 	 * @return string
 	 */
-	function showBetSet($currBetSet) {
+	protected function showBetSet($currBetSet) {
 		$matches = $currBetSet->getMatches();
 		$options['linker'][] = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_link_MatchBets');
 		$options['module'] = $this;
@@ -287,15 +286,15 @@ Vorgehen
 		$pasteButton = tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->makePasteButton($currBetSet, $this);
 		if($pasteButton)
 			$out .= $this->doc->section('Info:',$pasteButton,0,1,ICON_INFO);
-		
+
 		$searcher = $this->getMatchSearcher($options);
 		$searcher->showMatches($out, $GLOBALS['LANG']->getLL('label_matchlist'), $currBetSet->getMatches());
 		$this->formTool->addTCEfield2Stack('tx_t3sportsbet_betsets', $currBetSet->record, 'status','<strong>'.$GLOBALS['LANG']->getLL('label_change_state') . ':</strong>&nbsp;');
 		$arr = $this->formTool->getTCEfields('editform');
 		$out .= implode('',$arr);
-  	$out .= $this->formTool->createSubmit('savebetset',$GLOBALS['LANG']->getLL('label_save'));
+		$out .= $this->formTool->createSubmit('savebetset',$GLOBALS['LANG']->getLL('label_save'));
 		$out .= $this->pObj->doc->spacer(10);
-  	$out .= '<p>'.$this->formTool->createSubmit('analyzebets',$GLOBALS['LANG']->getLL('label_analyzebets')).'</p>';
+		$out .= '<p>'.$this->formTool->createSubmit('analyzebets',$GLOBALS['LANG']->getLL('label_analyzebets')).'</p>';
 		return $out;
 	}
 
@@ -326,7 +325,7 @@ Vorgehen
 		$row[] = array($GLOBALS['LANG']->getLL('label_betsetinfo_usercount'), $srv->getResultSize($currBetSet->uid));
 		$row[] = array($GLOBALS['LANG']->getLL('label_betsetinfo_betcount'), $srv->getBetSize($currBetSet));
 		$out .= $this->doc->table($row, $this->getTableLayout());
-		
+
 		return $out;
 	}
 
@@ -355,7 +354,7 @@ Vorgehen
 	 *
 	 * @return array
 	 */
-  function getTableLayout() {
+	function getTableLayout() {
 		$layout = Array (
 			'table' => Array('<table class="typo3-dblist" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
 			'0' => Array( // Format für 1. Zeile
@@ -368,26 +367,25 @@ Vorgehen
 			),
 		);
 		return $layout;
-  }
-  /**
-   * @return tx_rnbase_util_FormTool
-   */
-  public function getFormTool() {
-  	return $this->formTool;
-  }
-  public function getName() {
-  	return $this->MCONF['name'];
-  }
-  public function getPid() {
-  	return $this->id;
-  }
-  public function getDoc() {
-  	return $this->doc;
-  }
+	}
+	/**
+	 * @return tx_rnbase_util_FormTool
+	 */
+	public function getFormTool() {
+		return $this->formTool;
+	}
+	public function getName() {
+		return $this->MCONF['name'];
+	}
+	public function getPid() {
+		return $this->id;
+	}
+	public function getDoc() {
+		return $this->doc;
+	}
 }
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_index.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_index.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_index.php'])	{
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_index.php']);
 }
-?>

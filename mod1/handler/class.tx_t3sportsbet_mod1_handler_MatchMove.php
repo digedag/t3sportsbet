@@ -22,8 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
+tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 
 class tx_t3sportsbet_mod1_handler_MatchMove {
 	/**
@@ -33,11 +32,11 @@ class tx_t3sportsbet_mod1_handler_MatchMove {
 		return tx_rnbase::makeInstance('tx_t3sportsbet_mod1_handler_MatchMove');
 	}
 	/**
-	 * 
+	 *
 	 * @param tx_rnbase_mod_IModule $mod
 	 */
 	public function handleRequest($mod) {
-		$isCutted = t3lib_div::_GP('doCutMatch');
+		$isCutted = Tx_Rnbase_Utility_T3General::_GP('doCutMatch');
 		if($isCutted) {
 			return $this->handleCut($isCutted, $mod);
 		}
@@ -52,7 +51,7 @@ class tx_t3sportsbet_mod1_handler_MatchMove {
 		}
 	}
 	/**
-	 * 
+	 *
 	 * @param int $betset
 	 * @param tx_rnbase_mod_IModule $mod
 	 */
@@ -70,7 +69,7 @@ class tx_t3sportsbet_mod1_handler_MatchMove {
 		return $mod->getDoc()->section('###LABEL_MSG_MATCHMOVED###','',0,1,ICON_INFO);
 	}
 	/**
-	 * 
+	 *
 	 * @param tx_rnbase_mod_IModule $mod
 	 */
 	private function handleCut($matchToken, $mod) {
@@ -85,7 +84,7 @@ class tx_t3sportsbet_mod1_handler_MatchMove {
 		return $arr[$key];
 	}
 	/**
-	 * 
+	 *
 	 * @param unknown_type $item
 	 * @param tx_rnbase_mod_IModule $mod
 	 */
@@ -105,7 +104,7 @@ class tx_t3sportsbet_mod1_handler_MatchMove {
 		return $ret;
 	}
 	/**
-	 * 
+	 *
 	 * @param tx_t3sportsbet_models_betset $item
 	 * @param tx_rnbase_mod_IModule $mod
 	 */

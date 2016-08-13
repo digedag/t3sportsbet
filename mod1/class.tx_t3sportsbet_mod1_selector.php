@@ -22,7 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
@@ -30,15 +29,18 @@ tx_rnbase::load('tx_rnbase_util_Misc');
  */
 class tx_t3sportsbet_mod1_selector{
 	var $doc, $MCONF;
+	private $formTool;
 
 	/**
 	 * Initialisiert das Objekt mit dem Template und der Modul-Config.
 	 */
-	function init($doc, $MCONF){
+	public function init($doc, tx_rnbase_mod_IModule $module){
 		$this->doc = $doc;
-		$this->MCONF = $MCONF;
-		$this->formTool = t3lib_div::makeInstance('tx_rnbase_util_FormTool');
-		$this->formTool->init($this->doc);
+		$this->MCONF['name'] = $module->getName(); // deprecated
+		$this->modName = $module->getName();
+		$this->module = $module;
+		$this->formTool = tx_rnbase::makeInstance('tx_rnbase_util_FormTool');
+		$this->formTool->init($this->doc, $module);
 		tx_rnbase_util_Misc::prepareTSFE();
 	}
 
@@ -46,7 +48,7 @@ class tx_t3sportsbet_mod1_selector{
 	 * Darstellung der Select-Box mit allen Ligen der übergebenen Seite. Es wird auf die aktuelle Liga eingestellt.
 	 * @return tx_t3sportsbet_models_betgame den aktuellen Wettbewerb als Objekt oder 0
 	 */
-	function showGameSelector(&$content,$pid,$games=0){
+	public function showGameSelector(&$content,$pid,$games=0){
 		// Wenn vorhanden, nehmen wir die übergebenen Wettbewerbe, sonst schauen wir auf der aktuellen Seite nach
 		$games = $games ? $games : $this->findGames($pid);
 		$this->GAME_MENU = Array (
@@ -86,61 +88,56 @@ class tx_t3sportsbet_mod1_selector{
 	 * @param tx_t3sportsbet_models_betgame $game
 	 * @return tx_t3sportsbet_models_betset
 	 */
-	function showRoundSelector(&$content,$pid,$game){
-		$this->ROUND_MENU = Array (
-			'betset' => array()
-		);
-
+	public function showRoundSelector(&$content,$pid,$game){
 		$rounds = $game->getBetSets();
-		$empty = !count($rounds);
-		if($empty) {
-			$menu .= $GLOBALS['LANG']->getLL('msg_no_betset_found');
+		$idxRounds = array();
+		$entries = array();
+		foreach($rounds as $round){
+			$idxRounds[$round->getUid()] = $round;
+			$entries[$round->getUid()] = $round->getName() . ' (' . $GLOBALS['LANG']->getLL('tx_t3sportsbet_module.betStatus_'.$round->getStatus()) . ')';
 		}
-		else {
-			$idxRounds = array();
-			foreach($rounds as $round){
-				$idxRounds[$round->uid] = $round;
-				$this->ROUND_MENU['betset'][$round->uid] = $round->getName() . ' (' . $GLOBALS['LANG']->getLL('tx_t3sportsbet_module.betStatus_'.$round->getStatus()) . ')';
-			}
-			$this->ROUND_SETTINGS = t3lib_BEfunc::getModuleData(
-				$this->ROUND_MENU,t3lib_div::_GP('SET'),$this->MCONF['name'] // Das ist der Name des Moduls
-			);
-			$menu = t3lib_BEfunc::getFuncMenu(
-				$pid,'SET[betset]',$this->ROUND_SETTINGS['betset'],$this->ROUND_MENU['betset']
-			);
-		}
+		$menuData = $this->getFormTool()->showMenu($pid, 'betset', $this->modName, $entries);
 
+		if($menuData['value'] > 0) {
+			$menu = $menuData['menu'];
+			if($menu) {
+				$links = '';
+				if(!$empty)
+					$links .= $this->formTool->createEditLink('tx_t3sportsbet_betsets', $this->ROUND_SETTINGS['betset'],'');
+					$params['params'] = '&betgame='.$game->getUid();
+					$params['params'] .= '&round='.($game->getBetSetSize()+1);
+					$params['title'] = $GLOBALS['LANG']->getLL('label_create_betset');
+					$links .= $this->getFormTool()->createNewLink('tx_t3sportsbet_betsets', $pid,'',$params);
+					$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
+					//			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
+					//t3lib_div::debug($link, 'tx_t3sportsbet_mod1_selector'); // TODO: remove me
+			}
+		}
+		else
+			$menu .= $GLOBALS['LANG']->getLL('msg_no_betset_found');
 
 		// In den Content einbauen
 		// Spielrunden sind keine Objekte, die bearbeitet werden können
-		if($menu) {
-			$links = '';
-			if(!$empty)
-				$links .= $this->formTool->createEditLink('tx_t3sportsbet_betsets', $this->ROUND_SETTINGS['betset'],'');
-			$params['params'] = '&betgame='.$game->uid;
-			$params['params'] .= '&round='.($game->getBetSetSize()+1);
-			$params['title'] = $GLOBALS['LANG']->getLL('label_create_betset');
-			$links .= $this->formTool->createNewLink('tx_t3sportsbet_betsets', $pid,'',$params);
-			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
-//			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
-//t3lib_div::debug($link, 'tx_t3sportsbet_mod1_selector'); // TODO: remove me
-		}
 		$content.=$menu;
-//		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
-		return $this->ROUND_SETTINGS['betset'] ? $idxRounds[$this->ROUND_SETTINGS['betset']] :0;
+		if(count($idxRounds))
+			return $menuData['value'] ? $idxRounds[$menuData['value']] :0;
+
 	}
 
 	/**
 	 * Liefert die Tipspiele der aktuellen Seite.
 	 * @return ein Array mit Rows
 	 */
-	function findGames($pid){
+	private function findGames($pid){
 		$options['where'] = 'pid="'.$pid.'"';
 		$options['orderby'] = 'sorting';
 		$options['wrapperclass'] = 'tx_t3sportsbet_models_betgame';
 		return tx_rnbase_util_DB::doSelect('*', 'tx_t3sportsbet_betgames', $options, 0);
 	}
 
+	private function getFormTool() {
+		return $this->formTool;
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_selector.php'])	{

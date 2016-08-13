@@ -22,8 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 
 /**
  * Search matches from competitions
@@ -40,8 +38,11 @@ class tx_t3sportsbet_mod1_matchsearcher {
 		$this->init($mod, $options);
 	}
 
+	private function getModFunc() {
+		return $this->mod;
+	}
 	/**
-	 * 
+	 *
 	 * @param unknown_type $mod
 	 * @param array $options
 	 */
@@ -54,13 +55,14 @@ class tx_t3sportsbet_mod1_matchsearcher {
 		$this->data = t3lib_div::_GP('searchdata');
 		$this->competitions = $options['competitions'];
 
-		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-		$this->selector->init($mod->doc, $mod->MCONF['name']);
+		$this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
+		$this->selector->init($this->getModFunc()->getDoc(), $this->getModFunc()->getModule());
+//		$this->selector->init($mod->doc, $mod->MCONF['name']);
 		if(!isset($options['nopersist']))
 			$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''),$this->data,$this->mod->MCONF['name'] );
 		else
 			$this->SEARCH_SETTINGS = $this->data;
-			
+
 	}
 	/**
 	 * Liefert das Suchformular. Hier die beiden Selectboxen anzeigen
@@ -77,7 +79,7 @@ class tx_t3sportsbet_mod1_matchsearcher {
       return $out . $this->mod->doc->section('Info:',$LANG->getLL('msg_no_competition_in_betgame'),0,1,ICON_WARN);
     }
 //    $out.=$this->mod->doc->spacer(5);
-    
+
     $rounds = $this->currComp->getRounds();
 		if(!count($rounds)){
 			$out .= $LANG->getLL('msg_no_round_in_competition');
@@ -108,7 +110,7 @@ class tx_t3sportsbet_mod1_matchsearcher {
 		$this->resultSize = count($matches);
 		$label = $this->resultSize . ' ' . (($this->resultSize == 1) ? $GLOBALS['LANG']->getLL('msg_found_match') : $GLOBALS['LANG']->getLL('msg_found_matches'));
 		$this->showMatches($content, $label, $matches);
-		
+
 		return $content;
 	}
 	/**
@@ -118,10 +120,10 @@ class tx_t3sportsbet_mod1_matchsearcher {
 	 * @return int
 	 */
 	public function getSize() {
-		return $this->resultSize;		
+		return $this->resultSize;
 	}
 
-	function showMatches(&$content, $headline, &$matches) {
+	public function showMatches(&$content, $headline, &$matches) {
 		tx_rnbase::load('tx_rnbase_mod_Tables');
 		$decor = tx_rnbase::makeInstance('tx_t3sportsbet_util_MatchDecorator', $this->mod);
 		$columns = array(
@@ -157,7 +159,6 @@ class tx_t3sportsbet_mod1_matchsearcher {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_matchsearcher.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_matchsearcher.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_matchsearcher.php'])	{
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_matchsearcher.php']);
 }
-?>

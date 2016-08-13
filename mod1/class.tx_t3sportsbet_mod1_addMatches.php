@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2016 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,7 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
@@ -58,7 +57,7 @@ class tx_t3sportsbet_mod1_addMatches {
 	 */
 	private function handleNoCompetitions($currBetSet) {
 		$out .= $this->mod->doc->section('Info:',$GLOBALS['LANG']->getLL('msg_no_competition_in_betgame'),0,1,ICON_WARN);
-		$out.=$this->mod->doc->spacer(15);
+		$out .= $this->mod->doc->spacer(15);
 		$out .= $this->getFormTool()->form->getSoloField('tx_t3sportsbet_betgames',$currBetSet->getBetgame()->record,'competition');
 		$out .= $this->getFormTool()->createSubmit('updateBetgame',$GLOBALS['LANG']->getLL('btn_update'));
 		return $out;
@@ -79,7 +78,7 @@ class tx_t3sportsbet_mod1_addMatches {
 	 * @param array $competitions
 	 * @return string
 	 */
-	function showAddMatches($currBetSet, $competitions) {
+	protected function showAddMatches($currBetSet, $competitions) {
 
 		tx_rnbase::load('tx_t3sportsbet_mod1_matchsearcher');
 		$options['checkbox'] = 1;
@@ -93,7 +92,7 @@ class tx_t3sportsbet_mod1_addMatches {
 		$options['ignoreDummies'] = 1;
 		$searcher = $this->getMatchSearcher($options);
 		$out .= $searcher->getSearchForm();
-		$out.= $searcher->getResultList();
+		$out .= $searcher->getResultList();
 		if($searcher->getSize()) {
 			// Button für Zuordnung
 			$out .= $this->mod->formTool->createSubmit('match2betset', $GLOBALS['LANG']->getLL('label_join_matches'), $GLOBALS['LANG']->getLL('msg_join_matches'));

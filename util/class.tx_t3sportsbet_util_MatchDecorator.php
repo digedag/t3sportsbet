@@ -22,8 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 
 /**
  * Diese Klasse ist für die Darstellung von Spielen im Backend verantwortlich
@@ -59,7 +57,7 @@ class tx_t3sportsbet_util_MatchDecorator {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param tx_cfcleague_models_Match $item
 	 */
 	private function createMatchCutLink($item) {
