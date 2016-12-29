@@ -22,9 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-// Die Datenbank-Klasse
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 tx_rnbase::load('tx_rnbase_model_base');
 
 
@@ -33,7 +30,7 @@ tx_rnbase::load('tx_rnbase_model_base');
  */
 class tx_t3sportsbet_models_bet extends tx_rnbase_model_base {
 	function getTableName(){return 'tx_t3sportsbet_bets';}
-	
+
 	/**
 	 * Returns the match
 	 *
@@ -41,7 +38,7 @@ class tx_t3sportsbet_models_bet extends tx_rnbase_model_base {
 	 */
 	function getMatch() {
 		tx_rnbase::load('tx_cfcleaguefe_models_match');
-		return tx_cfcleaguefe_models_match::getInstance($this->record['t3match']);
+		return tx_cfcleaguefe_models_match::getMatchInstance($this->getProperty('t3match'));
 	}
 
 	/**
@@ -50,21 +47,21 @@ class tx_t3sportsbet_models_bet extends tx_rnbase_model_base {
 	 * @return tx_t3sportsbet_models_betset
 	 */
 	function getBetSet() {
-		return tx_t3sportsbet_models_betset::getInstance($this->record['betset']);
+		return tx_t3sportsbet_models_betset::getBetsetInstance($this->getProperty('betset'));
 	}
 	/**
 	 * Goals home
 	 * @return int
 	 */
 	function getGoalsHome() {
-		return intval($this->record['goals_home']);
+		return intval($this->getProperty('goals_home'));
 	}
 	/**
 	 * Goals guest
 	 * @return int
 	 */
 	function getGoalsGuest() {
-		return intval($this->record['goals_guest']);
+		return intval($this->getProperty('goals_guest'));
 	}
 	function getToto() {
 		$goalsHome = $this->getGoalsHome();
@@ -75,9 +72,3 @@ class tx_t3sportsbet_models_bet extends tx_rnbase_model_base {
 		return ($goalsDiff < 0) ? 2 : 1;
 	}
 }
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/models/class.tx_t3sportsbet_models_bet.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/models/class.tx_t3sportsbet_models_bet.php']);
-}
-
-?>

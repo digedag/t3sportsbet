@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2014 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2016 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,20 +22,18 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
-
+tx_rnbase::load('Tx_Rnbase_Service_Base');
 
 
 /**
  * This service calculates the points for a bet
- * 
+ *
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_services_betcalculator extends t3lib_svbase  {
+class tx_t3sportsbet_services_betcalculator extends Tx_Rnbase_Service_Base {
 
 	/**
-	 * 
+	 *
 	 * @param tx_t3sportsbet_models_betgame $betgame
 	 * @param tx_cfcleaguefe_models_match $match
 	 */
@@ -56,6 +54,7 @@ class tx_t3sportsbet_services_betcalculator extends t3lib_svbase  {
 	 */
 	public function calculatePoints($betgame, $bet) {
 		$match = $bet->getMatch();
+
 		// TODO: GreenTable kann noch nicht ermittelt werden...
 		// 1. Schritt: Spielergebnis ermitteln
 		list($goalsHome, $goalsGuest) = $this->getGoals($betgame, $match);

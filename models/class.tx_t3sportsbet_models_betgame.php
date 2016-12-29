@@ -22,9 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-// Die Datenbank-Klasse
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 tx_rnbase::load('tx_rnbase_util_DB');
 tx_rnbase::load('tx_rnbase_model_base');
 
@@ -42,7 +39,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base {
 	 * @param int $uid
 	 * @return tx_t3sportsbet_models_betgame
 	 */
-	static function getInstance($uid) {
+	public static function getBetgameInstance($uid) {
 		$uid = intval($uid);
 		if(!uid) throw new Exception('Invalid uid for betgame');
 		if(!is_object(self::$instances[$uid])) {
@@ -51,28 +48,28 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base {
 		return self::$instances[$uid];
 	}
 	function getName() {
-		return $this->record['name'];
+		return $this->getProperty('name');
 	}
 	/**
 	 *
 	 * @return boolean
 	 */
 	function isDrawIfExtraTime() {
-		return $this->record['draw_if_extratime'] > 0;
+		return $this->getProperty('draw_if_extratime') > 0;
 	}
 	/**
 	 *
 	 * @return boolean
 	 */
 	function isDrawIfPenalty() {
-		return $this->record['draw_if_penalty'] > 0;
+		return $this->getProperty('draw_if_penalty') > 0;
 	}
 	/**
 	 *
 	 * @return boolean
 	 */
 	function isIgnoreGreenTable() {
-		return $this->record['ignore_greentable'] > 0;
+		return $this->getProperty('ignore_greentable') > 0;
 	}
 
 	/**
@@ -80,14 +77,14 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base {
 	 * @return int
 	 */
 	function getPointsAccurate() {
-		return $this->record['points_accurate'];
+		return $this->getProperty('points_accurate');
 	}
 	/**
 	 * Points for tendency bet
 	 * @return int
 	 */
 	function getPointsGoalsDiff() {
-		return intval($this->record['points_goalsdiff']);
+		return intval($this->getProperty('points_goalsdiff'));
 	}
 
 	/**
@@ -95,7 +92,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base {
 	 * @return int
 	 */
 	function getPointsTendency() {
-		return $this->record['points_tendency'];
+		return $this->getProperty('points_tendency');
 	}
 
 	/**
@@ -103,9 +100,9 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base {
 	 * @return int
 	 */
 	function getLockMinutes() {
-		return intval($this->record['lockminutes']);
+		return intval($this->getProperty('lockminutes'));
 	}
-	
+
 	/**
 	 * Returns the competition for a static bet game
 	 *
@@ -114,7 +111,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base {
 	function getCompetitions() {
 		$ret = array();
 		tx_rnbase::load('tx_cfcleaguefe_models_competition');
-		$uids = $this->record['competition'];
+		$uids = $this->getProperty('competition');
 		if($uids) {
 			$uids = t3lib_div::intExplode(',',$uids);
 			foreach($uids As $uid) {
@@ -129,14 +126,14 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base {
    * @return int
    */
   function getPid() {
-  	return $this->record['pid'];
+  	return $this->getProperty('pid');
   }
   /**
    * Returns an array of existing bet sets
    * @return array of tx_t3sportsbet_models_betset
    */
   function getBetSets() {
-		$fields['BETSET.BETGAME'][OP_EQ_INT] = $this->uid;
+		$fields['BETSET.BETGAME'][OP_EQ_INT] = $this->getUid();
 		$options['orderby']['BETSET.ROUND'] = 'asc';
 
 		$service = tx_t3sportsbet_util_serviceRegistry::getBetService();
@@ -147,7 +144,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base {
    * @return int
    */
   function getBetSetSize() {
-		$fields['BETSET.BETGAME'][OP_EQ_INT] = $this->uid;
+		$fields['BETSET.BETGAME'][OP_EQ_INT] = $this->getUid();
 		$options['count'] = '1';
 
 		$service = tx_t3sportsbet_util_serviceRegistry::getBetService();
@@ -155,8 +152,3 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base {
   }
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/models/class.tx_t3sportsbet_models_betgame.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/models/class.tx_t3sportsbet_models_betgame.php']);
-}
-
-?>

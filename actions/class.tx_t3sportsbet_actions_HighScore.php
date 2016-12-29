@@ -36,9 +36,9 @@ tx_rnbase::load('tx_t3sportsbet_util_ScopeController');
  * Der View zeigt die Bestenliste an
  */
 class tx_t3sportsbet_actions_HighScore extends tx_rnbase_action_BaseIOC {
-	
+
 	/**
-	 * 
+	 *
 	 *
 	 * @param array_object $parameters
 	 * @param tx_rnbase_configurations $configurations
@@ -46,12 +46,8 @@ class tx_t3sportsbet_actions_HighScore extends tx_rnbase_action_BaseIOC {
 	 * @return string error msg or null
 	 */
 	function handleRequest(&$parameters,&$configurations, &$viewData){
-//		$betgameUid = intval($configurations->get('highscore.betgame'));
-//		if(!$betgameUid) tx_rnbase_util_Misc::mayday($configurations->getLL('error_nobetgame_defined'));
 
 		// Mit den Betsets kann man Zwischenauswertungen machen
-//		$betgame = tx_t3sportsbet_models_betgame::getInstance($betgameUid);
-//		$options['betgame'] = $betgame;
 		$scopeArr = tx_t3sportsbet_util_ScopeController::handleCurrentScope($parameters,$configurations, $options);
 		$betgames = tx_t3sportsbet_util_ScopeController::getBetgamesFromScope($scopeArr['BETGAME_UIDS']);
 		$betgameUids = $scopeArr['BETGAME_UIDS'];
@@ -78,13 +74,13 @@ class tx_t3sportsbet_actions_HighScore extends tx_rnbase_action_BaseIOC {
 		// Aus der Gesamtliste den gesuchten Abschnitt herausschneiden
 		$userPoints = array_slice($results[0], $limit['offset'], $limit['limit']);
 		$currUserPoints = ($feuser) ? $results[0][$results[1][$feuser->uid]] : array();
-		
+
 		$viewData->offsetSet('betgame', $betgames[0]);
 		$viewData->offsetSet('userPoints', $userPoints);
 		$viewData->offsetSet('currUserPoints', $currUserPoints);
 		$viewData->offsetSet('userSize', $pageBrowser->getListSize());
 		$viewData->offsetSet('pagebrowser', $pageBrowser);
-		
+
 	  return null;
 	}
 	/**

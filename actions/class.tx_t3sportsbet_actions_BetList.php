@@ -37,9 +37,9 @@ tx_rnbase::load('tx_t3sportsbet_util_ScopeController');
  * Der View zeigt Tiprunden an und speichert Veränderungen.
  */
 class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC {
-	
+
 	/**
-	 * 
+	 *
 	 *
 	 * @param array_object $parameters
 	 * @param tx_rnbase_configurations $configurations
@@ -62,12 +62,12 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC {
 				$feuser = tx_t3users_models_feuser::getInstance($uid);
 			}
 		}
-		
+
 		// Über die viewdata können wir Daten in den View transferieren
 		$viewData->offsetSet('betgame', $betgames[0]);
 		$viewData->offsetSet('rounds', $rounds);
 		$viewData->offsetSet('feuser', $feuser);
-		
+
 		return null;
 	}
 
@@ -76,7 +76,7 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC {
 		if(!$uids) return $rounds;
 		$uids = t3lib_div::intExplode(',', $uids);
 		for($i=0, $cnt=count($uids); $i <$cnt; $i++) {
-			$rounds[] = tx_t3sportsbet_models_betset::getInstance($uids[$i]);
+			$rounds[] = tx_t3sportsbet_models_betset::getBetsetInstance($uids[$i]);
 		}
 		return $rounds;
 	}
@@ -89,7 +89,7 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC {
 		$saveCnt = 0;
 		// Die Tips speichern
 		foreach($data As $betsetUid => $matchArr) {
-			$betset = tx_t3sportsbet_models_betset::getInstance($betsetUid);
+			$betset = tx_t3sportsbet_models_betset::getBetsetInstance($betsetUid);
 			if(!$betset->isValid() || $betset->isFinished()) continue;
 			foreach($matchArr As $matchUid => $betArr) {
 
@@ -97,8 +97,8 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC {
 					$saveCnt += $this->saveTeamBet($betArr, $feuser);
 					continue;
 				}
-				
-				$match = tx_cfcleaguefe_models_match::getInstance($matchUid);
+
+				$match = tx_cfcleaguefe_models_match::getMatchInstance($matchUid);
 				list($betUid, $betData) = each($betArr);
 				$saveCnt += $srv->saveOrUpdateBet($betset, $match, $feuser, $betUid, $betData);
 			}

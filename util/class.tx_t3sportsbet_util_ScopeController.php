@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2016 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 
 /**
  * Auswahl des Scopes im FE bereitstellen.
@@ -33,7 +33,7 @@ class tx_t3sportsbet_util_ScopeController {
 
 	/**
 	 * Diese Funktion stellt die UIDs der aktuell ausgewählten Ligen bereit.
-	 * Durch den Aufruf werden gleichzeitig die Daten für die Select-Boxen 
+	 * Durch den Aufruf werden gleichzeitig die Daten für die Select-Boxen
 	 * vorbereitet und in die viewData der Config gelegt.
 	 * Es wird ein Array mit dem aktuell gültigen Scope zurückgeliefert.
 	 * @param $useObjects Wenn true werden ganze Objekte
@@ -52,10 +52,10 @@ class tx_t3sportsbet_util_ScopeController {
 		$options['betgame'] = $betgameUid;
 		return $betgameUid;
 	}
-	
+
 	/**
 	 * Diese Funktion stellt die UIDs der aktuell ausgewählten Betsets bereit.
-	 * Durch den Aufruf werden gleichzeitig die Daten für die Select-Boxen 
+	 * Durch den Aufruf werden gleichzeitig die Daten für die Select-Boxen
 	 * vorbereitet und in die viewData der Config gelegt.
 	 * @return array[tx_t3sportsbet_betsets] betsets to show
 	 */
@@ -69,7 +69,7 @@ class tx_t3sportsbet_util_ScopeController {
 		$rounds = self::getBetsets($betgame, $betsetStatus, $betsetUids, $configurations, $configKey);
 		tx_rnbase::load('tx_rnbase_util_Misc');
 		$ret = tx_rnbase_util_Misc::objImplode(',', $rounds);
-		
+
 		// Soll eine SelectBox für die Tiprunde gezeigt werden?
 		if($configurations->get($configKey.'betsetInput')) {
 			$defaultBetset = $configurations->get($configKey.'defaultBetset');
@@ -97,27 +97,27 @@ class tx_t3sportsbet_util_ScopeController {
 			$fields['BETSET.STATUS'][OP_IN_INT] = $betsetStatus;
 		if(trim($betsetUids))
 			$fields['BETSET.UID'][OP_IN_INT] = $betsetUids;
-		
+
 		return $srv->searchBetSet($fields, $options);
 
 	}
 
 	public static function getBetgamesFromScope($uids) {
-		$uids = t3lib_div::intExplode(',', $uids);
+		$uids = Tx_Rnbase_Utility_Strings::intExplode(',', $uids);
 		$rounds = array();
 		tx_rnbase::load('tx_t3sportsbet_models_betgame');
 		for($i=0, $cnt=count($uids); $i <$cnt; $i++) {
-			$rounds[] = tx_t3sportsbet_models_betgame::getInstance($uids[$i]);
+			$rounds[] = tx_t3sportsbet_models_betgame::getBetgameInstance($uids[$i]);
 		}
 		return $rounds;
 	}
-	
+
 	public static function getRoundsFromScope($uids) {
-		$uids = t3lib_div::intExplode(',', $uids);
+		$uids = Tx_Rnbase_Utility_Strings::intExplode(',', $uids);
 		$rounds = array();
 		tx_rnbase::load('tx_t3sportsbet_models_betset');
 		for($i=0, $cnt=count($uids); $i <$cnt; $i++) {
-			$rounds[] = tx_t3sportsbet_models_betset::getInstance($uids[$i]);
+			$rounds[] = tx_t3sportsbet_models_betset::getBetsetInstance($uids[$i]);
 		}
 		return $rounds;
 	}
@@ -126,7 +126,7 @@ class tx_t3sportsbet_util_ScopeController {
 	 * Liefert ein Array für die Erstellung der Select-Box für eine Model-Klasse
 	 * Das Ergebnis-Array hat zwei Einträge: Index 0 enthält das Wertearray, Index 1 das
 	 * aktuelle Element
-	 * @param $displayAttrName Der Name eines Atttributs, um dessen Wert anzuzeigen. Wenn der 
+	 * @param $displayAttrName Der Name eines Atttributs, um dessen Wert anzuzeigen. Wenn der
 	 *        String leer ist, dann wird das gesamten Objekt als Wert verwendet.
 	 * @param int $defaultIdx
 	 */
@@ -148,8 +148,3 @@ class tx_t3sportsbet_util_ScopeController {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/util/class.tx_t3sportsbet_util_ScopeController.php'])	{
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/util/class.tx_t3sportsbet_util_ScopeController.php']);
-}
-
-?>

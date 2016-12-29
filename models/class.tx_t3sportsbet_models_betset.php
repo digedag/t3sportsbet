@@ -22,9 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-// Die Datenbank-Klasse
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 tx_rnbase::load('tx_rnbase_model_base');
 tx_rnbase::load('tx_t3sportsbet_models_betgame');
 
@@ -41,8 +38,8 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base {
 	 *
 	 * @return tx_t3sportsbet_models_betgame
 	 */
-	function getBetgame() {
-		return tx_t3sportsbet_models_betgame::getInstance($this->record['betgame']);
+	public function getBetgame() {
+		return tx_t3sportsbet_models_betgame::getBetgameInstance($this->getProperty('betgame'));
 	}
 	/**
 	 * Returns the bet state of a match. This can be OPEN, CLOSED or FINISHED
@@ -61,8 +58,8 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base {
 		$state = 'OPEN';
 		$now = tx_t3sportsbet_util_library::getNow();
 		$lock = $this->getBetgame()->getLockMinutes() * 60;
-		
-		$matchDate = $match->record['date'];
+
+		$matchDate = $match->getProperty('date');
 		if($matchDate <= ($now+$lock) || $match->isRunning()) {
 			$state = 'CLOSED';
 		}
@@ -75,7 +72,7 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base {
 	 */
 	public function getMatches() {
 		$service = tx_cfcleaguefe_util_ServiceRegistry::getMatchService();
-		$fields['BETSETMM.UID_LOCAL'][OP_EQ_INT] = $this->uid;
+		$fields['BETSETMM.UID_LOCAL'][OP_EQ_INT] = $this->getUid();
 		$options['orderby']['BETSETMM.SORTING'] = 'asc';
 		return $service->search($fields, $options);
 	}
@@ -98,14 +95,14 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base {
 	 */
 	function getBetCount($match) {
 		$service = tx_t3sportsbet_util_serviceRegistry::getBetService();
-		$fields['BET.BETSET'][OP_EQ_INT] = $this->uid;
-		$fields['BET.T3MATCH'][OP_EQ_INT] = $match->uid;
+		$fields['BET.BETSET'][OP_EQ_INT] = $this->getUid();
+		$fields['BET.T3MATCH'][OP_EQ_INT] = $match->getUid();
 		$options['count'] = 1;
 //		$options['debug'] = 1;
 		return $service->searchBet($fields, $options);;
 	}
 	function getName() {
-		return $this->record['round_name'];
+		return $this->getProperty('round_name');
 	}
 	/**
 	 * Whether or not bets can be made to this betset
@@ -113,10 +110,10 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base {
 	 * @return boolean
 	 */
 	function isFinished() {
-		return $this->record['status'] == 2;
+		return $this->getProperty('status') == 2;
 	}
 	function getStatus() {
-		return $this->record['status'];
+		return $this->getProperty('status');
 	}
 	/**
 	 * Liefert die Instance mit der übergebenen UID. Die Daten werden gecached, so daß
@@ -125,7 +122,7 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base {
 	 * @param int $uid
 	 * @return tx_t3sportsbet_models_betset
 	 */
-	static function getInstance($uid) {
+	public static function getBetsetInstance($uid) {
 		$uid = intval($uid);
 		if(!uid) throw new Exception('Invalid uid for betset');
 		if(!is_object(self::$instances[$uid])) {
@@ -135,8 +132,3 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/models/class.tx_t3sportsbet_models_betset.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/models/class.tx_t3sportsbet_models_betset.php']);
-}
-
-?>

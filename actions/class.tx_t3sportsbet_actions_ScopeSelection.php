@@ -35,9 +35,9 @@ tx_rnbase::load('tx_t3sportsbet_util_ScopeController');
  * Der View zeigt Auswahlbox für Tiprunden an und speichert Veränderungen.
  */
 class tx_t3sportsbet_actions_ScopeSelection extends tx_rnbase_action_BaseIOC {
-	
+
 	/**
-	 * 
+	 *
 	 *
 	 * @param array_object $parameters
 	 * @param tx_rnbase_configurations $configurations
@@ -45,10 +45,6 @@ class tx_t3sportsbet_actions_ScopeSelection extends tx_rnbase_action_BaseIOC {
 	 * @return string error msg or null
 	 */
 	function handleRequest(&$parameters,&$configurations, &$viewData){
-//		$betgameUid = intval($configurations->get('scope.betgame'));
-//		if(!$betgameUid) tx_rnbase_util_Misc::mayday($configurations->getLL('error_nobetgame_defined'));
-//
-//		$betgame = tx_t3sportsbet_models_betgame::getInstance($betgameUid);
 		// Wir zeigen entweder die offenen oder die schon fertigen Tipps
 		// Dies wird per Config festgelegt
 		$options['betgame'] = $betgame;
@@ -56,12 +52,12 @@ class tx_t3sportsbet_actions_ScopeSelection extends tx_rnbase_action_BaseIOC {
 		$scopeArr = tx_t3sportsbet_util_ScopeController::handleCurrentScope($parameters,$configurations, $options);
 		$betgames = tx_t3sportsbet_util_ScopeController::getBetgamesFromScope($scopeArr['BETGAME_UIDS']);
 		$rounds = tx_t3sportsbet_util_ScopeController::getRoundsFromScope($scopeArr['BETSET_UIDS']);
-		
+
 		// Über die viewdata können wir Daten in den View transferieren
 		$viewData->offsetSet('betgame', $betgames[0]);
 		$viewData->offsetSet('rounds', $rounds);
 		$viewData->offsetSet('feuser', $feuser);
-		
+
 		// Wenn wir hier direkt etwas zurückgeben, wird der View nicht
 		// aufgerufen. Eher für Abbruch im Fehlerfall gedacht.
 	  return null;

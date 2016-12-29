@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2010-2016 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -53,6 +53,3 @@ class tx_t3sportsbet_mod1_link_MatchBets implements tx_cfcleague_mod1_Linker {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/link/class.tx_t3sportsbet_mod1_link_MatchBets.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/link/class.tx_t3sportsbet_mod1_link_MatchBets.php']);
-}

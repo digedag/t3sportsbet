@@ -22,9 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-// Die Datenbank-Klasse
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 tx_rnbase::load('tx_rnbase_model_base');
 tx_rnbase::load('tx_rnbase_util_Dates');
 
@@ -42,7 +39,7 @@ class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base {
 	 * @return tx_t3sportsbet_models_betset
 	 */
 	public function getBetSet() {
-		return tx_t3sportsbet_models_betset::getInstance($this->getBetSetUid());
+		return tx_t3sportsbet_models_betset::getBetsetInstance($this->getBetSetUid());
 	}
 	/**
 	 * Returns the uid of betset
@@ -50,7 +47,7 @@ class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base {
 	 * @return int
 	 */
 	public function getBetSetUid() {
-		return $this->record['betset'];
+		return $this->getProperty('betset');
 	}
 
 	/**
@@ -65,20 +62,20 @@ class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base {
 	 * @return string
 	 */
 	public function getQuestion() {
-		return $this->record['question'];
+		return $this->getProperty('question');
 	}
 	public function getOpenUntil() {
-		return $this->record['openuntil'];
+		return $this->getProperty('openuntil');
 	}
 	public function getPoints() {
-		return $this->record['points'];
+		return $this->getProperty('points');
 	}
 	/**
 	 * Returns the uid of winning team
 	 * @return string comma separated uids
 	 */
 	public function getTeamUid() {
-		return $this->record['team'];
+		return $this->getProperty('team');
 	}
 	public function getOpenUntilTstamp() {
 		return tx_rnbase_util_Dates::datetime_mysql2tstamp($this->getOpenUntil());
@@ -97,8 +94,3 @@ class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/models/class.tx_t3sportsbet_models_teamquestion.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/models/class.tx_t3sportsbet_models_teamquestion.php']);
-}
-
-?>
