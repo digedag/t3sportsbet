@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2016 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -46,7 +46,8 @@ class tx_t3sportsbet_util_MatchDecorator {
 			$ret = date('H:i d.m.y', $value);
 		}
 		elseif($colName == 'competition') {
-			$comp = tx_cfcleaguefe_models_competition::getInstance($value);
+			tx_rnbase::load('tx_cfcleague_models_Competition');
+			$comp = tx_cfcleague_models_Competition::getCompetitionInstance($value);
 			if(!is_object($comp) || !$comp->isValid()) return '';
 			$group = $comp->getGroup();
 			if(!is_object($group) || !$group->isValid()) return '';
@@ -66,8 +67,3 @@ class tx_t3sportsbet_util_MatchDecorator {
 	}
 }
 
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/util/class.tx_t3sportsbet_util_MatchDecorator.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/util/class.tx_t3sportsbet_util_MatchDecorator.php']);
-}
-?>

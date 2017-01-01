@@ -30,7 +30,7 @@ tx_rnbase::load('tx_rnbase_model_base');
  * Model for a betgame.
  */
 class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base {
-  private static $instances = array();
+	private static $instances = array();
 	function getTableName(){return 'tx_t3sportsbet_betgames';}
 	/**
 	 * Liefert die Instance mit der übergebenen UID. Die Daten werden gecached, so daß
@@ -106,16 +106,16 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base {
 	/**
 	 * Returns the competition for a static bet game
 	 *
-	 * @return array of tx_cfcleaguefe_models_competition
+	 * @return array of tx_cfcleague_models_Competition
 	 */
 	function getCompetitions() {
 		$ret = array();
-		tx_rnbase::load('tx_cfcleaguefe_models_competition');
+		tx_rnbase::load('tx_cfcleague_models_Competition');
 		$uids = $this->getProperty('competition');
 		if($uids) {
 			$uids = t3lib_div::intExplode(',',$uids);
 			foreach($uids As $uid) {
-				$ret[] = tx_cfcleaguefe_models_competition::getInstance($uid);
+				$ret[] = tx_cfcleague_models_Competition::getCompetitionInstance($uid);
 			}
 		}
 		return $ret;
@@ -125,30 +125,30 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base {
    *
    * @return int
    */
-  function getPid() {
-  	return $this->getProperty('pid');
-  }
-  /**
-   * Returns an array of existing bet sets
-   * @return array of tx_t3sportsbet_models_betset
-   */
-  function getBetSets() {
+	function getPid() {
+		return $this->getProperty('pid');
+	}
+	/**
+	 * Returns an array of existing bet sets
+	 * @return array of tx_t3sportsbet_models_betset
+	 */
+	function getBetSets() {
 		$fields['BETSET.BETGAME'][OP_EQ_INT] = $this->getUid();
 		$options['orderby']['BETSET.ROUND'] = 'asc';
 
 		$service = tx_t3sportsbet_util_serviceRegistry::getBetService();
 		return $service->searchBetSet($fields, $options);
-  }
-  /**
-   * Returns the number of betsets
-   * @return int
-   */
-  function getBetSetSize() {
+	}
+	/**
+	 * Returns the number of betsets
+	 * @return int
+	 */
+	function getBetSetSize() {
 		$fields['BETSET.BETGAME'][OP_EQ_INT] = $this->getUid();
 		$options['count'] = '1';
 
 		$service = tx_t3sportsbet_util_serviceRegistry::getBetService();
 		return $service->searchBetSet($fields, $options);
-  }
+	}
 }
 
