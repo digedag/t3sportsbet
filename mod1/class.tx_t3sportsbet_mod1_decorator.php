@@ -35,7 +35,7 @@ class tx_t3sportsbet_mod1_decorator {
 		$arr = Array( 0 => Array( self::getHeadline($columns, $options) ));
 		foreach($records As $record){
 			$dataArr = is_object($record) ? $record->record : $record;
-			
+
 			$row = array();
 			if(isset($options['checkbox'])) {
 				// Check if record is checkable
@@ -76,7 +76,7 @@ class tx_t3sportsbet_mod1_decorator {
 	 * @param array $options
 	 * @return array
 	 */
-	static function getHeadline($columns, $options) {
+	public static function getHeadline($columns, $options) {
 		global $LANG;
 		$arr = array();
 		if(isset($options['checkbox'])) {
@@ -89,9 +89,10 @@ class tx_t3sportsbet_mod1_decorator {
 		}
 		if(isset($options['linker']))
 			$arr[] = $LANG->getLL('label_action');
-    return $arr;
-  }
-	static function addLinker($options, $obj, $formTool) {
+		return $arr;
+	}
+
+	public static function addLinker($options, $obj, $formTool) {
 		$out = '';
 		if(isset($options['linker'])) {
 			$linkerArr = $options['linker'];
@@ -110,6 +111,3 @@ class tx_t3sportsbet_mod1_decorator {
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_decorator.php'])	{
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_decorator.php']);
 }
-
-
-?>

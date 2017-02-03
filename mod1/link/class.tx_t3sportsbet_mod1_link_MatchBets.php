@@ -30,12 +30,12 @@ class tx_t3sportsbet_mod1_link_MatchBets implements tx_cfcleague_mod1_Linker {
 	 * @param tx_cfcleaguefe_models_match $match
 	 * @param tx_rnbase_util_FormTool $formTool
 	 * @param int $currentPid
-	 * @param array $options
+	 * @param Tx_Rnbase_Domain_Model_Data|array $options
 	 * @return string
 	 */
-	function makeLink($match, $formTool, $currentPid, $options) {
+	public function makeLink($match, $formTool, $currentPid, $options) {
 		$out = $formTool->createEditLink('tx_cfcleague_games', $match->getUid(), $GLOBALS['LANG']->getLL('label_edit'));
-		$options = is_object($options) ? $options->getRecord() : $options;
+		$options = is_object($options) ? $options->getProperty() : $options;
 		if(isset($options['module'])) {
 			$out .= '<br />';
 			$mod = $options['module'];

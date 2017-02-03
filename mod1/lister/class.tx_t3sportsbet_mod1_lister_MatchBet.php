@@ -37,7 +37,7 @@ class tx_t3sportsbet_mod1_lister_MatchBet {
 	private $SEARCH_SETTINGS;
 	private $betsetUid;
 	private $matchUids;
-	
+
 	public function __construct(&$mod, $options = array()) {
 		$this->init($mod, $options);
 	}
@@ -67,8 +67,8 @@ class tx_t3sportsbet_mod1_lister_MatchBet {
 	 * @return string
 	 */
 	public function getSearchForm($label = '') {
-    global $LANG;
-    $out = '';
+		global $LANG;
+		$out = '';
 		return $out;
 	}
 	public function getResultList() {
@@ -81,8 +81,8 @@ class tx_t3sportsbet_mod1_lister_MatchBet {
 		// Set options
 		$options = array('count'=>1);
 
-		$fields = array();		
-		// Set filter		
+		$fields = array();
+		// Set filter
 		if ($this->betsetUid)
 			$fields['BET.BETSET'] = array(OP_EQ_INT => $this->betsetUid);
 		if ($this->matchUids)
@@ -102,7 +102,7 @@ class tx_t3sportsbet_mod1_lister_MatchBet {
 		$pagerData = $pager->render();
 		$ret['pager'] .= '<div class="pager">' . $pagerData['limits'] . ' - ' .$pagerData['pages'] .'</div>';
 		return $ret;
-		
+
 	}
 	/**
 	 * Liefert die Anzahl der gefunden Datensätze.
@@ -111,7 +111,7 @@ class tx_t3sportsbet_mod1_lister_MatchBet {
 	 * @return int
 	 */
 	public function getSize() {
-		return $this->resultSize;		
+		return $this->resultSize;
 	}
 
 	private function showBets($bets) {
@@ -129,10 +129,12 @@ class tx_t3sportsbet_mod1_lister_MatchBet {
 		);
 		if($bets) {
 			$arr = tx_t3sportsbet_mod1_decorator::prepareRecords($bets, $columns, $this->formTool, $this->options);
-			$out .= $this->mod->doc->table($arr[0]); //, $this->getTableLayout()
+			/* @var $tables Tx_Rnbase_Backend_Utility_Tables */
+			$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+			$out .= $tables->buildTable($arr[0]);
 		}
 		else {
-	  	$out = '<p><strong>'.$GLOBALS['LANG']->getLL('msg_no_bets_found').'</strong></p><br/>';
+			$out = '<p><strong>'.$GLOBALS['LANG']->getLL('msg_no_bets_found').'</strong></p><br/>';
 		}
 		return $out;
 	}
