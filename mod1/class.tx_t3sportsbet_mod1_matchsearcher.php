@@ -33,6 +33,10 @@ class tx_t3sportsbet_mod1_matchsearcher {
 	private $SEARCH_SETTINGS;
 	/** @var tx_cfcleague_selector */
 	private $selector;
+	/** @var int */
+	private $current_round;
+	/** @var tx_cfcleague_models_Competition */
+	private $currComp;
 
 	public function __construct(&$mod, $options = array()) {
 		$this->init($mod, $options);
@@ -54,7 +58,6 @@ class tx_t3sportsbet_mod1_matchsearcher {
 		$this->resultSize = 0;
 		$this->data = t3lib_div::_GP('searchdata');
 		$this->competitions = $options['competitions'];
-
 		$this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
 		$this->selector->init($this->getModFunc()->getDoc(), $this->getModFunc()->getModule());
 //		$this->selector->init($mod->doc, $mod->MCONF['name']);
@@ -62,7 +65,6 @@ class tx_t3sportsbet_mod1_matchsearcher {
 			$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''),$this->data,$this->mod->MCONF['name'] );
 		else
 			$this->SEARCH_SETTINGS = $this->data;
-
 	}
 	/**
 	 * Liefert das Suchformular. Hier die beiden Selectboxen anzeigen
@@ -71,22 +73,23 @@ class tx_t3sportsbet_mod1_matchsearcher {
 	 * @return string
 	 */
 	public function getSearchForm($label = '') {
-    global $LANG;
-    $out = '';
-    // Wir zeigen zwei Selectboxen an
-    $this->currComp = $this->selector->showLeagueSelector($out,$this->mod->id, $this->competitions);
-    if(!$this->currComp) {
-      return $out . $this->mod->doc->section('Info:',$LANG->getLL('msg_no_competition_in_betgame'),0,1,ICON_WARN);
-    }
+		global $LANG;
+		$out = '';
+		// Wir zeigen zwei Selectboxen an
+		$this->currComp = $this->selector->showLeagueSelector($out,$this->mod->id, $this->competitions);
+		if(!$this->currComp) {
+			return $out . $this->mod->doc->section('Info:',$LANG->getLL('msg_no_competition_in_betgame'),0,1,ICON_WARN);
+		}
 //    $out.=$this->mod->doc->spacer(5);
 
-    $rounds = $this->currComp->getRounds();
+		$rounds = $this->currComp->getRounds();
 		if(!count($rounds)){
 			$out .= $LANG->getLL('msg_no_round_in_competition');
 			return $out;
 		}
 		// Jetzt den Spieltag wählen lassen
 		$this->current_round = $this->selector->showRoundSelector($out,$this->mod->id,$this->currComp);
+
 		$out .= '<div style="clear:both" />';
 		//t3lib_div::debug($this->currRound, 'tx_t3sportsbet_mod1_matchsearcher'); // TODO: Remove me!
 		return $out;
@@ -97,8 +100,8 @@ class tx_t3sportsbet_mod1_matchsearcher {
 
 		// Mit Matchtable nach Spielen suchen
 		$matchTable = $this->getMatchTable();
-		$matchTable->setCompetitions($this->currComp->uid);
-		$matchTable->setRounds($this->current_round->uid);
+		$matchTable->setCompetitions($this->currComp->getUid());
+		$matchTable->setRounds(is_object($this->current_round) ? $this->current_round->getUid() : $this->current_round);
 		if(isset($this->options['ignoreDummies']))
 			$matchTable->setIgnoreDummy();
 		$fields = array();
@@ -159,6 +162,3 @@ class tx_t3sportsbet_mod1_matchsearcher {
 	}
 }
 
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_matchsearcher.php'])	{
-	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/class.tx_t3sportsbet_mod1_matchsearcher.php']);
-}
