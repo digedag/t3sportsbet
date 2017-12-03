@@ -3,121 +3,140 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 $tx_t3sportsbet_betsets = Array (
     'ctrl' => Array (
-        'title' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_bets',
+        'title' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets',
         'label' => 'uid',
+        // If label_alt is used, the flexform fails for some reasons... huh??
+    //		'label_alt' => 'uid',
+        'label_alt' => 'round, round_name',
+        'label_alt_force' => 1,
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
-        'sortby' => 'tstamp',
+        'sortby' => 'sorting',
         'delete' => 'deleted',
-        'enablecolumns' => Array (
-            ),
+        'enablecolumns' => [],
         'iconfile' => tx_rnbase_util_Extensions::extRelPath('t3sportsbet').'icon_table.gif',
-        ),
+    ),
     'interface' => Array (
-        'showRecordFieldList' => 't3match'
+        'showRecordFieldList' => 'hidden,betgame, round, round_name, status'
         ),
     'feInterface' => Array (
         'fe_admin_fieldList' => '',
-    ),
+     ),
     'columns' => Array (
-        'betset' => Array (
-            'exclude' => 0,
-            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets',
-            'config' => Array (
-                'type' => 'group',
-                'internal_type' => 'db',
-                'allowed' => 'tx_t3sportsbet_betsets',
-                'size' => 1,
-                'minitems' => 1,
-                'maxitems' => 1,
-                )
-            ),
-        'fe_user' => Array (
+        'hidden' => Array (
             'exclude' => 1,
-            'label' => 'LLL:EXT:cms/locallang_tca.php:fe_users',
-            'config' => Array (
-                'type' => 'group',
-                'internal_type' => 'db',
-                'allowed' => 'fe_users',
-                'size' => 1,
-                'minitems' => 1,
-                'maxitems' => 1,
-                )
-            ),
-        't3match' => Array (
-            'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games',
-            'config' => Array (
-                'type' => 'group',
-                'internal_type' => 'db',
-                'allowed' => 'tx_cfcleague_games',
-                'size' => 1,
-                'minitems' => 1,
-                'maxitems' => 1,
-                )
-            ),
-        'finished' => Array (
-            'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_bets.finished',
+            'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
             'config' => Array (
                 'type' => 'check',
                 'default' => '0'
                 )
             ),
-        'goals_home' => Array (
+        'betgame' => Array (
+            'exclude' => 0,
+            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betgames',
+            'config' => Array (
+                'type' => 'select',
+                'items' => Array (
+                    Array(' ', '0'),
+                    ),
+                'foreign_table' => 'tx_t3sportsbet_betgames',
+                'foreign_table_where' => 'AND tx_t3sportsbet_betgames.pid=###CURRENT_PID### ORDER BY tx_t3sportsbet_betgames.sorting ',
+                'size' => 1,
+                'minitems' => 0,
+                'maxitems' => 1,
+                )
+            ),
+        'round' => Array (
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_bets.goals_home',
+            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets.round',
             'config' => Array (
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
-                'eval' => 'int',
+                'eval' => 'required,int',
                 'range' => Array (
                     'upper' => '1000',
-                    'lower' => '0'
+                    'lower' => '1'
+                    ),
+                'default' => 1
+                )
+            ),
+        'round_name' => Array (
+            'exclude' => 1,
+            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets.round_name',
+            'config' => Array (
+                'type' => 'input',
+                'size' => '30',
+                'max' => '100',
+                'eval' => 'required,trim',
+                )
+            ),
+        'status' => Array (
+            'exclude' => 1,
+            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets.status',
+            'config' => Array (
+                'type' => 'select',
+                'items' => Array(
+                    Array('LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets.status.prepare',0),
+                    Array('LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets.status.open',1),
+                    Array('LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets.status.finished',2),
                     ),
                 'default' => 0
                 )
             ),
-        'goals_guest' => Array (
+        't3matches' => Array (
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_bets.goals_guest',
+            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets.t3matches',
             'config' => Array (
-                'type' => 'input',
-                'size' => '4',
-                'max' => '4',
-                'eval' => 'int',
-                'range' => Array (
-                    'upper' => '1000',
-                    'lower' => '0'
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'tx_cfcleague_games',
+                'size' => 10,
+                'selectedListStyle' => 'width: 450px;',
+                'autoSizeMax' => 30,
+                'minitems' => 0,
+                'maxitems' => 100,
+                'MM' => 'tx_t3sportsbet_betsets_mm',
+                'MM_match_fields' => Array(
+                    'tablenames' => 'tx_cfcleague_games',
                     ),
-                'default' => 0
                 )
             ),
-        'points' => Array (
+        'teamquestions' => Array (
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_bets.points',
+            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_teamquestions',
             'config' => Array (
-                'type' => 'input',
-                'size' => '4',
-                'max' => '4',
-                'eval' => 'int',
-                //				'checkbox' => '0',
-                'range' => Array (
-                    'upper' => '1000',
-                    'lower' => '0'
+                'type' => 'inline',
+                'foreign_table' => 'tx_t3sportsbet_teamquestions',
+                'foreign_field' => 'betset',
+                'foreign_sortby' => 'sorting',
+                'foreign_label' => 'question',
+                'minitems' => 0,
+                'maxitems' => 20,
+                'appearance' => Array(
+                    'collapseAll' => '1',
+                    'expandSingle' => '1',
                     ),
-                'default' => 0
+                )
+            ),
+        'comment' => Array (
+            'exclude' => 1,
+            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betgames_comment',
+            'config' => Array (
+                'type' => 'text',
+                'cols' => '30',
+                'rows' => '5',
+                'eval' => 'trim',
                 )
             ),
         ),
     'types' => Array (
-        '0' => Array('showitem' => 'betset,fe_user,t3match,finished,goals_home,goals_guest,points')
+        '0' => Array('showitem' => 'hidden;;1;;1-1-1, betgame, round, round_name, status, comment, t3matches, teamquestions')
         ),
     'palettes' => Array (
         '1' => Array('showitem' => '')
-        )
+    )
 );
 
 return $tx_t3sportsbet_betsets;
