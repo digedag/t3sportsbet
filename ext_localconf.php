@@ -20,7 +20,7 @@ $GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['teamMarker_initRecord'
 $GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_tce.php:tx_t3sportsbet_hooks_tce';
 $GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms.php']['getMainFieldsClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_t3sportsbet_hooks_tce.php:tx_t3sportsbet_hooks_tce';
 
-t3lib_extMgm::addService($_EXTKEY,  't3sportsbet' /* sv type */,  'tx_t3sportsbet_services_bet' /* sv key */,
+tx_rnbase_util_Extensions::addService($_EXTKEY,  't3sportsbet' /* sv type */,  'tx_t3sportsbet_services_bet' /* sv key */,
   array(
     'title' => 'Bet game', 'description' => 'Working with bet games', 'subtype' => 'bet',
     'available' => TRUE, 'priority' => 50, 'quality' => 50,
@@ -30,7 +30,7 @@ t3lib_extMgm::addService($_EXTKEY,  't3sportsbet' /* sv type */,  'tx_t3sportsbe
   )
 );
 
-t3lib_extMgm::addService($_EXTKEY,  't3sportsbet' /* sv type */,  'tx_t3sportsbet_services_teambet' /* sv key */,
+tx_rnbase_util_Extensions::addService($_EXTKEY,  't3sportsbet' /* sv type */,  'tx_t3sportsbet_services_teambet' /* sv key */,
   array(
     'title' => 'Teambets', 'description' => 'Working with team bets', 'subtype' => 'teambet',
     'available' => TRUE, 'priority' => 50, 'quality' => 50,
@@ -40,7 +40,7 @@ t3lib_extMgm::addService($_EXTKEY,  't3sportsbet' /* sv type */,  'tx_t3sportsbe
   )
 );
 
-t3lib_extMgm::addService($_EXTKEY,  't3sportsbet' /* sv type */,  'tx_t3sportsbet_services_betcalculator' /* sv key */,
+tx_rnbase_util_Extensions::addService($_EXTKEY,  't3sportsbet' /* sv type */,  'tx_t3sportsbet_services_betcalculator' /* sv key */,
   array(
     'title' => 'Bet calculator', 'description' => 'Calculate points for a bet', 'subtype' => 'calculator',
     'available' => TRUE, 'priority' => 50, 'quality' => 50,
@@ -51,8 +51,4 @@ t3lib_extMgm::addService($_EXTKEY,  't3sportsbet' /* sv type */,  'tx_t3sportsbe
 );
 
 // always load service registry
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_t3sportsbet_util_serviceRegistry');
-
-
-?>

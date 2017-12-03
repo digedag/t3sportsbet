@@ -2,129 +2,16 @@
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 
-$TCA['tx_t3sportsbet_betgames'] = Array (
-	'ctrl' => Array (
-		'title' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betgames',
-		'label' => 'name',
-		'tstamp' => 'tstamp',
-		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
-		'sortby' => 'sorting',
-		'delete' => 'deleted',
-		'enablecolumns' => Array (
-			'disabled' => 'hidden',
-			'starttime' => 'starttime',
-			'fe_group' => 'fe_group',
-		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
-		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_table.gif',
-	),
-	'feInterface' => Array (
-		'fe_admin_fieldList' => 'hidden, starttime, name',
-	)
-);
+if(!tx_rnbase_util_TYPO3::isTYPO62OrHigher()) {
+    // TCA registration for 4.5
+    $TCA['tx_t3sportsbet_betgames'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/locallang_db.xml:tx_t3sportsbet_betgames.php';
+    $TCA['tx_t3sportsbet_betsets'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/locallang_db.xml:tx_t3sportsbet_betsets.php';
+    $TCA['tx_t3sportsbet_betsetresults'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/locallang_db.xml:tx_t3sportsbet_betsetresults.php';
+    $TCA['tx_t3sportsbet_bets'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/locallang_db.xml:tx_t3sportsbet_bets.php';
+    $TCA['tx_t3sportsbet_teamquestions'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/locallang_db.xml:tx_t3sportsbet_teamquestions.php';
+    $TCA['tx_t3sportsbet_teambets'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/locallang_db.xml:tx_t3sportsbet_teambets.php';
+}
 
-$TCA['tx_t3sportsbet_betsets'] = Array (
-	'ctrl' => Array (
-		'title' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets',
-		'label' => 'uid',
-// If label_alt is used, the flexform fails for some reasons... huh??
-//		'label_alt' => 'uid',
-		'label_alt' => 'round, round_name',
-		'label_alt_force' => 1,
-		'tstamp' => 'tstamp',
-		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
-		'sortby' => 'sorting',
-		'delete' => 'deleted',
-		'enablecolumns' => Array (
-		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
-		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_table.gif',
-	),
-	'feInterface' => Array (
-		'fe_admin_fieldList' => '',
-	)
-);
-
-$TCA['tx_t3sportsbet_betsetresults'] = Array (
-	'ctrl' => Array (
-		'title' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsetresults',
-		'label' => 'uid',
-		'label_alt' => 'betset, feuser',
-		'label_alt_force' => 1,
-		'tstamp' => 'tstamp',
-		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
-		'sortby' => 'crdate desc',
-		'delete' => 'deleted',
-		'enablecolumns' => Array (
-		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
-		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_table.gif',
-	),
-	'feInterface' => Array (
-		'fe_admin_fieldList' => '',
-	)
-);
-
-$TCA['tx_t3sportsbet_bets'] = Array (
-	'ctrl' => Array (
-		'title' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_bets',
-		'label' => 'uid',
-		'tstamp' => 'tstamp',
-		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
-		'sortby' => 'tstamp',
-		'delete' => 'deleted',
-		'enablecolumns' => Array (
-		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
-		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_table.gif',
-	),
-	'feInterface' => Array (
-		'fe_admin_fieldList' => '',
-	)
-);
-
-$TCA['tx_t3sportsbet_teamquestions'] = Array (
-	'ctrl' => Array (
-		'title' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_teamquestions',
-		'label' => 'question',
-		'tstamp' => 'tstamp',
-		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
-		'sortby' => 'tstamp',
-		'delete' => 'deleted',
-		'enablecolumns' => Array (
-			'disabled' => 'hidden',
-		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca_teamquest.php',
-		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_table.gif',
-	),
-	'feInterface' => Array (
-		'fe_admin_fieldList' => '',
-	)
-);
-
-$TCA['tx_t3sportsbet_teambets'] = Array (
-	'ctrl' => Array (
-		'title' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_teambets',
-		'label' => 'question',
-		'tstamp' => 'tstamp',
-		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
-		'sortby' => 'tstamp',
-		'delete' => 'deleted',
-		'enablecolumns' => Array (
-		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca_teamquest.php',
-		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_table.gif',
-	),
-	'feInterface' => Array (
-		'fe_admin_fieldList' => '',
-	)
-);
 
 ////////////////////////////////
 // Plugin anmelden
@@ -137,30 +24,29 @@ $TCA['tt_content']['types']['list']['subtypes_addlist']['tx_t3sportsbet_main']='
 
 $GLOBALS['TCA']['tt_content']['ctrl']['requestUpdate'] .= ',scope.betgame';
 
-t3lib_extMgm::addPiFlexFormValue('tx_t3sportsbet_main','FILE:EXT:'.$_EXTKEY.'/flexform_main.xml');
-t3lib_extMgm::addPlugin(Array('LLL:EXT:'.$_EXTKEY.'/locallang_db.php:plugin.t3sportsbet.label','tx_t3sportsbet_main'));
+tx_rnbase_util_Extensions::addPiFlexFormValue('tx_t3sportsbet_main','FILE:EXT:'.$_EXTKEY.'/flexform_main.xml');
+tx_rnbase_util_Extensions::addPlugin(Array('LLL:EXT:'.$_EXTKEY.'/locallang_db.php:plugin.t3sportsbet.label','tx_t3sportsbet_main'));
 
-t3lib_extMgm::addStaticFile($_EXTKEY,'static/ts/', 'T3sports Bet-System');
-t3lib_extMgm::addStaticFile($_EXTKEY,'static/css/', 'T3sports Bet-System (CSS)');
+tx_rnbase_util_Extensions::addStaticFile($_EXTKEY,'static/ts/', 'T3sports Bet-System');
+tx_rnbase_util_Extensions::addStaticFile($_EXTKEY,'static/css/', 'T3sports Bet-System (CSS)');
 
 # Add plugin wizard
 if (TYPO3_MODE=='BE')	{
 	tx_rnbase::load('tx_rnbase_util_Wizicon');
-	tx_rnbase_util_Wizicon::addWizicon('tx_t3sportsbet_util_Wizicon', t3lib_extMgm::extPath($_EXTKEY).'util/class.tx_t3sportsbet_util_Wizicon.php');
+	tx_rnbase_util_Wizicon::addWizicon('tx_t3sportsbet_util_Wizicon', tx_rnbase_util_Extensions::extPath($_EXTKEY).'util/class.tx_t3sportsbet_util_Wizicon.php');
 }
 
 ////////////////////////////////
 // Submodul anmelden
 ////////////////////////////////
 if (TYPO3_MODE=="BE")	{
-	require_once(t3lib_extMgm::extPath($_EXTKEY) .'util/class.tx_t3sportsbet_util_ItemFunctions.php');
-	t3lib_extMgm::insertModuleFunction(
-		'web_txcfcleagueM1',
-		'tx_t3sportsbet_mod1_index',
-		t3lib_extMgm::extPath($_EXTKEY).'mod1/class.tx_t3sportsbet_mod1_index.php',
+    $modName = 'web_txcfcleagueM1';
+    if (tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
+        $modName = 'web_CfcLeagueM1';
+    }
+    require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY) .'util/class.tx_t3sportsbet_util_ItemFunctions.php');
+	tx_rnbase_util_Extensions::insertModuleFunction($modName, 'tx_t3sportsbet_mod1_index',
+	    tx_rnbase_util_Extensions::extPath($_EXTKEY).'mod1/class.tx_t3sportsbet_mod1_index.php',
 		'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_module.name'
 	);
 }
-
-
-?>
