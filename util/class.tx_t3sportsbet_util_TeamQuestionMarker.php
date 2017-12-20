@@ -34,7 +34,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
 
     static $teamMarker = null;
 
-    function __construct($options = array())
+    public function __construct($options = array())
     {
         $this->options = $options;
     }
@@ -59,7 +59,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
             $item = self::getEmptyInstance('tx_t3sportsbet_models_teamquestion');
         }
         $feuser = $this->options['feuser'];
-        
+
         $this->prepare($item, $template, $marker);
         // Es wird das MarkerArray mit den Daten des Tips gefüllt.
         $ignore = self::findUnusedCols($item->record, $template, $marker);
@@ -67,19 +67,19 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
         
         $template = $this->handleStatePart($template, $item, $feuser, $formatter);
         
-        if ($this->containsMarker($template, $marker . '_TEAMS'))
+        if ($this->containsMarker($template, $marker . '_TEAMS')) {
             $template = $this->addTeams($template, $item, $formatter, $confId . 'team.', $marker . '_TEAM');
+        }
         
-        if ($this->containsMarker($template, $marker . '_BET_'))
+        if ($this->containsMarker($template, $marker . '_BET_')) {
             $template = $this->addBet($template, $item, $feuser, $formatter, $confId . 'bet.', $marker . '_BET');
-        if ($this->containsMarker($template, $marker . '_TREND_'))
+        }
+        if ($this->containsMarker($template, $marker . '_TREND_')) {
             $template = $this->addTrend($template, $item, $feuser, $formatter, $confId . 'trend.', $marker . '_TREND');
+        }
         
         $wrappedSubpartArray = [];
-        $wrappedSubpartArray['###' . $marker . '_TREND###'] = array(
-            '',
-            ''
-        );
+        $wrappedSubpartArray['###' . $marker . '_TREND###'] = ['', ''];
         $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
         return $out;
     }
@@ -90,8 +90,9 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
      */
     private static function getSimpleMarker()
     {
-        if (! self::$simpleMarker)
+        if (! self::$simpleMarker) {
             self::$simpleMarker = tx_rnbase::makeInstance('tx_rnbase_util_SimpleMarker');
+        }
         return self::$simpleMarker;
     }
 
@@ -120,6 +121,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
     {
         $srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
         $bet = $srv->getTeamBet($item, $feuser);
+        
         $template = self::getSimpleMarker()->parseTemplate($template, $bet, $formatter, $confId, $marker);
         if ($this->containsMarker($template, $marker . '_TEAM_')) {
             $template = self::getTeamMarker()->parseTemplate($template, $bet->getTeam(), $formatter, $confId . 'team.', $marker . '_TEAM');
@@ -240,6 +242,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
      */
     private function addTeams($template, $item, $formatter, $confId, $markerPrefix)
     {
+
         $children = tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->getTeams4TeamQuestion($item);
         // Den aktuellen Tip des Users mitgeben
         $options = array();
