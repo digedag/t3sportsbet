@@ -62,8 +62,8 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
 
         $this->prepare($item, $template, $marker);
         // Es wird das MarkerArray mit den Daten des Tips gefüllt.
-        $ignore = self::findUnusedCols($item->record, $template, $marker);
-        $markerArray = $formatter->getItemMarkerArrayWrapped($item->record, $confId, $ignore, $marker . '_', $item->getColumnNames());
+        $ignore = self::findUnusedCols($item->getProperty(), $template, $marker);
+        $markerArray = $formatter->getItemMarkerArrayWrapped($item->getProperty(), $confId, $ignore, $marker . '_', $item->getColumnNames());
         
         $template = $this->handleStatePart($template, $item, $feuser, $formatter);
         
@@ -124,7 +124,10 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
         
         $template = self::getSimpleMarker()->parseTemplate($template, $bet, $formatter, $confId, $marker);
         if ($this->containsMarker($template, $marker . '_TEAM_')) {
-            $template = self::getTeamMarker()->parseTemplate($template, $bet->getTeam(), $formatter, $confId . 'team.', $marker . '_TEAM');
+            // Der Marker liefert eine Fehlermeldung, wenn das Team nicht valid ist
+            if($bet->getTeam()->isValid()) {
+                $template = self::getTeamMarker()->parseTemplate($template, $bet->getTeam(), $formatter, $confId . 'team.', $marker . '_TEAM');
+            }
         }
         return $template;
     }
@@ -158,12 +161,16 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
         }
         
         if ($this->containsMarker($template, $markerPrefix . '_CHART')) {
+            // pbimagegraph is not supported anymore
+            // TODO: implement JS graph
             try {
-                tx_rnbase::load('tx_rnbase_plot_Builder');
-                $tsConf = $formatter->getConfigurations()->get($confId . 'chart.');
-                $dp = $this->makeChartDataProvider($item, $teams);
+//                 tx_rnbase::load('tx_rnbase_plot_Builder');
+//                 $tsConf = $formatter->getConfigurations()->get($confId . 'chart.');
+//                 $dp = $this->makeChartDataProvider($item, $teams);
                 $markerArray = [];
-                $markerArray['###' . $markerPrefix . '_CHART###'] = tx_rnbase_plot_Builder::getInstance()->make($tsConf, $dp);
+//                $markerArray['###' . $markerPrefix . '_CHART###'] = tx_rnbase_plot_Builder::getInstance()->make($tsConf, $dp);
+                
+                $markerArray['###' . $markerPrefix . '_CHART###'] = '';
                 $template = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray); // , $wrappedSubpartArray);
             } catch (Exception $e) {
                 $chart = 'Not possible';
@@ -210,7 +217,6 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
      */
     private function handleStatePart($template, $teamQuestion, $feuser, $formatter)
     {
-        //
         $subpartArray = [];
         $subpartArray['###BETSTATUS_OPEN###'] = '';
         $subpartArray['###BETSTATUS_CLOSED###'] = '';
@@ -260,8 +266,9 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
      */
     private function findCurrentBet($item, $feuser)
     {
-        if (! $feuser)
+        if (! $feuser) {
             return 0;
+        }
         $bet = tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->getTeamBet($item, $feuser);
         return $bet->isPersisted() ? $bet->getTeamUid() : 0;
     }
