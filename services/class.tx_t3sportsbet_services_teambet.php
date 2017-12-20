@@ -144,7 +144,7 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase
             $bet = tx_rnbase::makeInstance('tx_t3sportsbet_models_teambet', array(
                 'uid' => 0,
                 'question' => $teamQuestion->getUid(),
-                'fe_user' => $feuser->getUid()
+                'fe_user' => $feuser ? $feuser->getUid() : 0,
             ));
         }
         return $bet;
