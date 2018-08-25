@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2018 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -52,7 +52,7 @@ class tx_t3sportsbet_util_FeUserMarker extends tx_t3users_util_FeUserMarker
         $wrappedSubpartArray = array();
         $subpartArray = array();
         $this->prepareLinks($feuser, $marker, $markerArray, $subpartArray, $wrappedSubpartArray, $confId, $formatter);
-        
+
         $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
         return $out;
     }
@@ -67,7 +67,7 @@ class tx_t3sportsbet_util_FeUserMarker extends tx_t3users_util_FeUserMarker
      * @param string $confId
      * @param tx_rnbase_util_FormatUtil $formatter
      */
-    protected function prepareLinks(&$feuser, $marker, &$markerArray, &$subpartArray, &$wrappedSubpartArray, $confId, &$formatter)
+    protected function prepareLinks($feuser, $marker, &$markerArray, &$subpartArray, &$wrappedSubpartArray, $confId, $formatter, $template)
     {
         $this->initLink($markerArray, $subpartArray, $wrappedSubpartArray, $formatter, $confId, 'bets', $marker, array(
             'feuserId' => $feuser ? $feuser->getUid() : 0

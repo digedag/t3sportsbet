@@ -39,17 +39,17 @@ class tx_t3sportsbet_views_BetList extends tx_rnbase_view_Base {
 	 * Erstellt die Ausgabe für die Liste der Tiprunden
 	 *
 	 * @param string $template
-	 * @param arrayObj $viewData
+	 * @param ArrayObject $viewData
 	 * @param tx_rnbase_configurations $configurations
 	 * @param tx_rnbase_util_FormatUtil $formatter
 	 * @return string
 	 */
-	function createOutput($template, &$viewData, &$configurations, &$formatter) {
+	public function createOutput($template, &$viewData, &$configurations, &$formatter) {
 		// Wir holen die Daten von der Action ab
 		$betgame =& $viewData->offsetGet('betgame');
 		$feuser =& $viewData->offsetGet('feuser');
 		$currFeuser =& $viewData->offsetGet('currfeuser');
-		
+
 		$params['confid'] = 'betlist.';
 		$params['betgame'] = $betgame;
 		$params['feuser'] = $feuser;
@@ -61,18 +61,21 @@ class tx_t3sportsbet_views_BetList extends tx_rnbase_view_Base {
 			$wrappedSubpartArray['###BETSET_SAVED###'] = array('','');
 			$data['savecount'] = $viewData->offsetGet('saved');
 		}
-		else
+		else {
 			$subpartArray['###BETSET_SAVED###'] = '';
-		
+		}
+
 		// Wenn Selectbox für Tiprunde gezeigt werden soll, dann Abschnitt erstellen
 		$selectItems = $viewData->offsetGet('betset_select');
 		$selectItems = is_array($selectItems) ? $selectItems : array();
 		$template = $this->addScope($template, $viewData, $selectItems, 'betlist.betset.', 'BETSET', $formatter);
 
-		if(is_object($currFeuser))
+		if(is_object($currFeuser)) {
 			$subpartArray['###LOGINMESSAGE###'] = '';
-		else
+		}
+		else {
 			$wrappedSubpartArray['###LOGINMESSAGE###'] = '';
+		}
 
 		$betsets =& $viewData->offsetGet('rounds');
 		if(count($betsets)) {
@@ -92,11 +95,11 @@ class tx_t3sportsbet_views_BetList extends tx_rnbase_view_Base {
 			$subpartArray['###BETSETS###'] = $configurations->getLL('msg_no_betsets_found');
 //			$out = $formatter->cObj->substituteMarkerArrayCached($template, array(), $subpartArray);
 		}
-		
+
 		$userMarker = tx_rnbase::makeInstance('tx_t3sportsbet_util_FeUserMarker');
 		if($feuser)
 			$template = $userMarker->parseTemplate($template, $feuser, $formatter, 'betlist.feuser.', 'FEUSER');
-		
+
 		$markerArray = $formatter->getItemMarkerArrayWrapped($data, 'betlist.');
 		tx_rnbase_util_BaseMarker::callModules($template, $markerArray, $subpartArray, $wrappedSubpartArray, $params, $formatter);
 		$out = $formatter->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray,$wrappedSubpartArray);
@@ -104,10 +107,10 @@ class tx_t3sportsbet_views_BetList extends tx_rnbase_view_Base {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param tx_rnbase_configurations $configurations
 	 */
-	function createPageUri($configurations, $params = array()) {
+	protected function createPageUri($configurations, $params = array()) {
 		$link = $configurations->createLink();
 		$link->initByTS($configurations, $this->getController()->getConfId().'formUrl.', $params);
 		if($configurations->get($this->getController()->getConfId().'formUrl.noCache'))
@@ -131,11 +134,11 @@ class tx_t3sportsbet_views_BetList extends tx_rnbase_view_Base {
 
 	/**
 	 * Subpart der im HTML-Template geladen werden soll. Dieser wird der Methode
-	 * createOutput automatisch als $template übergeben. 
+	 * createOutput automatisch als $template übergeben.
 	 *
 	 * @return string
 	 */
-	function getMainSubpart() {
+	public function getMainSubpart(&$viewData) {
 		return '###BETLIST###';
 	}
 }

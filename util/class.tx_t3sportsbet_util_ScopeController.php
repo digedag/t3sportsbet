@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2018 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -37,10 +37,10 @@ class tx_t3sportsbet_util_ScopeController
      * Durch den Aufruf werden gleichzeitig die Daten für die Select-Boxen
      * vorbereitet und in die viewData der Config gelegt.
      * Es wird ein Array mit dem aktuell gültigen Scope zurückgeliefert.
-     * 
+     *
      * @return Array mit den UIDs als String
      */
-    public function handleCurrentScope($parameters, &$configurations, $options = array())
+    public static function handleCurrentScope($parameters, &$configurations, $options = array())
     {
         $ret = Array();
         $ret['BETGAME_UIDS'] = self::handleCurrentBetgame($parameters, $configurations, $options);
@@ -48,7 +48,7 @@ class tx_t3sportsbet_util_ScopeController
         return $ret;
     }
 
-    function handleCurrentBetgame(&$parameters, &$configurations, &$options)
+    protected static function handleCurrentBetgame(&$parameters, &$configurations, &$options)
     {
         // Erstmal nur ein Tipspiel im Scope erlaubt
         $betgameUid = $configurations->get('scope.betgame');
@@ -60,10 +60,10 @@ class tx_t3sportsbet_util_ScopeController
      * Diese Funktion stellt die UIDs der aktuell ausgewählten Betsets bereit.
      * Durch den Aufruf werden gleichzeitig die Daten für die Select-Boxen
      * vorbereitet und in die viewData der Config gelegt.
-     * 
+     *
      * @return array[tx_t3sportsbet_models_betset] betsets to show
      */
-    public function handleCurrentBetset(&$parameters, &$configurations, &$options)
+    public static function handleCurrentBetset(&$parameters, &$configurations, &$options)
     {
         $betgame = $options['betgame'];
         $useObjects = true;
@@ -74,7 +74,7 @@ class tx_t3sportsbet_util_ScopeController
         $rounds = self::getBetsets($betgame, $betsetStatus, $betsetUids, $configurations, $configKey);
         tx_rnbase::load('tx_rnbase_util_Misc');
         $ret = tx_rnbase_util_Misc::objImplode(',', $rounds);
-        
+
         // Soll eine SelectBox für die Tiprunde gezeigt werden?
         if ($configurations->get($configKey . 'betsetInput')) {
             $defaultBetset = $configurations->get($configKey . 'defaultBetset');
@@ -104,7 +104,7 @@ class tx_t3sportsbet_util_ScopeController
             $fields['BETSET.STATUS'][OP_IN_INT] = $betsetStatus;
         if (trim($betsetUids))
             $fields['BETSET.UID'][OP_IN_INT] = $betsetUids;
-        
+
         return $srv->searchBetSet($fields, $options);
     }
 
@@ -134,12 +134,12 @@ class tx_t3sportsbet_util_ScopeController
      * Liefert ein Array für die Erstellung der Select-Box für eine Model-Klasse
      * Das Ergebnis-Array hat zwei Einträge: Index 0 enthält das Wertearray, Index 1 das
      * aktuelle Element
-     * 
+     *
      * @param string $displayAttrName Der Name eines Atttributs, um dessen Wert anzuzeigen. Wenn der
      *            String leer ist, dann wird das gesamten Objekt als Wert verwendet.
      * @param int $defaultIdx
      */
-    protected function _prepareSelect($objects, $parameters, $parameterName, $displayAttrName = 'name', $defaultIdx = 0)
+    protected static function _prepareSelect($objects, $parameters, $parameterName, $displayAttrName = 'name', $defaultIdx = 0)
     {
         global $TSFE;
         $ret = array();
@@ -147,7 +147,7 @@ class tx_t3sportsbet_util_ScopeController
             foreach ($objects as $object) {
                 $ret[0][$object->uid] = strlen($displayAttrName) == 0 ? $object : $object->record[$displayAttrName];
             }
-            
+
             $paramValue = $parameters->offsetGet($parameterName);
             // Der Wert im Parameter darf nur übernommen werden, wenn er in der SelectBox vorkommt
             if (isset($paramValue) && array_key_exists($paramValue, $ret[0]))
