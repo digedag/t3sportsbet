@@ -51,7 +51,7 @@ class tx_t3sportsbet_util_FeUserMarker extends tx_t3users_util_FeUserMarker
         $markerArray = array();
         $wrappedSubpartArray = array();
         $subpartArray = array();
-        $this->prepareLinks($feuser, $marker, $markerArray, $subpartArray, $wrappedSubpartArray, $confId, $formatter);
+        $this->prepareLinks($feuser, $marker, $markerArray, $subpartArray, $wrappedSubpartArray, $confId, $formatter, $template);
 
         $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
         return $out;
