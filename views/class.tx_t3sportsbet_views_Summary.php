@@ -29,7 +29,7 @@ tx_rnbase::load('tx_rnbase_view_Base');
 class tx_t3sportsbet_views_Summary extends tx_rnbase_view_Base
 {
 
-    function createOutput($template, &$viewData, &$configurations, &$formatter)
+    public function createOutput($template, &$viewData, &$configurations, &$formatter)
     {
         // Wir holen die Daten von der Action ab
         $data = & $viewData->offsetGet('data');
@@ -45,7 +45,7 @@ class tx_t3sportsbet_views_Summary extends tx_rnbase_view_Base
      *
      * @return string
      */
-    function getMainSubpart()
+    public function getMainSubpart(&$viewData)
     {
         return '###SUMMARY###';
     }

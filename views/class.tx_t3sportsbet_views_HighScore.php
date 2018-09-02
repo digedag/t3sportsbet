@@ -32,7 +32,7 @@ tx_rnbase::load('tx_rnbase_util_Templates');
 class tx_t3sportsbet_views_HighScore extends tx_rnbase_view_Base
 {
 
-    function createOutput($template, &$viewData, &$configurations, &$formatter)
+    public function createOutput($template, &$viewData, &$configurations, &$formatter)
     {
         // Wir holen die Daten von der Action ab
         $betgame = & $viewData->offsetGet('betgame');
@@ -131,7 +131,7 @@ class tx_t3sportsbet_views_HighScore extends tx_rnbase_view_Base
      *
      * @return string
      */
-    function getMainSubpart()
+    public function getMainSubpart(&$viewData)
     {
         return '###HIGHSCORE###';
     }

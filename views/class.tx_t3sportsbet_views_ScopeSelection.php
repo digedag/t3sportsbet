@@ -31,7 +31,7 @@ tx_rnbase::load('tx_rnbase_util_ListBuilder');
 class tx_t3sportsbet_views_ScopeSelection extends tx_rnbase_view_Base
 {
 
-    function createOutput($template, &$viewData, &$configurations, &$formatter)
+    public function createOutput($template, &$viewData, &$configurations, &$formatter)
     {
         // Wenn Selectbox für Tiprunde gezeigt werden soll, dann Abschnitt erstellen
         $selectItems = $viewData->offsetGet('betset_select');
@@ -69,13 +69,8 @@ class tx_t3sportsbet_views_ScopeSelection extends tx_rnbase_view_Base
      *
      * @return string
      */
-    function getMainSubpart()
+    public function getMainSubpart(&$viewData)
     {
         return '###SCOPE###';
     }
 }
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/views/class.tx_t3sportsbet_views_ScopeSelection.php']) {
-    include_once ($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/views/class.tx_t3sportsbet_views_ScopeSelection.php']);
-}
-?>
