@@ -1,0 +1,43 @@
+{
+	"name" : "digedag/t3sportsbet",
+	"description" : "Bet game based on TYPO3 extension T3sports.",
+	"type" : "typo3-cms-extension",
+	"keywords" : [
+		"TYPO3 CMS",
+		"sports",
+		"betgame"
+	],
+	"homepage" : "http://www.system25.de/",
+	"license" : "GPL-2.0-or-later",
+	"authors" : [{
+			"name" : "René Nitzsche",
+			"email" : "rene@system25.de",
+			"role" : "Developer"
+		}
+	],
+	"support" : {
+		"email" : "rene@system25.de",
+		"source" : "https://github.com/digedag/t3sportsbet",
+		"issues" : "https://github.com/digedag/t3sportsbet/issues"
+	},
+	"replace" : {
+		"t3sportsbet" : "self.version",
+		"typo3-ter/t3sportsbet" : "self.version"
+	},
+	"require" : {
+		"typo3/cms-core" : ">=6.2.0 <=8.7.99",
+		"digedag/rn-base" : ">=1.8.0"
+	},
+	"autoload" : {
+		"classmap" : [
+			"actions/",
+			"hooks/",
+			"mod1/",
+			"models/",
+			"search/",
+			"services/",
+			"util/",
+			"views/"
+		]
+	}
+}
