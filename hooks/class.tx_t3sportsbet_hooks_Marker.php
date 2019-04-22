@@ -21,12 +21,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
-
 /**
  * Extend marker classes
- * 
+ *
  * @author Rene Nitzsche
  */
 class tx_t3sportsbet_hooks_Marker {
@@ -40,13 +37,6 @@ class tx_t3sportsbet_hooks_Marker {
 		$options = $parent->getOptions();
 		if(! (is_array($options) && array_key_exists('teambet', $options)) ) return;
 
-		$params['item']->record['currentbet'] = $params['item']->getUid() == $options['teambet'] ? 1 : '';
+		$params['item']->setProperty('currentbet', $params['item']->getUid() == $options['teambet'] ? 1 : '');
 	}
 }
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/hooks/class.tx_t3sportsbet_hooks_Marker.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/hooks/class.tx_t3sportsbet_hooks_Marker.php']);
-}
-
-?>

@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
@@ -21,30 +22,27 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 /**
  * Make additional join for feuser search to table tx_t3sportsbet_bets
- * 
+ *
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_hooks_searchFeuser {
+class tx_t3sportsbet_hooks_searchFeuser
+{
 
-	function getTableMapping($params, $parent) {
-		$params['tableMapping']['BET'] = 'tx_t3sportsbet_bets';
-		$params['tableMapping']['BETSETRESULT'] = 'tx_t3sportsbet_betsetresults';
-	}
-	function getJoins($params, $parent) {
-		if(isset($params['tableAliases']['BET'])) {
-			$params['join'] .= ' INNER JOIN tx_t3sportsbet_bets ON fe_users.uid = tx_t3sportsbet_bets.fe_user ';
-		}
-		if(isset($params['tableAliases']['BETSETRESULT'])) {
-			$params['join'] .= ' INNER JOIN tx_t3sportsbet_betsetresults ON fe_users.uid = tx_t3sportsbet_betsetresults.feuser ';
-		}
-	}
-}
+    public function getTableMapping($params, $parent)
+    {
+        $params['tableMapping']['BET'] = 'tx_t3sportsbet_bets';
+        $params['tableMapping']['BETSETRESULT'] = 'tx_t3sportsbet_betsetresults';
+    }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/hooks/class.tx_t3sportsbet_hooks_searchFeuser.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/hooks/class.tx_t3sportsbet_hooks_searchFeuser.php']);
+    public function getJoins($params, $parent)
+    {
+        if (isset($params['tableAliases']['BET'])) {
+            $params['join'] .= ' INNER JOIN tx_t3sportsbet_bets ON fe_users.uid = tx_t3sportsbet_bets.fe_user ';
+        }
+        if (isset($params['tableAliases']['BETSETRESULT'])) {
+            $params['join'] .= ' INNER JOIN tx_t3sportsbet_betsetresults ON fe_users.uid = tx_t3sportsbet_betsetresults.feuser ';
+        }
+    }
 }
-?>

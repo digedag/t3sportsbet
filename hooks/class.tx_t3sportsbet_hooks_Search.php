@@ -21,38 +21,35 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
-
 /**
  * Make additional join for match search to table tx_t3sportsbet_betsets_mm
- * 
+ *
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_hooks_Search {
+class tx_t3sportsbet_hooks_Search
+{
 
-	function getTableMappingMatch($params, $parent) {
-		$params['tableMapping']['BETSETMM'] = 'tx_t3sportsbet_betsets_mm';
-	}
-	function getJoinsMatch($params, $parent) {
-		if(isset($params['tableAliases']['BETSETMM'])) {
-			$params['join'] .= ' INNER JOIN tx_t3sportsbet_betsets_mm ON tx_cfcleague_games.uid = tx_t3sportsbet_betsets_mm.uid_foreign ';
-		}
-	}
+    public function getTableMappingMatch($params, $parent)
+    {
+        $params['tableMapping']['BETSETMM'] = 'tx_t3sportsbet_betsets_mm';
+    }
 
-	function getTableMappingTeam($params, $parent) {
-		$params['tableMapping']['TEAMQUESTIONMM'] = 'tx_t3sportsbet_teamquestions_mm';
-	}
-	function getJoinsTeam($params, $parent) {
-		if(isset($params['tableAliases']['TEAMQUESTIONMM'])) {
-			$params['join'] .= ' INNER JOIN tx_t3sportsbet_teamquestions_mm AS TEAMQUESTIONMM ON TEAM.uid = TEAMQUESTIONMM.uid_foreign ';
-		}
-	}
+    public function getJoinsMatch($params, $parent)
+    {
+        if (isset($params['tableAliases']['BETSETMM'])) {
+            $params['join'] .= ' INNER JOIN tx_t3sportsbet_betsets_mm ON tx_cfcleague_games.uid = tx_t3sportsbet_betsets_mm.uid_foreign ';
+        }
+    }
+
+    public function getTableMappingTeam($params, $parent)
+    {
+        $params['tableMapping']['TEAMQUESTIONMM'] = 'tx_t3sportsbet_teamquestions_mm';
+    }
+
+    public function getJoinsTeam($params, $parent)
+    {
+        if (isset($params['tableAliases']['TEAMQUESTIONMM'])) {
+            $params['join'] .= ' INNER JOIN tx_t3sportsbet_teamquestions_mm AS TEAMQUESTIONMM ON TEAM.uid = TEAMQUESTIONMM.uid_foreign ';
+        }
+    }
 }
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/hooks/class.tx_t3sportsbet_hooks_Search.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/hooks/class.tx_t3sportsbet_hooks_Search.php']);
-}
-
-?>
