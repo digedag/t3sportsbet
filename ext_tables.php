@@ -30,7 +30,7 @@ if (TYPO3_MODE=='BE')	{
 	$modName = 'web_CfcLeagueM1';
 
 //	require_once(tx_rnbase_util_Extensions::extPath($_EXTKEY) .'util/class.tx_t3sportsbet_util_ItemFunctions.php');
-	tx_rnbase_util_Extensions::insertModuleFunction($modName, \Sys25\T3sportsbet\Controller\BetGame::class,
+	tx_rnbase_util_Extensions::insertModuleFunction($modName, \Sys25\T3sportsbet\Module\Controller\BetGame::class,
 	    tx_rnbase_util_Extensions::extPath($_EXTKEY) . 'Classes/Controller/BetGame.php',
 		'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_module.name'
 	);

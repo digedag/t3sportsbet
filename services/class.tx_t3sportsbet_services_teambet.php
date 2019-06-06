@@ -27,13 +27,13 @@ tx_rnbase::load('tx_t3sportsbet_util_library');
  *
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_services_teambet extends t3lib_svbase
+class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
 {
 
     /**
      * Analyze teambets of a betgame
      *
-     * @param tx_t3sportsbet_models_betgame $betGame            
+     * @param tx_t3sportsbet_models_betgame $betGame
      * @return int number of finished bets
      */
     public function analyzeBets($betGame)
@@ -44,7 +44,7 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase
         $fields['BETSET.BETGAME'][OP_EQ_INT] = $betGame->getUid();
         $fields['TEAMBET.FINISHED'][OP_EQ_INT] = 0;
         $fields['TEAMQUESTION.TEAM'][OP_GT_INT] = 0; // Team ist gesetzt
-                                                     
+
         // $options['debug'] = 1;
                                                      // This could be memory consuming...
         $bets = $this->searchTeamBet($fields, $options);
@@ -65,7 +65,7 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase
 
     /**
      * Reset all bets for team questions
-     * 
+     *
      * @param mixed $teamQuestionUids
      *            commaseparated uids of team questions
      * @return int number of bets
@@ -86,8 +86,8 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase
     /**
      * Load a teamquestion from database.
      * This access is cached.
-     * 
-     * @param int $uid            
+     *
+     * @param int $uid
      * @return tx_t3sportsbet_models_teamquestion
      */
     public function loadTeamQuestion($uid)
@@ -105,7 +105,7 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase
     /**
      * Returns the number of bets for a teamquestion
      *
-     * @param tx_t3sportsbet_models_teamquestion $teamQuestion            
+     * @param tx_t3sportsbet_models_teamquestion $teamQuestion
      * @return int
      */
     public function getBetCount($teamQuestion)
@@ -122,8 +122,8 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase
      * If no bet is found this method return a dummy instance of tx_t3sportsbet_models_teambet
      * with uid=0.
      *
-     * @param tx_t3sportsbet_models_teamquestion $teamQuestion            
-     * @param tx_t3users_models_feuser $feuser            
+     * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+     * @param tx_t3users_models_feuser $feuser
      * @return tx_t3sportsbet_models_teambet
      */
     public function getTeamBet($teamQuestion, $feuser)
@@ -137,7 +137,7 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase
             // $options['debug'] = 1;
             $ret = $this->searchTeamBet($fields, $options);
         }
-        
+
         $bet = count($ret) ? $ret[0] : null;
         if (! $bet) {
             // No bet in database found. Create dummy instance
@@ -152,9 +152,9 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase
 
     /**
      * Is a teambet possible for a user.
-     * 
-     * @param tx_t3sportsbet_models_teamquestion $teamQuestion            
-     * @param tx_t3users_models_feuser $feuser            
+     *
+     * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+     * @param tx_t3users_models_feuser $feuser
      */
     public function getTeamQuestionStatus($teamQuestion, $feuser)
     {
@@ -174,8 +174,8 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase
 
     /**
      * Load all possible teams for a given teamquestion
-     * 
-     * @param tx_t3sportsbet_models_teamquestion $teamQuestion            
+     *
+     * @param tx_t3sportsbet_models_teamquestion $teamQuestion
      */
     public function getTeams4TeamQuestion($teamQuestion)
     {
@@ -183,7 +183,7 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase
         $fields = array();
         $fields['TEAMQUESTIONMM.UID_LOCAL'][OP_EQ_INT] = $teamQuestion->getUid();
         $fields['TEAMQUESTIONMM.TABLENAMES'][OP_EQ] = 'tx_cfcleague_teams';
-        
+
         $options = array();
         $options['orderby']['TEAMQUESTIONMM.SORTING'] = 'asc';
         return $srv->searchTeams($fields, $options);
@@ -191,8 +191,8 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase
 
     /**
      * Load all teams for a given betgame
-     * 
-     * @param tx_t3sportsbet_models_betgame $betgame            
+     *
+     * @param tx_t3sportsbet_models_betgame $betgame
      */
     public function getTeams4Betgame($betgame)
     {
@@ -210,7 +210,7 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase
     /**
      * Returns the bet trend for a single teambet
      *
-     * @param tx_t3sportsbet_models_teamquestion $teamQuestion            
+     * @param tx_t3sportsbet_models_teamquestion $teamQuestion
      * @return array
      */
     public function getBetTrend($teamQuestion)
@@ -237,10 +237,10 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase
     /**
      * Save or update a teambet from fe request.
      *
-     * @param tx_t3sportsbet_models_teamquestion $teamQuestion            
-     * @param tx_t3users_models_feuser $feuser            
-     * @param int $betUid            
-     * @param int $teamUid            
+     * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+     * @param tx_t3users_models_feuser $feuser
+     * @param int $betUid
+     * @param int $teamUid
      * @return int 0/1 whether the bet was saved or not
      */
     public function saveOrUpdateBet($teamQuestion, $feuser, $betUid, $teamUid)
@@ -252,7 +252,7 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase
         if ($betset->isFinished()) {
             return 0;
         }
-        
+
         $teamUid = intval($teamUid);
         if (! $teamUid) {
             return 0; // No values given
@@ -278,7 +278,7 @@ class tx_t3sportsbet_services_teambet extends t3lib_svbase
             $bet = $this->getTeamBet($teamQuestion, $feuser);
             if ($bet->isPersisted())
                 return 0; // There is already a bet for this match!
-            
+
             $values['pid'] = $teamQuestion->getProperty('pid');
             $values['crdate'] = $values['tstamp'];
             $values['feuser'] = $feuser->getUid();

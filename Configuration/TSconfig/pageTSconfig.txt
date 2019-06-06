@@ -1,0 +1,8 @@
+
+mod {
+	cfc_league {
+		funcbetgame {
+			template = EXT:t3sportsbet/Resources/Private/Templates/module.html
+		}
+	}
+}

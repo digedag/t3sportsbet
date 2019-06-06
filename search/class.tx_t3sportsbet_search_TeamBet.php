@@ -20,52 +20,48 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
-
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 tx_rnbase::load('tx_rnbase_util_SearchBase');
-
 
 /**
  * Class to search teambets from database
- * 
+ *
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_search_TeamBet extends tx_rnbase_util_SearchBase {
+class tx_t3sportsbet_search_TeamBet extends tx_rnbase_util_SearchBase
+{
 
-	protected function getTableMappings() {
-		$tableMapping['TEAMBET'] = 'tx_t3sportsbet_teambets';
-		$tableMapping['BETSET'] = 'tx_t3sportsbet_betsets';
-		$tableMapping['TEAMQUESTION'] = 'tx_t3sportsbet_teamquestions';
-		$tableMapping['BETGAME'] = 'tx_t3sportsbet_betgames';
-		return $tableMapping;
-	}
+    protected function getTableMappings()
+    {
+        $tableMapping = [];
+        $tableMapping['TEAMBET'] = 'tx_t3sportsbet_teambets';
+        $tableMapping['BETSET'] = 'tx_t3sportsbet_betsets';
+        $tableMapping['TEAMQUESTION'] = 'tx_t3sportsbet_teamquestions';
+        $tableMapping['BETGAME'] = 'tx_t3sportsbet_betgames';
+        return $tableMapping;
+    }
 
-	protected function getBaseTable() {
-		return 'tx_t3sportsbet_teambets';
-	}
-	function getWrapperClass() {
-		return 'tx_t3sportsbet_models_teambet';
-	}
+    protected function getBaseTable()
+    {
+        return 'tx_t3sportsbet_teambets';
+    }
 
-	protected function getJoins($tableAliases) {
-		$join = '';
-		if(isset($tableAliases['TEAMQUESTION']) || isset($tableAliases['BETSET']) || isset($tableAliases['BETGAME'])) {
-			$join .= ' JOIN tx_t3sportsbet_teamquestions ON tx_t3sportsbet_teambets.question = tx_t3sportsbet_teamquestions.uid ';
-		}
-		if(isset($tableAliases['BETSET']) || isset($tableAliases['BETGAME'])) {
-			$join .= ' JOIN tx_t3sportsbet_betsets ON tx_t3sportsbet_teamquestions.betset = tx_t3sportsbet_betsets.uid ';
-		}
-		if(isset($tableAliases['BETGAME'])) {
-			$join .= ' JOIN tx_t3sportsbet_betgames ON tx_t3sportsbet_betsets.betgame = tx_t3sportsbet_betgames.uid ';
-		}
-		return $join;
-	}
+    function getWrapperClass()
+    {
+        return 'tx_t3sportsbet_models_teambet';
+    }
+
+    protected function getJoins($tableAliases)
+    {
+        $join = '';
+        if (isset($tableAliases['TEAMQUESTION']) || isset($tableAliases['BETSET']) || isset($tableAliases['BETGAME'])) {
+            $join .= ' JOIN tx_t3sportsbet_teamquestions ON tx_t3sportsbet_teambets.question = tx_t3sportsbet_teamquestions.uid ';
+        }
+        if (isset($tableAliases['BETSET']) || isset($tableAliases['BETGAME'])) {
+            $join .= ' JOIN tx_t3sportsbet_betsets ON tx_t3sportsbet_teamquestions.betset = tx_t3sportsbet_betsets.uid ';
+        }
+        if (isset($tableAliases['BETGAME'])) {
+            $join .= ' JOIN tx_t3sportsbet_betgames ON tx_t3sportsbet_betsets.betgame = tx_t3sportsbet_betgames.uid ';
+        }
+        return $join;
+    }
 }
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/search/class.tx_t3sportsbet_search_TeamBet.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/search/class.tx_t3sportsbet_search_TeamBet.php']);
-}
-
-?>

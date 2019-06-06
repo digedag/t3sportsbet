@@ -20,63 +20,65 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
-
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 tx_rnbase::load('tx_rnbase_util_SearchBase');
-
-
 
 /**
  * Class to search betset results from database
- * 
+ *
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_search_BetSetResult extends tx_rnbase_util_SearchBase {
+class tx_t3sportsbet_search_BetSetResult extends tx_rnbase_util_SearchBase
+{
 
-	protected function getTableMappings() {
-		$tableMapping['BETSETRESULT'] = 'tx_t3sportsbet_betsetresults';
-		$tableMapping['BETSET'] = 'tx_t3sportsbet_betsets';
-		$tableMapping['BETGAME'] = 'tx_t3sportsbet_betgames';
+    protected function getTableMappings()
+    {
+        $tableMapping = [];
+        $tableMapping['BETSETRESULT'] = 'tx_t3sportsbet_betsetresults';
+        $tableMapping['BETSET'] = 'tx_t3sportsbet_betsets';
+        $tableMapping['BETGAME'] = 'tx_t3sportsbet_betgames';
 
-		// Hook to append other tables
-		tx_rnbase_util_Misc::callHook('t3sportsbet','search_BetSetResult_getTableMapping_hook',
-			array('tableMapping' => &$tableMapping), $this);
-		return $tableMapping;
-	}
+        // Hook to append other tables
+        tx_rnbase_util_Misc::callHook('t3sportsbet', 'search_BetSetResult_getTableMapping_hook', array(
+            'tableMapping' => &$tableMapping
+        ), $this);
+        return $tableMapping;
+    }
 
-	protected function getBaseTable() {
-		return 'tx_t3sportsbet_betsetresults';
-	}
-	function getWrapperClass() {
-		return 'tx_t3sportsbet_models_betsetresult';
-	}
-	protected function useAlias() {
-		return true;
-	}
-	protected function getBaseTableAlias() {
-		return 'BETSETRESULT';
-	}
+    protected function getBaseTable()
+    {
+        return 'tx_t3sportsbet_betsetresults';
+    }
 
-	protected function getJoins($tableAliases) {
-		$join = '';
-		if(isset($tableAliases['BETSET']) || isset($tableAliases['BETGAME'])) {
-			$join .= ' INNER JOIN tx_t3sportsbet_betsets AS BETSET ON BETSET.uid = BETSETRESULT.betset ';
-		}
-		if(isset($tableAliases['BETGAME'])) {
-			$join .= ' JOIN tx_t3sportsbet_betgames AS BETGAME ON BETSET.betgame = BETGAME.uid ';
-		}
+    function getWrapperClass()
+    {
+        return 'tx_t3sportsbet_models_betsetresult';
+    }
 
-		// Hook to append other tables
-		tx_rnbase_util_Misc::callHook('t3sportsbet','search_BetSetResult_getJoins_hook',
-			array('join' => &$join, 'tableAliases' => $tableAliases), $this);
-		return $join;
-	}
+    protected function useAlias()
+    {
+        return true;
+    }
+
+    protected function getBaseTableAlias()
+    {
+        return 'BETSETRESULT';
+    }
+
+    protected function getJoins($tableAliases)
+    {
+        $join = '';
+        if (isset($tableAliases['BETSET']) || isset($tableAliases['BETGAME'])) {
+            $join .= ' INNER JOIN tx_t3sportsbet_betsets AS BETSET ON BETSET.uid = BETSETRESULT.betset ';
+        }
+        if (isset($tableAliases['BETGAME'])) {
+            $join .= ' JOIN tx_t3sportsbet_betgames AS BETGAME ON BETSET.betgame = BETGAME.uid ';
+        }
+
+        // Hook to append other tables
+        tx_rnbase_util_Misc::callHook('t3sportsbet', 'search_BetSetResult_getJoins_hook', array(
+            'join' => &$join,
+            'tableAliases' => $tableAliases
+        ), $this);
+        return $join;
+    }
 }
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/search/class.tx_t3sportsbet_search_BetSet.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/search/class.tx_t3sportsbet_search_BetSet.php']);
-}
-
-?>
