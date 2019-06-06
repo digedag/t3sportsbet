@@ -38,6 +38,7 @@
 			"services/",
 			"util/",
 			"views/"
-		]
+		],
+        "psr-4": {"Sys25\\T3sportsbet\\" : "Classes"}
 	}
 }
