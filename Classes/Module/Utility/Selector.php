@@ -1,8 +1,10 @@
 <?php
+namespace Sys25\T3sportsbet\Module\Utility;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2016 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,13 +23,11 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_Misc');
-tx_rnbase::load('Tx_Rnbase_Database_Connection');
 
 /**
  * Die Klasse stellt Auswahlmenus zur Verfügung
  */
-class tx_t3sportsbet_mod1_selector
+class Selector
 {
 
     private $doc, $MCONF;
@@ -39,37 +39,36 @@ class tx_t3sportsbet_mod1_selector
     /**
      * Initialisiert das Objekt mit dem Template und der Modul-Config.
      */
-    public function init($doc, tx_rnbase_mod_IModule $module)
+    public function init($doc, \tx_rnbase_mod_IModule $module)
     {
         $this->doc = $doc;
         $this->MCONF['name'] = $module->getName(); // deprecated
         $this->modName = $module->getName();
         $this->module = $module;
-        $this->formTool = tx_rnbase::makeInstance('tx_rnbase_util_FormTool');
+        $this->formTool = \tx_rnbase::makeInstance('tx_rnbase_util_FormTool');
         $this->formTool->init($this->doc, $module);
-        tx_rnbase_util_Misc::prepareTSFE();
+        \tx_rnbase_util_Misc::prepareTSFE();
     }
 
     /**
      * Darstellung der Select-Box mit allen Ligen der übergebenen Seite.
      * Es wird auf die aktuelle Liga eingestellt.
      *
-     * @return tx_t3sportsbet_models_betgame den aktuellen Wettbewerb als Objekt oder 0
+     * @return \tx_t3sportsbet_models_betgame den aktuellen Wettbewerb als Objekt oder 0
      */
     public function showGameSelector(&$content, $pid, $games = 0)
     {
         // Wenn vorhanden, nehmen wir die übergebenen Wettbewerbe, sonst schauen wir auf der aktuellen Seite nach
         $games = $games ? $games : $this->findGames($pid);
 
-        $objGames = $entries = array();
-
-        $idxGames = array();
+        $objGames = $entries = [];
         foreach ($games as $game) {
             $objGames[$game->getUid()] = $game;
             $entries[$game->getUid()] = $game->getName();
         }
-        if (! count($entries))
+        if (! count($entries)) {
             return 0;
+        }
 
         $menuData = $this->getFormTool()->showMenu($pid, 'game', $this->modName, $entries);
         $menu = $menuData['menu'];
@@ -92,8 +91,8 @@ class tx_t3sportsbet_mod1_selector
      *
      * @param string $content
      * @param int $pid
-     * @param tx_t3sportsbet_models_betgame $game
-     * @return tx_t3sportsbet_models_betset
+     * @param \tx_t3sportsbet_models_betgame $game
+     * @return \tx_t3sportsbet_models_betset
      */
     public function showRoundSelector(&$content, $pid, $game)
     {
@@ -133,20 +132,21 @@ class tx_t3sportsbet_mod1_selector
     private function renderSelector($menu, array $links = [])
     {
         return '<div class="cfcselector" style="float: left; width: 100%">
-<span class="selector col-md-2">' . $menu . '</span>' . (empty($links) ? '' : '<span class="links">' . implode(' ', $links) . '</span>') . '</div>';
+<span class="selector col-md-4">' . $menu . '</span>' . (empty($links) ? '' : '<span class="links">' . implode(' ', $links) . '</span>') . '</div>';
     }
 
     /**
      * Liefert die Tipspiele der aktuellen Seite.
      *
-     * @return ein Array mit Rows
+     * @return array mit Rows
      */
     private function findGames($pid)
     {
+        $options = [];
         $options['where'] = 'pid="' . $pid . '"';
         $options['orderby'] = 'sorting';
         $options['wrapperclass'] = 'tx_t3sportsbet_models_betgame';
-        return Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_t3sportsbet_betgames', $options, 0);
+        return \Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_t3sportsbet_betgames', $options, 0);
     }
 
     private function getFormTool()

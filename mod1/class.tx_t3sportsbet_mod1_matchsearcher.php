@@ -93,7 +93,7 @@ class tx_t3sportsbet_mod1_matchsearcher
      *            Alternatives Label
      * @return string
      */
-    protected function getSearchForm($label = '')
+    public function getSearchForm($label = '')
     {
         global $LANG;
         $out = '';
@@ -116,7 +116,7 @@ class tx_t3sportsbet_mod1_matchsearcher
         return $out;
     }
 
-    protected function getResultList()
+    public function getResultList()
     {
         $content = '';
         if (! is_object($this->currComp))
@@ -147,7 +147,7 @@ class tx_t3sportsbet_mod1_matchsearcher
      *
      * @return int
      */
-    protected function getSize()
+    public function getSize()
     {
         return $this->resultSize;
     }

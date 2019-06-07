@@ -48,8 +48,9 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
     public static function getBetgameInstance($uid)
     {
         $uid = intval($uid);
-        if (! uid)
+        if (! uid) {
             throw new Exception('Invalid uid for betgame');
+        }
         if (! is_object(self::$instances[$uid])) {
             self::$instances[$uid] = new tx_t3sportsbet_models_betgame($uid);
         }
@@ -90,7 +91,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
 
     /**
      * Points for exact bet
-     * 
+     *
      * @return int
      */
     public function getPointsAccurate()
@@ -100,7 +101,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
 
     /**
      * Points for tendency bet
-     * 
+     *
      * @return int
      */
     public function getPointsGoalsDiff()
@@ -110,7 +111,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
 
     /**
      * Points for tendency bet
-     * 
+     *
      * @return int
      */
     public function getPointsTendency()
@@ -120,7 +121,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
 
     /**
      * Minutes to close bets before match kick off
-     * 
+     *
      * @return int
      */
     public function getLockMinutes()
@@ -135,11 +136,11 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
      */
     public function getCompetitions()
     {
-        $ret = array();
+        $ret = [];
         tx_rnbase::load('tx_cfcleague_models_Competition');
         $uids = $this->getProperty('competition');
         if ($uids) {
-            $uids = t3lib_div::intExplode(',', $uids);
+            $uids = \Tx_Rnbase_Utility_Strings::intExplode(',', $uids);
             foreach ($uids as $uid) {
                 $ret[] = tx_cfcleague_models_Competition::getCompetitionInstance($uid);
             }
@@ -159,28 +160,30 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
 
     /**
      * Returns an array of existing bet sets
-     * 
+     *
      * @return array of tx_t3sportsbet_models_betset
      */
     public function getBetSets()
     {
+        $fields = $options = [];
         $fields['BETSET.BETGAME'][OP_EQ_INT] = $this->getUid();
         $options['orderby']['BETSET.ROUND'] = 'asc';
-        
+
         $service = tx_t3sportsbet_util_serviceRegistry::getBetService();
         return $service->searchBetSet($fields, $options);
     }
 
     /**
      * Returns the number of betsets
-     * 
+     *
      * @return int
      */
     public function getBetSetSize()
     {
+        $fields = $options = [];
         $fields['BETSET.BETGAME'][OP_EQ_INT] = $this->getUid();
         $options['count'] = '1';
-        
+
         $service = tx_t3sportsbet_util_serviceRegistry::getBetService();
         return $service->searchBetSet($fields, $options);
     }
