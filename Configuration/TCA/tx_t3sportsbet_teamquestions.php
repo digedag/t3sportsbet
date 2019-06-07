@@ -110,7 +110,7 @@ FROM tx_cfcleague_teams t
             'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_teamquestions_team',
             'config' => [
                 'type' => 'select',
-                'itemsProcFunc' => 'tx_t3sportsbet_util_ItemFunctions->getTeams4TeamBet',
+                'itemsProcFunc' => 'Sys25\T3sportsbet\Utility\ItemFunctions->getTeams4TeamBet',
                 'size' => 5,
                 'minitems' => 0,
                 'maxitems' => 10,

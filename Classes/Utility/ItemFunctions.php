@@ -1,4 +1,5 @@
 <?php
+namespace Sys25\T3sportsbet\Utility;
 
 /***************************************************************
  *  Copyright notice
@@ -26,7 +27,7 @@
 /**
  * Diese Klasse ist für die Erstellung von Auswahllisten in TCEforms verantwortlich
  */
-class tx_t3sportsbet_util_ItemFunctions
+class ItemFunctions
 {
 
     /**
@@ -36,17 +37,25 @@ class tx_t3sportsbet_util_ItemFunctions
      */
     public function getBetSet4BetGame($config)
     {
-        if (! $config['row']['pi_flexform'])
+        $rowName = isset($config['flexParentDatabaseRow']) ? 'flexParentDatabaseRow' : 'row';
+        if (! $config[$rowName]['pi_flexform']) {
             return;
-        $flex = t3lib_div::xml2array($config['row']['pi_flexform']);
+        }
+        $flex = is_array($config[$rowName]['pi_flexform']) ? $config[$rowName]['pi_flexform'] :
+            \Tx_Rnbase_Utility_T3General::xml2array($config[$rowName]['pi_flexform']);
         $betgameUid = $flex['data']['sDEF']['lDEF']['scope.betgame']['vDEF'];
-        if (! $betgameUid)
+        if (! $betgameUid) {
             return;
-        
-        $options['where'] = 'tx_t3sportsbet_betsets.betgame = ' . $betgameUid;
-        tx_rnbase::load('tx_rnbase_util_Misc');
-        tx_rnbase_util_Misc::prepareTSFE();
-        $records = tx_rnbase_util_DB::doSelect('round_name, uid', 'tx_t3sportsbet_betsets', $options, 0);
+        }
+
+        $options = ['where' => 'tx_t3sportsbet_betsets.betgame = ' . $betgameUid];
+        \tx_rnbase::load('tx_rnbase_util_Misc');
+        \tx_rnbase_util_Misc::prepareTSFE();
+        $records = \Tx_Rnbase_Database_Connection::getInstance()->doSelect(
+            'round_name, uid',
+            'tx_t3sportsbet_betsets',
+            $options
+        );
         foreach ($records as $record) {
             $config['items'][] = array_values($record);
         }
@@ -55,39 +64,49 @@ class tx_t3sportsbet_util_ItemFunctions
     /**
      * Used in TCA.
      * Return all teams of a betsets betgame.
-     * 
+     *
      * @param array $PA
-     * @param t3lib_TCEforms $fobj
+     * @param \TYPO3\CMS\Backend\Form\FormDataProvider\TcaSelectItems $fobj
      */
     public function getTeams4TeamBet($PA, $fobj)
     {
         if ($PA['row']['betset']) {
-            $betset = $this->loadBetset($PA['row']['betset']);
-            if (! $PA['row']['uid'])
+            if (! $PA['row']['uid']) {
                 return;
-            $teamQuestion = tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', $PA['row']['uid']);
+            }
+            $betset = $this->loadBetset($PA['row']['betset']);
+            $teamQuestion = \tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', $PA['row']['uid']);
             $betgame = $betset->getBetgame();
-            $teams = tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->getTeams4TeamQuestion($teamQuestion);
+            $teams = \tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->getTeams4TeamQuestion($teamQuestion);
             foreach ($teams as $team) {
-                $PA['items'][] = array(
+                $PA['items'][] = [
                     $team->getName(),
                     $team->getUid()
-                );
+                ];
             }
         }
     }
 
     /**
      * Load a betset from database
-     * 
+     *
      * @param int $uid
-     * @return tx_t3sportsbet_models_betset
+     * @return \tx_t3sportsbet_models_betset
      */
-    private function loadBetset($fieldString)
+    private function loadBetset($fieldData)
     {
-        $arr = Tx_Rnbase_Utility_Strings::trimExplode('|', $fieldString);
-        $arr = Tx_Rnbase_Utility_Strings::trimExplode('_', $arr[0]);
-        $uid = intval($arr[count($arr) - 1]);
-        return $uid ? tx_rnbase::makeInstance('tx_t3sportsbet_models_betset', $uid) : false;
+        if (is_array($fieldData)) {
+            if (empty($fieldData)) {
+                return false;
+            }
+            $row = $fieldData[0]['row'];
+            return \tx_rnbase::makeInstance('tx_t3sportsbet_models_betset', $row);
+        }
+        else {
+            $arr = \Tx_Rnbase_Utility_Strings::trimExplode('|', $fieldData);
+            $arr = \Tx_Rnbase_Utility_Strings::trimExplode('_', $arr[0]);
+            $uid = (int) $arr[count($arr) - 1];
+            return $uid ? \tx_rnbase::makeInstance('tx_t3sportsbet_models_betset', $uid) : false;
+        }
     }
 }

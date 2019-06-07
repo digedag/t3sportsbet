@@ -70,7 +70,7 @@
                 		<numIndex index="1">0</numIndex>
                 	</numIndex>
                 </items>
-                <itemsProcFunc>tx_t3sportsbet_util_ItemFunctions->getBetSet4BetGame</itemsProcFunc>
+                <itemsProcFunc>Sys25\T3sportsbet\Utility\ItemFunctions->getBetSet4BetGame</itemsProcFunc>
                 <multiple>0</multiple>
                 <minitems>0</minitems>
                 <maxitems>99</maxitems>
