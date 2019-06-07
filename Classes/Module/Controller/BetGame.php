@@ -30,6 +30,8 @@ namespace Sys25\T3sportsbet\Module\Controller;
  */
 class BetGame extends \tx_rnbase_mod_BaseModFunc
 {
+    /** @var \tx_t3sportsbet_mod1_selector */
+    private $selector;
     /**
      * Method getFuncId
      *
@@ -64,11 +66,11 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
         // Anzeige der vorhandenen Tipspiele
         $currentGame = $this->selector->showGameSelector($selector,$this->getModule()->getPid());
         if(!$currentGame) {
-            $content .= $this->doc->section('Info:',$LANG->getLL('msg_no_game_in_page'),0,1,ICON_WARN);
+            $content .= $this->getModule()->getDoc()->section('Info:',$LANG->getLL('msg_no_game_in_page'),0,1,ICON_WARN);
             $content .= '<p style="margin-top:5px; font-weight:bold;">'.$formTool->createNewLink('tx_t3sportsbet_betgames', $this->getModule()->getPid(),$LANG->getLL('msg_create_new_game')).'</p>';
             return $content;
         }
-        $content = 'Hello Mod';
+        $content = '';
         $this->getModule()->selector = $selector;
 
         $currentRound = $this->selector->showRoundSelector($selector,$this->getModule()->getPid(), $currentGame);
@@ -100,8 +102,9 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
             $funcContent = '';
             switch($menu['value']) {
                 case 0:
-                    $handler = \tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\ShowBets::class, $this);
-                    $funcContent .= $handler->handleRequest($this->getModule(), $currentRound);
+                    $handler = \tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\ShowBets::class, $this->getModule(), $currentRound, $currentGame);
+                    $funcContent .= $handler->handleRequest();
+                    $funcContent .= $handler->show();
                     //$content .= $this->showBetSet($currentRound);
                     break;
                 case 1:
@@ -150,7 +153,9 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
     protected function showInfoBar($currBetSet) {
         $srv = \tx_t3sportsbet_util_serviceRegistry::getBetService();
         $dates = $srv->getBetsetDateRange($currBetSet);
-        if(!$dates) return '';
+        if(!$dates) {
+            return '';
+        }
         $matchCnt = count($currBetSet->getMatches());
         $row = [];
         $row[] = array($GLOBALS['LANG']->getLL('label_betsetinfo'));

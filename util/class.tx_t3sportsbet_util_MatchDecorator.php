@@ -29,9 +29,18 @@
 class tx_t3sportsbet_util_MatchDecorator
 {
 
-    public function __construct($module)
+    protected $module;
+    protected $currentRound;
+
+    /**
+     *
+     * @param \tx_rnbase_mod_IModule $module
+     * @param \tx_t3sportsbet_models_betset $currentRound
+     */
+    public function __construct($module, \tx_t3sportsbet_models_betset $currentRound)
     {
         $this->module = $module;
+        $this->currentRound = $currentRound;
     }
 
     /**
@@ -73,7 +82,10 @@ class tx_t3sportsbet_util_MatchDecorator
     private function createMatchCutLink($item)
     {
         tx_rnbase::load('tx_t3sportsbet_mod1_handler_MatchMove');
-        return tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->makeCutLink($item, $this->getModule()
-            ->getCurrentBetset(), $this->getModule());
+        return tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->makeCutLink(
+            $item,
+            $this->currentRound,
+            $this->getModule()
+        );
     }
 }
