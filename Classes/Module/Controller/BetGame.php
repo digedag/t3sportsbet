@@ -109,10 +109,9 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
             $funcContent = '';
             switch ($menu['value']) {
                 case 0:
-                    $handler = \tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\ShowBets::class, $this->getModule(), $currentRound, $currentGame);
+                    $handler = \tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\ShowBetSet::class, $this->getModule(), $currentRound, $currentGame);
                     $funcContent .= $handler->handleRequest();
                     $funcContent .= $handler->show();
-                    // $content .= $this->showBetSet($currentRound);
                     break;
                 case 1:
                     $handler = \tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\AddMatches::class, $this->getModule(), $currentRound);
@@ -124,6 +123,8 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
                     $funcContent .= $handler->show();
                     break;
                 case 3:
+                    $handler = \tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\ShowBets::class, $this->getModule(), $currentRound);
+                    $funcContent .= $handler->show();
                     // $funcContent .= $this->showBets($currentRound);
                     break;
             }
