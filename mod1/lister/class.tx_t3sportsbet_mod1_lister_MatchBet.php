@@ -39,7 +39,7 @@ class tx_t3sportsbet_mod1_lister_MatchBet
 
     private $matchUids;
 
-    public function __construct(&$mod, $options = array())
+    public function __construct($mod, $options = [])
     {
         $this->init($mod, $options);
     }
@@ -52,12 +52,14 @@ class tx_t3sportsbet_mod1_lister_MatchBet
         $this->resultSize = 0;
         $this->data = \Tx_Rnbase_Utility_T3General::_GP('searchdata');
 
-        if (! isset($options['nopersist']))
-            $this->SEARCH_SETTINGS = \Tx_Rnbase_Backend_Utility::getModuleData(array(
+        if (! isset($options['nopersist'])) {
+            $this->SEARCH_SETTINGS = \Tx_Rnbase_Backend_Utility::getModuleData([
                 'searchterm' => ''
-            ), $this->data, $this->mod->MCONF['name']);
-        else
+            ], $this->data, $this->mod->getName());
+        }
+        else {
             $this->SEARCH_SETTINGS = $this->data;
+        }
     }
 
     public function setMatchUids($uids)
@@ -86,6 +88,7 @@ class tx_t3sportsbet_mod1_lister_MatchBet
 
     public function getResultList()
     {
+        /* @var $pager \tx_rnbase_util_BEPager */
         $pager = tx_rnbase::makeInstance('tx_rnbase_util_BEPager', 'matchBetPager', $this->getModule()->getName(), $this->getModule()->getPid());
         $srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
 
@@ -118,7 +121,7 @@ class tx_t3sportsbet_mod1_lister_MatchBet
         $ret['table'] = $this->showBets($items);
         $ret['totalsize'] = $cnt;
         $pagerData = $pager->render();
-        $ret['pager'] .= '<div class="pager">' . $pagerData['limits'] . ' - ' . $pagerData['pages'] . '</div>';
+        $ret['pager'] .= '<div class="pager"><span class="col-md-2">' . $pagerData['limits'] . '</span><span class="col-md-2">' . $pagerData['pages'] . '</span></div>';
         return $ret;
     }
 

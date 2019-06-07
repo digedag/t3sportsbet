@@ -79,9 +79,9 @@ class AddMatches
      */
     private function handleNoCompetitions($currBetSet)
     {
-        $out .= $this->mod->getDoc()->section('Info:', $GLOBALS['LANG']->getLL('msg_no_competition_in_betgame'), 0, 1, ICON_WARN);
+        $out .= $this->mod->getDoc()->section('Info:', $GLOBALS['LANG']->getLL('msg_no_competition_in_betgame'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
         $out .= '<br /><br />';
-        $out .= $this->getFormTool()->form->getSoloField('tx_t3sportsbet_betgames', $currBetSet->getBetgame()->record, 'competition');
+        $out .= $this->getFormTool()->form->getSoloField('tx_t3sportsbet_betgames', $currBetSet->getBetgame()->getProperty(), 'competition');
         $out .= $this->getFormTool()->createSubmit('updateBetgame', $GLOBALS['LANG']->getLL('btn_update'));
         return $out;
     }
@@ -126,7 +126,7 @@ class AddMatches
         $out .= $searcher->getResultList();
         if ($searcher->getSize()) {
             // Button für Zuordnung
-            $out .= $this->mod->getFormTool()->createSubmit('match2betset', $GLOBALS['LANG']->getLL('label_join_matches'), $GLOBALS['LANG']->getLL('msg_join_matches'));
+            $out .= $this->mod->getFormTool()->createSubmit('match2betset', '###LABEL_JOIN_MATCHES###', $GLOBALS['LANG']->getLL('msg_join_matches'));
         }
         return $out;
     }

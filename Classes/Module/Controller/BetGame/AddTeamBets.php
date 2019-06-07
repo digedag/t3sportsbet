@@ -78,7 +78,7 @@ class AddTeamBets
         $lister->setBetSetUid($this->currentRound->getUid());
 
         $list = $lister->getResultList();
-        $out .= $list['pager'] . "\n" . $list['table'];
+        $out .= $list['pager'] . "\n<div style=\"clear:both;\"></div>\n" . $list['table'];
         $out .= $this->getFormTool()->createNewButton('tx_t3sportsbet_teamquestions', $this->currentRound->getProperty('pid'), $options);
 
         return $out;

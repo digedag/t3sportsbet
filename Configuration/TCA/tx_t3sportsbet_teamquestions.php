@@ -1,6 +1,8 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
+$sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
+
 $tx_t3sportsbet_tq = Array (
     'ctrl' => Array (
         'title' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_teamquestions',
@@ -15,21 +17,21 @@ $tx_t3sportsbet_tq = Array (
         ),
         'iconfile' => tx_rnbase_util_Extensions::extRelPath('t3sportsbet').'icon_table.gif',
     ),
-    'interface' => Array (
+    'interface' => [
         'showRecordFieldList' => ''
-        ),
-    'feInterface' => Array (
+    ],
+    'feInterface' => [
         'fe_admin_fieldList' => '',
-    ),
+    ],
     'columns' => Array (
-        'hidden' => Array (
+        'hidden' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
-            'config' => Array (
+            'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
+            'config' => [
                 'type' => 'check',
                 'default' => '0'
-                )
-            ),
+            ]
+        ],
         'betset' => Array (
             'exclude' => 0,
             'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets',
@@ -79,10 +81,10 @@ $tx_t3sportsbet_tq = Array (
                 'default' => 0
                 )
             ),
-        'teams' => Array (
+        'teams' => [
             'exclude' => 0,
             'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_teamquestions_teams',
-            'config' => Array (
+            'config' => [
                 'type' => 'select',
                 'foreign_table' => 'tx_cfcleague_teams',
                 'foreign_table_where' => 'AND tx_cfcleague_teams.uid IN (
@@ -100,11 +102,11 @@ FROM tx_cfcleague_teams t
                 'minitems' => 0,
                 'maxitems' => 100,
                 'MM' => 'tx_t3sportsbet_teamquestions_mm',
-                'MM_match_fields' => Array (
+                'MM_match_fields' => [
                     'tablenames' => 'tx_cfcleague_teams',
-                    ),
-                ),
-            ),
+                ],
+            ],
+        ],
         'team' => [
             'exclude' => 0,
             'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_teamquestions_team',
@@ -117,12 +119,12 @@ FROM tx_cfcleague_teams t
             ]
         ],
     ),
-    'types' => Array (
-        '0' => Array('showitem' => 'hidden;;1;;1-1-1, betset, question, openuntil, points, teams, team')
-    ),
-    'palettes' => Array (
-        '1' => Array('showitem' => '')
-    )
+    'types' => [
+        '0' => ['showitem' => 'hidden;;1;;1-1-1, betset, question, openuntil, points, teams, team']
+    ],
+    'palettes' => [
+        '1' => ['showitem' => '']
+    ]
 );
 
 return $tx_t3sportsbet_tq;

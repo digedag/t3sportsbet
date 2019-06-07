@@ -1,6 +1,8 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
+$sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
+
 $tx_t3sportsbet_betgame = Array (
     'ctrl' => Array (
         'title' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betgames',
@@ -26,7 +28,7 @@ $tx_t3sportsbet_betgame = Array (
     'columns' => Array (
         'hidden' => Array (
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
+            'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
             'config' => Array (
                 'type' => 'check',
                 'default' => '0'

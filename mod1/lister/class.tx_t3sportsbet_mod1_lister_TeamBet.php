@@ -132,7 +132,7 @@ class tx_t3sportsbet_mod1_lister_TeamBet
         $ret['table'] = $content;
         $ret['totalsize'] = $cnt;
         $pagerData = $pager->render();
-        $ret['pager'] .= '<div class="pager">' . $pagerData['limits'] . ' - ' . $pagerData['pages'] . '</div>';
+        $ret['pager'] .= '<div class="pager"><span class="col-md-2">' . $pagerData['limits'] . '</span><span class="col-md-2">' . $pagerData['pages'] . '</span></div>';
         return $ret;
     }
 

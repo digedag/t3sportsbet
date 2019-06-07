@@ -129,7 +129,7 @@ class ShowBetSet
         $list = $lister->getResultList();
         $out .= $list['pager']."\n".$list['table'];
         $out .= $this->getFormTool()->createSubmit('showBets[0]', $GLOBALS['LANG']->getLL('label_close'));
-        return $this->doc->section($GLOBALS['LANG']->getLL('label_betlist').':',$out,0,1,ICON_INFO);
+        return $this->doc->section($GLOBALS['LANG']->getLL('label_betlist').':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
     }
     /**
      * Reset all bets for a given match.
@@ -138,7 +138,9 @@ class ShowBetSet
      */
     protected function handleResetBets($currBetSet) {
         $matchUids = \Tx_Rnbase_Utility_T3General::_GP('resetBets');
-        if(!is_array($matchUids)) return;
+        if(!is_array($matchUids)) {
+            return;
+        }
 
         $tce = \Tx_Rnbase_Database_Connection::getInstance()->getTCEmain();
         $details = 'T3sportsbet: All bets for match with uid %s of betset with uid %s were reset.';

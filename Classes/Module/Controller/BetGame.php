@@ -90,7 +90,7 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
         $this->getModule()->selector = $selector;
 
         // RequestHandler aufrufen.
-        $content .= \tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->handleRequest($this);
+        $content .= \tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->handleRequest($this->getModule());
 
         $menu = $formTool->showTabMenu($this->getModule()
             ->getPid(), 'bettools', $this->getModule()

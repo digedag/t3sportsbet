@@ -83,10 +83,10 @@ class tx_t3sportsbet_mod1_handler_MatchMove
     {
         // Dieses Spiel in den Speicher legen
         $key = 'doCutMatch';
-        $changed[$key] = $matchToken;
-        \Tx_Rnbase_Backend_Utility::getModuleData(array(
+        $changed = [$key => $matchToken];
+        \Tx_Rnbase_Backend_Utility::getModuleData([
             $key => ''
-        ), $changed, $mod->getName());
+        ], $changed, $mod->getName());
     }
 
     private function getCurrentMatch($mod)
@@ -100,8 +100,8 @@ class tx_t3sportsbet_mod1_handler_MatchMove
 
     /**
      *
-     * @param unknown_type $item
-     * @param tx_rnbase_mod_IModule $mod
+     * @param \tx_cfcleaguefe_models_match $item
+     * @param \tx_rnbase_mod_IModule $mod
      */
     public function makeCutLink($item, $betset, $mod)
     {
@@ -109,11 +109,12 @@ class tx_t3sportsbet_mod1_handler_MatchMove
         $options = [];
         $key = $betset->getUid() . '_' . $item->getUid();
         if ($currentMatch != $key) {
-            $options['icon'] = 'clip_cut.gif';
+            $options['icon'] = 'actions-edit-cut';
             $ret .= $mod->getFormTool()->createSubmit('doCutMatch', $key, '', $options);
         } else {
-            $label = '<span class="t3-icon t3-icon-actions t3-icon-actions-edit t3-icon-edit-cut-release"></span>';
-            $ret .= $mod->getFormTool()->createLink('&doReleaseMatch=true', $mod->getPid(), $label, $options);
+            $label = '';
+            $options['icon'] = 'actions-edit-cut-release';
+            $ret .= $mod->getFormTool()->createModuleLink(['doReleaseMatch'=>'true'], $mod->getPid(), $label, $options);
         }
 
         return $ret;
@@ -133,7 +134,7 @@ class tx_t3sportsbet_mod1_handler_MatchMove
         list ($currentBetsetUid, $currentMatchUid) = \Tx_Rnbase_Utility_Strings::intExplode('_', $currentToken);
 
         $uids = tx_t3sportsbet_util_serviceRegistry::getBetService()->findMatchUidsByBetSet($item);
-        if (\tx_rnbase_util_Typo3Classes::getGeneralUtilityClass()::inArray($uids, $currentMatchUid)) {
+        if (in_array($currentMatchUid, $uids)) {
             return $ret;
         }
 
