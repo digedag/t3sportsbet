@@ -54,7 +54,6 @@ class ShowBets
     public function __construct($module, $currentRound, $currentGame)
     {
         $this->module = $module;
-        $pid = $module->getPid();
         $this->doc = $module->getDoc();
 
         $this->formTool = $module->getFormTool();
@@ -101,17 +100,13 @@ class ShowBets
             $options
         );
 
-        $searcher->showMatches($out, $GLOBALS['LANG']->getLL('label_matchlist'), $currBetSet->getMatches());
+        $searcher->showMatches($out, '###LABEL_MATCHLIST###', $currBetSet->getMatches());
 
         $out .= $this->formTool->getTCEForm()->getSoloField('tx_t3sportsbet_betsets', $currBetSet->getProperty(), 'status');
-
-//         $this->formTool->addTCEfield2Stack('tx_t3sportsbet_betsets', $currBetSet->getProperty(), 'status','<strong>'.$GLOBALS['LANG']->getLL('label_change_state') . ':</strong>&nbsp;');
-//         $arr = $this->formTool->getTCEfields('editform');
-//         $out .= implode('',$arr);
-        $out .= $this->formTool->createSubmit('savebetset',$GLOBALS['LANG']->getLL('label_save'));
+        $out .= $this->formTool->createSubmit('savebetset', '###LABEL_SAVE###');
 
 //        $out .= $this->module->getDoc()->spacer(10);
-        $out .= '<p>'.$this->formTool->createSubmit('analyzebets',$GLOBALS['LANG']->getLL('label_analyzebets')).'</p>';
+        $out .= '<p>'.$this->formTool->createSubmit('analyzebets', '###LABEL_ANALYZEBETS###').'</p>';
         return $out;
     }
 

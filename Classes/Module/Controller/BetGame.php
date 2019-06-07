@@ -63,13 +63,11 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
     {
         global $LANG;
         $this->selector = \tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Utility\Selector::class);
-        $this->selector->init($this->getModule()
-            ->getDoc(), $this->getModule());
+        $this->selector->init($this->getModule()->getDoc(), $this->getModule());
 
         $selector = '';
         // Anzeige der vorhandenen Tipspiele
-        $currentGame = $this->selector->showGameSelector($selector, $this->getModule()
-            ->getPid());
+        $currentGame = $this->selector->showGameSelector($selector, $this->getModule()->getPid());
         if (! $currentGame) {
             $content .= $this->getModule()
                 ->getDoc()
@@ -121,8 +119,9 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
                     $funcContent .= $handler->show();
                     break;
                 case 2:
-                    $handler = \tx_rnbase::makeInstance('tx_t3sportsbet_mod1_addTeamBets', $this->getModule());
-                    // $funcContent .= $handler->showScreen($currentRound);
+                    $handler = \tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\AddTeamBets::class, $this->getModule(), $currentRound);
+                    $funcContent .= $handler->handleRequest();
+                    $funcContent .= $handler->show();
                     break;
                 case 3:
                     // $funcContent .= $this->showBets($currentRound);

@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2010-2019 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,8 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 
 /**
  * Diese Klasse ist für die Darstellung von TeamQuestions im Backend verantwortlich
@@ -41,7 +39,7 @@ class tx_t3sportsbet_mod1_decorator_TeamQuestion {
 		return $this->mod;
 	}
 	/**
-	 * 
+	 *
 	 * @param string $value
 	 * @param string $colName
 	 * @param array $record
@@ -51,15 +49,9 @@ class tx_t3sportsbet_mod1_decorator_TeamQuestion {
 		$ret = $value;
 		if($colName == 'uid') {
 			$ret = $this->getModule()->getFormTool()->createEditLink('tx_t3sportsbet_teamquestions', $item->getUid(), '');
-			$wrap = $item->record['hidden'] ? array('<strike>', '</strike>') : array('<strong>', '</strong>');
+			$wrap = $item->getProperty('hidden') ? ['<strike>', '</strike>'] : ['<strong>', '</strong>'];
 			$ret .= $wrap[0]. $value . $wrap[1].'<br />';
 		}
 		return $ret;
 	}
 }
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/decorator/class.tx_t3sportsbet_mod1_decorator_TeamQuestion.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/decorator/class.tx_t3sportsbet_mod1_decorator_TeamQuestion.php']);
-}
-?>
