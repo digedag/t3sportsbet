@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,22 +25,20 @@ tx_rnbase::load('tx_rnbase_action_BaseIOC');
 
 /**
  */
-class tx_t3sportsbet_actions_Summary extends tx_rnbase_action_BaseIOC
+class tx_t3sportsbet_actions_Summary extends \Sys25\RnBase\Frontend\Controller\AbstractAction
 {
 
     /**
      *
-     * @param array_object $parameters            
-     * @param tx_rnbase_configurations $configurations            
-     * @param array $viewData            
+     * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
      * @return string error msg or null
      */
-    protected function handleRequest(&$parameters, &$configurations, &$viewData)
+    protected function handleRequest(\Sys25\RnBase\Frontend\Request\RequestInterface $request)
     {
-        
+
         // Über die viewdata können wir Daten in den View transferieren
-        $viewData->offsetSet('data', 'test');
-        
+        $request->getViewContext()->offsetSet('data', 'test');
+
         // Wenn wir hier direkt etwas zurückgeben, wird der View nicht
         // aufgerufen. Eher für Abbruch im Fehlerfall gedacht.
         return null;
@@ -56,4 +54,3 @@ class tx_t3sportsbet_actions_Summary extends tx_rnbase_action_BaseIOC
         return 'tx_t3sportsbet_views_Summary';
     }
 }
-

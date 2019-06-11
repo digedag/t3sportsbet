@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2018 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,35 +21,40 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_view_Base');
 tx_rnbase::load('tx_rnbase_util_BaseMarker');
 tx_rnbase::load('tx_rnbase_util_ListBuilder');
 
 /**
  * Viewklasse für die Darstellung der Bestenliste
  */
-class tx_t3sportsbet_views_ScopeSelection extends tx_rnbase_view_Base
+class tx_t3sportsbet_views_ScopeSelection extends \Sys25\RnBase\Frontend\View\Marker\BaseView
 {
 
-    public function createOutput($template, &$viewData, &$configurations, &$formatter)
+    /**
+     *
+     * @param string $template
+     * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
+     * @param tx_rnbase_util_FormatUtil $formatter
+     * @return string
+     */
+    protected function createOutput($template, Sys25\RnBase\Frontend\Request\RequestInterface $request, $formatter)
     {
+        $viewData = $request->getViewContext();
         // Wenn Selectbox für Tiprunde gezeigt werden soll, dann Abschnitt erstellen
         $selectItems = $viewData->offsetGet('betset_select');
-        $selectItems = is_array($selectItems) ? $selectItems : array();
+        $selectItems = is_array($selectItems) ? $selectItems : [];
         $template = $this->addScope($template, $viewData, $selectItems, 'scope.betset.', 'BETSET', $formatter);
-        $params['confid'] = 'scope.';
-        $markerArray = array();
-        $subpartArray = array();
-        $wrappedSubpartArray = array();
+        $params = ['confid' => $request->getConfId()];
+        $markerArray = $subpartArray = $wrappedSubpartArray = [];
 
         tx_rnbase_util_BaseMarker::callModules($template, $markerArray, $subpartArray, $wrappedSubpartArray, $params, $formatter);
-        $out = $formatter->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
+        $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
         return $out;
     }
 
-    private function addScope($template, &$viewData, &$itemsArr, $confId, $markerName, &$formatter)
+    private function addScope($template, $viewData, $itemsArr, $confId, $markerName, $formatter)
     {
-        if (count($itemsArr)) {
+        if (!empty($itemsArr)) {
             $betsets = $itemsArr[0];
             $currItem = $betsets[$itemsArr[1]];
             // Die Betsets liegen in einem Hash, sie müssen aber in ein einfaches Array
@@ -69,7 +74,7 @@ class tx_t3sportsbet_views_ScopeSelection extends tx_rnbase_view_Base
      *
      * @return string
      */
-    public function getMainSubpart(&$viewData)
+    protected function getMainSubpart(Sys25\RnBase\Frontend\View\ContextInterface $viewData)
     {
         return '###SCOPE###';
     }

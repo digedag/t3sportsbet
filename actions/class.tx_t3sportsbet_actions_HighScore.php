@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,20 +30,20 @@ tx_rnbase::load('tx_t3sportsbet_util_ScopeController');
 /**
  * Der View zeigt die Bestenliste an
  */
-class tx_t3sportsbet_actions_HighScore extends tx_rnbase_action_BaseIOC
+class tx_t3sportsbet_actions_HighScore extends \Sys25\RnBase\Frontend\Controller\AbstractAction
 {
 
     /**
      *
-     * @param array_object $parameters            
-     * @param tx_rnbase_configurations $configurations            
-     * @param array $viewData            
+     * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
      * @return string error msg or null
      */
-    protected function handleRequest(&$parameters, &$configurations, &$viewData)
+    protected function handleRequest(\Sys25\RnBase\Frontend\Request\RequestInterface $request)
     {
+        $parameters = $request->getParameters();
+        $configurations = $request->getConfigurations();
         // Mit den Betsets kann man Zwischenauswertungen machen
-        $scopeArr = tx_t3sportsbet_util_ScopeController::handleCurrentScope($parameters, $configurations, []);
+        $scopeArr = tx_t3sportsbet_util_ScopeController::handleCurrentScope($request, []);
         $betgames = tx_t3sportsbet_util_ScopeController::getBetgamesFromScope($scopeArr['BETGAME_UIDS']);
         $betsetUids = $scopeArr['BETSET_UIDS'];
         // Um etwas zu zeigen, benötigen wir Betset-Ids
@@ -60,7 +60,7 @@ class tx_t3sportsbet_actions_HighScore extends tx_rnbase_action_BaseIOC
         $userUids = ($feuser) ? $feuser->getUid() : '';
         $results = $betSrv->getResults($betsetUids, $userUids);
         $listSize = count($results[0]);
-        
+
         $pageBrowser = tx_rnbase::makeInstance('tx_rnbase_util_PageBrowser', 'bethighscores' . $configurations->getCObj()->data['uid']);
         $pageSize = $this->getPageSize($parameters, $configurations);
         $pageBrowser->setState($parameters, $listSize, $pageSize);
@@ -68,24 +68,25 @@ class tx_t3sportsbet_actions_HighScore extends tx_rnbase_action_BaseIOC
         // Aus der Gesamtliste den gesuchten Abschnitt herausschneiden
         $userPoints = array_slice($results[0], $limit['offset'], $limit['limit']);
         $currUserPoints = ($feuser) ? $results[0][$results[1][$feuser->getUid()]] : array();
-        
+
+        $viewData = $request->getViewContext();
         $viewData->offsetSet('betgame', $betgames[0]);
         $viewData->offsetSet('userPoints', $userPoints);
         $viewData->offsetSet('currUserPoints', $currUserPoints);
         $viewData->offsetSet('userSize', $pageBrowser->getListSize());
         $viewData->offsetSet('pagebrowser', $pageBrowser);
-        
+
         return null;
     }
 
     /**
      * Liefert die Anzahl der Ergebnisse pro Seite
      *
-     * @param array $parameters            
-     * @param tx_rnbase_configurations $configurations            
+     * @param array $parameters
+     * @param tx_rnbase_configurations $configurations
      * @return int
      */
-    protected function getPageSize(&$parameters, &$configurations)
+    protected function getPageSize($parameters, $configurations)
     {
         return $configurations->getInt('highscore.feuser.pagebrowser.limit');
     }

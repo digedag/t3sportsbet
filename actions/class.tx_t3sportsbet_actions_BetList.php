@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
@@ -30,29 +31,30 @@ tx_rnbase::load('tx_t3sportsbet_util_ScopeController');
 /**
  * Der View zeigt Tiprunden an und speichert Veränderungen.
  */
-class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC
+class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\AbstractAction
 {
 
     /**
      *
-     * @param array_object $parameters
-     * @param tx_rnbase_configurations $configurations
-     * @param array $viewData
+     * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
      * @return string error msg or null
      */
-    protected function handleRequest(&$parameters, &$configurations, &$viewData)
+    protected function handleRequest(\Sys25\RnBase\Frontend\Request\RequestInterface $request)
     {
+        $parameters = $request->getParameters();
+        $configurations = $request->getConfigurations();
         $feuser = tx_t3users_models_feuser::getCurrent();
+        $viewData = $request->getViewContext();
         $viewData->offsetSet('currfeuser', $feuser);
 
-        $scopeArr = tx_t3sportsbet_util_ScopeController::handleCurrentScope($parameters, $configurations, []);
+        $scopeArr = tx_t3sportsbet_util_ScopeController::handleCurrentScope($request, []);
         $betgames = tx_t3sportsbet_util_ScopeController::getBetgamesFromScope($scopeArr['BETGAME_UIDS']);
         $rounds = $this->getRoundsFromScope($scopeArr['BETSET_UIDS']);
         $this->handleSubmit($feuser, $viewData);
 
         if ($configurations->get('betlist.feuserFromRequestAllowed')) {
             // Der Nutzer, dessen Tips gezeigt werden kann per Request übergeben werden
-            $uid = intval($parameters->offsetGet('feuserId'));
+            $uid = (int) $parameters->offsetGet('feuserId');
             if ($uid) {
                 $feuser = tx_t3users_models_feuser::getInstance($uid);
             }
@@ -68,7 +70,7 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC
 
     protected function getRoundsFromScope($uids)
     {
-        $rounds = array();
+        $rounds = [];
         if (! $uids) {
             return $rounds;
         }
@@ -79,13 +81,13 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC
         return $rounds;
     }
 
-    protected function handleSubmit($feuser, &$viewData)
+    protected function handleSubmit($feuser, $viewData)
     {
         if (! $feuser) {
             return; // Nicht angemeldet
         }
         $srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
-        $data = t3lib_div::_GP('betset');
+        $data = \Tx_Rnbase_Utility_T3General::_GP('betset');
         if (! is_array($data)) {
             return;
         }

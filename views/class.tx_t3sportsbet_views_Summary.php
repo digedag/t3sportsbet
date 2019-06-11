@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2018 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,18 +21,23 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_view_Base');
 
 /**
  * Viewklasse für die Darstellung von Nutzerinformationen aus der DB
  */
 class tx_t3sportsbet_views_Summary extends tx_rnbase_view_Base
 {
-
-    public function createOutput($template, &$viewData, &$configurations, &$formatter)
+    /**
+     *
+     * @param string $template
+     * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
+     * @param tx_rnbase_util_FormatUtil $formatter
+     * @return string
+     */
+    protected function createOutput($template, Sys25\RnBase\Frontend\Request\RequestInterface $request, $formatter)
     {
         // Wir holen die Daten von der Action ab
-        $data = & $viewData->offsetGet('data');
+        $data = & $request->getViewContext()->offsetGet('data');
         $out = $data;
 
         return $out;
@@ -45,7 +50,7 @@ class tx_t3sportsbet_views_Summary extends tx_rnbase_view_Base
      *
      * @return string
      */
-    public function getMainSubpart(&$viewData)
+    protected function getMainSubpart(Sys25\RnBase\Frontend\View\ContextInterface $viewData)
     {
         return '###SUMMARY###';
     }

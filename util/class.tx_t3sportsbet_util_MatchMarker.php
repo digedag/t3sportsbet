@@ -32,12 +32,13 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
 {
 
     static $betMarker = null;
+    private $request;
 
-    function __construct($options = array())
+    public function __construct($options = [])
     {
         $this->options = $options;
+        $this->request = $options['request'];
         $this->matchMarker = tx_rnbase::makeInstance('tx_cfcleaguefe_util_MatchMarker');
-        // $this->betMarker = tx_rnbase::makeInstance('tx_t3sportsbet_util_BetMarker');
     }
 
     /**
@@ -46,8 +47,9 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
      */
     private static function getBetMarker()
     {
-        if (! self::$betMarker)
+        if (! self::$betMarker) {
             self::$betMarker = tx_rnbase::makeInstance('tx_t3sportsbet_util_BetMarker');
+        }
         return self::$betMarker;
     }
 
@@ -69,7 +71,7 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
     {
         $betset = $this->options['betset'];
         $feuser = $this->options['feuser'];
-        
+
         // Set some registers for TS
         $GLOBALS['TSFE']->register['T3SPORTS_MATCHUID'] = $match->getUid();
         $GLOBALS['TSFE']->register['T3SPORTS_MATCHSTATE'] = $match->getProperty('status');
@@ -77,7 +79,7 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
         $GLOBALS['TSFE']->register['T3SPORTSBET_BETSETUID'] = $betset->getUid();
         $GLOBALS['TSFE']->register['T3SPORTSBET_BETSETSTATUS'] = $betset->getProperty('status');
         $GLOBALS['TSFE']->register['T3SPORTSBET_BETSTATUS'] = $betset->getMatchState($match);
-        
+
         // Die Tipptendenz mit einblenden
         if ((self::containsMarker($template, $marker . '_TREND'))) {
             $this->addBetTrend($betset, $match);
@@ -85,13 +87,13 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
         if ((self::containsMarker($template, $marker . '_STATS'))) {
             $this->addBetStats($betset, $match);
         }
-        
+
         // Für T3sports muss der Qualifier geändert werden, damit die Verlinkung klappt
         $formatter->getConfigurations()->setQualifier('cfc_league_fe');
         $template = $this->matchMarker->parseTemplate($template, $match, $formatter, $confId, $marker);
         $formatter->getConfigurations()->setQualifier($formatter->getConfigurations()
             ->get('qualifier'));
-        
+
         $this->pushTT('setForm');
         $bet = $betset->getBet($match, $feuser);
         $template = $this->setForm($template, $betset, $bet, $feuser, $formatter);
@@ -124,7 +126,7 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
     {
         $srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
         $trend = $srv->getBetStats($betset, $match);
-        
+
         $match->setProperty(array_merge($match->getProperty(), $trend));
     }
 
@@ -167,7 +169,7 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
         $subTemplate = tx_rnbase_util_Templates::getSubpart($template, '###BETSTATUS_' . $state . '###');
         $subpartArray['###BETSTATUS_' . $state . '###'] = $subTemplate;
         $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray); // , $wrappedSubpartArray);
-        
+
         return $out;
     }
 }

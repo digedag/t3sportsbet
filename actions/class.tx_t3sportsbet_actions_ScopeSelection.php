@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,30 +29,28 @@ tx_rnbase::load('tx_t3sportsbet_util_ScopeController');
 /**
  * Der View zeigt Auswahlbox für Tiprunden an und speichert Veränderungen.
  */
-class tx_t3sportsbet_actions_ScopeSelection extends tx_rnbase_action_BaseIOC
+class tx_t3sportsbet_actions_ScopeSelection extends \Sys25\RnBase\Frontend\Controller\AbstractAction
 {
 
     /**
      *
-     * @param array_object $parameters            
-     * @param tx_rnbase_configurations $configurations            
-     * @param array $viewData            
+     * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
      * @return string error msg or null
      */
-    protected function handleRequest(&$parameters, &$configurations, &$viewData)
+    protected function handleRequest(\Sys25\RnBase\Frontend\Request\RequestInterface $request)
     {
         // Wir zeigen entweder die offenen oder die schon fertigen Tipps
         // Dies wird per Config festgelegt
         $options = [];
         $options['betsetkey'] = 'scope.';
-        $scopeArr = tx_t3sportsbet_util_ScopeController::handleCurrentScope($parameters, $configurations, $options);
+        $scopeArr = tx_t3sportsbet_util_ScopeController::handleCurrentScope($request, $options);
         $betgames = tx_t3sportsbet_util_ScopeController::getBetgamesFromScope($scopeArr['BETGAME_UIDS']);
         $rounds = tx_t3sportsbet_util_ScopeController::getRoundsFromScope($scopeArr['BETSET_UIDS']);
-        
-        // Über die viewdata können wir Daten in den View transferieren
+
+        $viewData = $request->getViewContext();
         $viewData->offsetSet('betgame', $betgames[0]);
         $viewData->offsetSet('rounds', $rounds);
-        
+
         // Wenn wir hier direkt etwas zurückgeben, wird der View nicht
         // aufgerufen. Eher für Abbruch im Fehlerfall gedacht.
         return null;

@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2018 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +30,7 @@ class tx_t3sportsbet_util_ScopeController
 {
 
     // Speichert die UID des aktuellen cObject
-    private static $_cObjectUID = array();
+    private static $_cObjectUID = [];
 
     /**
      * Diese Funktion stellt die UIDs der aktuell ausgewählten Ligen bereit.
@@ -40,17 +40,18 @@ class tx_t3sportsbet_util_ScopeController
      *
      * @return Array mit den UIDs als String
      */
-    public static function handleCurrentScope($parameters, &$configurations, $options = array())
+    public static function handleCurrentScope(\Sys25\RnBase\Frontend\Request\RequestInterface $request, $options = [])
     {
-        $ret = Array();
-        $ret['BETGAME_UIDS'] = self::handleCurrentBetgame($parameters, $configurations, $options);
-        $ret['BETSET_UIDS'] = self::handleCurrentBetset($parameters, $configurations, $options);
+        $ret = [];
+        $ret['BETGAME_UIDS'] = self::handleCurrentBetgame($request, $options);
+        $ret['BETSET_UIDS'] = self::handleCurrentBetset($request, $options);
         return $ret;
     }
 
-    protected static function handleCurrentBetgame(&$parameters, &$configurations, &$options)
+    protected static function handleCurrentBetgame(\Sys25\RnBase\Frontend\Request\RequestInterface $request, &$options)
     {
         // Erstmal nur ein Tipspiel im Scope erlaubt
+        $configurations = $request->getConfigurations();
         $betgameUid = $configurations->get('scope.betgame');
         $options['betgame'] = $betgameUid;
         return $betgameUid;
@@ -63,12 +64,14 @@ class tx_t3sportsbet_util_ScopeController
      *
      * @return array[tx_t3sportsbet_models_betset] betsets to show
      */
-    public static function handleCurrentBetset(&$parameters, &$configurations, &$options)
+    public static function handleCurrentBetset(\Sys25\RnBase\Frontend\Request\RequestInterface $request, $options)
     {
+        $configurations = $request->getConfigurations();
+        $parameters = $request->getParameters();
         $betgame = $options['betgame'];
         $useObjects = true;
         $configKey = isset($options['betsetkey']) ? $options['betsetkey'] : 'scope.';
-        $viewData = & $configurations->getViewData();
+        $viewData = $request->getViewContext();
         $betsetUids = $configurations->get($configKey . 'betset');
         $betsetStatus = $configurations->get($configKey . 'betsetStatus');
         $rounds = self::getBetsets($betgame, $betsetStatus, $betsetUids, $configurations, $configKey);
@@ -141,18 +144,18 @@ class tx_t3sportsbet_util_ScopeController
      */
     protected static function _prepareSelect($objects, $parameters, $parameterName, $displayAttrName = 'name', $defaultIdx = 0)
     {
-        global $TSFE;
-        $ret = array();
+        $ret = [];
         if (count($objects)) {
             foreach ($objects as $object) {
-                $ret[0][$object->uid] = strlen($displayAttrName) == 0 ? $object : $object->record[$displayAttrName];
+                $ret[0][$object->getUid()] = strlen($displayAttrName) == 0 ? $object : $object->getProperty($displayAttrName);
             }
 
             $paramValue = $parameters->offsetGet($parameterName);
             // Der Wert im Parameter darf nur übernommen werden, wenn er in der SelectBox vorkommt
-            if (isset($paramValue) && array_key_exists($paramValue, $ret[0]))
+            if (isset($paramValue) && array_key_exists($paramValue, $ret[0])) {
                 $ret[1] = $paramValue;
-            $ret[1] = $ret[1] ? $ret[1] : $objects[$defaultIdx]->uid;
+            }
+            $ret[1] = $ret[1] ? $ret[1] : $objects[$defaultIdx]->getUid();
         }
         return $ret;
     }
