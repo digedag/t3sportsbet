@@ -5,7 +5,7 @@ namespace Sys25\T3sportsbet\Module\Controller\BetGame;
  * *************************************************************
  * Copyright notice
  *
- * (c) 2008-2016 Rene Nitzsche (rene@system25.de)
+ * (c) 2008-2019 Rene Nitzsche (rene@system25.de)
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -80,7 +80,7 @@ class AddMatches
     private function handleNoCompetitions($currBetSet)
     {
         $out .= $this->mod->getDoc()->section('Info:', $GLOBALS['LANG']->getLL('msg_no_competition_in_betgame'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
-        $out .= '<br /><br />';
+        $out .= $this->mod->getDoc()->spacer(10);
         $out .= $this->getFormTool()->form->getSoloField('tx_t3sportsbet_betgames', $currBetSet->getBetgame()->getProperty(), 'competition');
         $out .= $this->getFormTool()->createSubmit('updateBetgame', $GLOBALS['LANG']->getLL('btn_update'));
         return $out;
@@ -122,6 +122,7 @@ class AddMatches
             $options
         );
 
+        $out = $this->mod->getDoc()->spacer(15);
         $out .= $searcher->getSearchForm();
         $out .= $searcher->getResultList();
         if ($searcher->getSize()) {
@@ -167,6 +168,6 @@ class AddMatches
                 $out = $cnt . ' ' . $GLOBALS['LANG']->getLL('msg_matches_added');
             }
         }
-        return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('label_info') . ':', $out, 0, 1, ICON_INFO) : '';
+        return (strlen($out)) ? $this->mod->getDoc()->section('###LABEL_INFO###' . ':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO) : '';
     }
 }

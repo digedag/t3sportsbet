@@ -1,6 +1,8 @@
 <?php
 namespace Sys25\T3sportsbet\Module\Controller;
 
+use Sys25\T3sportsbet\Module\Utility\AddCompetitionWizard;
+
 /**
  * *************************************************************
  * Copyright notice
@@ -71,7 +73,7 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
         if (! $currentGame) {
             $content .= $this->getModule()
                 ->getDoc()
-                ->section('Info:', $LANG->getLL('msg_no_game_in_page'), 0, 1, ICON_WARN);
+                ->section('Info:', $LANG->getLL('msg_no_game_in_page'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
             $content .= '<p style="margin-top:5px; font-weight:bold;">' . $formTool->createNewLink('tx_t3sportsbet_betgames', $this->getModule()
                 ->getPid(), $LANG->getLL('msg_create_new_game')) . '</p>';
             return $content;
@@ -79,12 +81,11 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
         $content = '';
         $this->getModule()->selector = $selector;
 
-        $currentRound = $this->selector->showRoundSelector($selector, $this->getModule()
-            ->getPid(), $currentGame);
+        $currentRound = $this->selector->showRoundSelector($selector, $this->getModule()->getPid(), $currentGame);
         if (! $currentRound) {
-            // Add competition wizard
-            $wizard = \tx_rnbase::makeInstance('tx_t3sportsbet_mod1_addCompetitionWizard');
-            $content .= $wizard->handleRequest($this, $currentGame);
+            /* @var $wizard AddCompetitionWizard */
+            $wizard = \tx_rnbase::makeInstance(AddCompetitionWizard::class);
+            $content .= $wizard->handleRequest($this->getModule(), $currentGame);
             return $content;
         }
         $this->getModule()->selector = $selector;

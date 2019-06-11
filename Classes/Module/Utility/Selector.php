@@ -131,8 +131,10 @@ class Selector
 
     private function renderSelector($menu, array $links = [])
     {
-        return '<div class="cfcselector" style="float: left; width: 100%">
-<span class="selector col-md-4">' . $menu . '</span>' . (empty($links) ? '' : '<span class="links">' . implode(' ', $links) . '</span>') . '</div>';
+        return '
+<div class="row">
+<div class="selector col-sm-4">' . $menu . '</div>' . (empty($links) ? '' : '<div class="links col-sm-4">' . implode(' ', $links) . '</div>') .
+        '</div>';
     }
 
     /**

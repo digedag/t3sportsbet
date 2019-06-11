@@ -130,7 +130,7 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion
         $ret['table'] = $content;
         $ret['totalsize'] = $cnt;
         $pagerData = $pager->render();
-        $ret['pager'] .= '<div class="pager"><span class="col-md-2">' . $pagerData['limits'] . '</span><span class="col-md-2">' . $pagerData['pages'] . '</span></div>';
+        $ret['pager'] .= '<div class="pager row"><span class="col-sm-2">' . $pagerData['limits'] . '</span><span class="col-sm-2">' . $pagerData['pages'] . '</span></div>';
         return $ret;
     }
 
@@ -142,6 +142,12 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion
      */
     private function showTeamQuestions(&$content, $items)
     {
+        if (empty($items)) {
+            $out = '<strong>###LABEL_MSG_NO_ITEMS_FOUND###</strong>';
+            $content .= $this->mod->getDoc()->section('',$out,0,1,\tx_rnbase_mod_IModFunc::ICON_INFO);
+            return ;
+        }
+
         $decor = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_decorator_TeamQuestion', $this->getModule());
         $columns = [
             'uid' => [
@@ -159,18 +165,11 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion
             ],
         ];
 
-        if ($items) {
-            /* @var $tables Tx_Rnbase_Backend_Utility_Tables */
-            $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
-            $arr = $tables->prepareTable($items, $columns, $this->formTool, $this->options);
-            $out .= $tables->buildTable($arr[0]);
+        /* @var $tables Tx_Rnbase_Backend_Utility_Tables */
+        $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        $arr = $tables->prepareTable($items, $columns, $this->formTool, $this->options);
+        $out .= $tables->buildTable($arr[0]);
 
-//             tx_rnbase::load('tx_rnbase_mod_Tables');
-//             $arr = tx_rnbase_mod_Tables::prepareTable($items, $columns, $this->formTool, $this->options);
-//             $out = $this->mod->doc->table($arr[0]);
-        } else {
-            $out = '<p><strong>###LABEL_MSG_NO_ITEMS_FOUND###</strong></p><br/>';
-        }
         $content .= $out;
     }
 

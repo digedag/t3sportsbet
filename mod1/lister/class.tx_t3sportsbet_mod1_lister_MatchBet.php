@@ -29,6 +29,7 @@
 class tx_t3sportsbet_mod1_lister_MatchBet
 {
 
+    /** @var \tx_rnbase_mod_IModule */
     private $mod;
 
     private $data;
@@ -121,7 +122,7 @@ class tx_t3sportsbet_mod1_lister_MatchBet
         $ret['table'] = $this->showBets($items);
         $ret['totalsize'] = $cnt;
         $pagerData = $pager->render();
-        $ret['pager'] .= '<div class="pager"><span class="col-md-2">' . $pagerData['limits'] . '</span><span class="col-md-2">' . $pagerData['pages'] . '</span></div>';
+        $ret['pager'] .= '<div class="pager row"><span class="col-sm-2">' . $pagerData['limits'] . '</span><span class="col-sm-2">' . $pagerData['pages'] . '</span></div>';
         return $ret;
     }
 
@@ -138,6 +139,10 @@ class tx_t3sportsbet_mod1_lister_MatchBet
 
     private function showBets($bets)
     {
+        if (empty($bets)) {
+            $out = '<strong>' . $GLOBALS['LANG']->getLL('msg_no_bets_found') . '</strong>';
+            return $this->mod->getDoc()->section('',$out,0,1,\tx_rnbase_mod_IModFunc::ICON_INFO);
+        }
         tx_rnbase::load('tx_t3sportsbet_mod1_decorator');
         $decor = tx_rnbase::makeInstance('tx_t3sportsbet_util_BetDecorator');
         $decor->setFormTool($this->formTool);
@@ -171,14 +176,10 @@ class tx_t3sportsbet_mod1_lister_MatchBet
                 'title' => 'label_feuser'
             ]
         ];
-        if ($bets) {
-            $arr = tx_t3sportsbet_mod1_decorator::prepareRecords($bets, $columns, $this->formTool, $this->options);
-            /* @var $tables Tx_Rnbase_Backend_Utility_Tables */
-            $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
-            $out .= $tables->buildTable($arr[0]);
-        } else {
-            $out = '<p><strong>' . $GLOBALS['LANG']->getLL('msg_no_bets_found') . '</strong></p><br/>';
-        }
+        $arr = tx_t3sportsbet_mod1_decorator::prepareRecords($bets, $columns, $this->formTool, $this->options);
+        /* @var $tables Tx_Rnbase_Backend_Utility_Tables */
+        $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        $out .= $tables->buildTable($arr[0]);
         return $out;
     }
 

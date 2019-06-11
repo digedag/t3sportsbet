@@ -89,7 +89,7 @@ class ShowBetSet
 
         $pasteButton = \tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->makePasteButton($this->currentRound, $this->module);
         if($pasteButton) {
-            $out .= $this->doc->section('Info:',$pasteButton,0,1,ICON_INFO);
+            $out .= $this->doc->section('Info:',$pasteButton,0,1, \tx_rnbase_mod_IModFunc::ICON_INFO);
         }
 
         /* @var $searcher \tx_t3sportsbet_mod1_matchsearcher */
@@ -105,7 +105,7 @@ class ShowBetSet
         $out .= $this->formTool->getTCEForm()->getSoloField('tx_t3sportsbet_betsets', $currBetSet->getProperty(), 'status');
         $out .= $this->formTool->createSubmit('savebetset', '###LABEL_SAVE###');
 
-//        $out .= $this->module->getDoc()->spacer(10);
+        $out .= $this->module->getDoc()->spacer(10);
         $out .= '<p>'.$this->formTool->createSubmit('analyzebets', '###LABEL_ANALYZEBETS###').'</p>';
         return $out;
     }

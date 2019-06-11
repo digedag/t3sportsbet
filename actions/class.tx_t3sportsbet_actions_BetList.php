@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -35,21 +35,21 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC
 
     /**
      *
-     * @param array_object $parameters            
-     * @param tx_rnbase_configurations $configurations            
-     * @param array $viewData            
+     * @param array_object $parameters
+     * @param tx_rnbase_configurations $configurations
+     * @param array $viewData
      * @return string error msg or null
      */
     protected function handleRequest(&$parameters, &$configurations, &$viewData)
     {
         $feuser = tx_t3users_models_feuser::getCurrent();
         $viewData->offsetSet('currfeuser', $feuser);
-        
+
         $scopeArr = tx_t3sportsbet_util_ScopeController::handleCurrentScope($parameters, $configurations, []);
         $betgames = tx_t3sportsbet_util_ScopeController::getBetgamesFromScope($scopeArr['BETGAME_UIDS']);
         $rounds = $this->getRoundsFromScope($scopeArr['BETSET_UIDS']);
         $this->handleSubmit($feuser, $viewData);
-        
+
         if ($configurations->get('betlist.feuserFromRequestAllowed')) {
             // Der Nutzer, dessen Tips gezeigt werden kann per Request übergeben werden
             $uid = intval($parameters->offsetGet('feuserId'));
@@ -57,12 +57,12 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC
                 $feuser = tx_t3users_models_feuser::getInstance($uid);
             }
         }
-        
+
         // Über die viewdata können wir Daten in den View transferieren
         $viewData->offsetSet('betgame', $betgames[0]);
         $viewData->offsetSet('rounds', $rounds);
         $viewData->offsetSet('feuser', $feuser);
-        
+
         return null;
     }
 
@@ -81,8 +81,9 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC
 
     protected function handleSubmit($feuser, &$viewData)
     {
-        if (! $feuser)
+        if (! $feuser) {
             return; // Nicht angemeldet
+        }
         $srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
         $data = t3lib_div::_GP('betset');
         if (! is_array($data)) {
@@ -96,12 +97,12 @@ class tx_t3sportsbet_actions_BetList extends tx_rnbase_action_BaseIOC
             if (! $betset->isValid() || $betset->isFinished())
                 continue;
             foreach ($matchArr as $matchUid => $betArr) {
-                
+
                 if ($matchUid == 'teambet') {
                     $saveCnt += $this->saveTeamBet($betArr, $feuser);
                     continue;
                 }
-                
+
                 $match = tx_cfcleaguefe_models_match::getMatchInstance($matchUid);
                 list ($betUid, $betData) = each($betArr);
                 $saveCnt += $srv->saveOrUpdateBet($betset, $match, $feuser, $betUid, $betData);

@@ -100,7 +100,7 @@ class tx_t3sportsbet_mod1_matchsearcher
         // Wir zeigen zwei Selectboxen an
         $this->currComp = $this->selector->showLeagueSelector($out, $this->mod->id, $this->competitions);
         if (! $this->currComp) {
-            return $out . $this->mod->getDoc()->section('Info:', $LANG->getLL('msg_no_competition_in_betgame'), 0, 1, ICON_WARN);
+            return $out . $this->mod->getDoc()->section('Info:', $LANG->getLL('msg_no_competition_in_betgame'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
         }
         // $out.=$this->mod->doc->spacer(5);
 
@@ -126,10 +126,10 @@ class tx_t3sportsbet_mod1_matchsearcher
         $matchTable = $this->getMatchTable();
         $matchTable->setCompetitions($this->currComp->getUid());
         $matchTable->setRounds(is_object($this->current_round) ? $this->current_round->getUid() : $this->current_round);
-        if (isset($this->options['ignoreDummies']))
+        if (isset($this->options['ignoreDummies'])) {
             $matchTable->setIgnoreDummy();
-        $fields = array();
-        $options = array();
+        }
+        $fields = $options = [];
         $options['orderby']['MATCH.DATE'] = 'ASC';
         $matchTable->getFields($fields, $options);
         $service = tx_cfcleaguefe_util_ServiceRegistry::getMatchService();
@@ -154,6 +154,12 @@ class tx_t3sportsbet_mod1_matchsearcher
 
     public function showMatches(&$content, $headline, &$matches)
     {
+        if (empty($matches)) {
+            $out = '<p><strong>' . $GLOBALS['LANG']->getLL('msg_no_matches_in_betset') . '</strong></p><br/>';
+            $content .= $this->mod->getDoc()->section($headline . ':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_FATAL);
+            return;
+        }
+
         tx_rnbase::load('tx_rnbase_mod_Tables');
         $decor = tx_rnbase::makeInstance('tx_t3sportsbet_util_MatchDecorator', $this->mod, $this->currentRound);
         $columns = [
@@ -187,18 +193,15 @@ class tx_t3sportsbet_mod1_matchsearcher
             ]
         ];
 
-        if ($matches) {
-            global $LANG;
-            $LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
+        global $LANG;
+        $LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
 
-            /* @var $tables \Tx_Rnbase_Backend_Utility_Tables */
-            $tables = \tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
-            $rows = $tables->prepareTable($matches, $columns, $this->formTool, $this->options);
-            $out .= $tables->buildTable($rows[0], $rows[1]);
-        } else {
-            $out = '<p><strong>' . $GLOBALS['LANG']->getLL('msg_no_matches_in_betset') . '</strong></p><br/>';
-        }
-        $content .= $this->mod->getDoc()->section($headline . ':', $out, 0, 1, ICON_INFO);
+        /* @var $tables \Tx_Rnbase_Backend_Utility_Tables */
+        $tables = \tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        $rows = $tables->prepareTable($matches, $columns, $this->formTool, $this->options);
+        $out .= $tables->buildTable($rows[0], $rows[1]);
+        $content .= '<h3>'.$headline.'</h3>';
+        $content .= $out;
     }
 
     /**
