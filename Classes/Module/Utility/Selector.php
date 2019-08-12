@@ -111,8 +111,12 @@ class Selector
                 $links = [];
                 $links[] = $this->getFormTool()->createEditLink('tx_t3sportsbet_betsets', $menuData['value'], '');
                 $params = [];
-                $params['params'] = '&betgame=' . $game->getUid();
-                $params['params'] .= '&round=' . ($game->getBetSetSize() + 1);
+                $params['defvals'] = [
+                    'tx_t3sportsbet_betsets' => [
+                        'betgame' => $game->getUid(),
+                        'round' => ($game->getBetSetSize() + 1),
+                    ]
+                ];
                 $params['title'] = '###LABEL_CREATE_BETSET###';
                 $links[] = $this->getFormTool()->createNewLink('tx_t3sportsbet_betsets', $pid, '', $params);
                 $menu = $this->renderSelector($menu, $links);
@@ -151,6 +155,9 @@ class Selector
         return \Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_t3sportsbet_betgames', $options, 0);
     }
 
+    /**
+     * @return \tx_rnbase_util_FormTool
+     */
     private function getFormTool()
     {
         return $this->formTool;

@@ -47,8 +47,8 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
      */
     public static function getBetgameInstance($uid)
     {
-        $uid = intval($uid);
-        if (! uid) {
+        $uid = (int) $uid;
+        if (!$uid) {
             throw new Exception('Invalid uid for betgame');
         }
         if (! is_object(self::$instances[$uid])) {
