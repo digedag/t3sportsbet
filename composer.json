@@ -21,12 +21,13 @@
 		"issues" : "https://github.com/digedag/t3sportsbet/issues"
 	},
 	"replace" : {
-		"t3sportsbet" : "self.version",
+		"digedag/t3sportsbet" : "self.version",
 		"typo3-ter/t3sportsbet" : "self.version"
 	},
 	"require" : {
-		"typo3/cms-core" : ">=7.6.0 <=8.7.99",
-		"digedag/rn-base" : ">=1.9.4"
+		"typo3/cms-core": "^7.6 || ^8.7 || ^9.5",
+		"digedag/cfc-league" : "^1.4.0",
+		"digedag/rn-base" : "^1.11"
 	},
 	"autoload" : {
 		"classmap" : [
@@ -40,5 +41,15 @@
 			"views/"
 		],
         "psr-4": {"Sys25\\T3sportsbet\\" : "Classes"}
-	}
+	},
+    "extra": {
+        "typo3/cms": {
+            "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "extension-key": "t3sportsbet",
+            "web-dir": ".Build/Web"
+        },
+        "branch-alias": {
+            "dev-master": "0.x-dev"
+        }
+    }
 }
