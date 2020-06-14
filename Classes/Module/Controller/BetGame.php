@@ -8,7 +8,7 @@ use Sys25\T3sportsbet\Module\Utility\AddCompetitionWizard;
  * *************************************************************
  * Copyright notice.
  *
- * (c) 2008-2019 Rene Nitzsche (rene@system25.de)
+ * (c) 2008-2020 Rene Nitzsche (rene@system25.de)
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -140,10 +140,9 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
             // $e->getMessage();
             $msg .= $e->__toString();
             $msg .= '</pre>';
-            \tx_rnbase::load('tx_rnbase_util_Logger');
-            \tx_rnbase_util_Logger::warn('Exception in BE module.', 't3sportsbet', array(
+            \tx_rnbase_util_Logger::warn('Exception in BE module.', 't3sportsbet', [
                 'Exception' => $e->getMessage(),
-            ));
+            ]);
             $content .= $msg;
         }
         $content .= $formTool->form->printNeededJSFunctions_top();
