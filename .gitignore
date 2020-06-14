@@ -1,3 +1,8 @@
+### travis builds
+/.Build
+/var
+/composer.lock
+
 .buildpath
 .project
 .settings

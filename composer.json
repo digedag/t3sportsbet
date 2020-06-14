@@ -26,9 +26,17 @@
 	},
 	"require" : {
 		"typo3/cms-core": "^7.6 || ^8.7 || ^9.5.17 || ^10.4.3",
-		"dmk/t3users": "^9.1",
-		"digedag/cfc-league" : "^1.5.0",
+		"dmk/t3users": "dev-master",
+		"digedag/cfc-league" : "^1.5.1",
+		"digedag/cfc-league-fe" : "^1.5.1",
 		"digedag/rn-base" : "^1.12"
+	},
+	"require-dev": {
+		"namelesscoder/typo3-repository-client": "^1.2",
+		"nimut/testing-framework": "^1.1 || ^2.0 || ^4.0 || ^5.0",
+		"mikey179/vfsstream": "^1.4 || ^1.6",
+		"phpunit/phpunit": "^4.7|| ^7.0",
+		"friendsofphp/php-cs-fixer": "^2.15"
 	},
 	"autoload" : {
 		"classmap" : [
@@ -42,6 +50,26 @@
 			"views/"
 		],
         "psr-4": {"Sys25\\T3sportsbet\\" : "Classes"}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"System25\\T3sportsbet\\Tests\\" : "Tests/Unit/PHP",
+			"TYPO3\\CMS\\Core\\Tests\\":".Build/vendor/typo3/cms/typo3/sysext/core/Tests/",
+			"TYPO3\\CMS\\Fluid\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/fluid/Tests/"
+		}
+	},
+	"config": {
+		"vendor-dir": ".Build/vendor",
+		"bin-dir": ".Build/bin",
+		"preferred-install": {
+			"typo3/cms": "source"
+		}
+	},
+	"scripts": {
+		"post-autoload-dump": [
+			"mkdir -p .Build/Web/typo3conf/ext/",
+			"[ -L .Build/Web/typo3conf/ext/t3sportsbet ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/t3sportsbet"
+		]
 	},
     "extra": {
         "typo3/cms": {

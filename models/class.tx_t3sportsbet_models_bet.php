@@ -40,8 +40,6 @@ class tx_t3sportsbet_models_bet extends tx_rnbase_model_base
      */
     public function getMatch()
     {
-        tx_rnbase::load('tx_cfcleaguefe_models_match');
-
         return tx_cfcleaguefe_models_match::getMatchInstance($this->getProperty('t3match'));
     }
 
