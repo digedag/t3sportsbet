@@ -1,10 +1,8 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-$sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
-
-$tx_t3sportsbet_betgame = Array (
-    'ctrl' => Array (
+$tx_t3sportsbet_betgame = [
+    'ctrl' => [
         'title' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames',
         'label' => 'name',
         'tstamp' => 'tstamp',
@@ -12,28 +10,28 @@ $tx_t3sportsbet_betgame = Array (
         'cruser_id' => 'cruser_id',
         'sortby' => 'sorting',
         'delete' => 'deleted',
-        'enablecolumns' => Array (
+        'enablecolumns' => [
             'disabled' => 'hidden',
             'starttime' => 'starttime',
             'fe_group' => 'fe_group',
-        ),
-        'iconfile' => tx_rnbase_util_Extensions::extRelPath('t3sportsbet').'icon_table.gif',
-    ),
-    'interface' => Array (
+        ],
+        'iconfile' => 'EXT:t3sportsbet/icon_table.gif',
+    ],
+    'interface' => [
         'showRecordFieldList' => 'hidden,starttime,fe_group,name'
-    ),
-    'feInterface' => Array (
+    ],
+    'feInterface' => [
         'fe_admin_fieldList' => 'hidden, starttime, name',
-    ),
-    'columns' => Array (
-        'hidden' => Array (
+    ],
+    'columns' => [
+        'hidden' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
-            'config' => Array (
+            'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
+            'config' => [
                 'type' => 'check',
-                'default' => '0'
-                )
-            ),
+                'default' => '0',
+            ],
+        ],
         'starttime' => Array (
             'exclude' => 1,
             'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.starttime',
@@ -70,7 +68,7 @@ $tx_t3sportsbet_betgame = Array (
             ),
         'competition' => Array (
             'exclude' => 0,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.competition',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.competition',
             'config' => Array (
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -142,31 +140,31 @@ $tx_t3sportsbet_betgame = Array (
                 'default' => 0
                 )
             ),
-        'lockminutes' => Array (
+        'lockminutes' => [
             'exclude' => 0,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames.lockminutes',
-            'config' => Array (
+            'config' => [
                 'type' => 'input',
                 'size' => '4',
                 'max' => '900',
                 'eval' => 'int,required',
-                'range' => Array (
+                'range' => [
                     'upper' => '900',
                     'lower' => '0'
-                    ),
+                ],
                 'default' => 30
-                )
-            ),
-        'comment' => Array (
+            ]
+        ],
+        'comment' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames_comment',
-            'config' => Array (
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
                 'eval' => 'trim',
-                )
-            ),
+            ]
+        ],
             //		'ignore_greentable' => Array (
                 //			'exclude' => 0,
                 //			'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames.ignore_greentable',
@@ -175,13 +173,17 @@ $tx_t3sportsbet_betgame = Array (
                 //				'default' => 1
                 //			)
             //		),
-                    ),
-    'types' => Array (
-        '0' => Array('showitem' => 'hidden;;1;;1-1-1, name, dataprovider, competition, points_accurate, points_goalsdiff, points_tendency, draw_if_extratime, draw_if_penalty, lockminutes, comment')
-    ),
-    'palettes' => Array (
-        '1' => Array('showitem' => 'starttime, fe_group')
-    )
-);
+    ],
+    'types' => [
+        '0' => ['showitem' => 'hidden;;1;;1-1-1, name, dataprovider, competition, points_accurate, points_goalsdiff, points_tendency, draw_if_extratime, draw_if_penalty, lockminutes, comment']
+    ],
+    'palettes' => [
+        '1' => ['showitem' => 'starttime, fe_group']
+    ]
+];
+
+if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+    unset($tx_t3sportsbet_betgame['interface']['showRecordFieldList']);
+}
 
 return $tx_t3sportsbet_betgame;

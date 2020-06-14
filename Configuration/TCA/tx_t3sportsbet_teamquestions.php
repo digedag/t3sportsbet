@@ -3,8 +3,8 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 $sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
 
-$tx_t3sportsbet_tq = Array (
-    'ctrl' => Array (
+$tx_t3sportsbet_tq = [
+    'ctrl' => [
         'title' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions',
         'label' => 'question',
         'tstamp' => 'tstamp',
@@ -12,38 +12,38 @@ $tx_t3sportsbet_tq = Array (
         'cruser_id' => 'cruser_id',
         'sortby' => 'tstamp',
         'delete' => 'deleted',
-        'enablecolumns' => Array (
+        'enablecolumns' => [
             'disabled' => 'hidden',
-        ),
-        'iconfile' => tx_rnbase_util_Extensions::extRelPath('t3sportsbet').'icon_table.gif',
-    ),
+        ],
+        'iconfile' => 'EXT:t3sportsbet/icon_table.gif',
+    ],
     'interface' => [
         'showRecordFieldList' => ''
     ],
     'feInterface' => [
         'fe_admin_fieldList' => '',
     ],
-    'columns' => Array (
+    'columns' => [
         'hidden' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
+            'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
             'config' => [
                 'type' => 'check',
                 'default' => '0'
             ]
         ],
-        'betset' => Array (
+        'betset' => [
             'exclude' => 0,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets',
-            'config' => Array (
+            'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
                 'allowed' => 'tx_t3sportsbet_betsets',
                 'size' => 1,
                 'minitems' => 1,
                 'maxitems' => 1,
-                )
-            ),
+            ]
+        ],
         'question' => Array (
             'exclude' => 1,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions_question',
@@ -52,8 +52,8 @@ $tx_t3sportsbet_tq = Array (
                 'cols' => '30',
                 'rows' => '5',
                 'eval' => 'required,trim',
-                )
-            ),
+            )
+        ),
         'openuntil' => Array (
             'exclude' => 1,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions_openuntil',
@@ -64,8 +64,8 @@ $tx_t3sportsbet_tq = Array (
                 'eval' => 'datetime',
                 'default' => '0',
                 'checkbox' => '0'
-                )
-            ),
+            )
+        ),
         'points' => Array (
             'exclude' => 0,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions_points',
@@ -77,10 +77,10 @@ $tx_t3sportsbet_tq = Array (
                 'range' => Array (
                     'upper' => '100',
                     'lower' => '0'
-                    ),
+                ),
                 'default' => 0
-                )
-            ),
+            )
+        ),
         'teams' => [
             'exclude' => 0,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions_teams',
@@ -118,13 +118,18 @@ FROM tx_cfcleague_teams t
                 'maxitems' => 10,
             ]
         ],
-    ),
+    ],
     'types' => [
         '0' => ['showitem' => 'hidden;;1;;1-1-1, betset, question, openuntil, points, teams, team']
     ],
     'palettes' => [
         '1' => ['showitem' => '']
     ]
-);
+];
+
+if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+    unset($tx_t3sportsbet_tq['interface']['showRecordFieldList']);
+}
+
 
 return $tx_t3sportsbet_tq;

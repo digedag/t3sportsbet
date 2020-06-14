@@ -1,10 +1,8 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-$sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
-
-$tx_t3sportsbet_betsets = Array (
-    'ctrl' => Array (
+$tx_t3sportsbet_betsets = [
+    'ctrl' => [
         'title' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets',
         'label' => 'uid',
         // If label_alt is used, the flexform fails for some reasons... huh??
@@ -16,39 +14,42 @@ $tx_t3sportsbet_betsets = Array (
         'cruser_id' => 'cruser_id',
         'sortby' => 'sorting',
         'delete' => 'deleted',
-        'enablecolumns' => [],
-        'iconfile' => tx_rnbase_util_Extensions::extRelPath('t3sportsbet').'icon_table.gif',
-    ),
-    'interface' => Array (
+        'enablecolumns' => [
+            'disabled' => 'hidden',
+        ],
+        'iconfile' => 'EXT:t3sportsbet/icon_table.gif',
+    ],
+    'interface' => [
         'showRecordFieldList' => 'hidden,betgame, round, round_name, status'
-        ),
-    'feInterface' => Array (
+    ],
+    'feInterface' => [
         'fe_admin_fieldList' => '',
-     ),
-    'columns' => Array (
-        'hidden' => Array (
+     ],
+    'columns' => [
+        'hidden' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
-            'config' => Array (
+            'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
+            'config' => [
                 'type' => 'check',
                 'default' => '0'
-                )
-            ),
-        'betgame' => Array (
+            ]
+        ],
+        'betgame' => [
             'exclude' => 0,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames',
-            'config' => Array (
+            'config' => [
                 'type' => 'select',
-                'items' => Array (
-                    Array(' ', '0'),
-                    ),
+                'renderType' => 'selectSingle',
+                'items' => [
+                    [' ', '0'],
+                ],
                 'foreign_table' => 'tx_t3sportsbet_betgames',
                 'foreign_table_where' => 'AND tx_t3sportsbet_betgames.pid=###CURRENT_PID### ORDER BY tx_t3sportsbet_betgames.sorting ',
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
-                )
-            ),
+            ]
+        ],
         'round' => Array (
             'exclude' => 1,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.round',
@@ -57,40 +58,41 @@ $tx_t3sportsbet_betsets = Array (
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'required,int',
-                'range' => Array (
+                'range' => [
                     'upper' => '1000',
                     'lower' => '1'
-                    ),
+                ],
                 'default' => 1
-                )
-            ),
-        'round_name' => Array (
+            )
+        ),
+        'round_name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.round_name',
-            'config' => Array (
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '100',
                 'eval' => 'required,trim',
-                )
-            ),
-        'status' => Array (
+            ]
+        ],
+        'status' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status',
-            'config' => Array (
+            'config' => [
                 'type' => 'select',
-                'items' => Array(
-                    Array('LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status.prepare',0),
-                    Array('LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status.open',1),
-                    Array('LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status.finished',2),
-                    ),
+                'renderType' => 'selectSingle',
+                'items' => [
+                    ['LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status.prepare',0],
+                    ['LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status.open',1],
+                    ['LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status.finished',2],
+                ],
                 'default' => 0
-                )
-            ),
-        't3matches' => Array (
+            ]
+        ],
+        't3matches' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.t3matches',
-            'config' => Array (
+            'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
                 'allowed' => 'tx_cfcleague_games',
@@ -100,15 +102,15 @@ $tx_t3sportsbet_betsets = Array (
                 'minitems' => 0,
                 'maxitems' => 100,
                 'MM' => 'tx_t3sportsbet_betsets_mm',
-                'MM_match_fields' => Array(
+                'MM_match_fields' => [
                     'tablenames' => 'tx_cfcleague_games',
-                    ),
-                )
-            ),
-        'teamquestions' => Array (
+                ],
+            ]
+        ],
+        'teamquestions' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions',
-            'config' => Array (
+            'config' => [
                 'type' => 'inline',
                 'foreign_table' => 'tx_t3sportsbet_teamquestions',
                 'foreign_field' => 'betset',
@@ -116,29 +118,37 @@ $tx_t3sportsbet_betsets = Array (
                 'foreign_label' => 'question',
                 'minitems' => 0,
                 'maxitems' => 20,
-                'appearance' => Array(
+                'appearance' => [
                     'collapseAll' => '1',
                     'expandSingle' => '1',
-                    ),
-                )
-            ),
-        'comment' => Array (
+                ],
+            ]
+        ],
+        'comment' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames_comment',
-            'config' => Array (
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
                 'eval' => 'trim',
-                )
-            ),
-        ),
-    'types' => Array (
-        '0' => Array('showitem' => 'hidden;;1;;1-1-1, betgame, round, round_name, status, comment, t3matches, teamquestions')
-        ),
-    'palettes' => Array (
-        '1' => Array('showitem' => '')
-    )
-);
+            ]
+        ],
+    ],
+    'types' => [
+        '0' => ['showitem' => 'hidden;;1;;1-1-1, betgame, round, round_name, status, comment, t3matches, teamquestions']
+    ],
+    'palettes' => [
+        '1' => ['showitem' => '']
+    ]
+];
+
+if (tx_rnbase_util_Extensions::isLoaded('static_info_tables')) {
+    $tx_t3sportsbet_betsets['columns']['country'] = tx_cfcleague_tca_Lookup::getCountryField();
+}
+
+if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+    unset($tx_t3sportsbet_betsets['interface']['showRecordFieldList']);
+}
 
 return $tx_t3sportsbet_betsets;

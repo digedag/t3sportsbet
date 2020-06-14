@@ -126,7 +126,7 @@ CREATE TABLE tx_t3sportsbet_teamquestions (
 	betset int(11) DEFAULT '0' NOT NULL,
 	question text NOT NULL,
 	points tinyint(11) DEFAULT '0' NOT NULL,
-	openuntil datetime DEFAULT '0000-00-00 00:00:00',
+	openuntil datetime DEFAULT NULL,
 	teams int(11) DEFAULT '0' NOT NULL,
 	team tinytext NOT NULL,
 

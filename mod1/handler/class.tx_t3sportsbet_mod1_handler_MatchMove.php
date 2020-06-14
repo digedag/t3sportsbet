@@ -68,11 +68,11 @@ class tx_t3sportsbet_mod1_handler_MatchMove
         try {
             tx_t3sportsbet_util_serviceRegistry::getBetService()->moveMatch($newBetsetUid, $oldBetsetUid, $matchUid);
         } catch (Exception $e) {
-            return $mod->getDoc()->section('###LABEL_ERROR###', $e->getMessage(), 0, 1, ICON_FATAL);
+            return $mod->getDoc()->section('###LABEL_ERROR###', $e->getMessage(), 0, 1, \tx_rnbase_mod_IModFunc::ICON_FATAL);
         }
         // Reset cutted matches
         $this->handleCut(0, $mod);
-        return $mod->getDoc()->section('###LABEL_MSG_MATCHMOVED###', '', 0, 1, ICON_INFO);
+        return $mod->getDoc()->section('###LABEL_MSG_MATCHMOVED###', '', 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
     }
 
     /**

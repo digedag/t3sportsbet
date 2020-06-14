@@ -4,8 +4,6 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 # Add plugin wizard
 if (TYPO3_MODE=='BE')	{
-    tx_rnbase_util_Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sportsbet/Configuration/TSConfig/modWizards.ts">');
-    tx_rnbase_util_Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sportsbet/Configuration/TSconfig/pageTSconfig.txt">');
 
     ////////////////////////////////
     // Submodul anmelden
