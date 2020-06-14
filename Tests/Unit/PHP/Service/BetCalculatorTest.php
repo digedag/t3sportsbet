@@ -25,7 +25,6 @@ namespace System25\T3sportsbet\Tests\Service;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 class BetCalculatorTest extends \tx_rnbase_tests_BaseTestCase
 {
     /**
@@ -185,7 +184,7 @@ class BetCalculatorTest extends \tx_rnbase_tests_BaseTestCase
                 'uid' => 1,
                 'name' => 'dummy',
                 'match_parts' => 2,
-                'addparts' => 0
+                'addparts' => 0,
             ]
         );
         foreach ($yamlData as $key => $arr) {
@@ -209,4 +208,3 @@ class BetCalculatorTest extends \tx_rnbase_tests_BaseTestCase
         return \tx_rnbase_util_Extensions::extPath('t3sportsbet').'Tests/Fixtures/'.$filename;
     }
 }
-
