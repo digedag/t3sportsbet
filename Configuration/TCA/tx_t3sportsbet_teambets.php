@@ -3,7 +3,7 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 $tx_t3sportsbet_tb = Array (
     'ctrl' => Array (
-        'title' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_teambets',
+        'title' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teambets',
         'label' => 'question',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -23,7 +23,7 @@ $tx_t3sportsbet_tb = Array (
     'columns' => Array (
         'question' => Array (
             'exclude' => 0,
-            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_teamquestions',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions',
             'config' => Array (
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -45,10 +45,10 @@ $tx_t3sportsbet_tb = Array (
                 'maxitems' => 1,
                 )
             ),
-        
+
         'finished' => Array (
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_bets.finished',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_bets.finished',
             'config' => Array (
                 'type' => 'check',
                 'default' => '0'
@@ -56,7 +56,7 @@ $tx_t3sportsbet_tb = Array (
             ),
         'team' => Array (
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_bets.goals_home',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_bets.goals_home',
             'config' => Array (
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -68,7 +68,7 @@ $tx_t3sportsbet_tb = Array (
             ),
         'points' => Array (
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_bets.points',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_bets.points',
             'config' => Array (
                 'type' => 'input',
                 'size' => '4',
@@ -83,7 +83,7 @@ $tx_t3sportsbet_tb = Array (
             ),
         'possiblepoints' => Array (
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_teambets_possiblepoints',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teambets_possiblepoints',
             'config' => Array (
                 'type' => 'input',
                 'size' => '4',

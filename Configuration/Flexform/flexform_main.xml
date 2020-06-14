@@ -8,7 +8,7 @@
     <sDEF>
       <ROOT>
         <TCEforms>
-          <sheetTitle>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.tab.common</sheetTitle>
+          <sheetTitle>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.tab.common</sheetTitle>
         </TCEforms>
 
         <type>array</type>
@@ -16,20 +16,20 @@
           <action> <!-- Bezeichner ist frei wählbar -->
             <TCEforms>
               <exclude>1</exclude>
-              <label>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.action</label>
+              <label>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.action</label>
               <config>
                 <type>select</type>
                 <items type="array">
                   <numIndex index="5" type="array">
-                    <numIndex index="0">LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.action.ScopeSelection</numIndex>
+                    <numIndex index="0">LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.action.ScopeSelection</numIndex>
                     <numIndex index="1">tx_t3sportsbet_actions_ScopeSelection</numIndex>
                   </numIndex>
                   <numIndex index="10" type="array">
-                    <numIndex index="0">LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.action.BetList</numIndex>
+                    <numIndex index="0">LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.action.BetList</numIndex>
                     <numIndex index="1">tx_t3sportsbet_actions_BetList</numIndex>
                   </numIndex>
                   <numIndex index="20" type="array">
-                    <numIndex index="0">LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.action.HighScore</numIndex>
+                    <numIndex index="0">LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.action.HighScore</numIndex>
                     <numIndex index="1">tx_t3sportsbet_actions_HighScore</numIndex>
                   </numIndex>
                 </items>
@@ -42,7 +42,7 @@
           <scope.betgame>
             <TCEforms>
               <exclude>1</exclude>
-              <label>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.betgame</label>
+              <label>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.betgame</label>
               <config>
                 <type>select</type>
                 <items>
@@ -61,12 +61,12 @@
           <scope.betset>
             <TCEforms>
               <exclude>1</exclude>
-              <label>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.betset</label>
+              <label>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.betset</label>
               <config>
                 <type>select</type>
                 <items>
                 	<numIndex index="0">
-                		<numIndex index="0">LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.betset.all</numIndex>
+                		<numIndex index="0">LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.betset.all</numIndex>
                 		<numIndex index="1">0</numIndex>
                 	</numIndex>
                 </items>
@@ -81,7 +81,7 @@
           <scope.betsetInput>
             <TCEforms>
               <exclude>1</exclude>
-              <label>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.betsetSelectionInput</label>
+              <label>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.betsetSelectionInput</label>
               <config>
                 <type>check</type>
               </config>
@@ -90,16 +90,16 @@
           <scope.betsetStatus>
             <TCEforms>
               <exclude>1</exclude>
-              <label>LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets.status</label>
+              <label>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status</label>
               <config>
                 <type>select</type>
                 <items type="array">
                   <numIndex index="0" type="array">
-                    <numIndex index="0">LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets.status.open</numIndex>
+                    <numIndex index="0">LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status.open</numIndex>
                     <numIndex index="1">1</numIndex>
                   </numIndex>
                   <numIndex index="1" type="array">
-                    <numIndex index="0">LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets.status.finished</numIndex>
+                    <numIndex index="0">LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status.finished</numIndex>
                     <numIndex index="1">2</numIndex>
                   </numIndex>
                 </items>
@@ -112,16 +112,16 @@
           <scope.defaultBetset>
             <TCEforms>
               <exclude>1</exclude>
-              <label>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.betset.default</label>
+              <label>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.betset.default</label>
               <config>
                 <type>select</type>
                 <items type="array">
                   <numIndex index="0" type="array">
-                    <numIndex index="0">LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.betset.default.first</numIndex>
+                    <numIndex index="0">LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.betset.default.first</numIndex>
                     <numIndex index="1">first</numIndex>
                   </numIndex>
                   <numIndex index="1" type="array">
-                    <numIndex index="0">LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.betset.default.last</numIndex>
+                    <numIndex index="0">LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.betset.default.last</numIndex>
                     <numIndex index="1">last</numIndex>
                   </numIndex>
                 </items>
@@ -134,7 +134,7 @@
           <scopeTemplate>
             <TCEforms>
               <exclude>1</exclude>
-              <label>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.template</label>
+              <label>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.template</label>
               <config>
                 <type>input</type>
                 <size>24</size>
@@ -158,7 +158,7 @@
     <!--sBETGAMELIST>
       <ROOT>
         <TCEforms>
-          <sheetTitle>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.action.GameList</sheetTitle>
+          <sheetTitle>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.action.GameList</sheetTitle>
         </TCEforms>
 
         <type>array</type>
@@ -166,7 +166,7 @@
           <betgamelist.betgames>
             <TCEforms>
               <exclude>1</exclude>
-              <label>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.betgame</label>
+              <label>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.betgame</label>
               <config>
                 <type>group</type>
                 <internal_type>db</internal_type>
@@ -183,7 +183,7 @@
     <sBETSETLIST>
       <ROOT>
         <TCEforms>
-          <sheetTitle>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.action.BetList</sheetTitle>
+          <sheetTitle>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.action.BetList</sheetTitle>
         </TCEforms>
 
         <type>array</type>
@@ -191,7 +191,7 @@
           <betlist.feuserFromRequestAllowed>
             <TCEforms>
               <exclude>1</exclude>
-              <label>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.betset.feuserFromRequestAllowed</label>
+              <label>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.betset.feuserFromRequestAllowed</label>
               <config>
                 <type>check</type>
               </config>
@@ -200,7 +200,7 @@
           <betlistTemplate>
             <TCEforms>
               <exclude>1</exclude>
-              <label>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.template</label>
+              <label>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.template</label>
               <config>
                 <type>input</type>
                 <size>24</size>
@@ -215,7 +215,7 @@
     <sHIGHSCORE>
       <ROOT>
         <TCEforms>
-          <sheetTitle>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.action.HighScore</sheetTitle>
+          <sheetTitle>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.action.HighScore</sheetTitle>
         </TCEforms>
 
         <type>array</type>
@@ -223,7 +223,7 @@
           <highscore.feuser.links.bets.pid>
             <TCEforms>
               <exclude>1</exclude>
-              <label>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.highscore.userbet_page</label>
+              <label>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.highscore.userbet_page</label>
               <config>
                 <type>group</type>
                 <internal_type>db</internal_type>
@@ -236,7 +236,7 @@
           <highscoreTemplate>
             <TCEforms>
               <exclude>1</exclude>
-              <label>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.template</label>
+              <label>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.template</label>
               <config>
                 <type>input</type>
                 <size>24</size>
@@ -251,14 +251,14 @@
 		<s_tssetup>
 			<ROOT>
 				<TCEforms>
-					<sheetTitle>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.tab.tssetup</sheetTitle>
+					<sheetTitle>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.tab.tssetup</sheetTitle>
 				</TCEforms>
 				<type>array</type>
 				<el>
 					<flexformTS>
 						<TCEforms>
 							<exclude>1</exclude>
-							<label>LLL:EXT:t3sportsbet/locallang_db.xml:plugin.t3sportsbet.flexform.tssetup</label>
+							<label>LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.tssetup</label>
 							<config>
 								<type>text</type>
 								<cols>80</cols>

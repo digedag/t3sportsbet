@@ -5,7 +5,7 @@ $sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Lan
 
 $tx_t3sportsbet_betsets = Array (
     'ctrl' => Array (
-        'title' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets',
+        'title' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets',
         'label' => 'uid',
         // If label_alt is used, the flexform fails for some reasons... huh??
     //		'label_alt' => 'uid',
@@ -36,7 +36,7 @@ $tx_t3sportsbet_betsets = Array (
             ),
         'betgame' => Array (
             'exclude' => 0,
-            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betgames',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames',
             'config' => Array (
                 'type' => 'select',
                 'items' => Array (
@@ -51,7 +51,7 @@ $tx_t3sportsbet_betsets = Array (
             ),
         'round' => Array (
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets.round',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.round',
             'config' => Array (
                 'type' => 'input',
                 'size' => '4',
@@ -66,7 +66,7 @@ $tx_t3sportsbet_betsets = Array (
             ),
         'round_name' => Array (
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets.round_name',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.round_name',
             'config' => Array (
                 'type' => 'input',
                 'size' => '30',
@@ -76,20 +76,20 @@ $tx_t3sportsbet_betsets = Array (
             ),
         'status' => Array (
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets.status',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status',
             'config' => Array (
                 'type' => 'select',
                 'items' => Array(
-                    Array('LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets.status.prepare',0),
-                    Array('LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets.status.open',1),
-                    Array('LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets.status.finished',2),
+                    Array('LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status.prepare',0),
+                    Array('LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status.open',1),
+                    Array('LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status.finished',2),
                     ),
                 'default' => 0
                 )
             ),
         't3matches' => Array (
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betsets.t3matches',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.t3matches',
             'config' => Array (
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -107,7 +107,7 @@ $tx_t3sportsbet_betsets = Array (
             ),
         'teamquestions' => Array (
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_teamquestions',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions',
             'config' => Array (
                 'type' => 'inline',
                 'foreign_table' => 'tx_t3sportsbet_teamquestions',
@@ -124,7 +124,7 @@ $tx_t3sportsbet_betsets = Array (
             ),
         'comment' => Array (
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/locallang_db.xml:tx_t3sportsbet_betgames_comment',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames_comment',
             'config' => Array (
                 'type' => 'text',
                 'cols' => '30',

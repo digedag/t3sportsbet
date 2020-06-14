@@ -25,9 +25,9 @@
 		"typo3-ter/t3sportsbet" : "self.version"
 	},
 	"require" : {
-		"typo3/cms-core": "^7.6 || ^8.7 || ^9.5",
-		"digedag/cfc-league" : "^1.4.0",
-		"digedag/rn-base" : "^1.11"
+		"typo3/cms-core": "^7.6 || ^8.7 || ^9.5.17 || ^10.4.3",
+		"digedag/cfc-league" : "^1.5.0",
+		"digedag/rn-base" : "^1.12"
 	},
 	"autoload" : {
 		"classmap" : [

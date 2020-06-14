@@ -50,9 +50,3 @@ tx_rnbase_util_Extensions::addService($_EXTKEY,  't3sportsbet' /* sv type */,  '
   ]
 );
 
-// always load service registry
-tx_rnbase::load('tx_t3sportsbet_util_serviceRegistry');
-
-if (TYPO3_MODE == 'BE') {
-    tx_rnbase_util_Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sportsbet/Configuration/TSconfig/pageTSconfig.txt">');
-}

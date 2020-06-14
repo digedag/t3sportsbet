@@ -1,7 +1,8 @@
 
-Tippspiel
+# Tippspiel
 
-Neues Tippspiel anlegen:
+## Neues Tippspiel anlegen:
+
 - Name
 - Typ -> Flexibel/statisch -> bei Statisch wird ein bestimmter Wettbewerb getippt (alle Spiel)
 
@@ -9,7 +10,7 @@ Bei einem statischen Wettbewerb ist das Tipset identisch mit den Spielrunden. Be
 liegt das Tipset in der Hand des Admins. Er muss Spiele auswählen, die in einem begrenzten Zeitraum liegen.
 
 
-UseCases FE
+## UseCases FE
 
 Anzeige aller noch zu tippenden Spiele
 Anzeige aller getippten Spiele
@@ -24,6 +25,7 @@ Wenn die Ausgabe rundenweise erfolgt, dann müssen wir immer nach Tipprunden suc
 
 
 Spiel hat drei Zustände:
+
 1. Spiel ist offen (kann getippt werden)
-2. Spiel ist geschlossen (kann nicht mehr getippt werden, ist aber noch nicht ausgewertet)
-3. Spiel ist gewertet
+1. Spiel ist geschlossen (kann nicht mehr getippt werden, ist aber noch nicht ausgewertet)
+1. Spiel ist gewertet

@@ -194,7 +194,7 @@ class tx_t3sportsbet_mod1_matchsearcher
         ];
 
         global $LANG;
-        $LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
+        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
 
         /* @var $tables \Tx_Rnbase_Backend_Utility_Tables */
         $tables = \tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');

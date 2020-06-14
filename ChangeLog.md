@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+v1.0.0 (??.06.2020)
+ * Support for TYPO3 9.5 and 10.4
+ * custom CSS removed
+ * Static TS for plugin moved to resource folder
+
 v0.6.0 (11.06.2019)
  * Support for TYPO3 7.6 and 8.7
 
