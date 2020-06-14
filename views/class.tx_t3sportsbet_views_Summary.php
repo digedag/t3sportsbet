@@ -23,21 +23,21 @@
  ***************************************************************/
 
 /**
- * Viewklasse für die Darstellung von Nutzerinformationen aus der DB
+ * Viewklasse für die Darstellung von Nutzerinformationen aus der DB.
  */
 class tx_t3sportsbet_views_Summary extends tx_rnbase_view_Base
 {
     /**
-     *
      * @param string $template
      * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
      * @param tx_rnbase_util_FormatUtil $formatter
+     *
      * @return string
      */
     protected function createOutput($template, Sys25\RnBase\Frontend\Request\RequestInterface $request, $formatter)
     {
         // Wir holen die Daten von der Action ab
-        $data = & $request->getViewContext()->offsetGet('data');
+        $data = &$request->getViewContext()->offsetGet('data');
         $out = $data;
 
         return $out;

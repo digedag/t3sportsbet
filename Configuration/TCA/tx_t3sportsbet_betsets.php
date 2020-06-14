@@ -1,5 +1,8 @@
 <?php
-if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
+
+if (!defined('TYPO3_MODE')) {
+    die('Access denied.');
+}
 
 $tx_t3sportsbet_betsets = [
     'ctrl' => [
@@ -20,7 +23,7 @@ $tx_t3sportsbet_betsets = [
         'iconfile' => 'EXT:t3sportsbet/icon_table.gif',
     ],
     'interface' => [
-        'showRecordFieldList' => 'hidden,betgame, round, round_name, status'
+        'showRecordFieldList' => 'hidden,betgame, round, round_name, status',
     ],
     'feInterface' => [
         'fe_admin_fieldList' => '',
@@ -31,8 +34,8 @@ $tx_t3sportsbet_betsets = [
             'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
             'config' => [
                 'type' => 'check',
-                'default' => '0'
-            ]
+                'default' => '0',
+            ],
         ],
         'betgame' => [
             'exclude' => 0,
@@ -48,22 +51,22 @@ $tx_t3sportsbet_betsets = [
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
-            ]
+            ],
         ],
-        'round' => Array (
+        'round' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.round',
-            'config' => Array (
+            'config' => array(
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'required,int',
                 'range' => [
                     'upper' => '1000',
-                    'lower' => '1'
+                    'lower' => '1',
                 ],
-                'default' => 1
-            )
+                'default' => 1,
+            ),
         ),
         'round_name' => [
             'exclude' => 1,
@@ -73,7 +76,7 @@ $tx_t3sportsbet_betsets = [
                 'size' => '30',
                 'max' => '100',
                 'eval' => 'required,trim',
-            ]
+            ],
         ],
         'status' => [
             'exclude' => 1,
@@ -82,12 +85,12 @@ $tx_t3sportsbet_betsets = [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status.prepare',0],
-                    ['LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status.open',1],
-                    ['LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status.finished',2],
+                    ['LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status.prepare', 0],
+                    ['LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status.open', 1],
+                    ['LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.status.finished', 2],
                 ],
-                'default' => 0
-            ]
+                'default' => 0,
+            ],
         ],
         't3matches' => [
             'exclude' => 1,
@@ -105,7 +108,7 @@ $tx_t3sportsbet_betsets = [
                 'MM_match_fields' => [
                     'tablenames' => 'tx_cfcleague_games',
                 ],
-            ]
+            ],
         ],
         'teamquestions' => [
             'exclude' => 1,
@@ -122,7 +125,7 @@ $tx_t3sportsbet_betsets = [
                     'collapseAll' => '1',
                     'expandSingle' => '1',
                 ],
-            ]
+            ],
         ],
         'comment' => [
             'exclude' => 1,
@@ -132,15 +135,15 @@ $tx_t3sportsbet_betsets = [
                 'cols' => '30',
                 'rows' => '5',
                 'eval' => 'trim',
-            ]
+            ],
         ],
     ],
     'types' => [
-        '0' => ['showitem' => 'hidden;;1;;1-1-1, betgame, round, round_name, status, comment, t3matches, teamquestions']
+        '0' => ['showitem' => 'hidden;;1;;1-1-1, betgame, round, round_name, status, comment, t3matches, teamquestions'],
     ],
     'palettes' => [
-        '1' => ['showitem' => '']
-    ]
+        '1' => ['showitem' => ''],
+    ],
 ];
 
 if (tx_rnbase_util_Extensions::isLoaded('static_info_tables')) {

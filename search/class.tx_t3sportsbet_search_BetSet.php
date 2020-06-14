@@ -27,13 +27,12 @@ define('MATCHSRV_FIELD_MATCH_ROUND', 'MATCH.ROUND');
 define('MATCHSRV_FIELD_MATCH_DATE', 'MATCH.DATE');
 
 /**
- * Class to search betsets from database
+ * Class to search betsets from database.
  *
  * @author Rene Nitzsche
  */
 class tx_t3sportsbet_search_BetSet extends tx_rnbase_util_SearchBase
 {
-
     protected function getTableMappings()
     {
         $tableMapping = [];
@@ -41,6 +40,7 @@ class tx_t3sportsbet_search_BetSet extends tx_rnbase_util_SearchBase
         $tableMapping['BETGAME'] = 'tx_t3sportsbet_betgames';
         $tableMapping['BETSETMM'] = 'tx_t3sportsbet_betsets_mm';
         $tableMapping['MATCH'] = 'tx_cfcleague_games';
+
         return $tableMapping;
     }
 
@@ -49,7 +49,7 @@ class tx_t3sportsbet_search_BetSet extends tx_rnbase_util_SearchBase
         return 'tx_t3sportsbet_betsets';
     }
 
-    function getWrapperClass()
+    public function getWrapperClass()
     {
         return 'tx_t3sportsbet_models_betset';
     }
@@ -66,6 +66,7 @@ class tx_t3sportsbet_search_BetSet extends tx_rnbase_util_SearchBase
         if (isset($tableAliases['MATCH'])) {
             $join .= ' INNER JOIN tx_cfcleague_games ON tx_cfcleague_games.uid = tx_t3sportsbet_betsets_mm.uid_foreign ';
         }
+
         return $join;
     }
 }

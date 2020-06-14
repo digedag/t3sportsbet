@@ -25,9 +25,7 @@ tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 
 class tx_t3sportsbet_mod1_handler_MatchMove
 {
-
     /**
-     *
      * @return tx_t3sportsbet_mod1_handler_MatchMove
      */
     public static function getInstance()
@@ -36,7 +34,6 @@ class tx_t3sportsbet_mod1_handler_MatchMove
     }
 
     /**
-     *
      * @param tx_rnbase_mod_IModule $mod
      */
     public function handleRequest($mod)
@@ -57,14 +54,14 @@ class tx_t3sportsbet_mod1_handler_MatchMove
     }
 
     /**
-     *
      * @param int $betset
      * @param tx_rnbase_mod_IModule $mod
      */
     private function handlePaste($newBetsetUid, $mod)
     {
         $currentToken = $this->getCurrentMatch($mod);
-        list ($oldBetsetUid, $matchUid) = \Tx_Rnbase_Utility_Strings::intExplode('_', $currentToken);
+        list($oldBetsetUid, $matchUid) = \Tx_Rnbase_Utility_Strings::intExplode('_', $currentToken);
+
         try {
             tx_t3sportsbet_util_serviceRegistry::getBetService()->moveMatch($newBetsetUid, $oldBetsetUid, $matchUid);
         } catch (Exception $e) {
@@ -72,11 +69,11 @@ class tx_t3sportsbet_mod1_handler_MatchMove
         }
         // Reset cutted matches
         $this->handleCut(0, $mod);
+
         return $mod->getDoc()->section('###LABEL_MSG_MATCHMOVED###', '', 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
     }
 
     /**
-     *
      * @param tx_rnbase_mod_IModule $mod
      */
     private function handleCut($matchToken, $mod)
@@ -85,7 +82,7 @@ class tx_t3sportsbet_mod1_handler_MatchMove
         $key = 'doCutMatch';
         $changed = [$key => $matchToken];
         \Tx_Rnbase_Backend_Utility::getModuleData([
-            $key => ''
+            $key => '',
         ], $changed, $mod->getName());
     }
 
@@ -93,13 +90,13 @@ class tx_t3sportsbet_mod1_handler_MatchMove
     {
         $key = 'doCutMatch';
         $arr = \Tx_Rnbase_Backend_Utility::getModuleData(array(
-            $key => ''
+            $key => '',
         ), array(), $mod->getName());
+
         return $arr[$key];
     }
 
     /**
-     *
      * @param \tx_cfcleaguefe_models_match $item
      * @param \tx_rnbase_mod_IModule $mod
      */
@@ -107,21 +104,20 @@ class tx_t3sportsbet_mod1_handler_MatchMove
     {
         $currentMatch = $this->getCurrentMatch($mod);
         $options = [];
-        $key = $betset->getUid() . '_' . $item->getUid();
+        $key = $betset->getUid().'_'.$item->getUid();
         if ($currentMatch != $key) {
             $options['icon'] = 'actions-edit-cut';
             $ret .= $mod->getFormTool()->createSubmit('doCutMatch', $key, '', $options);
         } else {
             $label = '';
             $options['icon'] = 'actions-edit-cut-release';
-            $ret .= $mod->getFormTool()->createModuleLink(['doReleaseMatch'=>'true'], $mod->getPid(), $label, $options);
+            $ret .= $mod->getFormTool()->createModuleLink(['doReleaseMatch' => 'true'], $mod->getPid(), $label, $options);
         }
 
         return $ret;
     }
 
     /**
-     *
      * @param tx_t3sportsbet_models_betset $item
      * @param tx_rnbase_mod_IModule $mod
      */
@@ -129,9 +125,10 @@ class tx_t3sportsbet_mod1_handler_MatchMove
     {
         $ret = '';
         $currentToken = $this->getCurrentMatch($mod);
-        if (! $currentToken)
+        if (!$currentToken) {
             return $ret;
-        list ($currentBetsetUid, $currentMatchUid) = \Tx_Rnbase_Utility_Strings::intExplode('_', $currentToken);
+        }
+        list($currentBetsetUid, $currentMatchUid) = \Tx_Rnbase_Utility_Strings::intExplode('_', $currentToken);
 
         $uids = tx_t3sportsbet_util_serviceRegistry::getBetService()->findMatchUidsByBetSet($item);
         if (in_array($currentMatchUid, $uids)) {
@@ -139,14 +136,15 @@ class tx_t3sportsbet_mod1_handler_MatchMove
         }
 
         $match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $currentMatchUid);
-        $matchInfo = $match->getHome()->getName() . '-' . $match->getGuest()->getName();
+        $matchInfo = $match->getHome()->getName().'-'.$match->getGuest()->getName();
         $matchInfo = sprintf($GLOBALS['LANG']->getLL('label_paste_match'), $matchInfo);
         $options = array();
         $options['confirm'] = $GLOBALS['LANG']->getLL('label_msg_paste_match');
         $options['hover'] = $matchInfo;
         $label = '<span class="t3-icon t3-icon-actions t3-icon-actions-document t3-icon-document-paste-after"></span>';
-        $label .= $matchInfo . '<br />';
-        $ret .= $mod->getFormTool()->createLink('&doPasteMatch=' . $item->getUid(), $mod->getPid(), $label, $options);
+        $label .= $matchInfo.'<br />';
+        $ret .= $mod->getFormTool()->createLink('&doPasteMatch='.$item->getUid(), $mod->getPid(), $label, $options);
+
         return $ret;
     }
 }

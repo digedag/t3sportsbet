@@ -25,13 +25,11 @@ tx_rnbase::load('tx_t3users_util_FeUserMarker');
 tx_rnbase::load('tx_rnbase_util_Templates');
 
 /**
- * Diese Klasse ist für die Erstellung von Markerarrays für FE User verantwortlich
+ * Diese Klasse ist für die Erstellung von Markerarrays für FE User verantwortlich.
  */
 class tx_t3sportsbet_util_FeUserMarker extends tx_t3users_util_FeUserMarker
 {
-
     /**
-     *
      * @param string $template
      *            das HTML-Template
      * @param tx_t3users_models_feuser $feuser
@@ -43,7 +41,8 @@ class tx_t3sportsbet_util_FeUserMarker extends tx_t3users_util_FeUserMarker
      * @param $marker Name
      *            des Markers für ein Object, z.B. FEUSER
      *            Von diesem String hängen die entsprechenden weiteren Marker ab: ###FEUSER_NAME###
-     * @return String das geparste Template
+     *
+     * @return string das geparste Template
      */
     public function parseTemplate($template, &$feuser, &$formatter, $confId, $marker = 'FEUSER')
     {
@@ -54,11 +53,12 @@ class tx_t3sportsbet_util_FeUserMarker extends tx_t3users_util_FeUserMarker
         $this->prepareLinks($feuser, $marker, $markerArray, $subpartArray, $wrappedSubpartArray, $confId, $formatter, $template);
 
         $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
+
         return $out;
     }
 
     /**
-     * Links vorbereiten
+     * Links vorbereiten.
      *
      * @param tx_t3users_models_feuser $profile
      * @param string $marker
@@ -70,7 +70,7 @@ class tx_t3sportsbet_util_FeUserMarker extends tx_t3users_util_FeUserMarker
     protected function prepareLinks($feuser, $marker, &$markerArray, &$subpartArray, &$wrappedSubpartArray, $confId, $formatter, $template)
     {
         $this->initLink($markerArray, $subpartArray, $wrappedSubpartArray, $formatter, $confId, 'bets', $marker, array(
-            'feuserId' => $feuser ? $feuser->getUid() : 0
+            'feuserId' => $feuser ? $feuser->getUid() : 0,
         ));
     }
 }

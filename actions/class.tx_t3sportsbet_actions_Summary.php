@@ -23,19 +23,15 @@
  ***************************************************************/
 tx_rnbase::load('tx_rnbase_action_BaseIOC');
 
-/**
- */
 class tx_t3sportsbet_actions_Summary extends \Sys25\RnBase\Frontend\Controller\AbstractAction
 {
-
     /**
-     *
      * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
+     *
      * @return string error msg or null
      */
     protected function handleRequest(\Sys25\RnBase\Frontend\Request\RequestInterface $request)
     {
-
         // Über die viewdata können wir Daten in den View transferieren
         $request->getViewContext()->offsetSet('data', 'test');
 

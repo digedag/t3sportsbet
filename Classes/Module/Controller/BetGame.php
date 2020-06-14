@@ -1,11 +1,12 @@
 <?php
+
 namespace Sys25\T3sportsbet\Module\Controller;
 
 use Sys25\T3sportsbet\Module\Utility\AddCompetitionWizard;
 
 /**
  * *************************************************************
- * Copyright notice
+ * Copyright notice.
  *
  * (c) 2008-2019 Rene Nitzsche (rene@system25.de)
  * All rights reserved
@@ -29,16 +30,15 @@ use Sys25\T3sportsbet\Module\Utility\AddCompetitionWizard;
  */
 
 /**
- * Die Klasse ist die Einstiegsklasse für das Modul "Tippspiel"
+ * Die Klasse ist die Einstiegsklasse für das Modul "Tippspiel".
  */
 class BetGame extends \tx_rnbase_mod_BaseModFunc
 {
-
     /** @var \Sys25\T3sportsbet\Module\Utility\Selector */
     private $selector;
 
     /**
-     * Method getFuncId
+     * Method getFuncId.
      *
      * @return string
      */
@@ -54,11 +54,11 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
     }
 
     /**
-     *
      * @param string $template
      * @param \tx_rnbase_configurations $configurations
      * @param \tx_rnbase_util_FormatUtil $formatter
      * @param \tx_rnbase_util_FormTool $formTool
+     *
      * @return string
      */
     protected function getContent($template, &$configurations, &$formatter, $formTool)
@@ -70,22 +70,24 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
         $selector = '';
         // Anzeige der vorhandenen Tipspiele
         $currentGame = $this->selector->showGameSelector($selector, $this->getModule()->getPid());
-        if (! $currentGame) {
+        if (!$currentGame) {
             $content .= $this->getModule()
                 ->getDoc()
                 ->section('Info:', $LANG->getLL('msg_no_game_in_page'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
-            $content .= '<p style="margin-top:5px; font-weight:bold;">' . $formTool->createNewLink('tx_t3sportsbet_betgames', $this->getModule()
-                ->getPid(), $LANG->getLL('msg_create_new_game')) . '</p>';
+            $content .= '<p style="margin-top:5px; font-weight:bold;">'.$formTool->createNewLink('tx_t3sportsbet_betgames', $this->getModule()
+                ->getPid(), $LANG->getLL('msg_create_new_game')).'</p>';
+
             return $content;
         }
         $content = '';
         $this->getModule()->selector = $selector;
 
         $currentRound = $this->selector->showRoundSelector($selector, $this->getModule()->getPid(), $currentGame);
-        if (! $currentRound) {
+        if (!$currentRound) {
             /* @var $wizard AddCompetitionWizard */
             $wizard = \tx_rnbase::makeInstance(AddCompetitionWizard::class);
             $content .= $wizard->handleRequest($this->getModule(), $currentGame);
+
             return $content;
         }
         $this->getModule()->selector = $selector;
@@ -99,7 +101,7 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
             '0' => $LANG->getLL('tab_control'),
             '1' => $LANG->getLL('tab_addmatches'),
             '2' => $LANG->getLL('tab_addteambets'),
-            '3' => $LANG->getLL('tab_bets')
+            '3' => $LANG->getLL('tab_bets'),
         ]);
 
         $content .= $menu['menu'];
@@ -113,15 +115,18 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
                     $handler = \tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\ShowBetSet::class, $this->getModule(), $currentRound, $currentGame);
                     $funcContent .= $handler->handleRequest();
                     $funcContent .= $handler->show();
+
                     break;
                 case 1:
                     $handler = \tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\AddMatches::class, $this->getModule(), $currentRound);
                     $funcContent .= $handler->show();
+
                     break;
                 case 2:
                     $handler = \tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\AddTeamBets::class, $this->getModule(), $currentRound);
                     $funcContent .= $handler->handleRequest();
                     $funcContent .= $handler->show();
+
                     break;
                 case 3:
                     $handler = \tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\ShowBets::class, $this->getModule(), $currentRound);
@@ -137,7 +142,7 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
             $msg .= '</pre>';
             \tx_rnbase::load('tx_rnbase_util_Logger');
             \tx_rnbase_util_Logger::warn('Exception in BE module.', 't3sportsbet', array(
-                'Exception' => $e->getMessage()
+                'Exception' => $e->getMessage(),
             ));
             $content .= $msg;
         }
@@ -149,23 +154,24 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
 
         $modContent = \tx_rnbase_util_Templates::getSubpart($template, '###MAIN###');
         $modContent = \tx_rnbase_util_Templates::substituteMarkerArrayCached($modContent, [
-            '###CONTENT###' => $content
+            '###CONTENT###' => $content,
         ]);
 
         return $modContent;
     }
 
     /**
-     * Shows some information about current betset
+     * Shows some information about current betset.
      *
      * @param \tx_t3sportsbet_models_betset $currBetSet
+     *
      * @return string
      */
     protected function showInfoBar($currBetSet)
     {
         $srv = \tx_t3sportsbet_util_serviceRegistry::getBetService();
         $dates = $srv->getBetsetDateRange($currBetSet);
-        if (! $dates) {
+        if (!$dates) {
             return '';
         }
         $matchCnt = count($currBetSet->getMatches());
@@ -175,33 +181,33 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
         $match = $dates['low'][1];
         $row[] = [
             '###LABEL_BETSETINFO_LOWDATE###',
-            strftime('%d. %b %y %H:%M', $date) . ' (' . $match->getHomeNameShort() . '-' . $match->getGuestNameShort() . ')'
+            strftime('%d. %b %y %H:%M', $date).' ('.$match->getHomeNameShort().'-'.$match->getGuestNameShort().')',
         ];
         $date = $dates['high'][0];
         $match = $dates['high'][1];
         $row[] = [
             '###LABEL_BETSETINFO_HIGHDATE###',
-            strftime('%d. %b %y %H:%M', $date) . ' (' . $match->getHomeNameShort() . '-' . $match->getGuestNameShort() . ')'
+            strftime('%d. %b %y %H:%M', $date).' ('.$match->getHomeNameShort().'-'.$match->getGuestNameShort().')',
         ];
         if ($dates['next']) {
             $date = $dates['next'][0];
             $match = $dates['next'][1];
             $row[] = [
                 '###LABEL_BETSETINFO_NEXTDATE###',
-                strftime('%d. %b %y %H:%M', $date) . ' (' . $match->getHomeNameShort() . '-' . $match->getGuestNameShort() . ')'
+                strftime('%d. %b %y %H:%M', $date).' ('.$match->getHomeNameShort().'-'.$match->getGuestNameShort().')',
             ];
         }
         $row[] = [
             '###LABEL_BETSETINFO_MATCHCOUNT###',
-            $matchCnt
+            $matchCnt,
         ];
         $row[] = [
             '###LABEL_BETSETINFO_USERCOUNT###',
-            $srv->getResultSize($currBetSet->uid)
+            $srv->getResultSize($currBetSet->uid),
         ];
         $row[] = [
             '###LABEL_BETSETINFO_BETCOUNT###',
-            $srv->getBetSize($currBetSet)
+            $srv->getBetSize($currBetSet),
         ];
         // $out .= $this->doc->table($row, $this->getTableLayout());
         /* @var $tables \Tx_Rnbase_Backend_Utility_Tables */
@@ -212,26 +218,26 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
     }
 
     /**
-     * Liefert das Layout für die Infotabelle
+     * Liefert das Layout für die Infotabelle.
      *
      * @return array
      */
-    private function getInfoTableLayout() {
+    private function getInfoTableLayout()
+    {
         $layout = [
             'table' => [
-                '<table class="table table-striped table-hover table-condensed">', '</table>'
+                '<table class="table table-striped table-hover table-condensed">', '</table>',
             ],
             '0' => [ // Format für 1. Zeile
-                'tr' => ['<thead><tr class="">','</tr></thead>'],
-                'defCol' => ['<th colspan="2">','</th>']  // Format für jede Spalte in der 1. Zeile
+                'tr' => ['<thead><tr class="">', '</tr></thead>'],
+                'defCol' => ['<th colspan="2">', '</th>'],  // Format für jede Spalte in der 1. Zeile
             ],
             'defRow' => [ // Formate für alle Zeilen
-                '0' => ['<th>','</th>'], // Format für 1. Spalte in jeder Zeile
-                'defCol' => ['<td>','</td>'] // Format für jede Spalte in jeder Zeile
+                '0' => ['<th>', '</th>'], // Format für 1. Spalte in jeder Zeile
+                'defCol' => ['<td>', '</td>'], // Format für jede Spalte in jeder Zeile
             ],
         ];
+
         return $layout;
     }
-
 }
-

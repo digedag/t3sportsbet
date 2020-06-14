@@ -28,61 +28,62 @@ tx_rnbase::load('tx_rnbase_model_base');
  */
 class tx_t3sportsbet_models_bet extends tx_rnbase_model_base
 {
-
-    function getTableName()
+    public function getTableName()
     {
         return 'tx_t3sportsbet_bets';
     }
 
     /**
-     * Returns the match
+     * Returns the match.
      *
      * @return tx_cfcleaguefe_models_match
      */
-    function getMatch()
+    public function getMatch()
     {
         tx_rnbase::load('tx_cfcleaguefe_models_match');
+
         return tx_cfcleaguefe_models_match::getMatchInstance($this->getProperty('t3match'));
     }
 
     /**
-     * Returns the betgame
+     * Returns the betgame.
      *
      * @return tx_t3sportsbet_models_betset
      */
-    function getBetSet()
+    public function getBetSet()
     {
         return tx_t3sportsbet_models_betset::getBetsetInstance($this->getProperty('betset'));
     }
 
     /**
-     * Goals home
-     * 
+     * Goals home.
+     *
      * @return int
      */
-    function getGoalsHome()
+    public function getGoalsHome()
     {
         return intval($this->getProperty('goals_home'));
     }
 
     /**
-     * Goals guest
-     * 
+     * Goals guest.
+     *
      * @return int
      */
-    function getGoalsGuest()
+    public function getGoalsGuest()
     {
         return intval($this->getProperty('goals_guest'));
     }
 
-    function getToto()
+    public function getToto()
     {
         $goalsHome = $this->getGoalsHome();
         $goalsGuest = $this->getGoalsGuest();
         $goalsDiff = $goalsHome - $goalsGuest;
-        if ($goalsDiff == 0) {
+        if (0 == $goalsDiff) {
             return 0;
         }
+
         return ($goalsDiff < 0) ? 2 : 1;
     }
 }

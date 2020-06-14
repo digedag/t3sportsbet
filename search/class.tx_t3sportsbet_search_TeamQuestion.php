@@ -23,18 +23,18 @@
 tx_rnbase::load('tx_rnbase_util_SearchBase');
 
 /**
- * Class to search team questions from database
+ * Class to search team questions from database.
  *
  * @author Rene Nitzsche
  */
 class tx_t3sportsbet_search_TeamQuestion extends tx_rnbase_util_SearchBase
 {
-
     protected function getTableMappings()
     {
         $tableMapping = [];
         $tableMapping['TEAMQUESTION'] = 'tx_t3sportsbet_teamquestions';
         $tableMapping['BETSET'] = 'tx_t3sportsbet_betsets';
+
         return $tableMapping;
     }
 
@@ -53,7 +53,7 @@ class tx_t3sportsbet_search_TeamQuestion extends tx_rnbase_util_SearchBase
         return 'TEAMQUESTION';
     }
 
-    function getWrapperClass()
+    public function getWrapperClass()
     {
         return 'tx_t3sportsbet_models_teamquestion';
     }
@@ -64,7 +64,7 @@ class tx_t3sportsbet_search_TeamQuestion extends tx_rnbase_util_SearchBase
         if (isset($tableAliases['BETSET'])) {
             $join .= ' JOIN tx_t3sportsbet_betsets AS BETSET ON BETSET.uid = TEAMQUESTION.betset ';
         }
+
         return $join;
     }
 }
-

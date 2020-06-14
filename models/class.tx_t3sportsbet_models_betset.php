@@ -29,7 +29,6 @@ tx_rnbase::load('tx_t3sportsbet_models_betgame');
  */
 class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
 {
-
     private static $instances = array();
 
     public function getTableName()
@@ -38,7 +37,7 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
     }
 
     /**
-     * Returns the betgame
+     * Returns the betgame.
      *
      * @return tx_t3sportsbet_models_betgame
      */
@@ -52,30 +51,32 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
      * This can be OPEN, CLOSED or FINISHED
      * OPEN -> new bets are possible
      * CLOSED -> bets are not possible, but not analyzed
-     * FINISHED -> bets are analyzed
+     * FINISHED -> bets are analyzed.
      *
      * @param tx_cfcleaguefe_models_match $match
      */
-    function getMatchState($match)
+    public function getMatchState($match)
     {
         // Das Spiel ist finished, wenn es ausgewertet und in die Tipstatistik des Users
         // aufgenommen wurde -> Es hängt am User
         // TODO: Wir sollten das über den Tip des Users ermitteln
-        if ($this->isFinished() || $match->isFinished())
+        if ($this->isFinished() || $match->isFinished()) {
             return 'FINISHED';
+        }
         $state = 'OPEN';
         $now = tx_t3sportsbet_util_library::getNow();
         $lock = $this->getBetgame()->getLockMinutes() * 60;
-        
+
         $matchDate = $match->getProperty('date');
         if ($matchDate <= ($now + $lock) || $match->isRunning()) {
             $state = 'CLOSED';
         }
+
         return $state;
     }
 
     /**
-     * Returns all matches of this bet set
+     * Returns all matches of this bet set.
      *
      * @return array of tx_cfcleaguefe_models_match
      */
@@ -84,11 +85,12 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
         $service = tx_cfcleaguefe_util_ServiceRegistry::getMatchService();
         $fields['BETSETMM.UID_LOCAL'][OP_EQ_INT] = $this->getUid();
         $options['orderby']['BETSETMM.SORTING'] = 'asc';
+
         return $service->search($fields, $options);
     }
 
     /**
-     * Returns the bet for a match
+     * Returns the bet for a match.
      *
      * @param tx_cfcleaguefe_models_match $match
      * @param tx_t3users_models_feuser $feuser
@@ -96,16 +98,18 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
     public function getBet($match, $feuser)
     {
         $service = tx_t3sportsbet_util_serviceRegistry::getBetService();
+
         return $service->getBet($this, $match, $feuser);
     }
 
     /**
-     * Returns the number of bets for a match in this betset
+     * Returns the number of bets for a match in this betset.
      *
      * @param tx_cfcleaguefe_models_match $match
+     *
      * @return int
      */
-    function getBetCount($match)
+    public function getBetCount($match)
     {
         $service = tx_t3sportsbet_util_serviceRegistry::getBetService();
         $fields['BET.BETSET'][OP_EQ_INT] = $this->getUid();
@@ -113,7 +117,6 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
         $options['count'] = 1;
         // $options['debug'] = 1;
         return $service->searchBet($fields, $options);
-        ;
     }
 
     public function getName()
@@ -122,16 +125,16 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
     }
 
     /**
-     * Whether or not bets can be made to this betset
+     * Whether or not bets can be made to this betset.
      *
-     * @return boolean
+     * @return bool
      */
-    function isFinished()
+    public function isFinished()
     {
-        return $this->getProperty('status') == 2;
+        return 2 == $this->getProperty('status');
     }
 
-    function getStatus()
+    public function getStatus()
     {
         return $this->getProperty('status');
     }
@@ -142,16 +145,19 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
      * bei zwei Anfragen für die selbe UID nur ein DB Zugriff erfolgt.
      *
      * @param int $uid
+     *
      * @return tx_t3sportsbet_models_betset
      */
     public static function getBetsetInstance($uid)
     {
         $uid = intval($uid);
-        if (! uid)
+        if (!uid) {
             throw new Exception('Invalid uid for betset');
-        if (! is_object(self::$instances[$uid])) {
-            self::$instances[$uid] = new tx_t3sportsbet_models_betset($uid);
         }
+        if (!is_object(self::$instances[$uid])) {
+            self::$instances[$uid] = new self($uid);
+        }
+
         return self::$instances[$uid];
     }
 }

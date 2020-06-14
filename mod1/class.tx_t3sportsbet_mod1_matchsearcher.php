@@ -25,11 +25,10 @@
 
 /**
  * Search matches from competitions
- * We to it by showing to select boxes: one for competition and the other for round
+ * We to it by showing to select boxes: one for competition and the other for round.
  */
 class tx_t3sportsbet_mod1_matchsearcher
 {
-
     private $mod;
 
     private $data;
@@ -41,6 +40,7 @@ class tx_t3sportsbet_mod1_matchsearcher
 
     /** @var int */
     private $current_round;
+
     /** @var \tx_t3sportsbet_models_betset */
     private $currentRound;
 
@@ -58,7 +58,6 @@ class tx_t3sportsbet_mod1_matchsearcher
     }
 
     /**
-     *
      * @param \tx_rnbase_mod_IModule $mod
      * @param array $options
      */
@@ -77,20 +76,22 @@ class tx_t3sportsbet_mod1_matchsearcher
         $this->selector->init($this->getModule()
             ->getDoc(), $this->getModule());
         // $this->selector->init($mod->doc, $mod->MCONF['name']);
-        if (! isset($options['nopersist']))
+        if (!isset($options['nopersist'])) {
             $this->SEARCH_SETTINGS = \Tx_Rnbase_Backend_Utility::getModuleData([
-                'searchterm' => ''
+                'searchterm' => '',
             ], $this->data, $this->mod->getName());
-        else
+        } else {
             $this->SEARCH_SETTINGS = $this->data;
+        }
     }
 
     /**
      * Liefert das Suchformular.
-     * Hier die beiden Selectboxen anzeigen
+     * Hier die beiden Selectboxen anzeigen.
      *
      * @param string $label
      *            Alternatives Label
+     *
      * @return string
      */
     public function getSearchForm($label = '')
@@ -99,28 +100,31 @@ class tx_t3sportsbet_mod1_matchsearcher
         $out = '';
         // Wir zeigen zwei Selectboxen an
         $this->currComp = $this->selector->showLeagueSelector($out, $this->mod->id, $this->competitions);
-        if (! $this->currComp) {
-            return $out . $this->mod->getDoc()->section('Info:', $LANG->getLL('msg_no_competition_in_betgame'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+        if (!$this->currComp) {
+            return $out.$this->mod->getDoc()->section('Info:', $LANG->getLL('msg_no_competition_in_betgame'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
         }
         // $out.=$this->mod->doc->spacer(5);
 
         $rounds = $this->currComp->getRounds();
-        if (! count($rounds)) {
+        if (!count($rounds)) {
             $out .= $LANG->getLL('msg_no_round_in_competition');
+
             return $out;
         }
         // Jetzt den Spieltag wählen lassen
         $this->current_round = $this->selector->showRoundSelector($out, $this->mod->id, $this->currComp);
 
         $out .= '<div style="clear:both" />';
+
         return $out;
     }
 
     public function getResultList()
     {
         $content = '';
-        if (! is_object($this->currComp))
+        if (!is_object($this->currComp)) {
             return '';
+        }
 
         // Mit Matchtable nach Spielen suchen
         $matchTable = $this->getMatchTable();
@@ -135,7 +139,7 @@ class tx_t3sportsbet_mod1_matchsearcher
         $service = tx_cfcleaguefe_util_ServiceRegistry::getMatchService();
         $matches = $service->search($fields, $options);
         $this->resultSize = count($matches);
-        $label = $this->resultSize . ' ' . (($this->resultSize == 1) ? $GLOBALS['LANG']->getLL('msg_found_match') : $GLOBALS['LANG']->getLL('msg_found_matches'));
+        $label = $this->resultSize.' '.((1 == $this->resultSize) ? $GLOBALS['LANG']->getLL('msg_found_match') : $GLOBALS['LANG']->getLL('msg_found_matches'));
         $this->showMatches($content, $label, $matches);
 
         return $content;
@@ -155,8 +159,9 @@ class tx_t3sportsbet_mod1_matchsearcher
     public function showMatches(&$content, $headline, &$matches)
     {
         if (empty($matches)) {
-            $out = '<p><strong>' . $GLOBALS['LANG']->getLL('msg_no_matches_in_betset') . '</strong></p><br/>';
-            $content .= $this->mod->getDoc()->section($headline . ':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_FATAL);
+            $out = '<p><strong>'.$GLOBALS['LANG']->getLL('msg_no_matches_in_betset').'</strong></p><br/>';
+            $content .= $this->mod->getDoc()->section($headline.':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_FATAL);
+
             return;
         }
 
@@ -165,32 +170,32 @@ class tx_t3sportsbet_mod1_matchsearcher
         $columns = [
             'uid' => [
                 'title' => 'label_uid',
-                'decorator' => $decor
+                'decorator' => $decor,
             ],
             'date' => [
                 'title' => 'tx_cfcleague_games.date',
-                'decorator' => $decor
+                'decorator' => $decor,
             ],
             'home' => [
                 'title' => 'tx_cfcleague_games.home',
-                'method' => 'getHomeNameShort'
+                'method' => 'getHomeNameShort',
             ],
             'guest' => [
                 'title' => 'tx_cfcleague_games.guest',
-                'method' => 'getGuestNameShort'
+                'method' => 'getGuestNameShort',
             ],
             'competition' => [
                 'title' => 'label_group',
-                'decorator' => $decor
+                'decorator' => $decor,
             ],
             'status' => [
                 'title' => 'tx_cfcleague_games.status',
-                'method' => 'getStateName'
+                'method' => 'getStateName',
             ],
             'result' => [
                 'method' => 'getResult',
-                'title' => 'label_result'
-            ]
+                'title' => 'label_result',
+            ],
         ];
 
         global $LANG;
@@ -205,7 +210,7 @@ class tx_t3sportsbet_mod1_matchsearcher
     }
 
     /**
-     * Returns an instance of tx_cfcleaguefe_util_MatchTable
+     * Returns an instance of tx_cfcleaguefe_util_MatchTable.
      *
      * @return tx_cfcleaguefe_util_MatchTable
      */
@@ -214,4 +219,3 @@ class tx_t3sportsbet_mod1_matchsearcher
         return tx_rnbase::makeInstance('tx_cfcleaguefe_util_MatchTable');
     }
 }
-

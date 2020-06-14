@@ -24,18 +24,17 @@
  ***************************************************************/
 
 /**
- * Hook-Klasse
+ * Hook-Klasse.
  */
 class tx_t3sportsbet_hooks_tce
 {
-
     /**
      * Dieser Hook wird vor der Darstellung eines TCE-Formulars aufgerufen.
      * Werte aus der Datenbank können vor deren Darstellung manipuliert werden.
      */
     public function getMainFields_preProcess($table, &$row, $tceform)
     {
-        if ($table == 'tx_t3sportsbet_betsets') {
+        if ('tx_t3sportsbet_betsets' == $table) {
             $betgame = intval(Tx_Rnbase_Utility_T3General::_GP('betgame'));
             if ($betgame) {
                 $row['betgame'] = $betgame;
@@ -45,7 +44,7 @@ class tx_t3sportsbet_hooks_tce
                 $row['round'] = $round;
             }
         }
-        if ($table == 'tx_t3sportsbet_teamquestions') {
+        if ('tx_t3sportsbet_teamquestions' == $table) {
             tx_rnbase::load('tx_rnbase_util_Dates');
             $row['openuntil'] = $row['openuntil'] ? tx_rnbase_util_Dates::datetime_mysql2tstamp($row['openuntil']) : time();
         }
@@ -68,7 +67,7 @@ class tx_t3sportsbet_hooks_tce
      */
     public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$tce)
     {
-        if ($table == 'tx_t3sportsbet_teamquestions') {
+        if ('tx_t3sportsbet_teamquestions' == $table) {
             if (array_key_exists('openuntil', $fieldArray)) {
                 tx_rnbase::load('tx_rnbase_util_Dates');
                 $fieldArray['openuntil'] = tx_rnbase_util_Dates::datetime_tstamp2mysql($fieldArray['openuntil']);

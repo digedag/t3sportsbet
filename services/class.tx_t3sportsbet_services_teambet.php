@@ -24,16 +24,15 @@
 tx_rnbase::load('tx_t3sportsbet_util_library');
 
 /**
- *
  * @author Rene Nitzsche
  */
 class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
 {
-
     /**
-     * Analyze teambets of a betgame
+     * Analyze teambets of a betgame.
      *
      * @param tx_t3sportsbet_models_betgame $betGame
+     *
      * @return int number of finished bets
      */
     public function analyzeBets($betGame)
@@ -46,40 +45,43 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
         $fields['TEAMQUESTION.TEAM'][OP_GT_INT] = 0; // Team ist gesetzt
 
         // $options['debug'] = 1;
-                                                     // This could be memory consuming...
+        // This could be memory consuming...
         $bets = $this->searchTeamBet($fields, $options);
         // Für jeden Tip die TeamQuestion holen. Danach die Teams vergleichen
         $ret = 0;
-        for ($i = 0, $cnt = count($bets); $i < $cnt; $i ++) {
+        for ($i = 0, $cnt = count($bets); $i < $cnt; ++$i ) {
             $bet = $bets[$i];
             $question = $this->loadTeamQuestion($bet->getTeamQuestionUid());
             $values = [];
             $values['finished'] = 1;
             $values['points'] = $question->isWinningBet($bet) ? $bet->getProperty('possiblepoints') : 0;
-            $where = 'uid=' . $bet->uid;
+            $where = 'uid='.$bet->uid;
             Tx_Rnbase_Database_Connection::getInstance()->doUpdate('tx_t3sportsbet_teambets', $where, $values, 0);
-            $ret ++;
+            ++$ret;
         }
+
         return $ret;
     }
 
     /**
-     * Reset all bets for team questions
+     * Reset all bets for team questions.
      *
      * @param mixed $teamQuestionUids
      *            commaseparated uids of team questions
+     *
      * @return int number of bets
      */
     public function resetTeamBets($teamQuestionUids)
     {
         $teamQuestionUids = implode(',', Tx_Rnbase_Utility_Strings::intExplode(',', $teamQuestionUids));
-        if (! $teamQuestionUids) {
+        if (!$teamQuestionUids) {
             return;
         }
         $values = [];
         $values['finished'] = 0;
         $values['points'] = 0;
-        $where = 'question IN (' . $teamQuestionUids . ')';
+        $where = 'question IN ('.$teamQuestionUids.')';
+
         return Tx_Rnbase_Database_Connection::getInstance()->doUpdate('tx_t3sportsbet_teambets', $where, $values, 0);
     }
 
@@ -88,24 +90,27 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
      * This access is cached.
      *
      * @param int $uid
+     *
      * @return tx_t3sportsbet_models_teamquestion
      */
     public function loadTeamQuestion($uid)
     {
         tx_rnbase::load('tx_rnbase_cache_Manager');
         $cache = tx_rnbase_cache_Manager::getCache('t3sports');
-        $question = $cache->get('t3sbet_tq_' . $uid);
-        if (! $question) {
+        $question = $cache->get('t3sbet_tq_'.$uid);
+        if (!$question) {
             $question = tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', $uid);
-            $cache->set('t3sbet_tq_' . $uid, $question);
+            $cache->set('t3sbet_tq_'.$uid, $question);
         }
+
         return $question;
     }
 
     /**
-     * Returns the number of bets for a teamquestion
+     * Returns the number of bets for a teamquestion.
      *
      * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+     *
      * @return int
      */
     public function getBetCount($teamQuestion)
@@ -113,8 +118,8 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
         $fields = $options = [];
         $fields['TEAMBET.QUESTION'][OP_EQ_INT] = $teamQuestion->getUid();
         $options['count'] = 1;
+
         return $this->searchTeamBet($fields, $options);
-        ;
     }
 
     /**
@@ -124,6 +129,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
      *
      * @param tx_t3sportsbet_models_teamquestion $teamQuestion
      * @param tx_t3users_models_feuser $feuser
+     *
      * @return tx_t3sportsbet_models_teambet
      */
     public function getTeamBet($teamQuestion, $feuser)
@@ -139,7 +145,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
         }
 
         $bet = count($ret) ? $ret[0] : null;
-        if (! $bet) {
+        if (!$bet) {
             // No bet in database found. Create dummy instance
             $bet = tx_rnbase::makeInstance('tx_t3sportsbet_models_teambet', array(
                 'uid' => 0,
@@ -147,6 +153,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
                 'fe_user' => $feuser ? $feuser->getUid() : 0,
             ));
         }
+
         return $bet;
     }
 
@@ -161,19 +168,21 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
         $state = 'CLOSED';
         if ($feuser) {
             $state = $teamQuestion->isOpen() ? 'OPEN' : $state;
-            if ($state == 'OPEN') {
+            if ('OPEN' == $state) {
                 // Prüfen, ob der aktuelle User seinen eigenen Tip bearbeiten will
                 tx_rnbase::load('tx_t3users_models_feuser');
                 $currUser = tx_t3users_models_feuser::getCurrent();
-                if (! ($currUser && $currUser->getUid() == $feuser->getUid()))
+                if (!($currUser && $currUser->getUid() == $feuser->getUid())) {
                     $state = 'CLOSED';
+                }
             }
         }
+
         return $state;
     }
 
     /**
-     * Load all possible teams for a given teamquestion
+     * Load all possible teams for a given teamquestion.
      *
      * @param tx_t3sportsbet_models_teamquestion $teamQuestion
      */
@@ -186,11 +195,12 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
 
         $options = array();
         $options['orderby']['TEAMQUESTIONMM.SORTING'] = 'asc';
+
         return $srv->searchTeams($fields, $options);
     }
 
     /**
-     * Load all teams for a given betgame
+     * Load all teams for a given betgame.
      *
      * @param tx_t3sportsbet_models_betgame $betgame
      */
@@ -204,13 +214,15 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
         $options['distinct'] = 1;
         $options['orderby']['TEAM.NAME'] = 'asc';
         $srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+
         return $srv->searchTeams($fields, $options);
     }
 
     /**
-     * Returns the bet trend for a single teambet
+     * Returns the bet trend for a single teambet.
      *
      * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+     *
      * @return array
      */
     public function getBetTrend($teamQuestion)
@@ -228,9 +240,10 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
         foreach ($ret as $row) {
             $sum += $row['betcount'];
         }
-        for ($i = 0, $cnt = count($ret); $i < $cnt; $i ++) {
+        for ($i = 0, $cnt = count($ret); $i < $cnt; ++$i ) {
             $ret[$i]['betcountp'] = round($ret[$i]['betcount'] / $sum * 100);
         }
+
         return $ret;
     }
 
@@ -241,12 +254,13 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
      * @param tx_t3users_models_feuser $feuser
      * @param int $betUid
      * @param int $teamUid
+     *
      * @return int 0/1 whether the bet was saved or not
      */
     public function saveOrUpdateBet($teamQuestion, $feuser, $betUid, $teamUid)
     {
         $betset = $teamQuestion->getBetSet();
-        if (! $teamQuestion->isOpen()) {
+        if (!$teamQuestion->isOpen()) {
             return 0;
         }
         if ($betset->isFinished()) {
@@ -254,7 +268,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
         }
 
         $teamUid = intval($teamUid);
-        if (! $teamUid) {
+        if (!$teamUid) {
             return 0; // No values given
         }
         // Der Tip muss vom selben User stammen
@@ -266,18 +280,21 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
         if ($betUid) {
             // Update bet
             $bet = tx_rnbase::makeInstance('tx_t3sportsbet_models_teambet', $betUid);
-            if ($bet->record['feuser'] != $feuser->getUid())
+            if ($bet->record['feuser'] != $feuser->getUid()) {
                 return 0;
-            if ($bet->record['team'] == $values['team'])
+            }
+            if ($bet->record['team'] == $values['team']) {
                 return 0;
-            $where = 'uid=' . $betUid;
+            }
+            $where = 'uid='.$betUid;
             Tx_Rnbase_Database_Connection::getInstance()->doUpdate('tx_t3sportsbet_teambets', $where, $values, 0);
         } else {
             // Create new teambet instance
             // Ein User darf pro Frage nur einen Tip abgeben
             $bet = $this->getTeamBet($teamQuestion, $feuser);
-            if ($bet->isPersisted())
-                return 0; // There is already a bet for this match!
+            if ($bet->isPersisted()) {
+                return 0;
+            } // There is already a bet for this match!
 
             $values['pid'] = $teamQuestion->getProperty('pid');
             $values['crdate'] = $values['tstamp'];
@@ -285,6 +302,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
             $values['question'] = $teamQuestion->getUid();
             Tx_Rnbase_Database_Connection::getInstance()->doInsert('tx_t3sportsbet_teambets', $values, 0);
         }
+
         return 1;
     }
 
@@ -292,6 +310,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
     {
         tx_rnbase::load('tx_rnbase_util_SearchBase');
         $searcher = tx_rnbase_util_SearchBase::getInstance('tx_t3sportsbet_search_TeamQuestion');
+
         return $searcher->search($fields, $options);
     }
 
@@ -299,6 +318,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
     {
         tx_rnbase::load('tx_rnbase_util_SearchBase');
         $searcher = tx_rnbase_util_SearchBase::getInstance('tx_t3sportsbet_search_TeamBet');
+
         return $searcher->search($fields, $options);
     }
 }

@@ -26,12 +26,12 @@ tx_rnbase::load('tx_cfcleaguefe_util_MatchMarker');
 tx_rnbase::load('tx_rnbase_util_Templates');
 
 /**
- * Diese Klasse ist für die Erstellung von Markerarrays der Tipprunden verantwortlich
+ * Diese Klasse ist für die Erstellung von Markerarrays der Tipprunden verantwortlich.
  */
 class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
 {
+    public static $betMarker = null;
 
-    static $betMarker = null;
     private $request;
 
     public function __construct($options = [])
@@ -42,19 +42,18 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
     }
 
     /**
-     *
      * @return tx_t3sportsbet_util_BetMarker
      */
     private static function getBetMarker()
     {
-        if (! self::$betMarker) {
+        if (!self::$betMarker) {
             self::$betMarker = tx_rnbase::makeInstance('tx_t3sportsbet_util_BetMarker');
         }
+
         return self::$betMarker;
     }
 
     /**
-     *
      * @param string $template
      *            das HTML-Template
      * @param tx_cfcleaguefe_models_match $match
@@ -65,7 +64,8 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
      *            Pfad der TS-Config des Spiels, z.B. 'listView.match.'
      * @param string $matchMarker
      *            Name des Markers für ein Spiel, z.B. MATCH
-     * @return String das geparste Template
+     *
+     * @return string das geparste Template
      */
     public function parseTemplate($template, &$match, &$formatter, $confId, $marker = 'MATCH')
     {
@@ -81,10 +81,10 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
         $GLOBALS['TSFE']->register['T3SPORTSBET_BETSTATUS'] = $betset->getMatchState($match);
 
         // Die Tipptendenz mit einblenden
-        if ((self::containsMarker($template, $marker . '_TREND'))) {
+        if ((self::containsMarker($template, $marker.'_TREND'))) {
             $this->addBetTrend($betset, $match);
         }
-        if ((self::containsMarker($template, $marker . '_STATS'))) {
+        if ((self::containsMarker($template, $marker.'_STATS'))) {
             $this->addBetStats($betset, $match);
         }
 
@@ -98,12 +98,13 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
         $bet = $betset->getBet($match, $feuser);
         $template = $this->setForm($template, $betset, $bet, $feuser, $formatter);
         $this->pullTT();
-        $template = self::getBetMarker()->parseTemplate($template, $bet, $formatter, $confId . 'bet.', $marker . '_BET');
+        $template = self::getBetMarker()->parseTemplate($template, $bet, $formatter, $confId.'bet.', $marker.'_BET');
+
         return $template;
     }
 
     /**
-     * Tiptrend für das Spiel einsetzen
+     * Tiptrend für das Spiel einsetzen.
      *
      * @param tx_t3sportsbet_models_betset $betset
      * @param tx_cfcleaguefe_models_match $match
@@ -131,16 +132,17 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
     }
 
     /**
-     * Render form
+     * Render form.
      *
      * @param string $template
      * @param tx_t3sportsbet_models_betset $betset
      * @param tx_t3sportsbet_models_bet $bet
      * @param tx_t3users_models_feuser $feuser
      * @param tx_rnbase_util_FormatUtil $formatter
+     *
      * @return string
      */
-    function setForm($template, $betset, $bet, $feuser, $formatter)
+    public function setForm($template, $betset, $bet, $feuser, $formatter)
     {
         $subpartArray['###BETSTATUS_OPEN###'] = '';
         $subpartArray['###BETSTATUS_CLOSED###'] = '';
@@ -150,24 +152,24 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
         $state = 'CLOSED';
         if ($feuser) {
             $state = $betset->getMatchState($bet->getMatch());
-            if ($state == 'OPEN') {
+            if ('OPEN' == $state) {
                 // Prüfen, ob der aktuelle User seinen eigenen Tip bearbeiten will
                 tx_rnbase::load('tx_t3users_models_feuser');
                 $currUser = tx_t3users_models_feuser::getCurrent();
-                if (! ($currUser && $currUser->getUid() == $feuser->getUid())) {
+                if (!($currUser && $currUser->getUid() == $feuser->getUid())) {
                     $state = 'CLOSED';
                 }
             }
         }
         // Hier benötigen wir eigentlich einen Observer, dem wir sagen, daß ein Spiel offen ist. Wir setzen das jetzt
         // einfach mal in die Config...
-        if ($state == 'OPEN') {
+        if ('OPEN' == $state) {
             $formatter->getConfigurations()
                 ->getViewData()
                 ->offsetSet('MATCH_STATE', 'OPEN');
         }
-        $subTemplate = tx_rnbase_util_Templates::getSubpart($template, '###BETSTATUS_' . $state . '###');
-        $subpartArray['###BETSTATUS_' . $state . '###'] = $subTemplate;
+        $subTemplate = tx_rnbase_util_Templates::getSubpart($template, '###BETSTATUS_'.$state.'###');
+        $subpartArray['###BETSTATUS_'.$state.'###'] = $subTemplate;
         $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray); // , $wrappedSubpartArray);
 
         return $out;

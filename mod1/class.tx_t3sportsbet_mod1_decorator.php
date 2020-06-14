@@ -28,14 +28,13 @@ tx_rnbase::load('tx_rnbase_util_Misc');
  */
 class tx_t3sportsbet_mod1_decorator
 {
-
-    static function prepareRecords($records, $columns, $formTool, $options)
+    public static function prepareRecords($records, $columns, $formTool, $options)
     {
         // Ist kein Wettbewerb vorhanden, dann wird nur das Endergebnis angezeigt
         $arr = [
             0 => [
-                self::getHeadline($columns, $options)
-            ]
+                self::getHeadline($columns, $options),
+            ],
         ];
         foreach ($records as $record) {
             $dataArr = is_object($record) ? $record->record : $record;
@@ -43,11 +42,10 @@ class tx_t3sportsbet_mod1_decorator
             $row = array();
             if (isset($options['checkbox'])) {
                 // Check if record is checkable
-                if (! is_array($options['dontcheck']) || ! array_key_exists($dataArr['uid'], $options['dontcheck'])) {
+                if (!is_array($options['dontcheck']) || !array_key_exists($dataArr['uid'], $options['dontcheck'])) {
                     $row[] = $formTool->createCheckbox('checkMatch[]', $dataArr['uid']);
-                }
-                else {
-                    $row[] = '<img' . t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/zoom2.gif', 'width="11" height="12"') . ' title="Info: ' . $options['dontcheck'][$dataArr['uid']] . '" border="0" alt="" />';
+                } else {
+                    $row[] = '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/zoom2.gif', 'width="11" height="12"').' title="Info: '.$options['dontcheck'][$dataArr['uid']].'" border="0" alt="" />';
                 }
             }
             reset($columns);
@@ -60,7 +58,7 @@ class tx_t3sportsbet_mod1_decorator
                 if (isset($data['method'])) {
                     $row[] = call_user_func([
                         $record,
-                        $data['method']
+                        $data['method'],
                     ]);
                 } elseif (isset($data['decorator'])) {
                     $decor = $data['decorator'];
@@ -79,10 +77,11 @@ class tx_t3sportsbet_mod1_decorator
     }
 
     /**
-     * Liefert die passenden Überschrift für die Tabelle
+     * Liefert die passenden Überschrift für die Tabelle.
      *
      * @param array $columns
      * @param array $options
+     *
      * @return array
      */
     public static function getHeadline($columns, $options)
@@ -93,13 +92,15 @@ class tx_t3sportsbet_mod1_decorator
             $arr[] = '&nbsp;'; // Spalte für Checkbox
         }
         foreach ($columns as $column => $data) {
-            if (intval($data['nocolumn']))
+            if (intval($data['nocolumn'])) {
                 continue;
+            }
             $arr[] = intval($data['notitle']) ? '' : $LANG->getLL((isset($data['title']) ? $data['title'] : $column));
         }
         if (isset($options['linker'])) {
             $arr[] = $LANG->getLL('label_action');
         }
+
         return $arr;
     }
 
@@ -116,6 +117,7 @@ class tx_t3sportsbet_mod1_decorator
                 }
             }
         }
+
         return $out;
     }
 }

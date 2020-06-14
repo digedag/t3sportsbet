@@ -28,7 +28,6 @@ tx_rnbase::load('tx_rnbase_model_base');
  */
 class tx_t3sportsbet_models_betsetresult extends tx_rnbase_model_base
 {
-
     public function getTableName()
     {
         return 'tx_t3sportsbet_betsetresults';

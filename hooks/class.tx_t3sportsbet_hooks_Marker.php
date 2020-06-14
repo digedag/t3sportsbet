@@ -22,21 +22,25 @@
  ***************************************************************/
 
 /**
- * Extend marker classes
+ * Extend marker classes.
  *
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_hooks_Marker {
+class tx_t3sportsbet_hooks_Marker
+{
+    /**
+     * Extend teamMarker for currently selected teambet team.
+     *
+     * @param array $params
+     * @param tx_cfcleaguefe_util_TeamMarker $parent
+     */
+    public function initTeam($params, $parent)
+    {
+        $options = $parent->getOptions();
+        if (!(is_array($options) && array_key_exists('teambet', $options))) {
+            return;
+        }
 
-	/**
-	 * Extend teamMarker for currently selected teambet team
-	 * @param array $params
-	 * @param tx_cfcleaguefe_util_TeamMarker $parent
-	 */
-	public function initTeam($params, $parent) {
-		$options = $parent->getOptions();
-		if(! (is_array($options) && array_key_exists('teambet', $options)) ) return;
-
-		$params['item']->setProperty('currentbet', $params['item']->getUid() == $options['teambet'] ? 1 : '');
-	}
+        $params['item']->setProperty('currentbet', $params['item']->getUid() == $options['teambet'] ? 1 : '');
+    }
 }

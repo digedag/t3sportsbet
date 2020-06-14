@@ -24,14 +24,14 @@
  ***************************************************************/
 class tx_t3sportsbet_mod1_link_MatchBets implements tx_cfcleague_mod1_Linker
 {
-
     /**
-     * Buttons for match bets
+     * Buttons for match bets.
      *
      * @param tx_cfcleaguefe_models_match $match
      * @param tx_rnbase_util_FormTool $formTool
      * @param int $currentPid
      * @param Tx_Rnbase_Domain_Model_Data|array $options
+     *
      * @return string
      */
     public function makeLink($match, $formTool, $currentPid, $options)
@@ -42,15 +42,16 @@ class tx_t3sportsbet_mod1_link_MatchBets implements tx_cfcleague_mod1_Linker
             $out .= '<br />';
             $betset = $options['currentRound'];
             $cnt = $betset->getBetCount($match);
-            if ($cnt)
-                $out .= $formTool->createSubmit('showBets[' . $match->getUid() . ']', $GLOBALS['LANG']->getLL('label_showbets') . ' (' . $cnt . ')');
+            if ($cnt) {
+                $out .= $formTool->createSubmit('showBets['.$match->getUid().']', $GLOBALS['LANG']->getLL('label_showbets').' ('.$cnt.')');
+            }
             // $out .= $GLOBALS['LANG']->getLL('label_numberOfBets').': ' . $cnt;
             // Wenn das Spiel ausgewertet wurde und die Tiprunde noch offen ist
-            if (! $betset->isFinished() && ($betset->getMatchState($match) == 'FINISHED'))
-                $out .= '<br />' . $formTool->createSubmit('resetBets[' . $match->getUid() . ']', $GLOBALS['LANG']->getLL('label_resetbets'), $GLOBALS['LANG']->getLL('msg_resetbets'));
+            if (!$betset->isFinished() && ('FINISHED' == $betset->getMatchState($match))) {
+                $out .= '<br />'.$formTool->createSubmit('resetBets['.$match->getUid().']', $GLOBALS['LANG']->getLL('label_resetbets'), $GLOBALS['LANG']->getLL('msg_resetbets'));
+            }
         }
 
         return $out;
     }
 }
-

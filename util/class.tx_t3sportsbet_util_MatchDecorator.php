@@ -24,16 +24,15 @@
  ***************************************************************/
 
 /**
- * Diese Klasse ist für die Darstellung von Spielen im Backend verantwortlich
+ * Diese Klasse ist für die Darstellung von Spielen im Backend verantwortlich.
  */
 class tx_t3sportsbet_util_MatchDecorator
 {
-
     protected $module;
+
     protected $currentRound;
 
     /**
-     *
      * @param \tx_rnbase_mod_IModule $module
      * @param \tx_t3sportsbet_models_betset $currentRound
      */
@@ -44,7 +43,6 @@ class tx_t3sportsbet_util_MatchDecorator
     }
 
     /**
-     *
      * @return tx_rnbase_mod_IModule
      */
     private function getModule()
@@ -55,33 +53,34 @@ class tx_t3sportsbet_util_MatchDecorator
     public function format($value, $colName, $record, $item)
     {
         $ret = $value;
-        if ($colName == 'uid') {
+        if ('uid' == $colName) {
             $ret .= $this->createMatchCutLink($item);
-        } elseif ($colName == 'date') {
+        } elseif ('date' == $colName) {
             $ret = date('H:i d.m.y', $value);
-        } elseif ($colName == 'competition') {
+        } elseif ('competition' == $colName) {
             tx_rnbase::load('tx_cfcleague_models_Competition');
             $comp = tx_cfcleague_models_Competition::getCompetitionInstance($value);
-            if (! is_object($comp) || ! $comp->isValid()) {
+            if (!is_object($comp) || !$comp->isValid()) {
                 return '';
             }
             $group = $comp->getGroup();
-            if (! is_object($group) || ! $group->isValid()) {
+            if (!is_object($group) || !$group->isValid()) {
                 return '';
             }
             $name = (array_key_exists('shortname', $group->record)) ? $group->record['shortname'] : '';
             $ret = strlen($name) ? $name : $group->getName();
         }
+
         return $ret;
     }
 
     /**
-     *
      * @param tx_cfcleague_models_Match $item
      */
     private function createMatchCutLink($item)
     {
         tx_rnbase::load('tx_t3sportsbet_mod1_handler_MatchMove');
+
         return tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->makeCutLink(
             $item,
             $this->currentRound,

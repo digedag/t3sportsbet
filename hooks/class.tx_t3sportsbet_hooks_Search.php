@@ -22,13 +22,12 @@
  ***************************************************************/
 
 /**
- * Make additional join for match search to table tx_t3sportsbet_betsets_mm
+ * Make additional join for match search to table tx_t3sportsbet_betsets_mm.
  *
  * @author Rene Nitzsche
  */
 class tx_t3sportsbet_hooks_Search
 {
-
     public function getTableMappingMatch($params, $parent)
     {
         $params['tableMapping']['BETSETMM'] = 'tx_t3sportsbet_betsets_mm';

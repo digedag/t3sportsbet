@@ -24,18 +24,17 @@
  ***************************************************************/
 
 /**
- * Show team bets in BE module
+ * Show team bets in BE module.
  */
 class tx_t3sportsbet_mod1_decorator_TeamBet
 {
-
     public function __construct($mod)
     {
         $this->mod = $mod;
     }
 
     /**
-     * Returns the module
+     * Returns the module.
      *
      * @return tx_rnbase_mod_IModule
      */
@@ -45,7 +44,6 @@ class tx_t3sportsbet_mod1_decorator_TeamBet
     }
 
     /**
-     *
      * @param string $value
      * @param string $colName
      * @param array $record
@@ -54,26 +52,26 @@ class tx_t3sportsbet_mod1_decorator_TeamBet
     public function format($value, $colName, $record, $item)
     {
         $ret = $value;
-        if ($colName == 'uid') {
+        if ('uid' == $colName) {
             $ret = $this->getModule()
                 ->getFormTool()
                 ->createEditLink('tx_t3sportsbet_teambets', $item->getUid(), '');
             $wrap = $item->getProperty('hidden') ? [
                 '<strike>',
-                '</strike>'
+                '</strike>',
             ] : [
                 '<strong>',
-                '</strong>'
+                '</strong>',
             ];
-            $ret .= $wrap[0] . $value . $wrap[1] . '<br />';
-        } elseif ($colName == 'tstamp') {
+            $ret .= $wrap[0].$value.$wrap[1].'<br />';
+        } elseif ('tstamp' == $colName) {
             $ret = date('H:i d.m.Y', $value);
-        } elseif ($colName == 'finished') {
+        } elseif ('finished' == $colName) {
             $ret = $value ? '###LABEL_YES###' : '###LABEL_NO###';
-        } elseif ($colName == 'team') {
+        } elseif ('team' == $colName) {
             $team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $value);
             $ret = $team->getName();
-        } elseif ($colName == 'feuser') {
+        } elseif ('feuser' == $colName) {
             tx_rnbase::load('tx_t3users_models_feuser');
             $feuser = tx_t3users_models_feuser::getInstance($value);
             $ret = $feuser->getProperty('username');
@@ -81,6 +79,7 @@ class tx_t3sportsbet_mod1_decorator_TeamBet
                 ->getFormTool()
                 ->createEditLink('fe_users', $feuser->getUid(), '');
         }
+
         return $ret;
     }
 }

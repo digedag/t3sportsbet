@@ -33,10 +33,9 @@ tx_rnbase::load('tx_t3sportsbet_util_ScopeController');
  */
 class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\AbstractAction
 {
-
     /**
-     *
      * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
+     *
      * @return string error msg or null
      */
     protected function handleRequest(\Sys25\RnBase\Frontend\Request\RequestInterface $request)
@@ -71,24 +70,25 @@ class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\A
     protected function getRoundsFromScope($uids)
     {
         $rounds = [];
-        if (! $uids) {
+        if (!$uids) {
             return $rounds;
         }
         $uids = Tx_Rnbase_Utility_Strings::intExplode(',', $uids);
-        for ($i = 0, $cnt = count($uids); $i < $cnt; $i ++) {
+        for ($i = 0, $cnt = count($uids); $i < $cnt; ++$i ) {
             $rounds[] = tx_t3sportsbet_models_betset::getBetsetInstance($uids[$i]);
         }
+
         return $rounds;
     }
 
     protected function handleSubmit($feuser, $viewData)
     {
-        if (! $feuser) {
+        if (!$feuser) {
             return; // Nicht angemeldet
         }
         $srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
         $data = \Tx_Rnbase_Utility_T3General::_GP('betset');
-        if (! is_array($data)) {
+        if (!is_array($data)) {
             return;
         }
         tx_rnbase::load('tx_cfcleaguefe_models_match');
@@ -96,17 +96,18 @@ class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\A
         // Die Tips speichern
         foreach ($data as $betsetUid => $matchArr) {
             $betset = tx_t3sportsbet_models_betset::getBetsetInstance($betsetUid);
-            if (! $betset->isValid() || $betset->isFinished())
+            if (!$betset->isValid() || $betset->isFinished()) {
                 continue;
+            }
             foreach ($matchArr as $matchUid => $betArr) {
-
-                if ($matchUid == 'teambet') {
+                if ('teambet' == $matchUid) {
                     $saveCnt += $this->saveTeamBet($betArr, $feuser);
+
                     continue;
                 }
 
                 $match = tx_cfcleaguefe_models_match::getMatchInstance($matchUid);
-                list ($betUid, $betData) = each($betArr);
+                list($betUid, $betData) = each($betArr);
                 $saveCnt += $srv->saveOrUpdateBet($betset, $match, $feuser, $betUid, $betData);
             }
         }
@@ -119,13 +120,14 @@ class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\A
         $ret = 0;
         foreach ($betArr as $betQuestionUid => $betData) {
             $betQuestion = tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', intval($betQuestionUid));
-            if (! $betQuestion->isValid()) {
+            if (!$betQuestion->isValid()) {
                 return 0;
             }
-            list ($betUid, $team) = each($betData);
+            list($betUid, $team) = each($betData);
             $srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
             $ret += $srv->saveOrUpdateBet($betQuestion, $feuser, $betUid, $team);
         }
+
         return $ret;
     }
 
@@ -139,4 +141,3 @@ class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\A
         return 'tx_t3sportsbet_views_BetList';
     }
 }
-
