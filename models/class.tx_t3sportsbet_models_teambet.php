@@ -29,14 +29,13 @@ tx_rnbase::load('tx_rnbase_model_base');
  */
 class tx_t3sportsbet_models_teambet extends tx_rnbase_model_base
 {
-
-    function getTableName()
+    public function getTableName()
     {
         return 'tx_t3sportsbet_teambets';
     }
 
     /**
-     * Returns the team question
+     * Returns the team question.
      *
      * @return tx_t3sportsbet_models_teamquestion
      */
@@ -51,18 +50,18 @@ class tx_t3sportsbet_models_teambet extends tx_rnbase_model_base
     }
 
     /**
-     * Possible points
-     * 
+     * Possible points.
+     *
      * @return int
      */
     public function getPossiblePoints()
     {
-        return (int)$this->getProperty('possiblepoints');
+        return (int) $this->getProperty('possiblepoints');
     }
 
     /**
-     * Team
-     * 
+     * Team.
+     *
      * @return int
      */
     public function getTeamUid()
@@ -71,8 +70,8 @@ class tx_t3sportsbet_models_teambet extends tx_rnbase_model_base
     }
 
     /**
-     * Team
-     * 
+     * Team.
+     *
      * @return tx_cfcleague_models_Team
      */
     public function getTeam()

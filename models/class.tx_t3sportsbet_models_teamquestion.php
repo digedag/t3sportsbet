@@ -29,14 +29,13 @@ tx_rnbase::load('tx_rnbase_util_Dates');
  */
 class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base
 {
-
     public function getTableName()
     {
         return 'tx_t3sportsbet_teamquestions';
     }
 
     /**
-     * Returns the betset
+     * Returns the betset.
      *
      * @return tx_t3sportsbet_models_betset
      */
@@ -46,7 +45,7 @@ class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base
     }
 
     /**
-     * Returns the uid of betset
+     * Returns the uid of betset.
      *
      * @return int
      */
@@ -56,18 +55,18 @@ class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base
     }
 
     /**
-     * Whether or not this team question is still open
-     * 
-     * @return boolean
+     * Whether or not this team question is still open.
+     *
+     * @return bool
      */
     public function isOpen()
     {
-        return $this->getOpenUntilTstamp() > time() && ! $this->getTeamUid();
+        return $this->getOpenUntilTstamp() > time() && !$this->getTeamUid();
     }
 
     /**
-     * Return the question string
-     * 
+     * Return the question string.
+     *
      * @return string
      */
     public function getQuestion()
@@ -86,8 +85,8 @@ class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base
     }
 
     /**
-     * Returns the uid of winning team
-     * 
+     * Returns the uid of winning team.
+     *
      * @return string comma separated uids
      */
     public function getTeamUid()
@@ -102,16 +101,18 @@ class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base
 
     /**
      * Whether or not the given bet wins.
-     * 
+     *
      * @param tx_t3sportsbet_models_teambet $bet
-     * @return boolean
+     *
+     * @return bool
      */
     public function isWinningBet($bet)
     {
-        if (! is_array($this->teamUids)) {
+        if (!is_array($this->teamUids)) {
             $this->teamUids = t3lib_div::intExplode(',', $this->getTeamUid());
             $this->teamUids = array_flip($this->teamUids);
         }
+
         return array_key_exists($bet->getTeamUid(), $this->teamUids);
     }
 }

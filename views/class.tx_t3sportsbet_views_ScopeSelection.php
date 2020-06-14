@@ -25,16 +25,15 @@ tx_rnbase::load('tx_rnbase_util_BaseMarker');
 tx_rnbase::load('tx_rnbase_util_ListBuilder');
 
 /**
- * Viewklasse für die Darstellung der Bestenliste
+ * Viewklasse für die Darstellung der Bestenliste.
  */
 class tx_t3sportsbet_views_ScopeSelection extends \Sys25\RnBase\Frontend\View\Marker\BaseView
 {
-
     /**
-     *
      * @param string $template
      * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
      * @param tx_rnbase_util_FormatUtil $formatter
+     *
      * @return string
      */
     protected function createOutput($template, Sys25\RnBase\Frontend\Request\RequestInterface $request, $formatter)
@@ -49,6 +48,7 @@ class tx_t3sportsbet_views_ScopeSelection extends \Sys25\RnBase\Frontend\View\Ma
 
         tx_rnbase_util_BaseMarker::callModules($template, $markerArray, $subpartArray, $wrappedSubpartArray, $params, $formatter);
         $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
+
         return $out;
     }
 
@@ -62,8 +62,9 @@ class tx_t3sportsbet_views_ScopeSelection extends \Sys25\RnBase\Frontend\View\Ma
         }
         $listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
         $template = $listBuilder->render($betsets, $viewData, $template, 'tx_t3sportsbet_util_BetSetMarker', $confId, $markerName, $formatter, array(
-            'currItem' => $currItem
+            'currItem' => $currItem,
         ));
+
         return $template;
     }
 

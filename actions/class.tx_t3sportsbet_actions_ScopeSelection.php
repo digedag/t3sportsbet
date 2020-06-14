@@ -31,10 +31,9 @@ tx_rnbase::load('tx_t3sportsbet_util_ScopeController');
  */
 class tx_t3sportsbet_actions_ScopeSelection extends \Sys25\RnBase\Frontend\Controller\AbstractAction
 {
-
     /**
-     *
      * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
+     *
      * @return string error msg or null
      */
     protected function handleRequest(\Sys25\RnBase\Frontend\Request\RequestInterface $request)

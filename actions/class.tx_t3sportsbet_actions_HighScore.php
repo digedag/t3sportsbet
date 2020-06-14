@@ -28,14 +28,13 @@ tx_rnbase::load('tx_t3users_util_ServiceRegistry');
 tx_rnbase::load('tx_t3sportsbet_util_ScopeController');
 
 /**
- * Der View zeigt die Bestenliste an
+ * Der View zeigt die Bestenliste an.
  */
 class tx_t3sportsbet_actions_HighScore extends \Sys25\RnBase\Frontend\Controller\AbstractAction
 {
-
     /**
-     *
      * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
+     *
      * @return string error msg or null
      */
     protected function handleRequest(\Sys25\RnBase\Frontend\Request\RequestInterface $request)
@@ -47,7 +46,7 @@ class tx_t3sportsbet_actions_HighScore extends \Sys25\RnBase\Frontend\Controller
         $betgames = tx_t3sportsbet_util_ScopeController::getBetgamesFromScope($scopeArr['BETGAME_UIDS']);
         $betsetUids = $scopeArr['BETSET_UIDS'];
         // Um etwas zu zeigen, benötigen wir Betset-Ids
-        if (! $betsetUids) {
+        if (!$betsetUids) {
             return $configurations->getLL('error_nobetsets_defined');
         }
         // Liste von Nutzern
@@ -61,7 +60,7 @@ class tx_t3sportsbet_actions_HighScore extends \Sys25\RnBase\Frontend\Controller
         $results = $betSrv->getResults($betsetUids, $userUids);
         $listSize = count($results[0]);
 
-        $pageBrowser = tx_rnbase::makeInstance('tx_rnbase_util_PageBrowser', 'bethighscores' . $configurations->getCObj()->data['uid']);
+        $pageBrowser = tx_rnbase::makeInstance('tx_rnbase_util_PageBrowser', 'bethighscores'.$configurations->getCObj()->data['uid']);
         $pageSize = $this->getPageSize($parameters, $configurations);
         $pageBrowser->setState($parameters, $listSize, $pageSize);
         $limit = $pageBrowser->getState();
@@ -80,10 +79,11 @@ class tx_t3sportsbet_actions_HighScore extends \Sys25\RnBase\Frontend\Controller
     }
 
     /**
-     * Liefert die Anzahl der Ergebnisse pro Seite
+     * Liefert die Anzahl der Ergebnisse pro Seite.
      *
      * @param array $parameters
      * @param tx_rnbase_configurations $configurations
+     *
      * @return int
      */
     protected function getPageSize($parameters, $configurations)
@@ -101,4 +101,3 @@ class tx_t3sportsbet_actions_HighScore extends \Sys25\RnBase\Frontend\Controller
         return 'tx_t3sportsbet_views_HighScore';
     }
 }
-

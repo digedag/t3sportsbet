@@ -23,13 +23,12 @@
 tx_rnbase::load('tx_rnbase_util_SearchBase');
 
 /**
- * Class to search betset results from database
+ * Class to search betset results from database.
  *
  * @author Rene Nitzsche
  */
 class tx_t3sportsbet_search_BetSetResult extends tx_rnbase_util_SearchBase
 {
-
     protected function getTableMappings()
     {
         $tableMapping = [];
@@ -39,8 +38,9 @@ class tx_t3sportsbet_search_BetSetResult extends tx_rnbase_util_SearchBase
 
         // Hook to append other tables
         tx_rnbase_util_Misc::callHook('t3sportsbet', 'search_BetSetResult_getTableMapping_hook', array(
-            'tableMapping' => &$tableMapping
+            'tableMapping' => &$tableMapping,
         ), $this);
+
         return $tableMapping;
     }
 
@@ -49,7 +49,7 @@ class tx_t3sportsbet_search_BetSetResult extends tx_rnbase_util_SearchBase
         return 'tx_t3sportsbet_betsetresults';
     }
 
-    function getWrapperClass()
+    public function getWrapperClass()
     {
         return 'tx_t3sportsbet_models_betsetresult';
     }
@@ -77,8 +77,9 @@ class tx_t3sportsbet_search_BetSetResult extends tx_rnbase_util_SearchBase
         // Hook to append other tables
         tx_rnbase_util_Misc::callHook('t3sportsbet', 'search_BetSetResult_getJoins_hook', array(
             'join' => &$join,
-            'tableAliases' => $tableAliases
+            'tableAliases' => $tableAliases,
         ), $this);
+
         return $join;
     }
 }

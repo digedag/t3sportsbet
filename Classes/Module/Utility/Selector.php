@@ -1,4 +1,5 @@
 <?php
+
 namespace Sys25\T3sportsbet\Module\Utility;
 
 /***************************************************************
@@ -25,12 +26,12 @@ namespace Sys25\T3sportsbet\Module\Utility;
  ***************************************************************/
 
 /**
- * Die Klasse stellt Auswahlmenus zur Verfügung
+ * Die Klasse stellt Auswahlmenus zur Verfügung.
  */
 class Selector
 {
-
-    private $doc, $MCONF;
+    private $doc;
+    private $MCONF;
 
     private $formTool;
 
@@ -66,7 +67,7 @@ class Selector
             $objGames[$game->getUid()] = $game;
             $entries[$game->getUid()] = $game->getName();
         }
-        if (! count($entries)) {
+        if (!count($entries)) {
             return 0;
         }
 
@@ -87,11 +88,12 @@ class Selector
     }
 
     /**
-     * Returns all rounds of current bet game
+     * Returns all rounds of current bet game.
      *
      * @param string $content
      * @param int $pid
      * @param \tx_t3sportsbet_models_betgame $game
+     *
      * @return \tx_t3sportsbet_models_betset
      */
     public function showRoundSelector(&$content, $pid, $game)
@@ -101,7 +103,7 @@ class Selector
         $entries = [];
         foreach ($rounds as $round) {
             $idxRounds[$round->getUid()] = $round;
-            $entries[$round->getUid()] = $round->getName() . ' (' . $GLOBALS['LANG']->getLL('tx_t3sportsbet_module.betStatus_' . $round->getStatus()) . ')';
+            $entries[$round->getUid()] = $round->getName().' ('.$GLOBALS['LANG']->getLL('tx_t3sportsbet_module.betStatus_'.$round->getStatus()).')';
         }
         $menuData = $this->getFormTool()->showMenu($pid, 'betset', $this->modName, $entries);
 
@@ -115,7 +117,7 @@ class Selector
                     'tx_t3sportsbet_betsets' => [
                         'betgame' => $game->getUid(),
                         'round' => ($game->getBetSetSize() + 1),
-                    ]
+                    ],
                 ];
                 $params['title'] = '###LABEL_CREATE_BETSET###';
                 $links[] = $this->getFormTool()->createNewLink('tx_t3sportsbet_betsets', $pid, '', $params);
@@ -137,7 +139,7 @@ class Selector
     {
         return '
 <div class="row">
-<div class="selector col-sm-4">' . $menu . '</div>' . (empty($links) ? '' : '<div class="links col-sm-4">' . implode(' ', $links) . '</div>') .
+<div class="selector col-sm-4">'.$menu.'</div>'.(empty($links) ? '' : '<div class="links col-sm-4">'.implode(' ', $links).'</div>').
         '</div>';
     }
 
@@ -149,9 +151,10 @@ class Selector
     private function findGames($pid)
     {
         $options = [];
-        $options['where'] = 'pid="' . $pid . '"';
+        $options['where'] = 'pid="'.$pid.'"';
         $options['orderby'] = 'sorting';
         $options['wrapperclass'] = 'tx_t3sportsbet_models_betgame';
+
         return \Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_t3sportsbet_betgames', $options, 0);
     }
 
@@ -163,4 +166,3 @@ class Selector
         return $this->formTool;
     }
 }
-

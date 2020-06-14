@@ -24,11 +24,10 @@
  ***************************************************************/
 
 /**
- * Search match bets from database
+ * Search match bets from database.
  */
 class tx_t3sportsbet_mod1_lister_MatchBet
 {
-
     /** @var \tx_rnbase_mod_IModule */
     private $mod;
 
@@ -53,12 +52,11 @@ class tx_t3sportsbet_mod1_lister_MatchBet
         $this->resultSize = 0;
         $this->data = \Tx_Rnbase_Utility_T3General::_GP('searchdata');
 
-        if (! isset($options['nopersist'])) {
+        if (!isset($options['nopersist'])) {
             $this->SEARCH_SETTINGS = \Tx_Rnbase_Backend_Utility::getModuleData([
-                'searchterm' => ''
+                'searchterm' => '',
             ], $this->data, $this->mod->getName());
-        }
-        else {
+        } else {
             $this->SEARCH_SETTINGS = $this->data;
         }
     }
@@ -75,15 +73,17 @@ class tx_t3sportsbet_mod1_lister_MatchBet
 
     /**
      * Liefert das Suchformular.
-     * Hier die beiden Selectboxen anzeigen
+     * Hier die beiden Selectboxen anzeigen.
      *
      * @param string $label
      *            Alternatives Label
+     *
      * @return string
      */
     public function getSearchForm($label = '')
     {
         $out = '';
+
         return $out;
     }
 
@@ -95,18 +95,18 @@ class tx_t3sportsbet_mod1_lister_MatchBet
 
         // Set options
         $options = [
-            'count' => 1
+            'count' => 1,
         ];
         $fields = [];
         // Set filter
         if ($this->betsetUid) {
             $fields['BET.BETSET'] = [
-                OP_EQ_INT => $this->betsetUid
+                OP_EQ_INT => $this->betsetUid,
             ];
         }
         if ($this->matchUids) {
             $fields['BET.T3MATCH'] = [
-                OP_IN_INT => $this->matchUids
+                OP_IN_INT => $this->matchUids,
             ];
         }
 
@@ -122,7 +122,8 @@ class tx_t3sportsbet_mod1_lister_MatchBet
         $ret['table'] = $this->showBets($items);
         $ret['totalsize'] = $cnt;
         $pagerData = $pager->render();
-        $ret['pager'] .= '<div class="pager row"><span class="col-sm-2">' . $pagerData['limits'] . '</span><span class="col-sm-2">' . $pagerData['pages'] . '</span></div>';
+        $ret['pager'] .= '<div class="pager row"><span class="col-sm-2">'.$pagerData['limits'].'</span><span class="col-sm-2">'.$pagerData['pages'].'</span></div>';
+
         return $ret;
     }
 
@@ -140,8 +141,9 @@ class tx_t3sportsbet_mod1_lister_MatchBet
     private function showBets($bets)
     {
         if (empty($bets)) {
-            $out = '<strong>' . $GLOBALS['LANG']->getLL('msg_no_bets_found') . '</strong>';
-            return $this->mod->getDoc()->section('',$out,0,1,\tx_rnbase_mod_IModFunc::ICON_INFO);
+            $out = '<strong>'.$GLOBALS['LANG']->getLL('msg_no_bets_found').'</strong>';
+
+            return $this->mod->getDoc()->section('', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
         }
         tx_rnbase::load('tx_t3sportsbet_mod1_decorator');
         $decor = tx_rnbase::makeInstance('tx_t3sportsbet_util_BetDecorator');
@@ -149,42 +151,42 @@ class tx_t3sportsbet_mod1_lister_MatchBet
         $columns = [
             'uid' => [
                 'decorator' => $decor,
-                'title' => 'label_uid'
+                'title' => 'label_uid',
             ],
             'tstamp' => [
                 'decorator' => $decor,
-                'title' => 'label_tstamp'
+                'title' => 'label_tstamp',
             ],
             't3match' => [
                 'decorator' => $decor,
-                'title' => 'label_match'
+                'title' => 'label_match',
             ],
             't3matchresult' => [
                 'decorator' => $decor,
-                'title' => 'label_result'
+                'title' => 'label_result',
             ],
             'bet' => [
                 'decorator' => $decor,
-                'title' => 'label_bet'
+                'title' => 'label_bet',
             ],
             'points' => [
                 'decorator' => $decor,
-                'title' => 'label_points'
+                'title' => 'label_points',
             ],
             'fe_user' => [
                 'decorator' => $decor,
-                'title' => 'label_feuser'
-            ]
+                'title' => 'label_feuser',
+            ],
         ];
         $arr = tx_t3sportsbet_mod1_decorator::prepareRecords($bets, $columns, $this->formTool, $this->options);
         /* @var $tables Tx_Rnbase_Backend_Utility_Tables */
         $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
         $out .= $tables->buildTable($arr[0]);
+
         return $out;
     }
 
     /**
-     *
      * @return tx_rnbase_mod_IModule
      */
     private function getModule()

@@ -28,7 +28,6 @@ tx_rnbase::load('Tx_Rnbase_Utility_Strings');
  */
 class tx_t3sportsbet_util_ScopeController
 {
-
     // Speichert die UID des aktuellen cObject
     private static $_cObjectUID = [];
 
@@ -38,13 +37,14 @@ class tx_t3sportsbet_util_ScopeController
      * vorbereitet und in die viewData der Config gelegt.
      * Es wird ein Array mit dem aktuell gültigen Scope zurückgeliefert.
      *
-     * @return Array mit den UIDs als String
+     * @return array mit den UIDs als String
      */
     public static function handleCurrentScope(\Sys25\RnBase\Frontend\Request\RequestInterface $request, $options = [])
     {
         $ret = [];
         $ret['BETGAME_UIDS'] = self::handleCurrentBetgame($request, $options);
         $ret['BETSET_UIDS'] = self::handleCurrentBetset($request, $options);
+
         return $ret;
     }
 
@@ -54,6 +54,7 @@ class tx_t3sportsbet_util_ScopeController
         $configurations = $request->getConfigurations();
         $betgameUid = $configurations->get('scope.betgame');
         $options['betgame'] = $betgameUid;
+
         return $betgameUid;
     }
 
@@ -72,16 +73,16 @@ class tx_t3sportsbet_util_ScopeController
         $useObjects = true;
         $configKey = isset($options['betsetkey']) ? $options['betsetkey'] : 'scope.';
         $viewData = $request->getViewContext();
-        $betsetUids = $configurations->get($configKey . 'betset');
-        $betsetStatus = $configurations->get($configKey . 'betsetStatus');
+        $betsetUids = $configurations->get($configKey.'betset');
+        $betsetStatus = $configurations->get($configKey.'betsetStatus');
         $rounds = self::getBetsets($betgame, $betsetStatus, $betsetUids, $configurations, $configKey);
         tx_rnbase::load('tx_rnbase_util_Misc');
         $ret = tx_rnbase_util_Misc::objImplode(',', $rounds);
 
         // Soll eine SelectBox für die Tiprunde gezeigt werden?
-        if ($configurations->get($configKey . 'betsetInput')) {
-            $defaultBetset = $configurations->get($configKey . 'defaultBetset');
-            $defaultIdx = $defaultBetset == 'first' ? 0 : count($rounds) - 1;
+        if ($configurations->get($configKey.'betsetInput')) {
+            $defaultBetset = $configurations->get($configKey.'defaultBetset');
+            $defaultIdx = 'first' == $defaultBetset ? 0 : count($rounds) - 1;
             // Die UIDs der Saisons in Objekte umwandeln um eine Selectbox zu bauen
             $dataArr = self::_prepareSelect($rounds, $parameters, 'betset', $useObjects ? '' : 'round_name', $defaultIdx);
             $ret = $dataArr[1];
@@ -89,6 +90,7 @@ class tx_t3sportsbet_util_ScopeController
             $viewData->offsetSet('betset_select', $dataArr);
             // $configurations->addKeepVar('betset',$betsetUids);
         }
+
         return $ret;
     }
 
@@ -98,15 +100,18 @@ class tx_t3sportsbet_util_ScopeController
         $options = array();
         $options['distinct'] = 1;
         tx_rnbase::load('tx_rnbase_util_SearchBase');
-        tx_rnbase_util_SearchBase::setConfigFields($fields, $configurations, $confId . 'fields.');
-        tx_rnbase_util_SearchBase::setConfigOptions($options, $configurations, $confId . 'options.');
+        tx_rnbase_util_SearchBase::setConfigFields($fields, $configurations, $confId.'fields.');
+        tx_rnbase_util_SearchBase::setConfigOptions($options, $configurations, $confId.'options.');
         $srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
-        if (strlen(trim($betgameUid)))
+        if (strlen(trim($betgameUid))) {
             $fields['BETSET.BETGAME'][OP_IN_INT] = $betgameUid;
-        if (trim($betsetStatus))
+        }
+        if (trim($betsetStatus)) {
             $fields['BETSET.STATUS'][OP_IN_INT] = $betsetStatus;
-        if (trim($betsetUids))
+        }
+        if (trim($betsetUids)) {
             $fields['BETSET.UID'][OP_IN_INT] = $betsetUids;
+        }
 
         return $srv->searchBetSet($fields, $options);
     }
@@ -116,9 +121,10 @@ class tx_t3sportsbet_util_ScopeController
         $uids = Tx_Rnbase_Utility_Strings::intExplode(',', $uids);
         $rounds = array();
         tx_rnbase::load('tx_t3sportsbet_models_betgame');
-        for ($i = 0, $cnt = count($uids); $i < $cnt; $i ++) {
+        for ($i = 0, $cnt = count($uids); $i < $cnt; ++$i ) {
             $rounds[] = tx_t3sportsbet_models_betgame::getBetgameInstance($uids[$i]);
         }
+
         return $rounds;
     }
 
@@ -127,16 +133,17 @@ class tx_t3sportsbet_util_ScopeController
         $uids = Tx_Rnbase_Utility_Strings::intExplode(',', $uids);
         $rounds = array();
         tx_rnbase::load('tx_t3sportsbet_models_betset');
-        for ($i = 0, $cnt = count($uids); $i < $cnt; $i ++) {
+        for ($i = 0, $cnt = count($uids); $i < $cnt; ++$i ) {
             $rounds[] = tx_t3sportsbet_models_betset::getBetsetInstance($uids[$i]);
         }
+
         return $rounds;
     }
 
     /**
      * Liefert ein Array für die Erstellung der Select-Box für eine Model-Klasse
      * Das Ergebnis-Array hat zwei Einträge: Index 0 enthält das Wertearray, Index 1 das
-     * aktuelle Element
+     * aktuelle Element.
      *
      * @param string $displayAttrName Der Name eines Atttributs, um dessen Wert anzuzeigen. Wenn der
      *            String leer ist, dann wird das gesamten Objekt als Wert verwendet.
@@ -147,7 +154,7 @@ class tx_t3sportsbet_util_ScopeController
         $ret = [];
         if (count($objects)) {
             foreach ($objects as $object) {
-                $ret[0][$object->getUid()] = strlen($displayAttrName) == 0 ? $object : $object->getProperty($displayAttrName);
+                $ret[0][$object->getUid()] = 0 == strlen($displayAttrName) ? $object : $object->getProperty($displayAttrName);
             }
 
             $paramValue = $parameters->offsetGet($parameterName);
@@ -157,6 +164,7 @@ class tx_t3sportsbet_util_ScopeController
             }
             $ret[1] = $ret[1] ? $ret[1] : $objects[$defaultIdx]->getUid();
         }
+
         return $ret;
     }
 }

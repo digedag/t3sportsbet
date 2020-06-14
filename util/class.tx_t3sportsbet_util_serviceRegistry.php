@@ -25,14 +25,13 @@ tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
  * Keine echte Registry, aber eine zentrale Klasse für den Zugriff auf verschiedene
- * Services
+ * Services.
  */
 class tx_t3sportsbet_util_serviceRegistry
 {
-
     /**
-     * Returns the bet service
-     * 
+     * Returns the bet service.
+     *
      * @return tx_t3sportsbet_services_betcalculator
      */
     public static function getCalculatorService()
@@ -41,8 +40,8 @@ class tx_t3sportsbet_util_serviceRegistry
     }
 
     /**
-     * Returns the teambet service
-     * 
+     * Returns the teambet service.
+     *
      * @return tx_t3sportsbet_services_teambet
      */
     public static function getTeamBetService()
@@ -51,8 +50,8 @@ class tx_t3sportsbet_util_serviceRegistry
     }
 
     /**
-     * Returns the bet service
-     * 
+     * Returns the bet service.
+     *
      * @return tx_t3sportsbet_services_bet
      */
     public static function getBetService()
@@ -61,8 +60,8 @@ class tx_t3sportsbet_util_serviceRegistry
     }
 
     /**
-     * Returns the available data providers for matches
-     * 
+     * Returns the available data providers for matches.
+     *
      * @return array
      */
     public function lookupDataProvider($config)
@@ -70,15 +69,15 @@ class tx_t3sportsbet_util_serviceRegistry
         $services = tx_rnbase_util_Misc::lookupServices('t3sportsbet_dataprovider');
         foreach ($services as $subtype => $info) {
             $title = $info['title'];
-            if (substr($title, 0, 4) === 'LLL:') {
+            if ('LLL:' === substr($title, 0, 4)) {
                 $title = $GLOBALS['LANG']->sL($title);
             }
             $config['items'][] = array(
                 $title,
-                $subtype
+                $subtype,
             );
         }
+
         return $config;
     }
-
 }

@@ -24,11 +24,10 @@
  ***************************************************************/
 
 /**
- * List team bets
+ * List team bets.
  */
 class tx_t3sportsbet_mod1_lister_TeamQuestion
 {
-
     private $mod;
 
     private $data;
@@ -38,7 +37,7 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion
     private $betsetUid;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param tx_rnbase_mod_IModule $mod
      * @param array $options
@@ -49,7 +48,7 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion
     }
 
     /**
-     * Init object
+     * Init object.
      *
      * @param tx_rnbase_mod_IModule $mod
      * @param array $options
@@ -62,9 +61,9 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion
         $this->resultSize = 0;
         $this->data = \Tx_Rnbase_Utility_T3General::_GP('searchdata');
 
-        if (! isset($options['nopersist'])) {
+        if (!isset($options['nopersist'])) {
             $this->SEARCH_SETTINGS = \Tx_Rnbase_Backend_Utility::getModuleData([
-                'searchterm' => ''
+                'searchterm' => '',
             ], $this->data, $this->mod->getName());
         } else {
             $this->SEARCH_SETTINGS = $this->data;
@@ -72,7 +71,7 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion
     }
 
     /**
-     * TODO: Returns the complete search form
+     * TODO: Returns the complete search form.
      */
     public function getSearchForm()
     {
@@ -80,7 +79,6 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion
     }
 
     /**
-     *
      * @return tx_rnbase_mod_IModule
      */
     private function getModule()
@@ -93,8 +91,6 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion
         $this->betsetUid = $uid;
     }
 
-    /**
-     */
     public function getResultList()
     {
         $pager = tx_rnbase::makeInstance('tx_rnbase_util_BEPager', 'teamQuestionPager', $this->getMod()->getName(), $this->getMod()->getPid());
@@ -108,7 +104,7 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion
         // Set filter
         if ($this->betsetUid) {
             $fields['TEAMQUESTION.BETSET'] = [
-                OP_EQ_INT => $this->betsetUid
+                OP_EQ_INT => $this->betsetUid,
             ];
         }
 
@@ -130,12 +126,13 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion
         $ret['table'] = $content;
         $ret['totalsize'] = $cnt;
         $pagerData = $pager->render();
-        $ret['pager'] .= '<div class="pager row"><span class="col-sm-2">' . $pagerData['limits'] . '</span><span class="col-sm-2">' . $pagerData['pages'] . '</span></div>';
+        $ret['pager'] .= '<div class="pager row"><span class="col-sm-2">'.$pagerData['limits'].'</span><span class="col-sm-2">'.$pagerData['pages'].'</span></div>';
+
         return $ret;
     }
 
     /**
-     * Start creation of result list
+     * Start creation of result list.
      *
      * @param string $content
      * @param array $items
@@ -144,24 +141,25 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion
     {
         if (empty($items)) {
             $out = '<strong>###LABEL_MSG_NO_ITEMS_FOUND###</strong>';
-            $content .= $this->mod->getDoc()->section('',$out,0,1,\tx_rnbase_mod_IModFunc::ICON_INFO);
-            return ;
+            $content .= $this->mod->getDoc()->section('', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+
+            return;
         }
 
         $decor = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_decorator_TeamQuestion', $this->getModule());
         $columns = [
             'uid' => [
                 'title' => 'label_uid',
-                'decorator' => $decor
+                'decorator' => $decor,
             ],
             'question' => [
-                'title' => 'label_question'
+                'title' => 'label_question',
             ],
             'points' => [
-                'title' => 'label_points'
+                'title' => 'label_points',
             ],
             'openuntil' => [
-                'title' => 'label_openuntil'
+                'title' => 'label_openuntil',
             ],
         ];
 
@@ -175,7 +173,7 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion
 
     /**
      * Method to get the number of data records
-     * Works only if the result list has been retrieved
+     * Works only if the result list has been retrieved.
      *
      * @return int
      */
@@ -185,7 +183,7 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion
     }
 
     /**
-     * Returns an instance of tx_rnbase_mod_IModule
+     * Returns an instance of tx_rnbase_mod_IModule.
      *
      * @return tx_rnbase_mod_IModule
      */
@@ -196,6 +194,5 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/lister/class.tx_t3sportsbet_mod1_lister_TeamQuestion.php']) {
-    include_once ($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/lister/class.tx_t3sportsbet_mod1_lister_TeamQuestion.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/lister/class.tx_t3sportsbet_mod1_lister_TeamQuestion.php'];
 }
-?>

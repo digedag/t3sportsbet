@@ -23,13 +23,12 @@
  ***************************************************************/
 
 /**
- * Make additional join for feuser search to table tx_t3sportsbet_bets
+ * Make additional join for feuser search to table tx_t3sportsbet_bets.
  *
  * @author Rene Nitzsche
  */
 class tx_t3sportsbet_hooks_searchFeuser
 {
-
     public function getTableMapping($params, $parent)
     {
         $params['tableMapping']['BET'] = 'tx_t3sportsbet_bets';

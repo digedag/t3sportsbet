@@ -23,13 +23,12 @@
 tx_rnbase::load('tx_rnbase_util_SearchBase');
 
 /**
- * Class to search teambets from database
+ * Class to search teambets from database.
  *
  * @author Rene Nitzsche
  */
 class tx_t3sportsbet_search_TeamBet extends tx_rnbase_util_SearchBase
 {
-
     protected function getTableMappings()
     {
         $tableMapping = [];
@@ -37,6 +36,7 @@ class tx_t3sportsbet_search_TeamBet extends tx_rnbase_util_SearchBase
         $tableMapping['BETSET'] = 'tx_t3sportsbet_betsets';
         $tableMapping['TEAMQUESTION'] = 'tx_t3sportsbet_teamquestions';
         $tableMapping['BETGAME'] = 'tx_t3sportsbet_betgames';
+
         return $tableMapping;
     }
 
@@ -45,7 +45,7 @@ class tx_t3sportsbet_search_TeamBet extends tx_rnbase_util_SearchBase
         return 'tx_t3sportsbet_teambets';
     }
 
-    function getWrapperClass()
+    public function getWrapperClass()
     {
         return 'tx_t3sportsbet_models_teambet';
     }
@@ -62,6 +62,7 @@ class tx_t3sportsbet_search_TeamBet extends tx_rnbase_util_SearchBase
         if (isset($tableAliases['BETGAME'])) {
             $join .= ' JOIN tx_t3sportsbet_betgames ON tx_t3sportsbet_betsets.betgame = tx_t3sportsbet_betgames.uid ';
         }
+
         return $join;
     }
 }

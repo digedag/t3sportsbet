@@ -22,36 +22,41 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 /**
- * Diese Klasse ist für die Darstellung von TeamQuestions im Backend verantwortlich
+ * Diese Klasse ist für die Darstellung von TeamQuestions im Backend verantwortlich.
  */
-class tx_t3sportsbet_mod1_decorator_TeamQuestion {
-	function __construct($mod) {
-		$this->mod = $mod;
-	}
+class tx_t3sportsbet_mod1_decorator_TeamQuestion
+{
+    public function __construct($mod)
+    {
+        $this->mod = $mod;
+    }
 
-	/**
-	 * Returns the module
-	 * @return tx_rnbase_mod_IModule
-	 */
-	private function getModule() {
-		return $this->mod;
-	}
-	/**
-	 *
-	 * @param string $value
-	 * @param string $colName
-	 * @param array $record
-	 * @param tx_t3sportsbet_models_teamquestion $item
-	 */
-	public function format($value, $colName, $record, $item) {
-		$ret = $value;
-		if($colName == 'uid') {
-			$ret = $this->getModule()->getFormTool()->createEditLink('tx_t3sportsbet_teamquestions', $item->getUid(), '');
-			$wrap = $item->getProperty('hidden') ? ['<strike>', '</strike>'] : ['<strong>', '</strong>'];
-			$ret .= $wrap[0]. $value . $wrap[1].'<br />';
-		}
-		return $ret;
-	}
+    /**
+     * Returns the module.
+     *
+     * @return tx_rnbase_mod_IModule
+     */
+    private function getModule()
+    {
+        return $this->mod;
+    }
+
+    /**
+     * @param string $value
+     * @param string $colName
+     * @param array $record
+     * @param tx_t3sportsbet_models_teamquestion $item
+     */
+    public function format($value, $colName, $record, $item)
+    {
+        $ret = $value;
+        if ('uid' == $colName) {
+            $ret = $this->getModule()->getFormTool()->createEditLink('tx_t3sportsbet_teamquestions', $item->getUid(), '');
+            $wrap = $item->getProperty('hidden') ? ['<strike>', '</strike>'] : ['<strong>', '</strong>'];
+            $ret .= $wrap[0].$value.$wrap[1].'<br />';
+        }
+
+        return $ret;
+    }
 }

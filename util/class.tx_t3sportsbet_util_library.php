@@ -23,17 +23,14 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- */
 class tx_t3sportsbet_util_library
 {
-
     /**
-     * Returns the current timestamp
-     * 
+     * Returns the current timestamp.
+     *
      * @return int timestamp of now
      */
-    static function getNow()
+    public static function getNow()
     {
         return time();
     }

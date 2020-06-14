@@ -25,17 +25,17 @@
 tx_rnbase::load('tx_t3sportsbet_util_FeUserMarker');
 
 /**
- * Viewklasse für die Darstellung von Tipplisten
+ * Viewklasse für die Darstellung von Tipplisten.
  */
 class tx_t3sportsbet_views_BetList extends \Sys25\RnBase\Frontend\View\Marker\BaseView
 {
-
     /**
-     * Erstellt die Ausgabe für die Liste der Tiprunden
+     * Erstellt die Ausgabe für die Liste der Tiprunden.
      *
      * @param string $template
      * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
      * @param tx_rnbase_util_FormatUtil $formatter
+     *
      * @return string
      */
     protected function createOutput($template, Sys25\RnBase\Frontend\Request\RequestInterface $request, $formatter)
@@ -55,7 +55,7 @@ class tx_t3sportsbet_views_BetList extends \Sys25\RnBase\Frontend\View\Marker\Ba
         if ($viewData->offsetExists('saved')) {
             $wrappedSubpartArray['###BETSET_SAVED###'] = [
                 '',
-                ''
+                '',
             ];
             $data['savecount'] = $viewData->offsetGet('saved');
         } else {
@@ -85,13 +85,12 @@ class tx_t3sportsbet_views_BetList extends \Sys25\RnBase\Frontend\View\Marker\Ba
             $data['ACTION_URI'] = $this->createPageUri($request);
             // Siehe tx_t3sportsbet_util_MatchMarker: Das ist nur ein Hack! Der Status sollte besser übergeben werden!
             $matchState = $request->getConfigurations()->getViewData()->offsetGet('MATCH_STATE');
-            if ($matchState == 'OPEN') {
+            if ('OPEN' == $matchState) {
                 $wrappedSubpartArray['###SAVEBUTTON###'] = [
                     '',
-                    ''
+                    '',
                 ];
-            }
-            else {
+            } else {
                 $subpartArray['###SAVEBUTTON###'] = '';
             }
         } else {
@@ -106,21 +105,22 @@ class tx_t3sportsbet_views_BetList extends \Sys25\RnBase\Frontend\View\Marker\Ba
         $markerArray = $formatter->getItemMarkerArrayWrapped($data, 'betlist.');
         tx_rnbase_util_BaseMarker::callModules($template, $markerArray, $subpartArray, $wrappedSubpartArray, $params, $formatter);
         $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
+
         return $out;
     }
 
     /**
-     *
      * @param tx_rnbase_configurations $configurations
      */
     protected function createPageUri(Sys25\RnBase\Frontend\Request\RequestInterface $request, $params = [])
     {
         $configurations = $request->getConfigurations();
         $link = $configurations->createLink();
-        $link->initByTS($configurations, $request->getConfId(). 'formUrl.', $params);
-        if ($configurations->get($request->getConfId() . 'formUrl.noCache')) {
+        $link->initByTS($configurations, $request->getConfId().'formUrl.', $params);
+        if ($configurations->get($request->getConfId().'formUrl.noCache')) {
             $link->noCache();
         }
+
         return $link->makeUrl(false);
     }
 
@@ -133,9 +133,10 @@ class tx_t3sportsbet_views_BetList extends \Sys25\RnBase\Frontend\View\Marker\Ba
             $betsets = array_values($betsets);
         }
         $listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
-        $template = $listBuilder->render($betsets, $viewData, $template, 'tx_t3sportsbet_util_BetSetMarker', $confId . 'selection.', $markerName . '_SELECTION', $formatter, array(
-            'currItem' => $currItem
+        $template = $listBuilder->render($betsets, $viewData, $template, 'tx_t3sportsbet_util_BetSetMarker', $confId.'selection.', $markerName.'_SELECTION', $formatter, array(
+            'currItem' => $currItem,
         ));
+
         return $template;
     }
 

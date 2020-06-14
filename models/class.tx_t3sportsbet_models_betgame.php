@@ -29,7 +29,6 @@ tx_rnbase::load('tx_rnbase_model_base');
  */
 class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
 {
-
     private static $instances = array();
 
     public function getTableName()
@@ -43,6 +42,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
      * bei zwei Anfragen für die selbe UID nur ein DB Zugriff erfolgt.
      *
      * @param int $uid
+     *
      * @return tx_t3sportsbet_models_betgame
      */
     public static function getBetgameInstance($uid)
@@ -51,9 +51,10 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
         if (!$uid) {
             throw new Exception('Invalid uid for betgame');
         }
-        if (! is_object(self::$instances[$uid])) {
-            self::$instances[$uid] = new tx_t3sportsbet_models_betgame($uid);
+        if (!is_object(self::$instances[$uid])) {
+            self::$instances[$uid] = new self($uid);
         }
+
         return self::$instances[$uid];
     }
 
@@ -63,8 +64,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
     }
 
     /**
-     *
-     * @return boolean
+     * @return bool
      */
     public function isDrawIfExtraTime()
     {
@@ -72,8 +72,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
     }
 
     /**
-     *
-     * @return boolean
+     * @return bool
      */
     public function isDrawIfPenalty()
     {
@@ -81,8 +80,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
     }
 
     /**
-     *
-     * @return boolean
+     * @return bool
      */
     public function isIgnoreGreenTable()
     {
@@ -90,7 +88,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
     }
 
     /**
-     * Points for exact bet
+     * Points for exact bet.
      *
      * @return int
      */
@@ -100,7 +98,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
     }
 
     /**
-     * Points for tendency bet
+     * Points for tendency bet.
      *
      * @return int
      */
@@ -110,7 +108,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
     }
 
     /**
-     * Points for tendency bet
+     * Points for tendency bet.
      *
      * @return int
      */
@@ -120,7 +118,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
     }
 
     /**
-     * Minutes to close bets before match kick off
+     * Minutes to close bets before match kick off.
      *
      * @return int
      */
@@ -130,7 +128,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
     }
 
     /**
-     * Returns the competition for a static bet game
+     * Returns the competition for a static bet game.
      *
      * @return array of tx_cfcleague_models_Competition
      */
@@ -145,11 +143,12 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
                 $ret[] = tx_cfcleague_models_Competition::getCompetitionInstance($uid);
             }
         }
+
         return $ret;
     }
 
     /**
-     * Returns the page UID
+     * Returns the page UID.
      *
      * @return int
      */
@@ -159,7 +158,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
     }
 
     /**
-     * Returns an array of existing bet sets
+     * Returns an array of existing bet sets.
      *
      * @return array of tx_t3sportsbet_models_betset
      */
@@ -170,11 +169,12 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
         $options['orderby']['BETSET.ROUND'] = 'asc';
 
         $service = tx_t3sportsbet_util_serviceRegistry::getBetService();
+
         return $service->searchBetSet($fields, $options);
     }
 
     /**
-     * Returns the number of betsets
+     * Returns the number of betsets.
      *
      * @return int
      */
@@ -185,7 +185,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
         $options['count'] = '1';
 
         $service = tx_t3sportsbet_util_serviceRegistry::getBetService();
+
         return $service->searchBetSet($fields, $options);
     }
 }
-

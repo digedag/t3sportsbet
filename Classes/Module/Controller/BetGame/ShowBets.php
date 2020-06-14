@@ -1,4 +1,5 @@
 <?php
+
 namespace Sys25\T3sportsbet\Module\Controller\BetGame;
 
 /***************************************************************
@@ -25,11 +26,12 @@ namespace Sys25\T3sportsbet\Module\Controller\BetGame;
  ***************************************************************/
 
 /**
- * Die Klasse verwaltet die Erstellung Teams für Wettbewerbe
+ * Die Klasse verwaltet die Erstellung Teams für Wettbewerbe.
  */
 class ShowBets
 {
     protected $doc;
+
     /**
      * @var \tx_rnbase_mod_IModule
      */
@@ -41,7 +43,7 @@ class ShowBets
     protected $currentRound;
 
     /**
-     * Verwaltet die Erstellung von Spielplänen von Ligen
+     * Verwaltet die Erstellung von Spielplänen von Ligen.
      *
      * @param \tx_rnbase_mod_IModule $module
      * @param \tx_t3sportsbet_models_betset $currentRound
@@ -54,8 +56,8 @@ class ShowBets
         $this->formTool = $module->getFormTool();
         $this->currentRound = $currentRound;
     }
+
     /**
-     *
      * @return string
      */
     public function handleRequest()
@@ -64,7 +66,6 @@ class ShowBets
     }
 
     /**
-     *
      * @return string
      */
     public function show()

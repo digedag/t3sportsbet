@@ -1,9 +1,10 @@
 <?php
+
 namespace Sys25\T3sportsbet\Module\Utility;
 
 /**
  * *************************************************************
- * Copyright notice
+ * Copyright notice.
  *
  * (c) 2008-2019 Rene Nitzsche (rene@system25.de)
  * All rights reserved
@@ -31,12 +32,12 @@ namespace Sys25\T3sportsbet\Module\Utility;
  */
 class AddCompetitionWizard
 {
-
     /**
-     * Handle the wizard
+     * Handle the wizard.
      *
      * @param \tx_rnbase_mod_IModule $mod
      * @param \tx_t3sportsbet_models_betgame $betgame
+     *
      * @return string
      */
     public function handleRequest(&$mod, $betgame)
@@ -51,13 +52,15 @@ class AddCompetitionWizard
         } else {
             $out .= $this->showInfoPage($betgame);
         }
+
         return $out;
     }
 
     /**
-     * Zeigt die Infoseite mit den möglichen Optionen
+     * Zeigt die Infoseite mit den möglichen Optionen.
      *
      * @param \tx_t3sportsbet_models_betgame $betgame
+     *
      * @return string
      */
     private function showInfoPage($betgame)
@@ -68,13 +71,13 @@ class AddCompetitionWizard
         $comps = $betgame->getCompetitions();
         $options = [];
 
-        if (! count($comps)) {
+        if (!count($comps)) {
             $out .= $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_no_competition_in_betgame'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
             $options['title'] = '###LABEL_EDITBETGAME###';
             $out .= $this->formTool->createEditButton('tx_t3sportsbet_betgames', $betgame->getUid(), $options);
         } else {
             $menu = $this->getCompMenu($comps);
-            $out .= '<div><span class="selector col-md-4">' . $menu['menu'] . '</span></div><div style="clear:both;"></div>';
+            $out .= '<div><span class="selector col-md-4">'.$menu['menu'].'</span></div><div style="clear:both;"></div>';
             $out .= $this->doc->spacer(15);
             $out .= $this->formTool->createSubmit('comp2betset', '###LABEL_JOIN_COMPETITION###', $GLOBALS['LANG']->getLL('msg_join_competition'));
         }
@@ -83,8 +86,8 @@ class AddCompetitionWizard
 
         // $out .= $this->handleCompetition2Betgame($searcher->getCompetition());
         $params = [];
-        $params['params'] = '&betgame=' . $betgame->getUid();
-        $params['params'] .= '&round=' . ($betgame->getBetSetSize() + 1);
+        $params['params'] = '&betgame='.$betgame->getUid();
+        $params['params'] .= '&round='.($betgame->getBetSetSize() + 1);
         $params['title'] = '###LABEL_CREATE_BETSET###';
         $out .= $this->formTool->createNewButton('tx_t3sportsbet_betsets', $this->mod->getPid(), $params);
 
@@ -92,9 +95,10 @@ class AddCompetitionWizard
     }
 
     /**
-     * Erstellt aus dem aktuellen Wettbewerb die notwendigen Tiprunden
+     * Erstellt aus dem aktuellen Wettbewerb die notwendigen Tiprunden.
      *
      * @param \tx_t3sportsbet_models_betgame $betgame
+     *
      * @return string
      */
     private function handleCompetition2Betgame($betgame)
@@ -102,7 +106,7 @@ class AddCompetitionWizard
         $menu = $this->getCompMenu($betgame->getCompetitions());
         $compId = $menu['value'];
         $matches = $this->loadMatches($compId);
-        if (! count($matches)) {
+        if (!count($matches)) {
             return $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_no_matchs_found'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
         }
 
@@ -119,16 +123,17 @@ class AddCompetitionWizard
         // Jetzt das Datenarray anlegen
         $data = array();
         foreach ($rounds as $key => $matchUids) {
-            $data['tx_t3sportsbet_betsets']['NEW' . $key]['pid'] = $betgame->getPid();
-            $data['tx_t3sportsbet_betsets']['NEW' . $key]['betgame'] = $betgame->getUid();
-            $data['tx_t3sportsbet_betsets']['NEW' . $key]['t3matches'] = 'tx_cfcleague_games_' . implode(',tx_cfcleague_games_', $matchUids);
-            $data['tx_t3sportsbet_betsets']['NEW' . $key]['status'] = 0;
-            $data['tx_t3sportsbet_betsets']['NEW' . $key]['round'] = $key;
-            $data['tx_t3sportsbet_betsets']['NEW' . $key]['round_name'] = $key . ' ###LABEL_ROUNDNAMEDEFAULT###';
+            $data['tx_t3sportsbet_betsets']['NEW'.$key]['pid'] = $betgame->getPid();
+            $data['tx_t3sportsbet_betsets']['NEW'.$key]['betgame'] = $betgame->getUid();
+            $data['tx_t3sportsbet_betsets']['NEW'.$key]['t3matches'] = 'tx_cfcleague_games_'.implode(',tx_cfcleague_games_', $matchUids);
+            $data['tx_t3sportsbet_betsets']['NEW'.$key]['status'] = 0;
+            $data['tx_t3sportsbet_betsets']['NEW'.$key]['round'] = $key;
+            $data['tx_t3sportsbet_betsets']['NEW'.$key]['round_name'] = $key.' ###LABEL_ROUNDNAMEDEFAULT###';
         }
         $tce = \Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
         $out .= $GLOBALS['LANG']->getLL('msg_add_competition_finished');
+
         return (strlen($out)) ? $this->mod->doc->section('###LABEL_INFO###:', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO) : '';
     }
 
@@ -142,6 +147,7 @@ class AddCompetitionWizard
         $options['orderby']['MATCH.DATE'] = 'ASC';
         $matchTable->getFields($fields, $options);
         $service = \tx_cfcleaguefe_util_ServiceRegistry::getMatchService();
+
         return $service->search($fields, $options);
     }
 
@@ -151,6 +157,7 @@ class AddCompetitionWizard
         foreach ($comps as $comp) {
             $menuData[$comp->getUid()] = $comp->getName();
         }
+
         return $this->formTool->showMenu($this->mod->getPid(), 'bettools', $this->mod->getName(), $menuData);
     }
 }

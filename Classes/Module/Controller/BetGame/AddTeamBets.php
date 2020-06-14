@@ -1,4 +1,5 @@
 <?php
+
 namespace Sys25\T3sportsbet\Module\Controller\BetGame;
 
 /***************************************************************
@@ -40,7 +41,6 @@ class AddTeamBets
     protected $currentRound;
 
     /**
-     *
      * @param \tx_rnbase_mod_IModule $module
      * @param \tx_t3sportsbet_models_betset $currentRound
      */
@@ -51,7 +51,6 @@ class AddTeamBets
     }
 
     /**
-     *
      * @return string
      */
     public function handleRequest()
@@ -59,11 +58,12 @@ class AddTeamBets
         $out = '';
         $out .= $this->handleResetTeamBets($this->currentRound);
         $out .= $this->handleShowTeamBets($this->currentRound);
+
         return $out;
     }
 
     /**
-     * Ausführung des Requests
+     * Ausführung des Requests.
      *
      * @return string
      */
@@ -71,7 +71,7 @@ class AddTeamBets
     {
         $options = [];
         $options['title'] = '###LABEL_BTN_NEWTEAMBET###';
-        $options['params'] = '&defVals[tx_t3sportsbet_teamquestions][betset]=tx_t3sportsbet_betsets_' . $this->currentRound->getUid();
+        $options['params'] = '&defVals[tx_t3sportsbet_teamquestions][betset]=tx_t3sportsbet_betsets_'.$this->currentRound->getUid();
         $options['linker'][] = \tx_rnbase::makeInstance('tx_t3sportsbet_mod1_link_TeamBets');
 
         $lister = \tx_rnbase::makeInstance('tx_t3sportsbet_mod1_lister_TeamQuestion', $this->module, $options);
@@ -79,7 +79,7 @@ class AddTeamBets
 
         $list = $lister->getResultList();
         $out .= $this->module->getDoc()->spacer(10);
-        $out .= $list['pager'] . "\n<div style=\"clear:both;\"></div>\n" . $list['table'];
+        $out .= $list['pager']."\n<div style=\"clear:both;\"></div>\n".$list['table'];
         $out .= $this->getFormTool()->createNewButton('tx_t3sportsbet_teamquestions', $this->currentRound->getProperty('pid'), $options);
         $out .= $this->module->getDoc()->spacer(10);
 
@@ -87,15 +87,16 @@ class AddTeamBets
     }
 
     /**
-     * Show a list of bets for a team question
+     * Show a list of bets for a team question.
      *
      * @param \tx_t3sportsbet_models_betset $currBetSet
+     *
      * @return string
      */
     private function handleShowTeamBets($currBetSet)
     {
         $teamQuestionUid = $this->module->getFormTool()->getStoredRequestData('showTeamBets', [], $this->module->getName());
-        if ($teamQuestionUid == 0) {
+        if (0 == $teamQuestionUid) {
             return '';
         }
 
@@ -111,34 +112,37 @@ class AddTeamBets
         $lister->setTeamQuestionUid($teamQuestionUid);
 
         $list = $lister->getResultList();
-        $out .= $list['pager'] . "\n" . $list['table'];
+        $out .= $list['pager']."\n".$list['table'];
         $out .= $this->getFormTool()->createSubmit('showTeamBets[0]', '###LABEL_CLOSE###');
-        if (! $currBetSet->isFinished())
-            $out .= $this->getFormTool()->createSubmit('resetTeamBets[' . $teamQuestion->getUid() . ']', '###LABEL_RESETBETS###', $GLOBALS['LANG']->getLL('msg_resetbets'));
+        if (!$currBetSet->isFinished()) {
+            $out .= $this->getFormTool()->createSubmit('resetTeamBets['.$teamQuestion->getUid().']', '###LABEL_RESETBETS###', $GLOBALS['LANG']->getLL('msg_resetbets'));
+        }
 
         $out .= '<hr />';
         $headline = strip_tags($teamQuestion->getQuestion());
+
         return $this->module->getDoc()->section($headline, $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
     }
 
     /**
-     * Show a list of bets for a team question
+     * Show a list of bets for a team question.
      *
      * @param \tx_t3sportsbet_models_betset $currBetSet
+     *
      * @return string
      */
     private function handleResetTeamBets($currBetSet)
     {
         $data = \Tx_Rnbase_Utility_T3General::_GP('resetTeamBets');
-        if (! is_array($data)) {
+        if (!is_array($data)) {
             return '';
         }
-        list ($itemid,) = each($data);
+        list($itemid) = each($data);
         \tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->resetTeamBets($itemid);
     }
 
     /**
-     * Liefert das FormTool
+     * Liefert das FormTool.
      *
      * @return \tx_rnbase_util_FormTool
      */

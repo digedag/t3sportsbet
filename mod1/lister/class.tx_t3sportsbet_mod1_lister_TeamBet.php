@@ -24,11 +24,10 @@
  ***************************************************************/
 
 /**
- * List team bets
+ * List team bets.
  */
 class tx_t3sportsbet_mod1_lister_TeamBet
 {
-
     private $mod;
 
     private $data;
@@ -38,7 +37,7 @@ class tx_t3sportsbet_mod1_lister_TeamBet
     private $teamQuestionUid;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param tx_rnbase_mod_IModule $mod
      * @param array $options
@@ -49,7 +48,7 @@ class tx_t3sportsbet_mod1_lister_TeamBet
     }
 
     /**
-     * Init object
+     * Init object.
      *
      * @param tx_rnbase_mod_IModule $mod
      * @param array $options
@@ -62,18 +61,17 @@ class tx_t3sportsbet_mod1_lister_TeamBet
         $this->resultSize = 0;
         $this->data = \Tx_Rnbase_Utility_T3General::_GP('searchdata');
 
-        if (! isset($options['nopersist'])) {
+        if (!isset($options['nopersist'])) {
             $this->SEARCH_SETTINGS = \Tx_Rnbase_Backend_Utility::getModuleData([
-                'searchterm' => ''
+                'searchterm' => '',
             ], $this->data, $this->mod->getName());
-        }
-        else {
+        } else {
             $this->SEARCH_SETTINGS = $this->data;
         }
     }
 
     /**
-     * TODO: Returns the complete search form
+     * TODO: Returns the complete search form.
      */
     public function getSearchForm()
     {
@@ -81,7 +79,6 @@ class tx_t3sportsbet_mod1_lister_TeamBet
     }
 
     /**
-     *
      * @return tx_rnbase_mod_IModule
      */
     private function getModule()
@@ -94,8 +91,6 @@ class tx_t3sportsbet_mod1_lister_TeamBet
         $this->teamQuestionUid = $uid;
     }
 
-    /**
-     */
     public function getResultList()
     {
         $pager = tx_rnbase::makeInstance('tx_rnbase_util_BEPager', 'teamBetPager', $this->getMod()->getName(), $this->getMod()->getPid());
@@ -103,14 +98,14 @@ class tx_t3sportsbet_mod1_lister_TeamBet
 
         // Set options
         $options = [
-            'count' => 1
+            'count' => 1,
         ];
 
         $fields = [];
         // Set filter
         if ($this->teamQuestionUid) {
             $fields['TEAMBET.QUESTION'] = [
-                OP_EQ_INT => $this->teamQuestionUid
+                OP_EQ_INT => $this->teamQuestionUid,
             ];
         }
 
@@ -132,12 +127,13 @@ class tx_t3sportsbet_mod1_lister_TeamBet
         $ret['table'] = $content;
         $ret['totalsize'] = $cnt;
         $pagerData = $pager->render();
-        $ret['pager'] .= '<div class="pager"><span class="col-md-2">' . $pagerData['limits'] . '</span><span class="col-md-2">' . $pagerData['pages'] . '</span></div>';
+        $ret['pager'] .= '<div class="pager"><span class="col-md-2">'.$pagerData['limits'].'</span><span class="col-md-2">'.$pagerData['pages'].'</span></div>';
+
         return $ret;
     }
 
     /**
-     * Start creation of result list
+     * Start creation of result list.
      *
      * @param string $content
      * @param array $items
@@ -148,29 +144,29 @@ class tx_t3sportsbet_mod1_lister_TeamBet
         $columns = [
             'uid' => [
                 'title' => 'label_uid',
-                'decorator' => $decor
+                'decorator' => $decor,
             ],
             'tstamp' => [
                 'decorator' => $decor,
-                'title' => 'label_tstamp'
+                'title' => 'label_tstamp',
             ],
             'team' => [
                 'title' => 'label_team',
-                'decorator' => $decor
+                'decorator' => $decor,
             ],
             'possiblepoints' => [
-                'title' => 'label_possiblepoints'
+                'title' => 'label_possiblepoints',
             ],
             'points' => [
-                'title' => 'label_points'
+                'title' => 'label_points',
             ],
             'finished' => [
                 'title' => 'label_finished',
-                'decorator' => $decor
+                'decorator' => $decor,
             ],
             'feuser' => [
                 'decorator' => $decor,
-                'title' => 'label_feuser'
+                'title' => 'label_feuser',
             ],
         ];
 
@@ -187,7 +183,7 @@ class tx_t3sportsbet_mod1_lister_TeamBet
 
     /**
      * Method to get the number of data records
-     * Works only if the result list has been retrieved
+     * Works only if the result list has been retrieved.
      *
      * @return int
      */
@@ -197,7 +193,7 @@ class tx_t3sportsbet_mod1_lister_TeamBet
     }
 
     /**
-     * Returns an instance of tx_rnbase_mod_IModule
+     * Returns an instance of tx_rnbase_mod_IModule.
      *
      * @return tx_rnbase_mod_IModule
      */

@@ -1,9 +1,10 @@
 <?php
+
 namespace Sys25\T3sportsbet\Module\Controller\BetGame;
 
 /**
  * *************************************************************
- * Copyright notice
+ * Copyright notice.
  *
  * (c) 2008-2019 Rene Nitzsche (rene@system25.de)
  * All rights reserved
@@ -31,18 +32,17 @@ namespace Sys25\T3sportsbet\Module\Controller\BetGame;
  */
 class AddMatches
 {
-
     /**
      * @var \tx_rnbase_mod_IModule
      */
     private $mod;
+
     /**
      * @var \tx_t3sportsbet_models_betset
      */
     protected $currentRound;
 
     /**
-     *
      * @param \tx_rnbase_mod_IModule $mod
      * @param \tx_t3sportsbet_models_betset $currBetSet
      */
@@ -53,9 +53,10 @@ class AddMatches
     }
 
     /**
-     * Ausführung des Requests
+     * Ausführung des Requests.
      *
      * @param \tx_t3sportsbet_models_betset $currBetSet
+     *
      * @return string
      */
     public function show()
@@ -63,17 +64,18 @@ class AddMatches
         $currBetSet = $this->currentRound;
         $out .= $this->handleAddCompetition();
         $competitions = $currBetSet->getBetgame()->getCompetitions();
-        if (! count($competitions)) {
+        if (!count($competitions)) {
             $out .= $this->handleNoCompetitions($currBetSet);
         } else {
             $out .= $this->handleAddMatches($currBetSet);
             $out .= $this->showAddMatches($currBetSet, $competitions);
         }
+
         return $out;
     }
 
     /**
-     * Sollte aufgerufen werden, wenn keine Wettberbe im Tipspiel zugeordnet sind
+     * Sollte aufgerufen werden, wenn keine Wettberbe im Tipspiel zugeordnet sind.
      *
      * @param \tx_t3sportsbet_models_betset $currBetSet
      */
@@ -83,11 +85,12 @@ class AddMatches
         $out .= $this->mod->getDoc()->spacer(10);
         $out .= $this->getFormTool()->form->getSoloField('tx_t3sportsbet_betgames', $currBetSet->getBetgame()->getProperty(), 'competition');
         $out .= $this->getFormTool()->createSubmit('updateBetgame', $GLOBALS['LANG']->getLL('btn_update'));
+
         return $out;
     }
 
     /**
-     * Liefert das FormTool
+     * Liefert das FormTool.
      *
      * @return \tx_rnbase_util_FormTool
      */
@@ -97,10 +100,11 @@ class AddMatches
     }
 
     /**
-     * Shows a list of matches
+     * Shows a list of matches.
      *
      * @param \tx_t3sportsbet_models_betset $currBetSet
      * @param array $competitions
+     *
      * @return string
      */
     protected function showAddMatches($currBetSet, $competitions)
@@ -129,11 +133,12 @@ class AddMatches
             // Button für Zuordnung
             $out .= $this->mod->getFormTool()->createSubmit('match2betset', '###LABEL_JOIN_MATCHES###', $GLOBALS['LANG']->getLL('msg_join_matches'));
         }
+
         return $out;
     }
 
     /**
-     * Add matches to a betset
+     * Add matches to a betset.
      *
      * @return string
      */
@@ -148,9 +153,10 @@ class AddMatches
     }
 
     /**
-     * Add matches to a betset
+     * Add matches to a betset.
      *
      * @param \tx_t3sportsbet_models_betset $currBetSet
+     *
      * @return string
      */
     private function handleAddMatches($currBetSet)
@@ -159,15 +165,16 @@ class AddMatches
         $match2set = strlen(\Tx_Rnbase_Utility_T3General::_GP('match2betset')) > 0; // Wurde der Submit-Button gedrückt?
         if ($match2set) {
             $matchUids = \Tx_Rnbase_Utility_T3General::_GP('checkEntry');
-            if (! is_array($matchUids) || ! count($matchUids)) {
-                $out = $GLOBALS['LANG']->getLL('msg_no_match_selected') . '<br/>';
+            if (!is_array($matchUids) || !count($matchUids)) {
+                $out = $GLOBALS['LANG']->getLL('msg_no_match_selected').'<br/>';
             } else {
                 // Die Spiele setzen
                 $service = \tx_t3sportsbet_util_serviceRegistry::getBetService();
                 $cnt = $service->addMatchesTCE($currBetSet, $matchUids);
-                $out = $cnt . ' ' . $GLOBALS['LANG']->getLL('msg_matches_added');
+                $out = $cnt.' '.$GLOBALS['LANG']->getLL('msg_matches_added');
             }
         }
-        return (strlen($out)) ? $this->mod->getDoc()->section('###LABEL_INFO###' . ':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO) : '';
+
+        return (strlen($out)) ? $this->mod->getDoc()->section('###LABEL_INFO###'.':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO) : '';
     }
 }

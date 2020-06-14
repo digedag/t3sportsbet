@@ -24,11 +24,10 @@
  ***************************************************************/
 
 /**
- * Diese Klasse ist für die Darstellung von Tips im Backend verantwortlich
+ * Diese Klasse ist für die Darstellung von Tips im Backend verantwortlich.
  */
 class tx_t3sportsbet_util_BetDecorator
 {
-
     public function setFormTool($formTool)
     {
         $this->formTool = $formTool;
@@ -37,31 +36,32 @@ class tx_t3sportsbet_util_BetDecorator
     public function format($value, $colName)
     {
         $ret = $value;
-        if ($colName == 'tstamp') {
+        if ('tstamp' == $colName) {
             $ret = date('H:i d.m.Y', $value);
-        } elseif ($colName == 't3matchresult') {
+        } elseif ('t3matchresult' == $colName) {
             if (is_object($value)) {
                 tx_rnbase::load('tx_cfcleaguefe_models_match');
                 $match = tx_cfcleaguefe_models_match::getMatchInstance($value->record['t3match']);
                 $ret = $match->getResult();
             }
-        } elseif ($colName == 't3match') {
+        } elseif ('t3match' == $colName) {
             tx_rnbase::load('tx_cfcleaguefe_models_match');
             $match = tx_cfcleaguefe_models_match::getMatchInstance($value);
-            $ret = $match->getHomeNameShort() . ' - ' . $match->getGuestNameShort();
+            $ret = $match->getHomeNameShort().' - '.$match->getGuestNameShort();
             $ret .= $this->formTool->createEditLink('tx_cfcleague_games', $match->uid, '');
-        } elseif ($colName == 'fe_user') {
+        } elseif ('fe_user' == $colName) {
             tx_rnbase::load('tx_t3users_models_feuser');
             $feuser = tx_t3users_models_feuser::getInstance($value);
             $ret = $feuser->getProperty('username');
             $ret .= $this->formTool->createEditLink('fe_users', $feuser->getUid(), '');
         }
-        if ($colName == 'uid') {
-            $ret = $value . ' ' . $this->formTool->createEditLink('tx_t3sportsbet_bets', $value, '');
+        if ('uid' == $colName) {
+            $ret = $value.' '.$this->formTool->createEditLink('tx_t3sportsbet_bets', $value, '');
         }
-        if ($colName == 'bet') {
-            $ret = (is_object($value)) ? $value->record['goals_home'] . ':' . $value->record['goals_guest'] : '-';
+        if ('bet' == $colName) {
+            $ret = (is_object($value)) ? $value->record['goals_home'].':'.$value->record['goals_guest'] : '-';
         }
+
         return $ret;
     }
 }

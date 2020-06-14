@@ -27,24 +27,24 @@ tx_rnbase::load('tx_rnbase_util_ListBuilder');
 tx_rnbase::load('tx_rnbase_util_Templates');
 
 /**
- * Viewklasse für die Darstellung der Bestenliste
+ * Viewklasse für die Darstellung der Bestenliste.
  */
 class tx_t3sportsbet_views_HighScore extends \Sys25\RnBase\Frontend\View\Marker\BaseView
 {
     /**
-     *
      * @param string $template
      * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
      * @param tx_rnbase_util_FormatUtil $formatter
+     *
      * @return string
      */
     protected function createOutput($template, Sys25\RnBase\Frontend\Request\RequestInterface $request, $formatter)
     {
         $viewData = $request->getViewContext();
         // Wir holen die Daten von der Action ab
-        $betgame = & $viewData->offsetGet('betgame');
-        $userPoints = & $viewData->offsetGet('userPoints');
-        $currUserPoints = & $viewData->offsetGet('currUserPoints');
+        $betgame = &$viewData->offsetGet('betgame');
+        $userPoints = &$viewData->offsetGet('userPoints');
+        $currUserPoints = &$viewData->offsetGet('currUserPoints');
         $userSize = $viewData->offsetGet('userSize');
 
         // Wenn Selectbox für Tiprunde gezeigt werden soll, dann Abschnitt erstellen
@@ -69,23 +69,25 @@ class tx_t3sportsbet_views_HighScore extends \Sys25\RnBase\Frontend\View\Marker\
 
         tx_rnbase_util_BaseMarker::callModules($template, $markerArray, $subpartArray, $wrappedSubpartArray, $params, $formatter);
         $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
+
         return $out;
     }
 
     protected function _addCurrUser($currUserPoints, $template, &$formatter, $confId, $marker)
     {
-        if (! isset($currUserPoints['uid']) || ! $currUserPoints['uid']) {
+        if (!isset($currUserPoints['uid']) || !$currUserPoints['uid']) {
             return '';
         }
         $feuser = tx_t3users_models_feuser::getInstance($currUserPoints['uid']);
-        if (! $feuser->isValid()) {
+        if (!$feuser->isValid()) {
             return '';
         }
         $this->setAddUserData($feuser, $currUserPoints);
 
         $subpartArray = $wrappedSubpartArray = [];
-        $markerArray = $formatter->getItemMarkerArrayWrapped($feuser->getProperty(), $confId, 0, $marker . '_', $feuser->getColumnNames());
+        $markerArray = $formatter->getItemMarkerArrayWrapped($feuser->getProperty(), $confId, 0, $marker.'_', $feuser->getColumnNames());
         $template = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
+
         return $template;
     }
 
@@ -93,12 +95,13 @@ class tx_t3sportsbet_views_HighScore extends \Sys25\RnBase\Frontend\View\Marker\
      * Return feuser objects for point list.
      *
      * @param array $userPoints
+     *
      * @return array
      */
     protected function getUsers($userPoints, $userSize)
     {
         $users = array();
-        for ($i = 0, $cnt = count($userPoints); $i < $cnt; $i ++) {
+        for ($i = 0, $cnt = count($userPoints); $i < $cnt; ++$i ) {
             // Wenn hier ein User gelöscht wurde, dann... :-(
             $feuser = tx_t3users_models_feuser::getInstance($userPoints[$i]['uid']);
             $this->setAddUserData($feuser, $userPoints[$i]);
@@ -107,11 +110,11 @@ class tx_t3sportsbet_views_HighScore extends \Sys25\RnBase\Frontend\View\Marker\
             // $feuser->record['betmark'] = $userPoints[$i]['mark'];
             $users[] = $feuser;
         }
+
         return $users;
     }
 
     /**
-     *
      * @param \tx_t3users_models_feuser $feuser
      * @param array $data
      */
@@ -133,9 +136,10 @@ class tx_t3sportsbet_views_HighScore extends \Sys25\RnBase\Frontend\View\Marker\
             $betsets = array_values($betsets);
         }
         $listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
-        $template = $listBuilder->render($betsets, $viewData, $template, 'tx_t3sportsbet_util_BetSetMarker', $confId . 'selection.', $markerName . '_SELECTION', $formatter, array(
-            'currItem' => $currItem
+        $template = $listBuilder->render($betsets, $viewData, $template, 'tx_t3sportsbet_util_BetSetMarker', $confId.'selection.', $markerName.'_SELECTION', $formatter, array(
+            'currItem' => $currItem,
         ));
+
         return $template;
     }
 

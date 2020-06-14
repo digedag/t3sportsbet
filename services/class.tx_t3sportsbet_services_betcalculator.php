@@ -24,17 +24,15 @@
 tx_rnbase::load('Tx_Rnbase_Service_Base');
 
 /**
- * This service calculates the points for a bet
+ * This service calculates the points for a bet.
  *
  * @author Rene Nitzsche
  */
 class tx_t3sportsbet_services_betcalculator extends Tx_Rnbase_Service_Base
 {
-
     /**
-     *
-     * @param tx_t3sportsbet_models_betgame $betgame            
-     * @param tx_cfcleaguefe_models_match $match            
+     * @param tx_t3sportsbet_models_betgame $betgame
+     * @param tx_cfcleaguefe_models_match $match
      */
     public function getGoals($betgame, $match)
     {
@@ -44,25 +42,26 @@ class tx_t3sportsbet_services_betcalculator extends Tx_Rnbase_Service_Base
         $mpart = ($match->isPenalty() && $betgame->isDrawIfPenalty()) ? 'et' : $mpart;
         $goalsHome = $match->getGoalsHome($mpart);
         $goalsGuest = $match->getGoalsGuest($mpart);
+
         return array(
             $goalsHome,
-            $goalsGuest
+            $goalsGuest,
         );
     }
 
     /**
-     * Calculates the points for a bet
+     * Calculates the points for a bet.
      *
-     * @param tx_t3sportsbet_models_betgame $betGame            
-     * @param tx_t3sportsbet_models_bet $bet            
+     * @param tx_t3sportsbet_models_betgame $betGame
+     * @param tx_t3sportsbet_models_bet $bet
      */
     public function calculatePoints($betgame, $bet)
     {
         $match = $bet->getMatch();
-        
+
         // TODO: GreenTable kann noch nicht ermittelt werden...
         // 1. Schritt: Spielergebnis ermitteln
-        list ($goalsHome, $goalsGuest) = $this->getGoals($betgame, $match);
+        list($goalsHome, $goalsGuest) = $this->getGoals($betgame, $match);
         $ret = 0;
         // Daten für Tordifferenz vorbereiten
         $diffMatch = $goalsHome - $goalsGuest;
@@ -77,15 +76,17 @@ class tx_t3sportsbet_services_betcalculator extends Tx_Rnbase_Service_Base
             // Tendency
             $ret = $betgame->getPointsTendency();
         }
+
         return $ret;
     }
 
     public function getToto($goalsHome, $goalsGuest)
     {
         $goalsDiff = $goalsHome - $goalsGuest;
-        if ($goalsDiff == 0) {
+        if (0 == $goalsDiff) {
             return 0;
         }
+
         return ($goalsDiff < 0) ? 2 : 1;
     }
 }

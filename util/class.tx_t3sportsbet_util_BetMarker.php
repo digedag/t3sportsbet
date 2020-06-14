@@ -24,18 +24,16 @@
 tx_rnbase::load('tx_rnbase_util_BaseMarker');
 
 /**
- * Diese Klasse ist für die Erstellung von Markerarrays der Tips verantwortlich
+ * Diese Klasse ist für die Erstellung von Markerarrays der Tips verantwortlich.
  */
 class tx_t3sportsbet_util_BetMarker extends tx_rnbase_util_BaseMarker
 {
-
     public function __construct($options = array())
     {
         $this->options = $options;
     }
 
     /**
-     *
      * @param string $template
      *            das HTML-Template
      * @param tx_t3sportsbet_models_bet $bet
@@ -46,17 +44,19 @@ class tx_t3sportsbet_util_BetMarker extends tx_rnbase_util_BaseMarker
      *            Pfad der TS-Config des Vereins, z.B. 'listView.round.'
      * @param string $marker
      *            Name des Markers für die Tipprunde, z.B. ROUND
-     * @return String das geparste Template
+     *
+     * @return string das geparste Template
      */
     public function parseTemplate($template, &$bet, &$formatter, $confId, $marker = 'BET')
     {
-        if (! is_object($bet)) {
+        if (!is_object($bet)) {
             // Ist kein Verein vorhanden wird ein leeres Objekt verwendet.
             $bet = self::getEmptyInstance('tx_t3sportsbet_models_bet');
         }
         // Es wird das MarkerArray mit den Daten des Tips gefüllt.
-        $markerArray = $formatter->getItemMarkerArrayWrapped($bet->record, $confId, 0, $marker . '_', $bet->getColumnNames());
+        $markerArray = $formatter->getItemMarkerArrayWrapped($bet->record, $confId, 0, $marker.'_', $bet->getColumnNames());
         $out = $formatter->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
+
         return $out;
     }
 }
