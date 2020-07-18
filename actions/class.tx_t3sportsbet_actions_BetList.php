@@ -74,7 +74,7 @@ class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\A
             return $rounds;
         }
         $uids = Tx_Rnbase_Utility_Strings::intExplode(',', $uids);
-        for ($i = 0, $cnt = count($uids); $i < $cnt; ++$i ) {
+        for ($i = 0, $cnt = count($uids); $i < $cnt; ++$i) {
             $rounds[] = tx_t3sportsbet_models_betset::getBetsetInstance($uids[$i]);
         }
 
