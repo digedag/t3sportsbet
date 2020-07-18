@@ -159,7 +159,7 @@ GROUP BY feuser, betset
         $bets = $this->searchBet($fields, $options);
         $ret = 0;
         $service = tx_t3sportsbet_util_serviceRegistry::getCalculatorService();
-        for ($i = 0, $cnt = count($bets); $i < $cnt; ++$i ) {
+        for ($i = 0, $cnt = count($bets); $i < $cnt; ++$i) {
             $bet = $bets[$i];
             $values = [
                 'finished' => 1,
@@ -207,7 +207,7 @@ GROUP BY feuser, betset
             0,
             0,
         );
-        for ($i = 1, $cnt = count($matches); $i < $cnt; ++$i ) {
+        for ($i = 1, $cnt = count($matches); $i < $cnt; ++$i) {
             $match = $matches[$i];
             if ($match->getDate() < $low[0]) {
                 $low = array(
@@ -286,7 +286,7 @@ GROUP BY feuser, betset
         $options['what'] = 'uid';
         $result = $service->search($fields, $options);
         $ret = array();
-        for ($i = 0, $cnt = count($result); $i < $cnt; ++$i ) {
+        for ($i = 0, $cnt = count($result); $i < $cnt; ++$i) {
             $ret[] = $result[$i]['uid'];
         }
 
@@ -502,7 +502,7 @@ GROUP BY feuser, betset
         $userIdx = array();
         $rank = 0;
         $lastPoints = 0;
-        for ($i = 0, $cnt = count($rows); $i < $cnt; ++$i ) {
+        for ($i = 0, $cnt = count($rows); $i < $cnt; ++$i) {
             $row = &$rows[$i];
             // Check rank
             if ($lastPoints != $row['betpoints']) {

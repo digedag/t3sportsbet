@@ -49,7 +49,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
         $bets = $this->searchTeamBet($fields, $options);
         // Für jeden Tip die TeamQuestion holen. Danach die Teams vergleichen
         $ret = 0;
-        for ($i = 0, $cnt = count($bets); $i < $cnt; ++$i ) {
+        for ($i = 0, $cnt = count($bets); $i < $cnt; ++$i) {
             $bet = $bets[$i];
             $question = $this->loadTeamQuestion($bet->getTeamQuestionUid());
             $values = [];
@@ -240,7 +240,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
         foreach ($ret as $row) {
             $sum += $row['betcount'];
         }
-        for ($i = 0, $cnt = count($ret); $i < $cnt; ++$i ) {
+        for ($i = 0, $cnt = count($ret); $i < $cnt; ++$i) {
             $ret[$i]['betcountp'] = round($ret[$i]['betcount'] / $sum * 100);
         }
 

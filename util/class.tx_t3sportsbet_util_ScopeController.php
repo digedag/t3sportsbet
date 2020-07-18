@@ -121,7 +121,7 @@ class tx_t3sportsbet_util_ScopeController
         $uids = Tx_Rnbase_Utility_Strings::intExplode(',', $uids);
         $rounds = array();
         tx_rnbase::load('tx_t3sportsbet_models_betgame');
-        for ($i = 0, $cnt = count($uids); $i < $cnt; ++$i ) {
+        for ($i = 0, $cnt = count($uids); $i < $cnt; ++$i) {
             $rounds[] = tx_t3sportsbet_models_betgame::getBetgameInstance($uids[$i]);
         }
 
@@ -133,7 +133,7 @@ class tx_t3sportsbet_util_ScopeController
         $uids = Tx_Rnbase_Utility_Strings::intExplode(',', $uids);
         $rounds = array();
         tx_rnbase::load('tx_t3sportsbet_models_betset');
-        for ($i = 0, $cnt = count($uids); $i < $cnt; ++$i ) {
+        for ($i = 0, $cnt = count($uids); $i < $cnt; ++$i) {
             $rounds[] = tx_t3sportsbet_models_betset::getBetsetInstance($uids[$i]);
         }
 

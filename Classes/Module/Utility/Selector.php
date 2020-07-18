@@ -31,6 +31,7 @@ namespace Sys25\T3sportsbet\Module\Utility;
 class Selector
 {
     private $doc;
+
     private $MCONF;
 
     private $formTool;

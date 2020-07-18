@@ -101,7 +101,7 @@ class tx_t3sportsbet_views_HighScore extends \Sys25\RnBase\Frontend\View\Marker\
     protected function getUsers($userPoints, $userSize)
     {
         $users = array();
-        for ($i = 0, $cnt = count($userPoints); $i < $cnt; ++$i ) {
+        for ($i = 0, $cnt = count($userPoints); $i < $cnt; ++$i) {
             // Wenn hier ein User gelöscht wurde, dann... :-(
             $feuser = tx_t3users_models_feuser::getInstance($userPoints[$i]['uid']);
             $this->setAddUserData($feuser, $userPoints[$i]);

@@ -151,7 +151,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
         $trendData = tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->getBetTrend($item);
         // Jetzt die TeamDaten einbauen
         $teams = array();
-        for ($i = 0, $cnt = count($trendData); $i < $cnt; ++$i ) {
+        for ($i = 0, $cnt = count($trendData); $i < $cnt; ++$i) {
             $teamId = $trendData[$i]['team'];
             $team = tx_cfcleague_util_ServiceRegistry::getTeamService()->getTeam($teamId);
             if (!$team) {
