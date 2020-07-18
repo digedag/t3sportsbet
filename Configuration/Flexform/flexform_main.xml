@@ -24,22 +24,16 @@
 								<renderType>selectMultipleSideBySide</renderType>
 								<items type="array">
 									<numIndex index="5" type="array">
-										<numIndex index="0">LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.action.ScopeSelection
-										</numIndex>
-										<numIndex index="1">tx_t3sportsbet_actions_ScopeSelection
-										</numIndex>
+										<numIndex index="0">LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.action.ScopeSelection</numIndex>
+										<numIndex index="1">tx_t3sportsbet_actions_ScopeSelection</numIndex>
 									</numIndex>
 									<numIndex index="10" type="array">
-										<numIndex index="0">LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.action.BetList
-										</numIndex>
-										<numIndex index="1">tx_t3sportsbet_actions_BetList
-										</numIndex>
+										<numIndex index="0">LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.action.BetList</numIndex>
+										<numIndex index="1">tx_t3sportsbet_actions_BetList</numIndex>
 									</numIndex>
 									<numIndex index="20" type="array">
-										<numIndex index="0">LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.action.HighScore
-										</numIndex>
-										<numIndex index="1">tx_t3sportsbet_actions_HighScore
-										</numIndex>
+										<numIndex index="0">LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.action.HighScore</numIndex>
+										<numIndex index="1">tx_t3sportsbet_actions_HighScore</numIndex>
 									</numIndex>
 								</items>
 								<multiple>0</multiple>
@@ -79,8 +73,7 @@
 								<renderType>selectMultipleSideBySide</renderType>
 								<items>
 									<numIndex index="0">
-										<numIndex index="0">LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.betset.all
-										</numIndex>
+										<numIndex index="0">LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.flexform.betset.all</numIndex>
 										<numIndex index="1">0</numIndex>
 									</numIndex>
 								</items>
