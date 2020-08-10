@@ -30,7 +30,7 @@ class tx_t3sportsbet_actions_Summary extends \Sys25\RnBase\Frontend\Controller\A
      *
      * @return string error msg or null
      */
-    protected function handleRequest(\Sys25\RnBase\Frontend\Request\RequestInterface $request)
+    protected function handleRequest(Sys25\RnBase\Frontend\Request\RequestInterface $request)
     {
         // Über die viewdata können wir Daten in den View transferieren
         $request->getViewContext()->offsetSet('data', 'test');

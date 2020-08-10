@@ -33,7 +33,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
 
     public static $teamMarker = null;
 
-    public function __construct($options = array())
+    public function __construct($options = [])
     {
         $this->options = $options;
     }
@@ -150,7 +150,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
     {
         $trendData = tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->getBetTrend($item);
         // Jetzt die TeamDaten einbauen
-        $teams = array();
+        $teams = [];
         for ($i = 0, $cnt = count($trendData); $i < $cnt; ++$i) {
             $teamId = $trendData[$i]['team'];
             $team = tx_cfcleague_util_ServiceRegistry::getTeamService()->getTeam($teamId);
@@ -180,9 +180,9 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
             } catch (Exception $e) {
                 $chart = 'Not possible';
                 tx_rnbase::load('tx_rnbase_util_Logger');
-                tx_rnbase_util_Logger::warn('Chart creation failed!', 'cfc_league_fe', array(
+                tx_rnbase_util_Logger::warn('Chart creation failed!', 'cfc_league_fe', [
                     'Exception' => $e->getMessage(),
-                ));
+                ]);
             }
         }
 
@@ -197,9 +197,9 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
     {
         $dp = tx_rnbase::makeInstance('tx_rnbase_plot_DataProvider');
         $dp->setChartTitle($item->getQuestion());
-        $dataSet = array();
+        $dataSet = [];
         foreach ($teams as $team) {
-            $data = array();
+            $data = [];
             $data['x'] = $team->record['name'];
             $data['y'] = $team->record['betcount'];
             $dataSet[] = $data;
@@ -258,7 +258,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
     {
         $children = tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->getTeams4TeamQuestion($item);
         // Den aktuellen Tip des Users mitgeben
-        $options = array();
+        $options = [];
         $options['teambet'] = $this->findCurrentBet($item, $this->options['feuser']);
         $listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
         $out = $listBuilder->render($children, false, $template, 'tx_cfcleaguefe_util_TeamMarker', $confId, $markerPrefix, $formatter, $options);

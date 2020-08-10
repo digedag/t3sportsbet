@@ -35,11 +35,11 @@ class tx_t3sportsbet_hooks_tce
     public function getMainFields_preProcess($table, &$row, $tceform)
     {
         if ('tx_t3sportsbet_betsets' == $table) {
-            $betgame = intval(Tx_Rnbase_Utility_T3General::_GP('betgame'));
+            $betgame = (int) (Tx_Rnbase_Utility_T3General::_GP('betgame'));
             if ($betgame) {
                 $row['betgame'] = $betgame;
             }
-            $round = intval(Tx_Rnbase_Utility_T3General::_GP('round'));
+            $round = (int) (Tx_Rnbase_Utility_T3General::_GP('round'));
             if ($round) {
                 $row['round'] = $round;
             }

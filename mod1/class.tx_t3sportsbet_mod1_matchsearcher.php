@@ -47,7 +47,7 @@ class tx_t3sportsbet_mod1_matchsearcher
     /** @var tx_cfcleague_models_Competition */
     private $currComp;
 
-    public function __construct($mod, \tx_t3sportsbet_models_betset $currentRound, $options = [])
+    public function __construct($mod, tx_t3sportsbet_models_betset $currentRound, $options = [])
     {
         $this->init($mod, $currentRound, $options);
     }

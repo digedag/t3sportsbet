@@ -61,9 +61,9 @@ class tx_t3sportsbet_views_ScopeSelection extends \Sys25\RnBase\Frontend\View\Ma
             $betsets = array_values($betsets);
         }
         $listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
-        $template = $listBuilder->render($betsets, $viewData, $template, 'tx_t3sportsbet_util_BetSetMarker', $confId, $markerName, $formatter, array(
+        $template = $listBuilder->render($betsets, $viewData, $template, 'tx_t3sportsbet_util_BetSetMarker', $confId, $markerName, $formatter, [
             'currItem' => $currItem,
-        ));
+        ]);
 
         return $template;
     }

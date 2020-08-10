@@ -146,7 +146,7 @@ class ShowBetSet
     protected function handleResetBets($currBetSet)
     {
         $matchUids = \Tx_Rnbase_Utility_T3General::_GP('resetBets');
-        if (!is_array($matchUids)) {
+        if (!\is_array($matchUids)) {
             return;
         }
 
@@ -174,7 +174,7 @@ class ShowBetSet
     protected function handleSaveBetSet($currBetSet)
     {
         $out = '';
-        $button = strlen(\Tx_Rnbase_Utility_T3General::_GP('savebetset')) > 0;
+        $button = \strlen(\Tx_Rnbase_Utility_T3General::_GP('savebetset')) > 0;
         if ($button) {
             $data = \Tx_Rnbase_Utility_T3General::_GP('data');
             $tce = \Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
@@ -196,7 +196,7 @@ class ShowBetSet
     protected function handleAnalyzeBets($betGame)
     {
         $out = '';
-        $button = strlen(\Tx_Rnbase_Utility_T3General::_GP('analyzebets')) > 0;
+        $button = \strlen(\Tx_Rnbase_Utility_T3General::_GP('analyzebets')) > 0;
         if ($button) {
             $betsUpdated = \tx_t3sportsbet_util_serviceRegistry::getBetService()->analyzeBets($betGame);
             $betsUpdated += \tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->analyzeBets($betGame);

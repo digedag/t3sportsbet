@@ -28,7 +28,7 @@ tx_rnbase::load('tx_rnbase_util_BaseMarker');
  */
 class tx_t3sportsbet_util_BetMarker extends tx_rnbase_util_BaseMarker
 {
-    public function __construct($options = array())
+    public function __construct($options = [])
     {
         $this->options = $options;
     }

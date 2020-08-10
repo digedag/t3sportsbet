@@ -36,7 +36,7 @@ class tx_t3sportsbet_actions_ScopeSelection extends \Sys25\RnBase\Frontend\Contr
      *
      * @return string error msg or null
      */
-    protected function handleRequest(\Sys25\RnBase\Frontend\Request\RequestInterface $request)
+    protected function handleRequest(Sys25\RnBase\Frontend\Request\RequestInterface $request)
     {
         // Wir zeigen entweder die offenen oder die schon fertigen Tipps
         // Dies wird per Config festgelegt

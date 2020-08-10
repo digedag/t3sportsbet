@@ -41,7 +41,7 @@ class ItemFunctions
         if (!$config[$rowName]['pi_flexform']) {
             return;
         }
-        $flex = is_array($config[$rowName]['pi_flexform']) ? $config[$rowName]['pi_flexform'] :
+        $flex = \is_array($config[$rowName]['pi_flexform']) ? $config[$rowName]['pi_flexform'] :
             \Tx_Rnbase_Utility_T3General::xml2array($config[$rowName]['pi_flexform']);
         $betgameUid = $flex['data']['sDEF']['lDEF']['scope.betgame']['vDEF'];
         if (!$betgameUid) {
@@ -96,7 +96,7 @@ class ItemFunctions
      */
     private function loadBetset($fieldData)
     {
-        if (is_array($fieldData)) {
+        if (\is_array($fieldData)) {
             if (empty($fieldData)) {
                 return false;
             }
@@ -106,7 +106,7 @@ class ItemFunctions
         } else {
             $arr = \Tx_Rnbase_Utility_Strings::trimExplode('|', $fieldData);
             $arr = \Tx_Rnbase_Utility_Strings::trimExplode('_', $arr[0]);
-            $uid = (int) $arr[count($arr) - 1];
+            $uid = (int) $arr[\count($arr) - 1];
 
             return $uid ? \tx_rnbase::makeInstance('tx_t3sportsbet_models_betset', $uid) : false;
         }

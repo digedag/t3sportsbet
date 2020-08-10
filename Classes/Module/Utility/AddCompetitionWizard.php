@@ -45,7 +45,7 @@ class AddCompetitionWizard
         $this->mod = $mod;
         $this->doc = $mod->getDoc();
         $this->formTool = $mod->getFormTool();
-        $comp2set = strlen(\Tx_Rnbase_Utility_T3General::_GP('comp2betset')) > 0; // Wurde der Submit-Button gedrückt?
+        $comp2set = \strlen(\Tx_Rnbase_Utility_T3General::_GP('comp2betset')) > 0; // Wurde der Submit-Button gedrückt?
         $out = '';
         if ($comp2set) {
             $out .= $this->handleCompetition2Betgame($betgame);
@@ -71,7 +71,7 @@ class AddCompetitionWizard
         $comps = $betgame->getCompetitions();
         $options = [];
 
-        if (!count($comps)) {
+        if (!\count($comps)) {
             $out .= $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_no_competition_in_betgame'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
             $options['title'] = '###LABEL_EDITBETGAME###';
             $out .= $this->formTool->createEditButton('tx_t3sportsbet_betgames', $betgame->getUid(), $options);
@@ -106,14 +106,14 @@ class AddCompetitionWizard
         $menu = $this->getCompMenu($betgame->getCompetitions());
         $compId = $menu['value'];
         $matches = $this->loadMatches($compId);
-        if (!count($matches)) {
+        if (!\count($matches)) {
             return $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_no_matchs_found'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
         }
 
         $lastRound = -1;
         $rounds = [];
         foreach ($matches as $match) {
-            $round = intval($match->getProperty('round'));
+            $round = (int) ($match->getProperty('round'));
             if ($lastRound != $round) {
                 $lastRound = $round;
             }
@@ -121,7 +121,7 @@ class AddCompetitionWizard
             $rounds[$round][] = $match->getUid();
         }
         // Jetzt das Datenarray anlegen
-        $data = array();
+        $data = [];
         foreach ($rounds as $key => $matchUids) {
             $data['tx_t3sportsbet_betsets']['NEW'.$key]['pid'] = $betgame->getPid();
             $data['tx_t3sportsbet_betsets']['NEW'.$key]['betgame'] = $betgame->getUid();
@@ -134,7 +134,7 @@ class AddCompetitionWizard
         $tce->process_datamap();
         $out .= $GLOBALS['LANG']->getLL('msg_add_competition_finished');
 
-        return (strlen($out)) ? $this->mod->doc->section('###LABEL_INFO###:', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO) : '';
+        return (\strlen($out)) ? $this->mod->doc->section('###LABEL_INFO###:', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO) : '';
     }
 
     private function loadMatches($compId)
