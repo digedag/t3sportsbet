@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('TYPO3_MODE')) {
-    exit('Access denied.');
+    die('Access denied.');
 }
 
 $sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
@@ -47,43 +47,43 @@ $tx_t3sportsbet_tq = [
                 'maxitems' => 1,
             ],
         ],
-        'question' => [
+        'question' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions_question',
-            'config' => [
+            'config' => array(
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
                 'eval' => 'required,trim',
-            ],
-        ],
-        'openuntil' => [
+            ),
+        ),
+        'openuntil' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions_openuntil',
-            'config' => [
+            'config' => array(
                 'type' => 'input',
                 'size' => '12',
                 'max' => '20',
                 'eval' => 'datetime',
                 'default' => '0',
                 'checkbox' => '0',
-            ],
-        ],
-        'points' => [
+            ),
+        ),
+        'points' => array(
             'exclude' => 0,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions_points',
-            'config' => [
+            'config' => array(
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
-                'range' => [
+                'range' => array(
                     'upper' => '100',
                     'lower' => '0',
-                ],
+                ),
                 'default' => 0,
-            ],
-        ],
+            ),
+        ),
         'teams' => [
             'exclude' => 0,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions_teams',

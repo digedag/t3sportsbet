@@ -49,7 +49,7 @@ class tx_t3sportsbet_views_HighScore extends \Sys25\RnBase\Frontend\View\Marker\
 
         // Wenn Selectbox für Tiprunde gezeigt werden soll, dann Abschnitt erstellen
         $selectItems = $viewData->offsetGet('betset_select');
-        $selectItems = is_array($selectItems) ? $selectItems : [];
+        $selectItems = is_array($selectItems) ? $selectItems : array();
         $template = $this->addScope($template, $viewData, $selectItems, 'highscore.betset.', 'BETSET', $formatter);
 
         // Wir haben jetzt erstmal nur die UIDs und die Punktezahl. Die Nutzerdaten müssen erst geladen werden
@@ -100,7 +100,7 @@ class tx_t3sportsbet_views_HighScore extends \Sys25\RnBase\Frontend\View\Marker\
      */
     protected function getUsers($userPoints, $userSize)
     {
-        $users = [];
+        $users = array();
         for ($i = 0, $cnt = count($userPoints); $i < $cnt; ++$i) {
             // Wenn hier ein User gelöscht wurde, dann... :-(
             $feuser = tx_t3users_models_feuser::getInstance($userPoints[$i]['uid']);
@@ -136,9 +136,9 @@ class tx_t3sportsbet_views_HighScore extends \Sys25\RnBase\Frontend\View\Marker\
             $betsets = array_values($betsets);
         }
         $listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
-        $template = $listBuilder->render($betsets, $viewData, $template, 'tx_t3sportsbet_util_BetSetMarker', $confId.'selection.', $markerName.'_SELECTION', $formatter, [
+        $template = $listBuilder->render($betsets, $viewData, $template, 'tx_t3sportsbet_util_BetSetMarker', $confId.'selection.', $markerName.'_SELECTION', $formatter, array(
             'currItem' => $currItem,
-        ]);
+        ));
 
         return $template;
     }

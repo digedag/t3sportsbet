@@ -37,9 +37,9 @@ class tx_t3sportsbet_search_BetSetResult extends tx_rnbase_util_SearchBase
         $tableMapping['BETGAME'] = 'tx_t3sportsbet_betgames';
 
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('t3sportsbet', 'search_BetSetResult_getTableMapping_hook', [
+        tx_rnbase_util_Misc::callHook('t3sportsbet', 'search_BetSetResult_getTableMapping_hook', array(
             'tableMapping' => &$tableMapping,
-        ], $this);
+        ), $this);
 
         return $tableMapping;
     }
@@ -75,10 +75,10 @@ class tx_t3sportsbet_search_BetSetResult extends tx_rnbase_util_SearchBase
         }
 
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('t3sportsbet', 'search_BetSetResult_getJoins_hook', [
+        tx_rnbase_util_Misc::callHook('t3sportsbet', 'search_BetSetResult_getJoins_hook', array(
             'join' => &$join,
             'tableAliases' => $tableAliases,
-        ], $this);
+        ), $this);
 
         return $join;
     }

@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('TYPO3_MODE')) {
-    exit('Access denied.');
+    die('Access denied.');
 }
 
 $tx_t3sportsbet_betsets = [
@@ -53,10 +53,10 @@ $tx_t3sportsbet_betsets = [
                 'maxitems' => 1,
             ],
         ],
-        'round' => [
+        'round' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.round',
-            'config' => [
+            'config' => array(
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
@@ -66,8 +66,8 @@ $tx_t3sportsbet_betsets = [
                     'lower' => '1',
                 ],
                 'default' => 1,
-            ],
-        ],
+            ),
+        ),
         'round_name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets.round_name',

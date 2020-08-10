@@ -39,7 +39,7 @@ class tx_t3sportsbet_mod1_decorator
         foreach ($records as $record) {
             $dataArr = is_object($record) ? $record->record : $record;
 
-            $row = [];
+            $row = array();
             if (isset($options['checkbox'])) {
                 // Check if record is checkable
                 if (!is_array($options['dontcheck']) || !array_key_exists($dataArr['uid'], $options['dontcheck'])) {
@@ -92,10 +92,10 @@ class tx_t3sportsbet_mod1_decorator
             $arr[] = '&nbsp;'; // Spalte für Checkbox
         }
         foreach ($columns as $column => $data) {
-            if ((int) ($data['nocolumn'])) {
+            if (intval($data['nocolumn'])) {
                 continue;
             }
-            $arr[] = (int) ($data['notitle']) ? '' : $LANG->getLL((isset($data['title']) ? $data['title'] : $column));
+            $arr[] = intval($data['notitle']) ? '' : $LANG->getLL((isset($data['title']) ? $data['title'] : $column));
         }
         if (isset($options['linker'])) {
             $arr[] = $LANG->getLL('label_action');
@@ -110,10 +110,10 @@ class tx_t3sportsbet_mod1_decorator
         if (isset($options['linker'])) {
             $linkerArr = $options['linker'];
             if (is_array($linkerArr) && count($linkerArr)) {
-                $currentPid = (int) ($options['pid']);
+                $currentPid = intval($options['pid']);
                 foreach ($linkerArr as $linker) {
                     $out .= $linker->makeLink($obj, $formTool, $currentPid, $options);
-                    $out .= $options['linkerimplode'] ?: '<br />';
+                    $out .= $options['linkerimplode'] ? $options['linkerimplode'] : '<br />';
                 }
             }
         }

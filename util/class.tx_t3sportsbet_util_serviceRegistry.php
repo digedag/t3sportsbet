@@ -72,10 +72,10 @@ class tx_t3sportsbet_util_serviceRegistry
             if ('LLL:' === substr($title, 0, 4)) {
                 $title = $GLOBALS['LANG']->sL($title);
             }
-            $config['items'][] = [
+            $config['items'][] = array(
                 $title,
                 $subtype,
-            ];
+            );
         }
 
         return $config;

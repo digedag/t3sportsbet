@@ -100,7 +100,7 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion
         // Set options
         $options = ['count' => 1];
 
-        $fields = [];
+        $fields = array();
         // Set filter
         if ($this->betsetUid) {
             $fields['TEAMQUESTION.BETSET'] = [

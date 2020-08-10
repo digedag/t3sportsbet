@@ -173,7 +173,7 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
         if (!$dates) {
             return '';
         }
-        $matchCnt = \count($currBetSet->getMatches());
+        $matchCnt = count($currBetSet->getMatches());
         $row = [];
         $row[] = ['###LABEL_BETSETINFO###'];
         $date = $dates['low'][0];

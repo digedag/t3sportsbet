@@ -73,12 +73,12 @@ class tx_t3sportsbet_services_bet extends Tx_Rnbase_Service_Base
      */
     public function findMatchUids($betgame)
     {
-        $from = [
+        $from = array(
             'tx_t3sportsbet_betsets JOIN tx_t3sportsbet_betsets_mm ON tx_t3sportsbet_betsets_mm.uid_local = tx_t3sportsbet_betsets.uid',
             'tx_t3sportsbet_betsets',
-        ];
+        );
         $options = [];
-        $options['where'] = 'tx_t3sportsbet_betsets.betgame = '.(int) ($betgame->getUid());
+        $options['where'] = 'tx_t3sportsbet_betsets.betgame = '.intval($betgame->getUid());
 
         return Tx_Rnbase_Database_Connection::getInstance()->doSelect('tx_t3sportsbet_betsets_mm.uid_foreign as uid', $from, $options, 0);
     }
@@ -118,9 +118,9 @@ GROUP BY feuser, betset
         $ok = Tx_Rnbase_Database_Connection::getInstance()->doQuery($sqlQuery);
 
         // Jetzt die Spalte hasresults füllen
-        $values = [
+        $values = array(
             'hasresults' => 1,
-        ];
+        );
         Tx_Rnbase_Database_Connection::getInstance()->doUpdate('tx_t3sportsbet_betsets', $betgameWhere, $values);
 
         /*
@@ -163,17 +163,17 @@ GROUP BY feuser, betset
             $bet = $bets[$i];
             $values = [
                 'finished' => 1,
-                'points' => (int) ($service->calculatePoints($betGame, $bet)),
+                'points' => intval($service->calculatePoints($betGame, $bet)),
             ];
             $where = 'uid='.$bet->getUid();
             Tx_Rnbase_Database_Connection::getInstance()->doUpdate('tx_t3sportsbet_bets', $where, $values, 0);
             ++$ret;
         }
         // Hook to inform about updated bets
-        tx_rnbase_util_Misc::callHook('t3sportsbet', 'srv_Bet_analysebets_finished_hook', [
+        tx_rnbase_util_Misc::callHook('t3sportsbet', 'srv_Bet_analysebets_finished_hook', array(
             'calculatedBets' => $ret,
             'betgame' => $betGame,
-        ], $this);
+        ), $this);
 
         return $ret;
     }
@@ -192,49 +192,49 @@ GROUP BY feuser, betset
             return false;
         }
         $today = time();
-        $high = [
+        $high = array(
             $matches[0]->getDate(),
             $matches[0],
-        ];
-        $low = [
+        );
+        $low = array(
             $matches[0]->getDate(),
             $matches[0],
-        ];
-        $next = $matches[0]->getDate() > $today ? [
+        );
+        $next = $matches[0]->getDate() > $today ? array(
             $matches[0]->getDate(),
             $matches[0],
-        ] : [
+        ) : array(
             0,
             0,
-        ];
+        );
         for ($i = 1, $cnt = count($matches); $i < $cnt; ++$i) {
             $match = $matches[$i];
             if ($match->getDate() < $low[0]) {
-                $low = [
+                $low = array(
                     $match->getDate(),
                     $match,
-                ];
+                );
             }
             if ($match->getDate() >= $high[0]) {
-                $high = [
+                $high = array(
                     $match->getDate(),
                     $match,
-                ];
+                );
             }
             if ((0 == $next[0] || $match->getDate() < $next[0]) && $match->getDate() > $today) {
-                $next = [
+                $next = array(
                     $match->getDate(),
                     $match,
-                ];
+                );
             }
         }
         $next = $next[0] > 0 ? $next : 0;
 
-        return [
+        return array(
             'high' => $high,
             'low' => $low,
             'next' => $next,
-        ];
+        );
     }
 
     /**
@@ -256,17 +256,17 @@ GROUP BY feuser, betset
         }
         // Zuordnung Spiel im alten Betset entfernen
         $where = 'uid_local='.$oldBetsetUid.' AND uid_foreign='.$matchUid.' AND tablenames=\'tx_cfcleague_games\'';
-        $rows = tx_rnbase_util_DB::doUpdate('tx_t3sportsbet_betsets_mm', $where, [
+        $rows = tx_rnbase_util_DB::doUpdate('tx_t3sportsbet_betsets_mm', $where, array(
             'uid_local' => $newBetsetUid,
-        ]);
+        ));
         if (0 == $rows) {
             throw new Exception('Match ('.$matchUid.') not found in old betset ('.$oldBetsetUid.')!');
         }
         // Alle Bets auf das neue Betset umstellen
         $where = 'betset='.$oldBetsetUid.' AND t3match='.$matchUid;
-        $rows = Tx_Rnbase_Database_Connection::getInstance()->doUpdate('tx_t3sportsbet_bets', $where, [
+        $rows = Tx_Rnbase_Database_Connection::getInstance()->doUpdate('tx_t3sportsbet_bets', $where, array(
             'betset' => $newBetsetUid,
-        ]);
+        ));
 
         return $rows;
     }
@@ -279,13 +279,13 @@ GROUP BY feuser, betset
     public function findMatchUidsByBetSet($betset)
     {
         $fields = $options = [];
-        $betsetUid = is_object($betset) ? $betset->getUid() : (int) $betset;
+        $betsetUid = is_object($betset) ? $betset->getUid() : intval($betset);
         $service = tx_cfcleaguefe_util_ServiceRegistry::getMatchService();
         $fields['BETSETMM.UID_LOCAL'][OP_EQ_INT] = $betsetUid;
         $options['orderby']['BETSETMM.SORTING'] = 'asc';
         $options['what'] = 'uid';
         $result = $service->search($fields, $options);
-        $ret = [];
+        $ret = array();
         for ($i = 0, $cnt = count($result); $i < $cnt; ++$i) {
             $ret[] = $result[$i]['uid'];
         }
@@ -306,7 +306,7 @@ GROUP BY feuser, betset
             'finished' => 0,
             'points' => 0,
         ];
-        $where = 'betset='.$betset->getUid().' AND t3match='.(int) $matchUid;
+        $where = 'betset='.$betset->getUid().' AND t3match='.intval($matchUid);
         Tx_Rnbase_Database_Connection::getInstance()->doUpdate('tx_t3sportsbet_bets', $where, $values, 0);
     }
 
@@ -338,7 +338,7 @@ GROUP BY feuser, betset
     public function getBet($betset, $match, $feuser)
     {
         $fields = $options = [];
-        $ret = [];
+        $ret = array();
         if ($feuser) {
             // Ohne FE-User kann die DB-Abfragen gespart werden
             $fields['BET.BETSET'][OP_EQ_INT] = $betset->uid;
@@ -351,12 +351,12 @@ GROUP BY feuser, betset
         $bet = count($ret) ? $ret[0] : null;
         if (!$bet) {
             // No bet in database found. Create dummy instance
-            $bet = tx_rnbase::makeInstance('tx_t3sportsbet_models_bet', [
+            $bet = tx_rnbase::makeInstance('tx_t3sportsbet_models_bet', array(
                 'uid' => 0,
                 'betset' => $betset->uid,
                 'fe_user' => $feuser->uid,
                 't3match' => $match->uid,
-            ]);
+            ));
         }
 
         return $bet;
@@ -403,7 +403,7 @@ GROUP BY feuser, betset
         $fields[SEARCH_FIELD_CUSTOM] = 'tx_t3sportsbet_bets.goals_home < tx_t3sportsbet_bets.goals_guest';
         $ret['trendguest'] = $this->searchBet($fields, $options);
         $sum = $ret['trendhome'] + $ret['trenddraw'] + $ret['trendguest'];
-        $sum = $sum ?: 1;
+        $sum = $sum ? $sum : 1;
         $ret['trendhomep'] = round($ret['trendhome'] / $sum * 100);
         $ret['trenddrawp'] = round($ret['trenddraw'] / $sum * 100);
         $ret['trendguestp'] = round($ret['trendguest'] / $sum * 100);
@@ -499,7 +499,7 @@ GROUP BY feuser, betset
 
         $userIds = Tx_Rnbase_Utility_Strings::intExplode(',', $feuserUids);
         $userIds = array_flip($userIds);
-        $userIdx = [];
+        $userIdx = array();
         $rank = 0;
         $lastPoints = 0;
         for ($i = 0, $cnt = count($rows); $i < $cnt; ++$i) {
@@ -517,10 +517,10 @@ GROUP BY feuser, betset
             }
         }
 
-        return [
+        return array(
             0 => $rows,
             1 => $userIdx,
-        ];
+        );
     }
 
     public function searchBet($fields, $options)
@@ -558,7 +558,7 @@ GROUP BY feuser, betset
      */
     public function addMatchesTCE($betset, $matchUids)
     {
-        $data = [];
+        $data = array();
         tx_rnbase::load('tx_cfcleaguefe_models_match');
         $cnt = count($matchUids);
         $existingUids = $this->getMatchUids($betset);
@@ -573,7 +573,7 @@ GROUP BY feuser, betset
     private function getMatchUids($betset)
     {
         $matches = $betset->getMatches();
-        $ret = [];
+        $ret = array();
         foreach ($matches as $match) {
             $ret[] = $match->uid;
         }
@@ -591,7 +591,7 @@ GROUP BY feuser, betset
      */
     public function getRounds(&$betgame, $status, $betsetUids = '')
     {
-        $fields = [];
+        $fields = array();
         $fields['BETSET.BETGAME'][OP_EQ_INT] = $betgame->uid;
         if (trim($status)) {
             $fields['BETSET.STATUS'][OP_IN_INT] = $status;
@@ -600,7 +600,7 @@ GROUP BY feuser, betset
             $fields['BETSET.UID'][OP_IN_INT] = $betsetUids;
         }
 
-        $options = [];
+        $options = array();
         // $options['debug'] = 1;
         $options['orderby']['BETSET.ROUND'] = 'asc';
 
@@ -631,11 +631,11 @@ GROUP BY feuser, betset
             return 0;
         } // No values given
         // Der Tip muss vom selben User stammen
-        $values = [];
+        $values = array();
         $values['tstamp'] = time();
-        $values['goals_home'] = (int) ($betData['home']);
-        $values['goals_guest'] = (int) ($betData['guest']);
-        $betUid = (int) $betUid;
+        $values['goals_home'] = intval($betData['home']);
+        $values['goals_guest'] = intval($betData['guest']);
+        $betUid = intval($betUid);
         if ($betUid) {
             // Update bet
             $bet = tx_rnbase::makeInstance('tx_t3sportsbet_models_bet', $betUid);

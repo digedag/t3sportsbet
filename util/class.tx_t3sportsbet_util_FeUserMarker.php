@@ -47,9 +47,9 @@ class tx_t3sportsbet_util_FeUserMarker extends tx_t3users_util_FeUserMarker
     public function parseTemplate($template, &$feuser, &$formatter, $confId, $marker = 'FEUSER')
     {
         $template = parent::parseTemplate($template, $feuser, $formatter, $confId, $marker);
-        $markerArray = [];
-        $wrappedSubpartArray = [];
-        $subpartArray = [];
+        $markerArray = array();
+        $wrappedSubpartArray = array();
+        $subpartArray = array();
         $this->prepareLinks($feuser, $marker, $markerArray, $subpartArray, $wrappedSubpartArray, $confId, $formatter, $template);
 
         $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
@@ -69,8 +69,8 @@ class tx_t3sportsbet_util_FeUserMarker extends tx_t3users_util_FeUserMarker
      */
     protected function prepareLinks($feuser, $marker, &$markerArray, &$subpartArray, &$wrappedSubpartArray, $confId, $formatter, $template)
     {
-        $this->initLink($markerArray, $subpartArray, $wrappedSubpartArray, $formatter, $confId, 'bets', $marker, [
+        $this->initLink($markerArray, $subpartArray, $wrappedSubpartArray, $formatter, $confId, 'bets', $marker, array(
             'feuserId' => $feuser ? $feuser->getUid() : 0,
-        ]);
+        ));
     }
 }

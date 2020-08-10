@@ -43,10 +43,10 @@ class tx_t3sportsbet_services_betcalculator extends Tx_Rnbase_Service_Base
         $goalsHome = $match->getGoalsHome($mpart);
         $goalsGuest = $match->getGoalsGuest($mpart);
 
-        return [
+        return array(
             $goalsHome,
             $goalsGuest,
-        ];
+        );
     }
 
     /**
