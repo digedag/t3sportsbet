@@ -153,7 +153,7 @@ class BetCalculatorTest extends \tx_rnbase_tests_BaseTestCase
 
     private function getBet($home, $guest)
     {
-        $record = array();
+        $record = [];
         $record['uid'] = 1;
         $record['goals_home'] = $home;
         $record['goals_guest'] = $guest;
@@ -188,7 +188,7 @@ class BetCalculatorTest extends \tx_rnbase_tests_BaseTestCase
             ]
         );
         foreach ($yamlData as $key => $arr) {
-            if (isset($arr['record']) && is_array($arr['record'])) {
+            if (isset($arr['record']) && \is_array($arr['record'])) {
                 $mock = $this->getMockBuilder($clazzName)
                     ->disableOriginalConstructor()
                     ->setMethods(['getCompetition'])

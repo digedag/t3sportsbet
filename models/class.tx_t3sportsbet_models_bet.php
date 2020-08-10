@@ -60,7 +60,7 @@ class tx_t3sportsbet_models_bet extends tx_rnbase_model_base
      */
     public function getGoalsHome()
     {
-        return intval($this->getProperty('goals_home'));
+        return (int) ($this->getProperty('goals_home'));
     }
 
     /**
@@ -70,7 +70,7 @@ class tx_t3sportsbet_models_bet extends tx_rnbase_model_base
      */
     public function getGoalsGuest()
     {
-        return intval($this->getProperty('goals_guest'));
+        return (int) ($this->getProperty('goals_guest'));
     }
 
     public function getToto()

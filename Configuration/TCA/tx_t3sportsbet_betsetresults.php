@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
+    exit('Access denied.');
 }
 
 $tx_t3sportsbet_betsetresults = [
@@ -37,33 +37,33 @@ $tx_t3sportsbet_betsetresults = [
                 'maxitems' => 1,
             ],
         ],
-        'feuser' => array(
+        'feuser' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cms/locallang_tca.php:fe_users',
-            'config' => array(
+            'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
                 'allowed' => 'fe_users',
                 'size' => 1,
                 'minitems' => 1,
                 'maxitems' => 1,
-            ),
-        ),
-        'points' => array(
+            ],
+        ],
+        'points' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_bets.points',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
-                'range' => array(
+                'range' => [
                     'upper' => '1000',
                     'lower' => '0',
-                ),
+                ],
                 'default' => 0,
-            ),
-        ),
+            ],
+        ],
     ],
     'types' => [
         '0' => ['showitem' => 'betset,feuser,points'],

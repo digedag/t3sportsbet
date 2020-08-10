@@ -29,7 +29,7 @@ tx_rnbase::load('tx_rnbase_model_base');
  */
 class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
 {
-    private static $instances = array();
+    private static $instances = [];
 
     public function getTableName()
     {
@@ -104,7 +104,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
      */
     public function getPointsGoalsDiff()
     {
-        return intval($this->getProperty('points_goalsdiff'));
+        return (int) ($this->getProperty('points_goalsdiff'));
     }
 
     /**
@@ -124,7 +124,7 @@ class tx_t3sportsbet_models_betgame extends tx_rnbase_model_base
      */
     public function getLockMinutes()
     {
-        return intval($this->getProperty('lockminutes'));
+        return (int) ($this->getProperty('lockminutes'));
     }
 
     /**

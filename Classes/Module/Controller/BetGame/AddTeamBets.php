@@ -134,7 +134,7 @@ class AddTeamBets
     private function handleResetTeamBets($currBetSet)
     {
         $data = \Tx_Rnbase_Utility_T3General::_GP('resetTeamBets');
-        if (!is_array($data)) {
+        if (!\is_array($data)) {
             return '';
         }
         list($itemid) = each($data);

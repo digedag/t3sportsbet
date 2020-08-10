@@ -89,9 +89,9 @@ class tx_t3sportsbet_mod1_handler_MatchMove
     private function getCurrentMatch($mod)
     {
         $key = 'doCutMatch';
-        $arr = \Tx_Rnbase_Backend_Utility::getModuleData(array(
+        $arr = \Tx_Rnbase_Backend_Utility::getModuleData([
             $key => '',
-        ), array(), $mod->getName());
+        ], [], $mod->getName());
 
         return $arr[$key];
     }
@@ -138,7 +138,7 @@ class tx_t3sportsbet_mod1_handler_MatchMove
         $match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $currentMatchUid);
         $matchInfo = $match->getHome()->getName().'-'.$match->getGuest()->getName();
         $matchInfo = sprintf($GLOBALS['LANG']->getLL('label_paste_match'), $matchInfo);
-        $options = array();
+        $options = [];
         $options['confirm'] = $GLOBALS['LANG']->getLL('label_msg_paste_match');
         $options['hover'] = $matchInfo;
         $label = '<span class="t3-icon t3-icon-actions t3-icon-actions-document t3-icon-document-paste-after"></span>';
