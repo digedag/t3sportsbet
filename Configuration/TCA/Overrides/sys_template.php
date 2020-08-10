@@ -1,6 +1,6 @@
 <?php
 
-defined('TYPO3_MODE') || exit();
+defined('TYPO3_MODE') or die();
 
 call_user_func(function () {
     $extKey = 't3sportsbet';

@@ -29,7 +29,7 @@ tx_rnbase::load('tx_t3sportsbet_models_betgame');
  */
 class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
 {
-    private static $instances = [];
+    private static $instances = array();
 
     public function getTableName()
     {
@@ -150,7 +150,7 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
      */
     public static function getBetsetInstance($uid)
     {
-        $uid = (int) $uid;
+        $uid = intval($uid);
         if (!uid) {
             throw new Exception('Invalid uid for betset');
         }

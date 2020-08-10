@@ -36,7 +36,7 @@ class tx_t3sportsbet_util_MatchDecorator
      * @param \tx_rnbase_mod_IModule $module
      * @param \tx_t3sportsbet_models_betset $currentRound
      */
-    public function __construct($module, tx_t3sportsbet_models_betset $currentRound)
+    public function __construct($module, \tx_t3sportsbet_models_betset $currentRound)
     {
         $this->module = $module;
         $this->currentRound = $currentRound;

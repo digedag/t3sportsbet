@@ -135,7 +135,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
     public function getTeamBet($teamQuestion, $feuser)
     {
         $fields = $options = [];
-        $ret = [];
+        $ret = array();
         if ($feuser) {
             // Ohne FE-User kann die DB-Abfragen gespart werden
             $fields['TEAMBET.QUESTION'][OP_EQ_INT] = $teamQuestion->getUid();
@@ -147,11 +147,11 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
         $bet = count($ret) ? $ret[0] : null;
         if (!$bet) {
             // No bet in database found. Create dummy instance
-            $bet = tx_rnbase::makeInstance('tx_t3sportsbet_models_teambet', [
+            $bet = tx_rnbase::makeInstance('tx_t3sportsbet_models_teambet', array(
                 'uid' => 0,
                 'question' => $teamQuestion->getUid(),
                 'fe_user' => $feuser ? $feuser->getUid() : 0,
-            ]);
+            ));
         }
 
         return $bet;
@@ -189,11 +189,11 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
     public function getTeams4TeamQuestion($teamQuestion)
     {
         $srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
-        $fields = [];
+        $fields = array();
         $fields['TEAMQUESTIONMM.UID_LOCAL'][OP_EQ_INT] = $teamQuestion->getUid();
         $fields['TEAMQUESTIONMM.TABLENAMES'][OP_EQ] = 'tx_cfcleague_teams';
 
-        $options = [];
+        $options = array();
         $options['orderby']['TEAMQUESTIONMM.SORTING'] = 'asc';
 
         return $srv->searchTeams($fields, $options);
@@ -208,9 +208,9 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
     {
         // $betgame->getCompetitions();
         // Search for teams
-        $fields = [];
+        $fields = array();
         $fields['COMPETITION.UID'][OP_IN_INT] = $betgame->getProperty('competition');
-        $options = [];
+        $options = array();
         $options['distinct'] = 1;
         $options['orderby']['TEAM.NAME'] = 'asc';
         $srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
@@ -229,7 +229,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
     {
         // Wir suchen jeweils die Anzahl der Tips pro Team
         // SELECT count(team), team FROM `tx_t3sportsbet_teambets` WHERE question=1 GROUP BY team
-        $fields = [];
+        $fields = array();
         $fields['TEAMBET.QUESTION'][OP_EQ_INT] = $teamQuestion->getUid();
         $options = [];
         $options['what'] = 'count(team) AS betcount, team';
@@ -267,16 +267,16 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
             return 0;
         }
 
-        $teamUid = (int) $teamUid;
+        $teamUid = intval($teamUid);
         if (!$teamUid) {
             return 0; // No values given
         }
         // Der Tip muss vom selben User stammen
-        $values = [];
+        $values = array();
         $values['tstamp'] = time();
         $values['team'] = $teamUid;
         $values['possiblepoints'] = $teamQuestion->getPoints();
-        $betUid = (int) $betUid;
+        $betUid = intval($betUid);
         if ($betUid) {
             // Update bet
             $bet = tx_rnbase::makeInstance('tx_t3sportsbet_models_teambet', $betUid);

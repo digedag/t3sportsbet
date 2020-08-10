@@ -64,7 +64,7 @@ class AddMatches
         $currBetSet = $this->currentRound;
         $out .= $this->handleAddCompetition();
         $competitions = $currBetSet->getBetgame()->getCompetitions();
-        if (!\count($competitions)) {
+        if (!count($competitions)) {
             $out .= $this->handleNoCompetitions($currBetSet);
         } else {
             $out .= $this->handleAddMatches($currBetSet);
@@ -144,7 +144,7 @@ class AddMatches
      */
     private function handleAddCompetition()
     {
-        $buttonPressed = \strlen(\Tx_Rnbase_Utility_T3General::_GP('updateBetgame')) > 0; // Wurde der Submit-Button gedrückt?
+        $buttonPressed = strlen(\Tx_Rnbase_Utility_T3General::_GP('updateBetgame')) > 0; // Wurde der Submit-Button gedrückt?
         if ($buttonPressed) {
             $data = \Tx_Rnbase_Utility_T3General::_GP('data');
             $tce = \Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data, []);
@@ -162,10 +162,10 @@ class AddMatches
     private function handleAddMatches($currBetSet)
     {
         $out = '';
-        $match2set = \strlen(\Tx_Rnbase_Utility_T3General::_GP('match2betset')) > 0; // Wurde der Submit-Button gedrückt?
+        $match2set = strlen(\Tx_Rnbase_Utility_T3General::_GP('match2betset')) > 0; // Wurde der Submit-Button gedrückt?
         if ($match2set) {
             $matchUids = \Tx_Rnbase_Utility_T3General::_GP('checkEntry');
-            if (!\is_array($matchUids) || !\count($matchUids)) {
+            if (!is_array($matchUids) || !count($matchUids)) {
                 $out = $GLOBALS['LANG']->getLL('msg_no_match_selected').'<br/>';
             } else {
                 // Die Spiele setzen
@@ -175,6 +175,6 @@ class AddMatches
             }
         }
 
-        return (\strlen($out)) ? $this->mod->getDoc()->section('###LABEL_INFO###'.':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO) : '';
+        return (strlen($out)) ? $this->mod->getDoc()->section('###LABEL_INFO###'.':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO) : '';
     }
 }

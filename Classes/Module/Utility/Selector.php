@@ -61,14 +61,14 @@ class Selector
     public function showGameSelector(&$content, $pid, $games = 0)
     {
         // Wenn vorhanden, nehmen wir die übergebenen Wettbewerbe, sonst schauen wir auf der aktuellen Seite nach
-        $games = $games ?: $this->findGames($pid);
+        $games = $games ? $games : $this->findGames($pid);
 
         $objGames = $entries = [];
         foreach ($games as $game) {
             $objGames[$game->getUid()] = $game;
             $entries[$game->getUid()] = $game->getName();
         }
-        if (!\count($entries)) {
+        if (!count($entries)) {
             return 0;
         }
 
@@ -131,7 +131,7 @@ class Selector
         // In den Content einbauen
         // Spielrunden sind keine Objekte, die bearbeitet werden können
         $content .= $menu;
-        if (\count($idxRounds)) {
+        if (count($idxRounds)) {
             return $menuData['value'] ? $idxRounds[$menuData['value']] : 0;
         }
     }
