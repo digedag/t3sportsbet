@@ -146,10 +146,6 @@ $tx_t3sportsbet_betsets = [
     ],
 ];
 
-if (tx_rnbase_util_Extensions::isLoaded('static_info_tables')) {
-    $tx_t3sportsbet_betsets['columns']['country'] = tx_cfcleague_tca_Lookup::getCountryField();
-}
-
 if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_t3sportsbet_betsets['interface']['showRecordFieldList']);
 }
