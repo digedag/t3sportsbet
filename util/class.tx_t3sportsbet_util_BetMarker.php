@@ -21,7 +21,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_BaseMarker');
 
 /**
  * Diese Klasse ist für die Erstellung von Markerarrays der Tips verantwortlich.
@@ -54,8 +53,8 @@ class tx_t3sportsbet_util_BetMarker extends tx_rnbase_util_BaseMarker
             $bet = self::getEmptyInstance('tx_t3sportsbet_models_bet');
         }
         // Es wird das MarkerArray mit den Daten des Tips gefüllt.
-        $markerArray = $formatter->getItemMarkerArrayWrapped($bet->record, $confId, 0, $marker.'_', $bet->getColumnNames());
-        $out = $formatter->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
+        $markerArray = $formatter->getItemMarkerArrayWrapped($bet->getProperty(), $confId, 0, $marker.'_', $bet->getColumnNames());
+        $out = \tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
 
         return $out;
     }
