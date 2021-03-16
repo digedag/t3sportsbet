@@ -59,7 +59,7 @@ class tx_t3sportsbet_views_HighScore extends \Sys25\RnBase\Frontend\View\Marker\
 
         // Anzeige des aktuellen Users
         $markerArray = $subpartArray = $wrappedSubpartArray = [];
-        $subpartArray['###CURRUSER###'] = $this->_addCurrUser($currUserPoints, $formatter->cObj->getSubpart($template, '###CURRUSER###'), $formatter, 'currUser.', 'CURRUSER');
+        $subpartArray['###CURRUSER###'] = $this->_addCurrUser($currUserPoints, tx_rnbase_util_Templates::getSubpart($template, '###CURRUSER###'), $formatter, 'currUser.', 'CURRUSER');
         $template = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
 
         $params = [];
