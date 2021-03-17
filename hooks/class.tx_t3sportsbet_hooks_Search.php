@@ -1,8 +1,11 @@
 <?php
+
+use Sys25\RnBase\Database\Query\Join;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2010 Rene Nitzsche
+ *  (c) 2008-2020 Rene Nitzsche
  *  Contact: rene@system25.de
  *  All rights reserved
  *
@@ -36,7 +39,7 @@ class tx_t3sportsbet_hooks_Search
     public function getJoinsMatch($params, $parent)
     {
         if (isset($params['tableAliases']['BETSETMM'])) {
-            $params['join'] .= ' INNER JOIN tx_t3sportsbet_betsets_mm ON tx_cfcleague_games.uid = tx_t3sportsbet_betsets_mm.uid_foreign ';
+            $params['join'][] = new Join('MATCH','tx_t3sportsbet_betsets_mm', 'MATCH.uid = BETSETMM.uid_foreign', 'BETSETMM');
         }
     }
 
@@ -48,7 +51,7 @@ class tx_t3sportsbet_hooks_Search
     public function getJoinsTeam($params, $parent)
     {
         if (isset($params['tableAliases']['TEAMQUESTIONMM'])) {
-            $params['join'] .= ' INNER JOIN tx_t3sportsbet_teamquestions_mm AS TEAMQUESTIONMM ON TEAM.uid = TEAMQUESTIONMM.uid_foreign ';
+            $params['join'][] = new Join('TEAM','tx_t3sportsbet_teamquestions_mm', 'TEAM.uid = TEAMQUESTIONMM.uid_foreign', 'TEAMQUESTIONMM');
         }
     }
 }
