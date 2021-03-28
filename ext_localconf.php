@@ -7,8 +7,8 @@ if (!defined('TYPO3_MODE')) {
 $_EXTKEY = 't3sportsbet';
 
 // Hook for match search
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['search_Match_getTableMapping_hook'][] = 'tx_t3sportsbet_hooks_Search->getTableMappingMatch';
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['search_Match_getJoins_hook'][] = 'tx_t3sportsbet_hooks_Search->getJoinsMatch';
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['search_Match_getTableMapping_hook'][] = 'tx_t3sportsbet_hooks_Search->getTableMappingMatch';
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['search_Match_getJoins_hook'][] = 'tx_t3sportsbet_hooks_Search->getJoinsMatch';
 
 // Hook for team search
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['search_Team_getTableMapping_hook'][] = 'tx_t3sportsbet_hooks_Search->getTableMappingTeam';

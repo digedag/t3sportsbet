@@ -136,7 +136,7 @@ class tx_t3sportsbet_mod1_matchsearcher
         $fields = $options = [];
         $options['orderby']['MATCH.DATE'] = 'ASC';
         $matchTable->getFields($fields, $options);
-        $service = tx_cfcleaguefe_util_ServiceRegistry::getMatchService();
+        $service = tx_cfcleague_util_ServiceRegistry::getMatchService();
         $matches = $service->search($fields, $options);
         $this->resultSize = count($matches);
         $label = $this->resultSize.' '.((1 == $this->resultSize) ? $GLOBALS['LANG']->getLL('msg_found_match') : $GLOBALS['LANG']->getLL('msg_found_matches'));
@@ -165,7 +165,6 @@ class tx_t3sportsbet_mod1_matchsearcher
             return;
         }
 
-        tx_rnbase::load('tx_rnbase_mod_Tables');
         $decor = tx_rnbase::makeInstance('tx_t3sportsbet_util_MatchDecorator', $this->mod, $this->currentRound);
         $columns = [
             'uid' => [
@@ -212,10 +211,10 @@ class tx_t3sportsbet_mod1_matchsearcher
     /**
      * Returns an instance of tx_cfcleaguefe_util_MatchTable.
      *
-     * @return tx_cfcleaguefe_util_MatchTable
+     * @return tx_cfcleague_util_MatchTableBuilder
      */
     private function getMatchTable()
     {
-        return tx_rnbase::makeInstance('tx_cfcleaguefe_util_MatchTable');
+        return tx_rnbase::makeInstance('tx_cfcleague_util_MatchTableBuilder');
     }
 }
