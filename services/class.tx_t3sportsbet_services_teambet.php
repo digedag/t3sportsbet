@@ -280,10 +280,10 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
         if ($betUid) {
             // Update bet
             $bet = tx_rnbase::makeInstance('tx_t3sportsbet_models_teambet', $betUid);
-            if ($bet->record['feuser'] != $feuser->getUid()) {
+            if ($bet->getProperty('feuser') != $feuser->getUid()) {
                 return 0;
             }
-            if ($bet->record['team'] == $values['team']) {
+            if ($bet->getProperty('team') == $values['team']) {
                 return 0;
             }
             $where = 'uid='.$betUid;

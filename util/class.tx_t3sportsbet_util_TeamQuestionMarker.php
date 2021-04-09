@@ -200,8 +200,8 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
         $dataSet = array();
         foreach ($teams as $team) {
             $data = array();
-            $data['x'] = $team->record['name'];
-            $data['y'] = $team->record['betcount'];
+            $data['x'] = $team->getProperty('name');
+            $data['y'] = $team->getProperty('betcount');
             $dataSet[] = $data;
         }
         $plotId = $dp->addPlot();

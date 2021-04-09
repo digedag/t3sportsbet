@@ -639,10 +639,10 @@ GROUP BY feuser, betset
         if ($betUid) {
             // Update bet
             $bet = tx_rnbase::makeInstance('tx_t3sportsbet_models_bet', $betUid);
-            if ($bet->record['fe_user'] != $feuser->uid) {
+            if ($bet->getProperty('fe_user') != $feuser->uid) {
                 return 0;
             }
-            if ($bet->record['goals_home'] == $values['goals_home'] && $bet->record['goals_guest'] == $values['goals_guest']) {
+            if ($bet->getProperty('goals_home') == $values['goals_home'] && $bet->getProperty('goals_guest') == $values['goals_guest']) {
                 return 0;
             }
             $where = 'uid='.$betUid;
@@ -655,11 +655,11 @@ GROUP BY feuser, betset
                 return 0;
             } // There is already a bet for this match!
 
-            $values['pid'] = $betset->record['pid'];
+            $values['pid'] = $betset->getProperty('pid');
             $values['crdate'] = $values['tstamp'];
-            $values['fe_user'] = $feuser->uid;
-            $values['t3match'] = $match->uid;
-            $values['betset'] = $betset->uid;
+            $values['fe_user'] = $feuser->getUid();
+            $values['t3match'] = $match->getUid();
+            $values['betset'] = $betset->getUid();
             Tx_Rnbase_Database_Connection::getInstance()->doInsert('tx_t3sportsbet_bets', $values, 0);
         }
 

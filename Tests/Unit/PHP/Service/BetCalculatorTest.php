@@ -42,25 +42,25 @@ class BetCalculatorTest extends \tx_rnbase_tests_BaseTestCase
         // Matches
         $matches = $this->getMatches();
 
-        $bet->record['t3match'] = $matches['match_2_0']->uid;
+        $bet->setProperty('t3match', $matches['match_2_0']->uid);
         $result = $calculator->calculatePoints($betgame, $bet);
 
         $this->assertEquals(1, $result, 'Match 2:0 Bet 2:1 Points: '.$result);
 
-        $bet->record['t3match'] = $matches['match_1_1']->uid;
+        $bet->setProperty('t3match', $matches['match_1_1']->uid);
         $result = $calculator->calculatePoints($betgame, $bet);
         $this->assertEquals(0, $result, 'Match 1:1 Bet 2:1 Points: '.$result);
 
-        $bet->record['t3match'] = $matches['match_1_0']->uid;
+        $bet->setProperty('t3match', $matches['match_1_0']->uid);
         $result = $calculator->calculatePoints($betgame, $bet);
         $this->assertEquals(3, $result, 'Match 1:0 Bet 2:1 Points: '.$result);
 
-        $bet->record['t3match'] = $matches['match_1_2']->uid;
+        $bet->setProperty('t3match', $matches['match_1_2']->uid);
         $result = $calculator->calculatePoints($betgame, $bet);
         $this->assertEquals(0, $result, 'Match 1:2 Bet 2:1 Points: '.$result);
 
         $bet = $this->getBet(3, 0);
-        $bet->record['t3match'] = $matches['match_3_0']->uid;
+        $bet->setProperty('t3match', $matches['match_3_0']->uid);
         $result = $calculator->calculatePoints($betgame, $bet);
         $this->assertEquals(5, $result, 'Match 3:0 Bet 3:0 Points: '.$result);
     }
@@ -76,7 +76,7 @@ class BetCalculatorTest extends \tx_rnbase_tests_BaseTestCase
         $calculator = \tx_rnbase::makeInstance('tx_t3sportsbet_services_betcalculator');
         $matches = $this->getMatches();
         $bet = $this->getBet(3, 1);
-        $bet->record['t3match'] = $matches['match_3_1_et']->uid;
+        $bet->setProperty('t3match', $matches['match_3_1_et']->uid);
         // 3:1 n.V., Da Unentschieden bei Verlängerung aktiviert ist, gibt es keinen Punkt
         $result = $calculator->calculatePoints($betgame, $bet);
         $this->assertEquals(0, $result, 'Match 3:1 et (1:1) Bet 3:1 Points: '.$result);
@@ -84,19 +84,19 @@ class BetCalculatorTest extends \tx_rnbase_tests_BaseTestCase
         $this->assertEquals(5, $result, 'Match 3:1 et (1:1) Bet 3:1 Points: '.$result);
 
         $bet = $this->getBet(2, 2);
-        $bet->record['t3match'] = $matches['match_3_1_et']->uid;
+        $bet->setProperty('t3match', $matches['match_3_1_et']->uid);
         $result = $calculator->calculatePoints($betgame, $bet);
         $this->assertEquals(1, $result, 'Match 3:1 et (1:1) Bet 2:2 Points: '.$result);
         $result = $calculator->calculatePoints($betgame2, $bet);
         $this->assertEquals(0, $result, 'Match 3:1 et (1:1) Bet 3:1 Points: '.$result);
 
         $bet = $this->getBet(1, 1);
-        $bet->record['t3match'] = $matches['match_3_1_et']->uid;
+        $bet->setProperty('t3match', $matches['match_3_1_et']->uid);
         $result = $calculator->calculatePoints($betgame, $bet);
         $this->assertEquals(5, $result, 'Match 3:1 et (1:1) Bet 1:1 Points: '.$result);
 
         $bet = $this->getBet(2, 2);
-        $bet->record['t3match'] = $matches['match_7_6_ap']->uid;
+        $bet->setProperty('t3match', $matches['match_7_6_ap']->uid);
         $result = $calculator->calculatePoints($betgame3, $bet);
         $this->assertEquals(2, $result, 'Match 7:6 et (4:4, 3:3) Bet 2:2 Points: '.$result);
     }
@@ -112,16 +112,16 @@ class BetCalculatorTest extends \tx_rnbase_tests_BaseTestCase
         $calculator = \tx_rnbase::makeInstance('tx_t3sportsbet_services_betcalculator');
         $matches = $this->getMatches();
 
-        $bet->record['t3match'] = $matches['match_1_0']->uid;
+        $bet->setProperty('t3match', $matches['match_1_0']->uid);
         $result = $calculator->calculatePoints($betgame, $bet);
         $this->assertEquals(1, $result, 'Match 1:0 Bet 2:1 Points: '.$result);
 
-        $bet->record['t3match'] = $matches['match_1_2']->uid;
+        $bet->setProperty('t3match', $matches['match_1_2']->uid);
         $result = $calculator->calculatePoints($betgame, $bet);
         $this->assertEquals(0, $result, 'Match 1:2 Bet 2:1 Points: '.$result);
 
         $bet = $this->getBet(3, 0);
-        $bet->record['t3match'] = $matches['match_3_0']->uid;
+        $bet->setProperty('t3match', $matches['match_3_0']->uid);
         $result = $calculator->calculatePoints($betgame, $bet);
         $this->assertEquals(5, $result, 'Match 3:0 Bet 3:0 Points: '.$result);
     }
