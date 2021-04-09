@@ -67,7 +67,7 @@ class tx_t3sportsbet_util_MatchDecorator
             if (!is_object($group) || !$group->isValid()) {
                 return '';
             }
-            $name = (array_key_exists('shortname', $group->record)) ? $group->record['shortname'] : '';
+            $name = (array_key_exists('shortname', $group->record)) ? $group->getProperty('shortname') : '';
             $ret = strlen($name) ? $name : $group->getName();
         }
 

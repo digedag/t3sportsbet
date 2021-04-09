@@ -105,9 +105,6 @@ class tx_t3sportsbet_views_HighScore extends \Sys25\RnBase\Frontend\View\Marker\
             // Wenn hier ein User gelöscht wurde, dann... :-(
             $feuser = tx_t3users_models_feuser::getInstance($userPoints[$i]['uid']);
             $this->setAddUserData($feuser, $userPoints[$i]);
-            // $feuser->record['betpoints'] = $userPoints[$i]['betpoints'];
-            // $feuser->record['betrank'] = $userPoints[$i]['rank'];
-            // $feuser->record['betmark'] = $userPoints[$i]['mark'];
             $users[] = $feuser;
         }
 

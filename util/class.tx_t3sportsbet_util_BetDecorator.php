@@ -41,7 +41,7 @@ class tx_t3sportsbet_util_BetDecorator
         } elseif ('t3matchresult' == $colName) {
             if (is_object($value)) {
                 tx_rnbase::load('tx_cfcleaguefe_models_match');
-                $match = tx_cfcleaguefe_models_match::getMatchInstance($value->record['t3match']);
+                $match = tx_cfcleaguefe_models_match::getMatchInstance($value->getProperty('t3match'));
                 $ret = $match->getResult();
             }
         } elseif ('t3match' == $colName) {
@@ -59,7 +59,7 @@ class tx_t3sportsbet_util_BetDecorator
             $ret = $value.' '.$this->formTool->createEditLink('tx_t3sportsbet_bets', $value, '');
         }
         if ('bet' == $colName) {
-            $ret = (is_object($value)) ? $value->record['goals_home'].':'.$value->record['goals_guest'] : '-';
+            $ret = (is_object($value)) ? $value->getProperty('goals_home').':'.$value->getProperty('goals_guest') : '-';
         }
 
         return $ret;

@@ -53,7 +53,7 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
             $betset = self::getEmptyInstance('tx_t3sportsbet_models_betset');
         }
         $currItem = isset($this->options['currItem']) ? $this->options['currItem'] : false;
-        $betset->record['isCurrent'] = $currItem && $currItem->uid == $betset->uid;
+        $betset->setProperty('isCurrent', $currItem && $currItem->uid == $betset->uid);
         // Die Spiele einbinden.
         if ($this->containsMarker($template, $marker.'_MATCHS')) {
             $template = $this->_addMatches($template, $betset, $formatter, $confId.'match.', $marker.'_MATCH');
@@ -150,13 +150,13 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
         $currItem = isset($this->options['currItem']) ? $this->options['currItem'] : false;
         // Link bauen, wenn: kein $currItem oder $currItem != $betset
         $linkId = 'scope';
-        if (!intval($betset->record['isCurrent'])) {
+        if (!intval($betset->getProperty('isCurrent'))) {
             $this->initLink($markerArray, $subpartArray, $wrappedSubpartArray, $formatter, $confId, $linkId, $marker, array(
                 'betset' => $betset->uid,
             ));
         } else {
             $linkMarker = $marker.'_'.strtoupper($linkId).'LINK';
-            $remove = intval($formatter->configurations->get($confId.'links.'.$linkId.'.removeIfDisabled'));
+            $remove = intval($formatter->getConfigurations()->get($confId.'links.'.$linkId.'.removeIfDisabled'));
             $this->disableLink($markerArray, $subpartArray, $wrappedSubpartArray, $linkMarker, $remove > 0);
         }
     }
