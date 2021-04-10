@@ -38,7 +38,7 @@ class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\A
      *
      * @return string error msg or null
      */
-    protected function handleRequest(\Sys25\RnBase\Frontend\Request\RequestInterface $request)
+    protected function handleRequest(Sys25\RnBase\Frontend\Request\RequestInterface $request)
     {
         $parameters = $request->getParameters();
         $configurations = $request->getConfigurations();

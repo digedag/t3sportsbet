@@ -30,7 +30,7 @@ class BetCalculatorTest extends \tx_rnbase_tests_BaseTestCase
     /**
      * @group unit
      */
-    public function test_betCalculation()
+    public function testBetCalculation()
     {
         // betgame
         $betgame = $this->getBetgame(5, 3, 1);
@@ -68,7 +68,7 @@ class BetCalculatorTest extends \tx_rnbase_tests_BaseTestCase
     /**
      * @group unit
      */
-    public function test_betCalculationCup()
+    public function testBetCalculationCup()
     {
         $betgame = $this->getBetgame(5, 0, 1, 1);
         $betgame2 = $this->getBetgame(5, 0, 1, 0);
@@ -104,7 +104,7 @@ class BetCalculatorTest extends \tx_rnbase_tests_BaseTestCase
     /**
      * @group unit
      */
-    public function test_betCalculationWoDiff()
+    public function testBetCalculationWoDiff()
     {
         // Ohne Tordiff testen
         $betgame = $this->getBetgame(5, 0, 1);
@@ -129,7 +129,7 @@ class BetCalculatorTest extends \tx_rnbase_tests_BaseTestCase
     /**
      * @group unit
      */
-    public function test_getGoals()
+    public function testGetGoals()
     {
         $betgame3 = $this->getBetgame(5, 2, 1, 0, 1);
         $calculator = \tx_rnbase::makeInstance('tx_t3sportsbet_services_betcalculator');
@@ -153,7 +153,7 @@ class BetCalculatorTest extends \tx_rnbase_tests_BaseTestCase
 
     private function getBet($home, $guest)
     {
-        $record = array();
+        $record = [];
         $record['uid'] = 1;
         $record['goals_home'] = $home;
         $record['goals_guest'] = $guest;

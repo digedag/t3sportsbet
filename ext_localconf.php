@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
+    exit('Access denied.');
 }
 
 $_EXTKEY = 't3sportsbet';
@@ -26,8 +26,8 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms.php']['get
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
-    't3sportsbet' /* sv type */,
-    'tx_t3sportsbet_services_bet' /* sv key */,
+    't3sportsbet' /* sv type */ ,
+    'tx_t3sportsbet_services_bet' /* sv key */ ,
     [
     'title' => 'Bet game', 'description' => 'Working with bet games', 'subtype' => 'bet',
     'available' => true, 'priority' => 50, 'quality' => 50,
@@ -39,8 +39,8 @@ tx_rnbase_util_Extensions::addService(
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
-    't3sportsbet' /* sv type */,
-    'tx_t3sportsbet_services_teambet' /* sv key */,
+    't3sportsbet' /* sv type */ ,
+    'tx_t3sportsbet_services_teambet' /* sv key */ ,
     [
     'title' => 'Teambets', 'description' => 'Working with team bets', 'subtype' => 'teambet',
     'available' => true, 'priority' => 50, 'quality' => 50,
@@ -52,8 +52,8 @@ tx_rnbase_util_Extensions::addService(
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
-    't3sportsbet' /* sv type */,
-    'tx_t3sportsbet_services_betcalculator' /* sv key */,
+    't3sportsbet' /* sv type */ ,
+    'tx_t3sportsbet_services_betcalculator' /* sv key */ ,
     [
     'title' => 'Bet calculator', 'description' => 'Calculate points for a bet', 'subtype' => 'calculator',
     'available' => true, 'priority' => 50, 'quality' => 50,

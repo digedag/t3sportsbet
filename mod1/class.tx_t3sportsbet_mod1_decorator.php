@@ -39,7 +39,7 @@ class tx_t3sportsbet_mod1_decorator
         foreach ($records as $record) {
             $dataArr = is_object($record) ? $record->record : $record;
 
-            $row = array();
+            $row = [];
             if (isset($options['checkbox'])) {
                 // Check if record is checkable
                 if (!is_array($options['dontcheck']) || !array_key_exists($dataArr['uid'], $options['dontcheck'])) {

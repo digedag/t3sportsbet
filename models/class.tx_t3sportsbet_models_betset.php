@@ -29,7 +29,7 @@ tx_rnbase::load('tx_t3sportsbet_models_betgame');
  */
 class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
 {
-    private static $instances = array();
+    private static $instances = [];
 
     public function getTableName()
     {

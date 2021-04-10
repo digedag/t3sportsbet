@@ -121,7 +121,7 @@ class AddCompetitionWizard
             $rounds[$round][] = $match->getUid();
         }
         // Jetzt das Datenarray anlegen
-        $data = array();
+        $data = [];
         foreach ($rounds as $key => $matchUids) {
             $data['tx_t3sportsbet_betsets']['NEW'.$key]['pid'] = $betgame->getPid();
             $data['tx_t3sportsbet_betsets']['NEW'.$key]['betgame'] = $betgame->getUid();

@@ -39,7 +39,7 @@ class tx_t3sportsbet_hooks_Search
     public function getJoinsMatch($params, $parent)
     {
         if (isset($params['tableAliases']['BETSETMM'])) {
-            $params['join'][] = new Join('MATCH','tx_t3sportsbet_betsets_mm', 'MATCH.uid = BETSETMM.uid_foreign', 'BETSETMM');
+            $params['join'][] = new Join('MATCH', 'tx_t3sportsbet_betsets_mm', 'MATCH.uid = BETSETMM.uid_foreign', 'BETSETMM');
         }
     }
 
@@ -51,7 +51,7 @@ class tx_t3sportsbet_hooks_Search
     public function getJoinsTeam($params, $parent)
     {
         if (isset($params['tableAliases']['TEAMQUESTIONMM'])) {
-            $params['join'][] = new Join('TEAM','tx_t3sportsbet_teamquestions_mm', 'TEAM.uid = TEAMQUESTIONMM.uid_foreign', 'TEAMQUESTIONMM');
+            $params['join'][] = new Join('TEAM', 'tx_t3sportsbet_teamquestions_mm', 'TEAM.uid = TEAMQUESTIONMM.uid_foreign', 'TEAMQUESTIONMM');
         }
     }
 }

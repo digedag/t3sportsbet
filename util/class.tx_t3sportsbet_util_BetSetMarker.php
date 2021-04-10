@@ -28,7 +28,7 @@ tx_rnbase::load('tx_rnbase_util_BaseMarker');
  */
 class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
 {
-    public function __construct($options = array())
+    public function __construct($options = [])
     {
         $this->options = $options;
     }
@@ -63,14 +63,14 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
         }
 
         $markerArray = $formatter->getItemMarkerArrayWrapped($betset->record, $confId, 0, $marker.'_', $betset->getColumnNames());
-        $subpartArray = array();
-        $wrappedSubpartArray = array();
+        $subpartArray = [];
+        $wrappedSubpartArray = [];
         $this->prepareLinks($betset, $marker, $markerArray, $subpartArray, $wrappedSubpartArray, $confId, $formatter);
         $template = tx_rnbase_util_BaseMarker::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
 
-        $markerArray = array();
-        $subpartArray = array();
-        $wrappedSubpartArray = array();
+        $markerArray = [];
+        $subpartArray = [];
+        $wrappedSubpartArray = [];
 
         $params['confid'] = $confId;
         $params['marker'] = $marker;
@@ -96,7 +96,7 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
     {
         $srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
         $fields['TEAMQUESTION.BETSET'][OP_EQ_INT] = $betset->getUid();
-        $options = array();
+        $options = [];
         tx_rnbase_util_SearchBase::setConfigFields($fields, $formatter->configurations, $confId.'fields.');
         tx_rnbase_util_SearchBase::setConfigOptions($options, $formatter->configurations, $confId.'options.');
         $children = $srv->searchTeamQuestion($fields, $options);
@@ -122,7 +122,7 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
     {
         $srv = tx_cfcleaguefe_util_ServiceRegistry::getMatchService();
         $fields['BETSETMM.UID_LOCAL'][OP_EQ_INT] = $betset->getUid();
-        $options = array();
+        $options = [];
         tx_rnbase_util_SearchBase::setConfigFields($fields, $formatter->configurations, $confId.'fields.');
         tx_rnbase_util_SearchBase::setConfigOptions($options, $formatter->configurations, $confId.'options.');
         $children = $srv->search($fields, $options);
@@ -151,9 +151,9 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
         // Link bauen, wenn: kein $currItem oder $currItem != $betset
         $linkId = 'scope';
         if (!intval($betset->getProperty('isCurrent'))) {
-            $this->initLink($markerArray, $subpartArray, $wrappedSubpartArray, $formatter, $confId, $linkId, $marker, array(
+            $this->initLink($markerArray, $subpartArray, $wrappedSubpartArray, $formatter, $confId, $linkId, $marker, [
                 'betset' => $betset->uid,
-            ));
+            ]);
         } else {
             $linkMarker = $marker.'_'.strtoupper($linkId).'LINK';
             $remove = intval($formatter->getConfigurations()->get($confId.'links.'.$linkId.'.removeIfDisabled'));

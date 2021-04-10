@@ -37,7 +37,7 @@ class tx_t3sportsbet_actions_HighScore extends \Sys25\RnBase\Frontend\Controller
      *
      * @return string error msg or null
      */
-    protected function handleRequest(\Sys25\RnBase\Frontend\Request\RequestInterface $request)
+    protected function handleRequest(Sys25\RnBase\Frontend\Request\RequestInterface $request)
     {
         $parameters = $request->getParameters();
         $configurations = $request->getConfigurations();
@@ -66,7 +66,7 @@ class tx_t3sportsbet_actions_HighScore extends \Sys25\RnBase\Frontend\Controller
         $limit = $pageBrowser->getState();
         // Aus der Gesamtliste den gesuchten Abschnitt herausschneiden
         $userPoints = array_slice($results[0], $limit['offset'], $limit['limit']);
-        $currUserPoints = ($feuser) ? $results[0][$results[1][$feuser->getUid()]] : array();
+        $currUserPoints = ($feuser) ? $results[0][$results[1][$feuser->getUid()]] : [];
 
         $viewData = $request->getViewContext();
         $viewData->offsetSet('betgame', $betgames[0]);
