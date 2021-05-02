@@ -120,7 +120,7 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
      */
     private function _addMatches($template, $betset, $formatter, $confId, $marker)
     {
-        $srv = tx_cfcleaguefe_util_ServiceRegistry::getMatchService();
+        $srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
         $fields['BETSETMM.UID_LOCAL'][OP_EQ_INT] = $betset->getUid();
         $options = [];
         tx_rnbase_util_SearchBase::setConfigFields($fields, $formatter->configurations, $confId.'fields.');
