@@ -59,9 +59,6 @@ jobs:
     include:
     - stage: test
       php: 7.1
-      env: TYPO3_CORE="typo3/cms=^7.6.0"
-    - stage: test
-      php: 7.1
       env: TYPO3_CORE="typo3/cms=^8.7.0"
     - stage: test
       php: 7.2
@@ -92,4 +89,4 @@ jobs:
         echo "Release comment ${TAG_MESSAGE}";
         echo;
         echo;
-        $HOME/.composer/vendor/bin/ter-client upload t3sportsbet . -u "$TYPO3_ORG_USERNAME" -p "$TYPO3_ORG_PASS" -m "$TAG_MESSAGE";
+        $HOME/.config/composer/vendor/bin/ter-client upload t3sportsbet . -u "$TYPO3_ORG_USERNAME" -p "$TYPO3_ORG_PASS" -m "$TAG_MESSAGE";

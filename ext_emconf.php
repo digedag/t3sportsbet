@@ -14,26 +14,20 @@ $EM_CONF[$_EXTKEY] = [
     'category' => 'plugin',
     'author' => 'Rene Nitzsche',
     'author_email' => 'rene@system25.de',
-    'shy' => '',
+    'author_company' => 'System 25',
     'dependencies' => '',
-    'conflicts' => '',
-    'priority' => '',
     'module' => '',
-    'version' => '1.0.0',
+    'version' => '1.0.1',
     'state' => 'stable',
-    'internal' => '',
     'uploadfolder' => 0,
     'createDirs' => '',
-    'modify_tables' => '',
     'clearCacheOnLoad' => 0,
-    'lockType' => '',
-    'author_company' => 'System 25',
     'constraints' => [
         'depends' => [
             'typo3' => '7.6.0-10.4.99',
-            'rn_base' => '1.12.0-0.0.0',
-            'cfc_league' => '1.5.0-0.0.0',
-            'cfc_league_fe' => '1.5.0-0.0.0',
+            'rn_base' => '1.13.0-0.0.0',
+            'cfc_league' => '1.7.0-0.0.0',
+            'cfc_league_fe' => '1.7.0-0.0.0',
             't3users' => '0.4.0-0.0.0',
         ],
         'conflicts' => [
@@ -41,5 +35,4 @@ $EM_CONF[$_EXTKEY] = [
         'suggests' => [
         ],
     ],
-    '_md5_values_when_last_written' => 'a:8:{s:9:"ChangeLog";s:4:"690e";s:10:"README.txt";s:4:"ee2d";s:12:"ext_icon.gif";s:4:"1bdc";s:14:"ext_tables.php";s:4:"fc02";s:19:"doc/wizard_form.dat";s:4:"d0ae";s:20:"doc/wizard_form.html";s:4:"1048";s:23:"static/ts/constants.txt";s:4:"96ef";s:19:"static/ts/setup.txt";s:4:"f531";}',
 ];

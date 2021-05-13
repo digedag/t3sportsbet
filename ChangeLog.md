@@ -1,6 +1,9 @@
 Changelog
 ---------
 
+v1.0.1 (13.05.2021)
+ * Fix travis build
+
 v1.0.0 (11.04.2021)
  * Support for TYPO3 9.5 and 10.4
  * custom CSS removed
