@@ -146,7 +146,7 @@ class AddCompetitionWizard
         $options['orderby']['MATCH.ROUND'] = 'ASC';
         $options['orderby']['MATCH.DATE'] = 'ASC';
         $matchTable->getFields($fields, $options);
-        $service = \tx_cfcleaguefe_util_ServiceRegistry::getMatchService();
+        $service = \tx_cfcleague_util_ServiceRegistry::getMatchService();
 
         return $service->search($fields, $options);
     }

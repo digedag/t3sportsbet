@@ -22,9 +22,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-tx_rnbase::load('tx_t3sportsbet_util_library');
-tx_rnbase::load('tx_rnbase_util_Misc');
-
 define('T3SPORTSBET_OPEN', 1);
 define('T3SPORTSBET_CLOSED', 2);
 
@@ -86,7 +83,7 @@ class tx_t3sportsbet_services_bet extends Tx_Rnbase_Service_Base
     /**
      * Fill table betsetresults with values for all bets of a betgame.
      *
-     * @param tx_t3sportsbet_betgame $betGame
+     * @param tx_t3sportsbet_models_betgame $betGame
      */
     public function updateBetsetResultsByGame(tx_t3sportsbet_models_betgame $betGame)
     {
@@ -280,7 +277,7 @@ GROUP BY feuser, betset
     {
         $fields = $options = [];
         $betsetUid = is_object($betset) ? $betset->getUid() : intval($betset);
-        $service = tx_cfcleaguefe_util_ServiceRegistry::getMatchService();
+        $service = tx_cfcleague_util_ServiceRegistry::getMatchService();
         $fields['BETSETMM.UID_LOCAL'][OP_EQ_INT] = $betsetUid;
         $options['orderby']['BETSETMM.SORTING'] = 'asc';
         $options['what'] = 'uid';
