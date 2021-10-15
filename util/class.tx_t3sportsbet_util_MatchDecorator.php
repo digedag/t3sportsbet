@@ -58,7 +58,6 @@ class tx_t3sportsbet_util_MatchDecorator
         } elseif ('date' == $colName) {
             $ret = date('H:i d.m.y', $value);
         } elseif ('competition' == $colName) {
-            tx_rnbase::load('tx_cfcleague_models_Competition');
             $comp = tx_cfcleague_models_Competition::getCompetitionInstance($value);
             if (!is_object($comp) || !$comp->isValid()) {
                 return '';
@@ -67,7 +66,7 @@ class tx_t3sportsbet_util_MatchDecorator
             if (!is_object($group) || !$group->isValid()) {
                 return '';
             }
-            $name = (array_key_exists('shortname', $group->record)) ? $group->getProperty('shortname') : '';
+            $name = (array_key_exists('shortname', $group->getProperty())) ? $group->getProperty('shortname') : '';
             $ret = strlen($name) ? $name : $group->getName();
         }
 

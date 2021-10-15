@@ -159,7 +159,7 @@ class ShowBetSet
             $srv->resetBets($currBetSet, $uid);
 
             //$tce->BE_USER->writelog($type,$action,$error,$details_nr,$details,$data,$table,$recuid,$recpid,$event_pid,$NEWid);
-            $data = [$uid, $currBetSet->uid];
+            $data = [$uid, $currBetSet->getUid()];
             $tce->BE_USER->writelog(1, 2, 0, 0, $details, $data);
         }
     }

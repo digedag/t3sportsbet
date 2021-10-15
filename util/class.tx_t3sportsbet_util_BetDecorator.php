@@ -48,7 +48,7 @@ class tx_t3sportsbet_util_BetDecorator
             tx_rnbase::load('tx_cfcleaguefe_models_match');
             $match = tx_cfcleaguefe_models_match::getMatchInstance($value);
             $ret = $match->getHomeNameShort().' - '.$match->getGuestNameShort();
-            $ret .= $this->formTool->createEditLink('tx_cfcleague_games', $match->uid, '');
+            $ret .= $this->formTool->createEditLink('tx_cfcleague_games', $match->getUid(), '');
         } elseif ('fe_user' == $colName) {
             tx_rnbase::load('tx_t3users_models_feuser');
             $feuser = tx_t3users_models_feuser::getInstance($value);

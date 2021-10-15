@@ -21,7 +21,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
  * Die Klasse zeigt Objekte im Backend an.
@@ -37,7 +36,7 @@ class tx_t3sportsbet_mod1_decorator
             ],
         ];
         foreach ($records as $record) {
-            $dataArr = is_object($record) ? $record->record : $record;
+            $dataArr = is_object($record) ? $record->getProperty() : $record;
 
             $row = [];
             if (isset($options['checkbox'])) {

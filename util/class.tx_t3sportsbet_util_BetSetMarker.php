@@ -21,7 +21,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_BaseMarker');
 
 /**
  * Diese Klasse ist für die Erstellung von Markerarrays der Tipprunden verantwortlich.
@@ -53,7 +52,7 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
             $betset = self::getEmptyInstance('tx_t3sportsbet_models_betset');
         }
         $currItem = isset($this->options['currItem']) ? $this->options['currItem'] : false;
-        $betset->setProperty('isCurrent', $currItem && $currItem->uid == $betset->uid);
+        $betset->setProperty('isCurrent', $currItem && $currItem->getUid() == $betset->getUid());
         // Die Spiele einbinden.
         if ($this->containsMarker($template, $marker.'_MATCHS')) {
             $template = $this->_addMatches($template, $betset, $formatter, $confId.'match.', $marker.'_MATCH');
@@ -62,7 +61,7 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
             $template = $this->_addTeamBets($template, $betset, $formatter, $confId.'teambet.', $marker.'_TEAMBET');
         }
 
-        $markerArray = $formatter->getItemMarkerArrayWrapped($betset->record, $confId, 0, $marker.'_', $betset->getColumnNames());
+        $markerArray = $formatter->getItemMarkerArrayWrapped($betset->getProperty(), $confId, 0, $marker.'_', $betset->getColumnNames());
         $subpartArray = [];
         $wrappedSubpartArray = [];
         $this->prepareLinks($betset, $marker, $markerArray, $subpartArray, $wrappedSubpartArray, $confId, $formatter);
@@ -152,7 +151,7 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
         $linkId = 'scope';
         if (!intval($betset->getProperty('isCurrent'))) {
             $this->initLink($markerArray, $subpartArray, $wrappedSubpartArray, $formatter, $confId, $linkId, $marker, [
-                'betset' => $betset->uid,
+                'betset' => $betset->getUid(),
             ]);
         } else {
             $linkMarker = $marker.'_'.strtoupper($linkId).'LINK';

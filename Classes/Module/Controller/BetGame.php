@@ -202,7 +202,7 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
         ];
         $row[] = [
             '###LABEL_BETSETINFO_USERCOUNT###',
-            $srv->getResultSize($currBetSet->uid),
+            $srv->getResultSize($currBetSet->getUid()),
         ];
         $row[] = [
             '###LABEL_BETSETINFO_BETCOUNT###',

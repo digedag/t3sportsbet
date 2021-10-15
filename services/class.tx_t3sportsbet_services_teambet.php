@@ -55,7 +55,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
             $values = [];
             $values['finished'] = 1;
             $values['points'] = $question->isWinningBet($bet) ? $bet->getProperty('possiblepoints') : 0;
-            $where = 'uid='.$bet->uid;
+            $where = 'uid='.$bet->getUid();
             Tx_Rnbase_Database_Connection::getInstance()->doUpdate('tx_t3sportsbet_teambets', $where, $values, 0);
             ++$ret;
         }
