@@ -1,9 +1,12 @@
 <?php
 
+use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Backend\Module\Linker\LinkerInterface;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,7 +25,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-class tx_t3sportsbet_mod1_link_MatchBets implements tx_cfcleague_mod1_Linker
+class tx_t3sportsbet_mod1_link_MatchBets implements LinkerInterface
 {
     /**
      * Buttons for match bets.
@@ -34,7 +37,7 @@ class tx_t3sportsbet_mod1_link_MatchBets implements tx_cfcleague_mod1_Linker
      *
      * @return string
      */
-    public function makeLink($match, $formTool, $currentPid, $options)
+    public function makeLink($match, ToolBox $formTool, $currentPid, $options)
     {
         $out = $formTool->createEditLink('tx_cfcleague_games', $match->getUid(), $GLOBALS['LANG']->getLL('label_edit'));
         $options = is_object($options) ? $options->getProperty() : $options;

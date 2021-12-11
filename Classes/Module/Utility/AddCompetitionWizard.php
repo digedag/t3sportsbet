@@ -2,6 +2,9 @@
 
 namespace Sys25\T3sportsbet\Module\Utility;
 
+use System25\T3sports\Model\Repository\MatchRepository;
+use System25\T3sports\Utility\MatchTableBuilder;
+
 /**
  * *************************************************************
  * Copyright notice.
@@ -139,16 +142,16 @@ class AddCompetitionWizard
 
     private function loadMatches($compId)
     {
-        $matchTable = \tx_rnbase::makeInstance('tx_cfcleaguefe_util_MatchTable');
+        $matchTable = \tx_rnbase::makeInstance(MatchTableBuilder::class);
         $matchTable->setCompetitions($compId);
         $matchTable->setIgnoreDummy();
         $fields = $options = [];
         $options['orderby']['MATCH.ROUND'] = 'ASC';
         $options['orderby']['MATCH.DATE'] = 'ASC';
         $matchTable->getFields($fields, $options);
-        $service = \tx_cfcleague_util_ServiceRegistry::getMatchService();
+        $repo = new MatchRepository();
 
-        return $service->search($fields, $options);
+        return $repo->search($fields, $options);
     }
 
     private function getCompMenu($comps)

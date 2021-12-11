@@ -3,6 +3,7 @@
 /var
 /composer.lock
 .php_cs.cache
+.php-cs-fixer.cache
 
 .buildpath
 .project

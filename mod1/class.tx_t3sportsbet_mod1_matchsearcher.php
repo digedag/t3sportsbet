@@ -1,5 +1,9 @@
 <?php
 
+use System25\T3sports\Model\Competition;
+use System25\T3sports\Utility\MatchTableBuilder;
+use System25\T3sports\Utility\ServiceRegistry;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -44,7 +48,7 @@ class tx_t3sportsbet_mod1_matchsearcher
     /** @var \tx_t3sportsbet_models_betset */
     private $currentRound;
 
-    /** @var tx_cfcleague_models_Competition */
+    /** @var Competition */
     private $currComp;
 
     public function __construct($mod, tx_t3sportsbet_models_betset $currentRound, $options = [])
@@ -136,7 +140,7 @@ class tx_t3sportsbet_mod1_matchsearcher
         $fields = $options = [];
         $options['orderby']['MATCH.DATE'] = 'ASC';
         $matchTable->getFields($fields, $options);
-        $service = tx_cfcleague_util_ServiceRegistry::getMatchService();
+        $service = ServiceRegistry::getMatchService();
         $matches = $service->search($fields, $options);
         $this->resultSize = count($matches);
         $label = $this->resultSize.' '.((1 == $this->resultSize) ? $GLOBALS['LANG']->getLL('msg_found_match') : $GLOBALS['LANG']->getLL('msg_found_matches'));
@@ -209,12 +213,10 @@ class tx_t3sportsbet_mod1_matchsearcher
     }
 
     /**
-     * Returns an instance of tx_cfcleaguefe_util_MatchTable.
-     *
-     * @return tx_cfcleague_util_MatchTableBuilder
+     * @return MatchTableBuilder
      */
     private function getMatchTable()
     {
-        return tx_rnbase::makeInstance('tx_cfcleague_util_MatchTableBuilder');
+        return tx_rnbase::makeInstance(MatchTableBuilder::class);
     }
 }

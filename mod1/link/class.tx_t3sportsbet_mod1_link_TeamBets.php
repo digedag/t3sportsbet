@@ -1,4 +1,8 @@
 <?php
+
+use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Backend\Module\Linker\LinkerInterface;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -22,7 +26,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class tx_t3sportsbet_mod1_link_TeamBets implements tx_cfcleague_mod1_Linker
+class tx_t3sportsbet_mod1_link_TeamBets implements LinkerInterface
 {
     /**
      * Buttons for team bets.
@@ -34,7 +38,7 @@ class tx_t3sportsbet_mod1_link_TeamBets implements tx_cfcleague_mod1_Linker
      *
      * @return string
      */
-    public function makeLink($item, $formTool, $currentPid, $options)
+    public function makeLink($item, ToolBox $formTool, $currentPid, $options)
     {
         //, $GLOBALS['LANG']->getLL('label_edit')
         $out = $formTool->createEditButton('tx_t3sportsbet_teamquestions', $item->getUid());
