@@ -21,7 +21,6 @@
 		"issues" : "https://github.com/digedag/t3sportsbet/issues"
 	},
 	"replace" : {
-		"digedag/t3sportsbet" : "self.version",
 		"typo3-ter/t3sportsbet" : "self.version"
 	},
 	"require" : {
