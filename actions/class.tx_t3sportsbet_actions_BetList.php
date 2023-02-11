@@ -1,6 +1,8 @@
 <?php
 
 use Sys25\RnBase\Domain\Repository\FeUserRepository;
+use Sys25\RnBase\Frontend\Controller\AbstractAction;
+use Sys25\RnBase\Frontend\Request\RequestInterface;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Repository\MatchRepository;
@@ -31,7 +33,7 @@ use System25\T3sports\Model\Repository\MatchRepository;
 /**
  * Der View zeigt Tiprunden an und speichert Veränderungen.
  */
-class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\AbstractAction
+class tx_t3sportsbet_actions_BetList extends AbstractAction
 {
     private $feuserRepo;
     private $matchRepo;
@@ -43,11 +45,11 @@ class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\A
     }
 
     /**
-     * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
+     * @param RequestInterface $request
      *
      * @return string error msg or null
      */
-    protected function handleRequest(Sys25\RnBase\Frontend\Request\RequestInterface $request)
+    protected function handleRequest(RequestInterface $request)
     {
         $parameters = $request->getParameters();
         $configurations = $request->getConfigurations();
@@ -115,7 +117,9 @@ class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\A
                 }
 
                 $match = $this->matchRepo->findByUid($matchUid);
-                list($betUid, $betData) = each($betArr);
+                $betUid = key($betArr);
+                $betData = current($betArr);
+
                 $saveCnt += $srv->saveOrUpdateBet($betset, $match, $feuser, $betUid, $betData);
             }
         }

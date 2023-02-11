@@ -199,7 +199,7 @@ GROUP BY feuser, betset
      *
      * @return array|false keys: high and low, values are timestamps or false if no match is set
      */
-    public function getBetsetDateRange(&$betset)
+    public function getBetsetDateRange($betset)
     {
         $matches = $betset->getMatches();
         if (!count($matches)) {
