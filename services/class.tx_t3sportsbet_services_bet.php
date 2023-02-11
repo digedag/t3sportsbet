@@ -368,7 +368,7 @@ GROUP BY feuser, betset
             $bet = tx_rnbase::makeInstance('tx_t3sportsbet_models_bet', [
                 'uid' => 0,
                 'betset' => $betset->getUid(),
-                'fe_user' => $feuser->getUid(),
+                'fe_user' => $feuser ? $feuser->getUid() : null,
                 't3match' => $match->getUid(),
             ]);
         }
@@ -486,7 +486,7 @@ GROUP BY feuser, betset
             }
             $fields['BET.FE_USER'][OP_GT_INT] = 0;
             $options['what'] = '
-				fe_users.uid, sum(tx_t3sportsbet_bets.points) AS betpoints,
+				FEUSER.uid, sum(tx_t3sportsbet_bets.points) AS betpoints,
 				sum(tx_t3sportsbet_bets.finished) AS betcount
 				';
         } else {
@@ -495,7 +495,7 @@ GROUP BY feuser, betset
             }
             $fields['BETSETRESULT.FEUSER'][OP_GT_INT] = 0;
             $options['what'] = '
-			fe_users.uid, sum(tx_t3sportsbet_betsetresults.points) AS betpoints,
+			FEUSER.uid, sum(tx_t3sportsbet_betsetresults.points) AS betpoints,
 			sum(tx_t3sportsbet_betsetresults.bets) AS betcount
 			';
         }
