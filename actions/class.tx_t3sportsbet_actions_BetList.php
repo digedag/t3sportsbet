@@ -135,7 +135,8 @@ class tx_t3sportsbet_actions_BetList extends AbstractAction
             if (!$betQuestion->isValid()) {
                 return 0;
             }
-            list($betUid, $team) = each($betData);
+            $betUid = key($betData);
+            $team = current($betData);
             $srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
             $ret += $srv->saveOrUpdateBet($betQuestion, $feuser, $betUid, $team);
         }
