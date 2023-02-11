@@ -1,4 +1,5 @@
 <?php
+use Sys25\RnBase\Utility\Extensions;
 
 if (!defined('TYPO3_MODE')) {
     exit('Access denied.');
@@ -15,6 +16,7 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['search_Team_getTableMappin
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['search_Team_getJoins_hook'][] = 'tx_t3sportsbet_hooks_Search->getJoinsTeam';
 
 // Hook for feuser search
+// FIXME: switch to rn_base
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['t3users']['search_feuser_getTableMapping_hook'][] = 'tx_t3sportsbet_hooks_searchFeuser->getTableMapping';
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['t3users']['search_feuser_getJoins_hook'][] = 'tx_t3sportsbet_hooks_searchFeuser->getJoins';
 
@@ -24,7 +26,7 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['teamMarker_initRecord']
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'tx_t3sportsbet_hooks_tce';
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms.php']['getMainFieldsClass'][] = 'tx_t3sportsbet_hooks_tce';
 
-tx_rnbase_util_Extensions::addService(
+Extensions::addService(
     $_EXTKEY,
     't3sportsbet' /* sv type */ ,
     'tx_t3sportsbet_services_bet' /* sv key */ ,
@@ -32,12 +34,12 @@ tx_rnbase_util_Extensions::addService(
     'title' => 'Bet game', 'description' => 'Working with bet games', 'subtype' => 'bet',
     'available' => true, 'priority' => 50, 'quality' => 50,
     'os' => '', 'exec' => '',
-    'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_t3sportsbet_services_bet.php',
+    'classFile' => Extensions::extPath($_EXTKEY).'services/class.tx_t3sportsbet_services_bet.php',
     'className' => 'tx_t3sportsbet_services_bet',
   ]
 );
 
-tx_rnbase_util_Extensions::addService(
+Extensions::addService(
     $_EXTKEY,
     't3sportsbet' /* sv type */ ,
     'tx_t3sportsbet_services_teambet' /* sv key */ ,
@@ -45,12 +47,12 @@ tx_rnbase_util_Extensions::addService(
     'title' => 'Teambets', 'description' => 'Working with team bets', 'subtype' => 'teambet',
     'available' => true, 'priority' => 50, 'quality' => 50,
     'os' => '', 'exec' => '',
-    'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_t3sportsbet_services_teambet.php',
+    'classFile' => Extensions::extPath($_EXTKEY).'services/class.tx_t3sportsbet_services_teambet.php',
     'className' => 'tx_t3sportsbet_services_teambet',
   ]
 );
 
-tx_rnbase_util_Extensions::addService(
+Extensions::addService(
     $_EXTKEY,
     't3sportsbet' /* sv type */ ,
     'tx_t3sportsbet_services_betcalculator' /* sv key */ ,
@@ -58,12 +60,12 @@ tx_rnbase_util_Extensions::addService(
     'title' => 'Bet calculator', 'description' => 'Calculate points for a bet', 'subtype' => 'calculator',
     'available' => true, 'priority' => 50, 'quality' => 50,
     'os' => '', 'exec' => '',
-    'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_t3sportsbet_services_betcalculator.php',
+    'classFile' => Extensions::extPath($_EXTKEY).'services/class.tx_t3sportsbet_services_betcalculator.php',
     'className' => 'tx_t3sportsbet_services_betcalculator',
   ]
 );
 
 if (TYPO3_MODE === 'BE') {
-    tx_rnbase_util_Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sportsbet/Configuration/TSconfig/modWizards.txt">');
-    tx_rnbase_util_Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sportsbet/Configuration/TSconfig/pageTSconfig.txt">');
+    Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sportsbet/Configuration/TSconfig/modWizards.txt">');
+    Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sportsbet/Configuration/TSconfig/pageTSconfig.txt">');
 }

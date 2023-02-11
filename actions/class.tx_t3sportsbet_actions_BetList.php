@@ -1,9 +1,13 @@
 <?php
+use Sys25\RnBase\Domain\Repository\FeUserRepository;
+use Sys25\RnBase\Utility\Strings;
+use Sys25\RnBase\Utility\T3General;
+use System25\T3sports\Model\Repository\MatchRepository;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,17 +26,19 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_action_BaseIOC');
-tx_rnbase::load('tx_t3sportsbet_models_betgame');
-tx_rnbase::load('tx_t3sportsbet_models_betset');
-tx_rnbase::load('tx_t3users_models_feuser');
-tx_rnbase::load('tx_t3sportsbet_util_ScopeController');
 
 /**
  * Der View zeigt Tiprunden an und speichert Veränderungen.
  */
 class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\AbstractAction
 {
+    private $feuserRepo;
+    private $matchRepo;
+    public function __construct()
+    {
+        $this->feuserRepo = new FeUserRepository();
+        $this->matchRepo = new MatchRepository();
+    }
     /**
      * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
      *
@@ -42,7 +48,7 @@ class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\A
     {
         $parameters = $request->getParameters();
         $configurations = $request->getConfigurations();
-        $feuser = tx_t3users_models_feuser::getCurrent();
+        $feuser = $this->feuserRepo->getCurrent();
         $viewData = $request->getViewContext();
         $viewData->offsetSet('currfeuser', $feuser);
 
@@ -55,7 +61,7 @@ class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\A
             // Der Nutzer, dessen Tips gezeigt werden kann per Request übergeben werden
             $uid = (int) $parameters->offsetGet('feuserId');
             if ($uid) {
-                $feuser = tx_t3users_models_feuser::getInstance($uid);
+                $feuser = $this->feuserRepo->getInstance($uid);
             }
         }
 
@@ -73,7 +79,7 @@ class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\A
         if (!$uids) {
             return $rounds;
         }
-        $uids = Tx_Rnbase_Utility_Strings::intExplode(',', $uids);
+        $uids = Strings::intExplode(',', $uids);
         for ($i = 0, $cnt = count($uids); $i < $cnt; ++$i) {
             $rounds[] = tx_t3sportsbet_models_betset::getBetsetInstance($uids[$i]);
         }
@@ -87,11 +93,10 @@ class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\A
             return; // Nicht angemeldet
         }
         $srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
-        $data = \Tx_Rnbase_Utility_T3General::_GP('betset');
+        $data = T3General::_GP('betset');
         if (!is_array($data)) {
             return;
         }
-        tx_rnbase::load('tx_cfcleaguefe_models_match');
         $saveCnt = 0;
         // Die Tips speichern
         foreach ($data as $betsetUid => $matchArr) {
@@ -106,7 +111,7 @@ class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\A
                     continue;
                 }
 
-                $match = tx_cfcleaguefe_models_match::getMatchInstance($matchUid);
+                $match = $this->matchRepo->findByUid($matchUid);
                 list($betUid, $betData) = each($betArr);
                 $saveCnt += $srv->saveOrUpdateBet($betset, $match, $feuser, $betUid, $betData);
             }

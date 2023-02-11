@@ -24,18 +24,17 @@
 		"typo3-ter/t3sportsbet" : "self.version"
 	},
 	"require" : {
-		"typo3/cms-core": "^7.6 || ^8.7 || ^9.5.17 || ^10.4.3",
-		"dmk/t3users": "dev-master",
-		"digedag/cfc-league" : "^1.6.0",
-		"digedag/cfc-league-fe" : "^1.6.0",
-		"digedag/rn-base" : "^1.13"
+		"typo3/cms-core": "^8.7 || ^9.5.17 || ^10.4.3 || ^11.5.0",
+		"digedag/cfc-league" : "^1.10.0",
+		"digedag/cfc-league-fe" : "^1.10.0",
+		"digedag/rn-base" : "^1.16"
 	},
 	"require-dev": {
-		"namelesscoder/typo3-repository-client": "^1.2",
-		"nimut/testing-framework": "^1.1 || ^2.0 || ^4.0 || ^5.0",
+		"friendsofphp/php-cs-fixer": "^3.1.0",
 		"mikey179/vfsstream": "^1.4 || ^1.6",
-		"phpunit/phpunit": "^4.7|| ^7.0",
-		"friendsofphp/php-cs-fixer": "^2.15"
+		"nimut/testing-framework": "^4.0 || ^5.0 || ^6.0",
+		"phpcompatibility/php-compatibility": "^9.3.5",
+		"phpunit/phpunit": "^6.5.14 || ^7.5.20 || ^8.0"
 	},
 	"autoload" : {
 		"classmap" : [
@@ -65,6 +64,8 @@
 		}
 	},
 	"scripts": {
+		"test:phplint": "find *.php Classes Configuration Tests hooks mod1 models search services util views -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l",
+		"test:phpcompat": ".Build/bin/phpcs --ignore=.Build/*,Resources/* -p . --standard=.Build/vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion ",
 		"post-autoload-dump": [
 			"mkdir -p .Build/Web/typo3conf/ext/",
 			"[ -L .Build/Web/typo3conf/ext/t3sportsbet ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/t3sportsbet"

@@ -24,10 +24,10 @@ $EM_CONF[$_EXTKEY] = [
     'clearCacheOnLoad' => 0,
     'constraints' => [
         'depends' => [
-            'typo3' => '7.6.0-10.4.99',
-            'rn_base' => '1.13.0-0.0.0',
-            'cfc_league' => '1.7.0-0.0.0',
-            'cfc_league_fe' => '1.7.0-0.0.0',
+            'typo3' => '8.7.0-11.5.99',
+            'rn_base' => '1.16.0-0.0.0',
+            'cfc_league' => '1.10.0-0.0.0',
+            'cfc_league_fe' => '1.10.0-0.0.0',
             't3users' => '0.4.0-0.0.0',
         ],
         'conflicts' => [
