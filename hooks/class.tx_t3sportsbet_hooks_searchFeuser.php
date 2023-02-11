@@ -1,9 +1,11 @@
 <?php
 
+use Sys25\RnBase\Database\Query\Join;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2010 Rene Nitzsche
+ *  (c) 2008-2023 Rene Nitzsche
  *  Contact: rene@system25.de
  *  All rights reserved
  *
@@ -38,10 +40,10 @@ class tx_t3sportsbet_hooks_searchFeuser
     public function getJoins($params, $parent)
     {
         if (isset($params['tableAliases']['BET'])) {
-            $params['join'] .= ' INNER JOIN tx_t3sportsbet_bets ON fe_users.uid = tx_t3sportsbet_bets.fe_user ';
+            $params['join'][] = new Join('FEUSER', 'tx_t3sportsbet_bets', 'FEUSER.uid = BET.fe_user', 'BET');
         }
         if (isset($params['tableAliases']['BETSETRESULT'])) {
-            $params['join'] .= ' INNER JOIN tx_t3sportsbet_betsetresults ON fe_users.uid = tx_t3sportsbet_betsetresults.feuser ';
+            $params['join'][] = new Join('FEUSER', 'tx_t3sportsbet_betsetresults', 'FEUSER.uid = BETSETRESULT.feuser', 'BETSETRESULT');
         }
     }
 }

@@ -1,8 +1,11 @@
 <?php
+
+use Sys25\RnBase\Frontend\Request\RequestInterface;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,10 +24,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_action_BaseIOC');
-tx_rnbase::load('tx_t3sportsbet_models_betgame');
-tx_rnbase::load('tx_t3users_models_feuser');
-tx_rnbase::load('tx_t3sportsbet_util_ScopeController');
 
 /**
  * Der View zeigt Auswahlbox für Tiprunden an und speichert Veränderungen.
@@ -32,11 +31,11 @@ tx_rnbase::load('tx_t3sportsbet_util_ScopeController');
 class tx_t3sportsbet_actions_ScopeSelection extends \Sys25\RnBase\Frontend\Controller\AbstractAction
 {
     /**
-     * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
+     * @param RequestInterface $request
      *
      * @return string error msg or null
      */
-    protected function handleRequest(Sys25\RnBase\Frontend\Request\RequestInterface $request)
+    protected function handleRequest(RequestInterface $request)
     {
         // Wir zeigen entweder die offenen oder die schon fertigen Tipps
         // Dies wird per Config festgelegt

@@ -1,8 +1,12 @@
 <?php
+
+use System25\T3sports\Model\Fixture;
+use System25\T3sports\Utility\ServiceRegistry;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,8 +25,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_model_base');
-tx_rnbase::load('tx_t3sportsbet_models_betgame');
 
 /**
  * Model for a betset.
@@ -53,7 +55,7 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
      * CLOSED -> bets are not possible, but not analyzed
      * FINISHED -> bets are analyzed.
      *
-     * @param tx_cfcleaguefe_models_match $match
+     * @param Fixture $match
      */
     public function getMatchState($match)
     {
@@ -78,11 +80,11 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
     /**
      * Returns all matches of this bet set.
      *
-     * @return array of tx_cfcleaguefe_models_match
+     * @return Fixture[]
      */
     public function getMatches()
     {
-        $service = tx_cfcleague_util_ServiceRegistry::getMatchService();
+        $service = ServiceRegistry::getMatchService();
         $fields = $options = [];
         $fields['BETSETMM.UID_LOCAL'][OP_EQ_INT] = $this->getUid();
         $options['orderby']['BETSETMM.SORTING'] = 'asc';
@@ -93,8 +95,8 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
     /**
      * Returns the bet for a match.
      *
-     * @param tx_cfcleaguefe_models_match $match
-     * @param tx_t3users_models_feuser $feuser
+     * @param Fixture $match
+     * @param \Sys25\RnBase\Domain\Model\FeUser $feuser
      */
     public function getBet($match, $feuser)
     {
@@ -106,7 +108,7 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
     /**
      * Returns the number of bets for a match in this betset.
      *
-     * @param tx_cfcleaguefe_models_match $match
+     * @param Fixture $match
      *
      * @return int
      */

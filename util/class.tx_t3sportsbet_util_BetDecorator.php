@@ -1,9 +1,12 @@
 <?php
 
+use Sys25\RnBase\Domain\Repository\FeUserRepository;
+use System25\T3sports\Model\Repository\MatchRepository;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,6 +31,16 @@
  */
 class tx_t3sportsbet_util_BetDecorator
 {
+    private $feuserRepo;
+    private $matchRepo;
+    private $formTool;
+
+    public function __construct()
+    {
+        $this->feuserRepo = new FeUserRepository();
+        $this->matchRepo = new MatchRepository();
+    }
+
     public function setFormTool($formTool)
     {
         $this->formTool = $formTool;
@@ -40,18 +53,15 @@ class tx_t3sportsbet_util_BetDecorator
             $ret = date('H:i d.m.Y', $value);
         } elseif ('t3matchresult' == $colName) {
             if (is_object($value)) {
-                tx_rnbase::load('tx_cfcleaguefe_models_match');
-                $match = tx_cfcleaguefe_models_match::getMatchInstance($value->getProperty('t3match'));
+                $match = $this->matchRepo->findByUid($value->getProperty('t3match'));
                 $ret = $match->getResult();
             }
         } elseif ('t3match' == $colName) {
-            tx_rnbase::load('tx_cfcleaguefe_models_match');
-            $match = tx_cfcleaguefe_models_match::getMatchInstance($value);
+            $match = $this->matchRepo->findByUid($value);
             $ret = $match->getHomeNameShort().' - '.$match->getGuestNameShort();
             $ret .= $this->formTool->createEditLink('tx_cfcleague_games', $match->getUid(), '');
         } elseif ('fe_user' == $colName) {
-            tx_rnbase::load('tx_t3users_models_feuser');
-            $feuser = tx_t3users_models_feuser::getInstance($value);
+            $feuser = $this->feuserRepo->getInstance($value);
             $ret = $feuser->getProperty('username');
             $ret .= $this->formTool->createEditLink('fe_users', $feuser->getUid(), '');
         }

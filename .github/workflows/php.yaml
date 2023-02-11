@@ -3,9 +3,40 @@ name: PHP Checks
 on: [push, pull_request]
 
 jobs:
+    php-lint:
+        name: "PHP Lint"
+
+        runs-on: "ubuntu-latest"
+
+        strategy:
+            matrix:
+                php-version:
+                    - "7.1"
+                    - "7.2"
+                    - "7.3"
+                    - "7.4"
+                    - "8.0"
+                    - "8.1"
+                    - "8.2"
+
+        steps:
+            -
+                name: "Checkout"
+                uses: "actions/checkout@v2"
+            -
+                name: "Setup PHP"
+                uses: "shivammathur/setup-php@v2"
+                with:
+                    php-version: "${{ matrix.php-version }}"
+                    coverage: none
+                    tools: composer:v2
+            - 
+                name: "Run PHP lint"
+                run: "composer test:phplint"
     php-cs-fixer:
         name: PHP-CS-Fixer
         runs-on: ubuntu-latest
+        needs: php-lint
         steps:
             - uses: actions/checkout@master
               with:
@@ -13,6 +44,50 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@master
               with:
-                  php-version: 7.3
+                  php-version: 7.4
             - run: composer require friendsofphp/php-cs-fixer:2.19.0
             - run: .Build/bin/php-cs-fixer fix --diff --dry-run
+    php-compatibility:
+        name: "PHPCompatibility"
+        runs-on: ubuntu-20.04
+        needs: php-lint
+        steps:
+            -
+                name: "Checkout"
+                uses: actions/checkout@v2
+            -
+                name: "Install PHP"
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: "8.1"
+                    coverage: none
+                    tools: composer:v2
+            -
+                name: "Determine composer cache directory"
+                id: "determine-composer-cache-directory"
+                run: "echo \"::set-output name=directory::$(composer config cache-dir)\""
+            -
+                name: "Cache dependencies installed with composer"
+                uses: "actions/cache@v2.0.0"
+                with:
+                    path: "${{ steps.determine-composer-cache-directory.outputs.directory }}"
+                    key: "php-${{ matrix.php-version }}-composer-${{ hashFiles('composer.lock') }}"
+                    restore-keys: "php-${{ matrix.php-version }}-composer-"
+            -
+                name: "Install composer dependencies"
+                run: "composer install --no-interaction --no-progress --no-suggest"
+
+            -
+                name: "Run PHP CS with PHPCompatibility rule"
+                run: "composer test:phpcompat ${{ matrix.php-version }}"
+        strategy:
+            fail-fast: false
+            matrix:
+                php-version:
+                    - "7.1"
+                    - "7.2"
+                    - "7.3"
+                    - "7.4"
+                    - "8.0"
+                    - "8.1"
+                    - "8.2"

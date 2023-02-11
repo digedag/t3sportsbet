@@ -1,8 +1,19 @@
 <?php
+
+use Sys25\RnBase\Domain\Model\FeUser;
+use Sys25\RnBase\Frontend\Marker\BaseMarker;
+use Sys25\RnBase\Frontend\Marker\FormatUtil;
+use Sys25\RnBase\Frontend\Marker\ListBuilder;
+use Sys25\RnBase\Frontend\Marker\SimpleMarker;
+use Sys25\RnBase\Frontend\Marker\Templates;
+use Sys25\RnBase\Utility\Logger;
+use System25\ClubMember\Util\ServiceRegistry;
+use System25\T3sports\Frontend\Marker\TeamMarker;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,17 +32,16 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_BaseMarker');
-tx_rnbase::load('tx_rnbase_util_Templates');
 
 /**
  * Handle team questions.
  */
-class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
+class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
 {
     public static $simpleMarker = null;
 
     public static $teamMarker = null;
+    private $options;
 
     public function __construct($options = [])
     {
@@ -39,15 +49,11 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
     }
 
     /**
-     * @param string $template
-     *            das HTML-Template
+     * @param string $template das HTML-Template
      * @param tx_t3sportsbet_models_teamquestion $item
-     * @param tx_rnbase_util_FormatUtil $formatter
-     *            der zu verwendente Formatter
-     * @param string $confId
-     *            Pfad der TS-Config des Vereins, z.B. 'listView.round.'
-     * @param string $marker
-     *            Name des Markers für die Tipprunde, z.B. ROUND
+     * @param FormatUtil $formatter der zu verwendente Formatter
+     * @param string $confId Pfad der TS-Config des Vereins, z.B. 'listView.round.'
+     * @param string $marker Name des Markers für die Tipprunde, z.B. ROUND
      *
      * @return string das geparste Template
      */
@@ -79,7 +85,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
 
         $wrappedSubpartArray = [];
         $wrappedSubpartArray['###'.$marker.'_TREND###'] = ['', ''];
-        $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
+        $out = Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
 
         return $out;
     }
@@ -90,19 +96,19 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
     private static function getSimpleMarker()
     {
         if (!self::$simpleMarker) {
-            self::$simpleMarker = tx_rnbase::makeInstance('tx_rnbase_util_SimpleMarker');
+            self::$simpleMarker = tx_rnbase::makeInstance(SimpleMarker::class);
         }
 
         return self::$simpleMarker;
     }
 
     /**
-     * @return tx_cfcleaguefe_util_TeamMarker
+     * @return TeamMarker
      */
     private static function getTeamMarker()
     {
         if (!self::$teamMarker) {
-            self::$teamMarker = tx_rnbase::makeInstance('tx_cfcleaguefe_util_TeamMarker');
+            self::$teamMarker = tx_rnbase::makeInstance(TeamMarker::class);
         }
 
         return self::$teamMarker;
@@ -113,7 +119,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
      *
      * @param tx_t3sportsbet_models_teamquestion $teamQuestion
      * @param string $template
-     * @param tx_rnbase_util_FormatUtil $formatter
+     * @param FormatUtil $formatter
      * @param string $confId
      * @param string $marker
      *
@@ -140,7 +146,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
      *
      * @param tx_t3sportsbet_models_teamquestion $item
      * @param string $template
-     * @param tx_rnbase_util_FormatUtil $formatter
+     * @param FormatUtil $formatter
      * @param string $confId
      * @param string $marker
      *
@@ -153,7 +159,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
         $teams = [];
         for ($i = 0, $cnt = count($trendData); $i < $cnt; ++$i) {
             $teamId = $trendData[$i]['team'];
-            $team = tx_cfcleague_util_ServiceRegistry::getTeamService()->getTeam($teamId);
+            $team = ServiceRegistry::getTeamService()->getTeam($teamId);
             if (!$team) {
                 continue;
             }
@@ -169,18 +175,11 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
             // pbimagegraph is not supported anymore
             // TODO: implement JS graph
             try {
-//                 tx_rnbase::load('tx_rnbase_plot_Builder');
-//                 $tsConf = $formatter->getConfigurations()->get($confId . 'chart.');
-//                 $dp = $this->makeChartDataProvider($item, $teams);
                 $markerArray = [];
-//                $markerArray['###' . $markerPrefix . '_CHART###'] = tx_rnbase_plot_Builder::getInstance()->make($tsConf, $dp);
-
                 $markerArray['###'.$markerPrefix.'_CHART###'] = '';
-                $template = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray); // , $wrappedSubpartArray);
+                $template = Templates::substituteMarkerArrayCached($template, $markerArray); // , $wrappedSubpartArray);
             } catch (Exception $e) {
-                $chart = 'Not possible';
-                tx_rnbase::load('tx_rnbase_util_Logger');
-                tx_rnbase_util_Logger::warn('Chart creation failed!', 'cfc_league_fe', [
+                Logger::warn('Chart creation failed!', 'cfc_league_fe', [
                     'Exception' => $e->getMessage(),
                 ]);
             }
@@ -191,7 +190,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
 
     /**
      * @param tx_t3sportsbet_models_teamquestion $item
-     * @param array[tx_cfcleaguefe_models_Team] $teams
+     * @param \System25\T3sports\Model\Team[] $teams
      */
     private function makeChartDataProvider($item, $teams)
     {
@@ -215,7 +214,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
      *
      * @param tx_t3sportsbet_models_teamquestion $teamQuestion
      * @param string $template
-     * @param tx_rnbase_util_FormatUtil $formatter
+     * @param FormatUtil $formatter
      * @param string $confId
      * @param string $marker
      *
@@ -236,9 +235,10 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
                 ->offsetSet('MATCH_STATE', 'OPEN');
         }
 
-        $subTemplate = tx_rnbase_util_Templates::getSubpart($template, '###BETSTATUS_'.$state.'###');
+        $markerArray = [];
+        $subTemplate = Templates::getSubpart($template, '###BETSTATUS_'.$state.'###');
         $subpartArray['###BETSTATUS_'.$state.'###'] = $subTemplate;
-        $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray); // , $wrappedSubpartArray);
+        $out = Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray); // , $wrappedSubpartArray);
 
         return $out;
     }
@@ -246,12 +246,10 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
     /**
      * Hinzufügen der Teams.
      *
-     * @param string $template
-     *            HTML-Template
+     * @param string $template HTML-Template
      * @param tx_t3sportsbet_models_teamquestion $item
-     * @param tx_rnbase_util_FormatUtil $formatter
-     * @param string $confId
-     *            Config-String
+     * @param FormatUtil $formatter
+     * @param string $confId Config-String
      * @param string $markerPrefix
      */
     private function addTeams($template, $item, $formatter, $confId, $markerPrefix)
@@ -260,8 +258,8 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
         // Den aktuellen Tip des Users mitgeben
         $options = [];
         $options['teambet'] = $this->findCurrentBet($item, $this->options['feuser']);
-        $listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
-        $out = $listBuilder->render($children, false, $template, 'tx_cfcleaguefe_util_TeamMarker', $confId, $markerPrefix, $formatter, $options);
+        $listBuilder = tx_rnbase::makeInstance(ListBuilder::class);
+        $out = $listBuilder->render($children, false, $template, TeamMarker::class, $confId, $markerPrefix, $formatter, $options);
 
         return $out;
     }
@@ -269,7 +267,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends tx_rnbase_util_BaseMarker
     /**
      * Returns the UID of current teambet for given user.
      *
-     * @param tx_t3users_models_feuser $feuser
+     * @param FeUser $feuser
      * @param tx_t3sportsbet_models_teamquestion $item
      */
     private function findCurrentBet($item, $feuser)

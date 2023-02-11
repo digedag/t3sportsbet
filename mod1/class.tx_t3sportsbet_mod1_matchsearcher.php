@@ -1,5 +1,8 @@
 <?php
 
+use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Backend\Utility\Tables;
+use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Competition;
 use System25\T3sports\Utility\MatchTableBuilder;
 use System25\T3sports\Utility\ServiceRegistry;
@@ -7,7 +10,7 @@ use System25\T3sports\Utility\ServiceRegistry;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -74,14 +77,14 @@ class tx_t3sportsbet_mod1_matchsearcher
         $this->options['pid'] = $this->mod->getPid();
         $this->formTool = $this->mod->getFormTool();
         $this->resultSize = 0;
-        $this->data = \Tx_Rnbase_Utility_T3General::_GP('searchdata');
+        $this->data = T3General::_GP('searchdata');
         $this->competitions = $options['competitions'];
         $this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
         $this->selector->init($this->getModule()
             ->getDoc(), $this->getModule());
         // $this->selector->init($mod->doc, $mod->MCONF['name']);
         if (!isset($options['nopersist'])) {
-            $this->SEARCH_SETTINGS = \Tx_Rnbase_Backend_Utility::getModuleData([
+            $this->SEARCH_SETTINGS = BackendUtility::getModuleData([
                 'searchterm' => '',
             ], $this->data, $this->mod->getName());
         } else {
@@ -202,10 +205,9 @@ class tx_t3sportsbet_mod1_matchsearcher
         ];
 
         global $LANG;
-        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
+        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
 
-        /* @var $tables \Tx_Rnbase_Backend_Utility_Tables */
-        $tables = \tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        $tables = \tx_rnbase::makeInstance(Tables::class);
         $rows = $tables->prepareTable($matches, $columns, $this->formTool, $this->options);
         $out .= $tables->buildTable($rows[0], $rows[1]);
         $content .= '<h3>'.$headline.'</h3>';

@@ -4,11 +4,11 @@ if (!defined('TYPO3_MODE')) {
     exit('Access denied.');
 }
 
-$sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
+$sysLangFile = 'Resources/Private/Language/locallang_general.xlf';
 
 $tx_t3sportsbet_tq = [
     'ctrl' => [
-        'title' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions',
+        'title' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_teamquestions',
         'label' => 'question',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -37,7 +37,7 @@ $tx_t3sportsbet_tq = [
         ],
         'betset' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_betsets',
             'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -49,7 +49,7 @@ $tx_t3sportsbet_tq = [
         ],
         'question' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions_question',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_teamquestions_question',
             'config' => [
                 'type' => 'text',
                 'cols' => '30',
@@ -59,7 +59,7 @@ $tx_t3sportsbet_tq = [
         ],
         'openuntil' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions_openuntil',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_teamquestions_openuntil',
             'config' => [
                 'type' => 'input',
                 'size' => '12',
@@ -71,7 +71,7 @@ $tx_t3sportsbet_tq = [
         ],
         'points' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions_points',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_teamquestions_points',
             'config' => [
                 'type' => 'input',
                 'size' => '4',
@@ -86,7 +86,7 @@ $tx_t3sportsbet_tq = [
         ],
         'teams' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions_teams',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_teamquestions_teams',
             'config' => [
                 'type' => 'select',
                 'foreign_table' => 'tx_cfcleague_teams',
@@ -112,7 +112,7 @@ FROM tx_cfcleague_teams t
         ],
         'team' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions_team',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_teamquestions_team',
             'config' => [
                 'type' => 'select',
                 'itemsProcFunc' => 'Sys25\T3sportsbet\Utility\ItemFunctions->getTeams4TeamBet',

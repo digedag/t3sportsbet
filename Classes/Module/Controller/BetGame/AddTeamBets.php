@@ -2,10 +2,16 @@
 
 namespace Sys25\T3sportsbet\Module\Controller\BetGame;
 
+use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Utility\T3General;
+use tx_rnbase;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -31,7 +37,7 @@ namespace Sys25\T3sportsbet\Module\Controller\BetGame;
 class AddTeamBets
 {
     /**
-     * @var \tx_rnbase_mod_IModule
+     * @var IModule
      */
     protected $module;
 
@@ -41,7 +47,7 @@ class AddTeamBets
     protected $currentRound;
 
     /**
-     * @param \tx_rnbase_mod_IModule $module
+     * @param IModule $module
      * @param \tx_t3sportsbet_models_betset $currentRound
      */
     public function __construct($module, $currentRound)
@@ -72,9 +78,9 @@ class AddTeamBets
         $options = [];
         $options['title'] = '###LABEL_BTN_NEWTEAMBET###';
         $options['params'] = '&defVals[tx_t3sportsbet_teamquestions][betset]=tx_t3sportsbet_betsets_'.$this->currentRound->getUid();
-        $options['linker'][] = \tx_rnbase::makeInstance('tx_t3sportsbet_mod1_link_TeamBets');
+        $options['linker'][] = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_link_TeamBets');
 
-        $lister = \tx_rnbase::makeInstance('tx_t3sportsbet_mod1_lister_TeamQuestion', $this->module, $options);
+        $lister = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_lister_TeamQuestion', $this->module, $options);
         $lister->setBetSetUid($this->currentRound->getUid());
 
         $list = $lister->getResultList();
@@ -101,14 +107,13 @@ class AddTeamBets
         }
 
         // Gehört die Question zum aktuellen Betset
-        $teamQuestion = \tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', $teamQuestionUid);
+        $teamQuestion = tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', $teamQuestionUid);
         if ($teamQuestion->getBetSetUid() != $currBetSet->getUid()) {
             return '';
         }
 
         $options = ['module' => $this->module];
-        /* @var $lister \tx_t3sportsbet_mod1_lister_TeamBet */
-        $lister = \tx_rnbase::makeInstance('tx_t3sportsbet_mod1_lister_TeamBet', $this->module, $options);
+        $lister = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_lister_TeamBet', $this->module, $options);
         $lister->setTeamQuestionUid($teamQuestionUid);
 
         $list = $lister->getResultList();
@@ -121,7 +126,7 @@ class AddTeamBets
         $out .= '<hr />';
         $headline = strip_tags($teamQuestion->getQuestion());
 
-        return $this->module->getDoc()->section($headline, $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+        return $this->module->getDoc()->section($headline, $out, 0, 1, IModFunc::ICON_INFO);
     }
 
     /**
@@ -133,18 +138,20 @@ class AddTeamBets
      */
     private function handleResetTeamBets($currBetSet)
     {
-        $data = \Tx_Rnbase_Utility_T3General::_GP('resetTeamBets');
+        $data = T3General::_GP('resetTeamBets');
         if (!is_array($data)) {
             return '';
         }
-        list($itemid) = each($data);
+        $itemid = key($data);
         \tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->resetTeamBets($itemid);
+
+        return '';
     }
 
     /**
      * Liefert das FormTool.
      *
-     * @return \tx_rnbase_util_FormTool
+     * @return ToolBox
      */
     private function getFormTool()
     {

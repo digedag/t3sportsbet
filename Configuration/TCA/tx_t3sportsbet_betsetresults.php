@@ -6,7 +6,7 @@ if (!defined('TYPO3_MODE')) {
 
 $tx_t3sportsbet_betsetresults = [
     'ctrl' => [
-        'title' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsetresults',
+        'title' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_betsetresults',
         'label' => 'uid',
         'label_alt' => 'betset, feuser',
         'label_alt_force' => 1,
@@ -27,7 +27,7 @@ $tx_t3sportsbet_betsetresults = [
     'columns' => [
         'betset' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_betsets',
             'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -51,7 +51,7 @@ $tx_t3sportsbet_betsetresults = [
         ],
         'points' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_bets.points',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_bets.points',
             'config' => [
                 'type' => 'input',
                 'size' => '4',

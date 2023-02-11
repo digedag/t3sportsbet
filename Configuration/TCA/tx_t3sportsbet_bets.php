@@ -6,7 +6,7 @@ if (!defined('TYPO3_MODE')) {
 
 $tx_t3sportsbet_bets = [
     'ctrl' => [
-        'title' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_bets',
+        'title' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_bets',
         'label' => 'uid',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -25,7 +25,7 @@ $tx_t3sportsbet_bets = [
     'columns' => [
         'betset' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betsets',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_betsets',
             'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -49,7 +49,7 @@ $tx_t3sportsbet_bets = [
         ],
         't3match' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games',
             'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -61,7 +61,7 @@ $tx_t3sportsbet_bets = [
         ],
         'finished' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_bets.finished',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_bets.finished',
             'config' => [
                 'type' => 'check',
                 'default' => '0',
@@ -69,7 +69,7 @@ $tx_t3sportsbet_bets = [
         ],
         'goals_home' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_bets.goals_home',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_bets.goals_home',
             'config' => [
                 'type' => 'input',
                 'size' => '4',
@@ -84,7 +84,7 @@ $tx_t3sportsbet_bets = [
         ],
         'goals_guest' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_bets.goals_guest',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_bets.goals_guest',
             'config' => [
                 'type' => 'input',
                 'size' => '4',
@@ -99,7 +99,7 @@ $tx_t3sportsbet_bets = [
         ],
         'points' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_bets.points',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_bets.points',
             'config' => [
                 'type' => 'input',
                 'size' => '4',
