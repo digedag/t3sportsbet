@@ -1,8 +1,16 @@
 <?php
+
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Domain\Model\FeUser;
+use Sys25\RnBase\Domain\Repository\FeUserRepository;
+use Sys25\RnBase\Search\SearchBase;
+use Sys25\RnBase\Utility\Strings;
+use System25\T3sports\Utility\ServiceRegistry;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,13 +29,19 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_t3sportsbet_util_library');
 
 /**
  * @author Rene Nitzsche
  */
 class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
 {
+    private $feuserRepo;
+
+    public function __construct()
+    {
+        $this->feuserRepo = new FeUserRepository();
+    }
+
     /**
      * Analyze teambets of a betgame.
      *
@@ -56,7 +70,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
             $values['finished'] = 1;
             $values['points'] = $question->isWinningBet($bet) ? $bet->getProperty('possiblepoints') : 0;
             $where = 'uid='.$bet->getUid();
-            Tx_Rnbase_Database_Connection::getInstance()->doUpdate('tx_t3sportsbet_teambets', $where, $values, 0);
+            Connection::getInstance()->doUpdate('tx_t3sportsbet_teambets', $where, $values, 0);
             ++$ret;
         }
 
@@ -66,23 +80,22 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
     /**
      * Reset all bets for team questions.
      *
-     * @param mixed $teamQuestionUids
-     *            commaseparated uids of team questions
+     * @param mixed $teamQuestionUids commaseparated uids of team questions
      *
      * @return int number of bets
      */
     public function resetTeamBets($teamQuestionUids)
     {
-        $teamQuestionUids = implode(',', Tx_Rnbase_Utility_Strings::intExplode(',', $teamQuestionUids));
+        $teamQuestionUids = implode(',', Strings::intExplode(',', $teamQuestionUids));
         if (!$teamQuestionUids) {
-            return;
+            return 0;
         }
         $values = [];
         $values['finished'] = 0;
         $values['points'] = 0;
         $where = 'question IN ('.$teamQuestionUids.')';
 
-        return Tx_Rnbase_Database_Connection::getInstance()->doUpdate('tx_t3sportsbet_teambets', $where, $values, 0);
+        return Connection::getInstance()->doUpdate('tx_t3sportsbet_teambets', $where, $values);
     }
 
     /**
@@ -95,7 +108,6 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
      */
     public function loadTeamQuestion($uid)
     {
-        tx_rnbase::load('tx_rnbase_cache_Manager');
         $cache = tx_rnbase_cache_Manager::getCache('t3sports');
         $question = $cache->get('t3sbet_tq_'.$uid);
         if (!$question) {
@@ -128,7 +140,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
      * with uid=0.
      *
      * @param tx_t3sportsbet_models_teamquestion $teamQuestion
-     * @param tx_t3users_models_feuser $feuser
+     * @param FeUser $feuser
      *
      * @return tx_t3sportsbet_models_teambet
      */
@@ -161,7 +173,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
      * Is a teambet possible for a user.
      *
      * @param tx_t3sportsbet_models_teamquestion $teamQuestion
-     * @param tx_t3users_models_feuser $feuser
+     * @param FeUser $feuser
      */
     public function getTeamQuestionStatus($teamQuestion, $feuser)
     {
@@ -170,8 +182,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
             $state = $teamQuestion->isOpen() ? 'OPEN' : $state;
             if ('OPEN' == $state) {
                 // Prüfen, ob der aktuelle User seinen eigenen Tip bearbeiten will
-                tx_rnbase::load('tx_t3users_models_feuser');
-                $currUser = tx_t3users_models_feuser::getCurrent();
+                $currUser = $this->feuserRepo->getCurrent();
                 if (!($currUser && $currUser->getUid() == $feuser->getUid())) {
                     $state = 'CLOSED';
                 }
@@ -188,7 +199,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
      */
     public function getTeams4TeamQuestion($teamQuestion)
     {
-        $srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+        $srv = ServiceRegistry::getTeamService();
         $fields = [];
         $fields['TEAMQUESTIONMM.UID_LOCAL'][OP_EQ_INT] = $teamQuestion->getUid();
         $fields['TEAMQUESTIONMM.TABLENAMES'][OP_EQ] = 'tx_cfcleague_teams';
@@ -213,7 +224,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
         $options = [];
         $options['distinct'] = 1;
         $options['orderby']['TEAM.NAME'] = 'asc';
-        $srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+        $srv = ServiceRegistry::getTeamService();
 
         return $srv->searchTeams($fields, $options);
     }
@@ -251,7 +262,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
      * Save or update a teambet from fe request.
      *
      * @param tx_t3sportsbet_models_teamquestion $teamQuestion
-     * @param tx_t3users_models_feuser $feuser
+     * @param FeUser $feuser
      * @param int $betUid
      * @param int $teamUid
      *
@@ -287,7 +298,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
                 return 0;
             }
             $where = 'uid='.$betUid;
-            Tx_Rnbase_Database_Connection::getInstance()->doUpdate('tx_t3sportsbet_teambets', $where, $values, 0);
+            Connection::getInstance()->doUpdate('tx_t3sportsbet_teambets', $where, $values, 0);
         } else {
             // Create new teambet instance
             // Ein User darf pro Frage nur einen Tip abgeben
@@ -300,7 +311,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
             $values['crdate'] = $values['tstamp'];
             $values['feuser'] = $feuser->getUid();
             $values['question'] = $teamQuestion->getUid();
-            Tx_Rnbase_Database_Connection::getInstance()->doInsert('tx_t3sportsbet_teambets', $values, 0);
+            Connection::getInstance()->doInsert('tx_t3sportsbet_teambets', $values, 0);
         }
 
         return 1;
@@ -308,16 +319,14 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
 
     public function searchTeamQuestion($fields, $options)
     {
-        tx_rnbase::load('tx_rnbase_util_SearchBase');
-        $searcher = tx_rnbase_util_SearchBase::getInstance('tx_t3sportsbet_search_TeamQuestion');
+        $searcher = SearchBase::getInstance('tx_t3sportsbet_search_TeamQuestion');
 
         return $searcher->search($fields, $options);
     }
 
     public function searchTeamBet($fields, $options)
     {
-        tx_rnbase::load('tx_rnbase_util_SearchBase');
-        $searcher = tx_rnbase_util_SearchBase::getInstance('tx_t3sportsbet_search_TeamBet');
+        $searcher = SearchBase::getInstance('tx_t3sportsbet_search_TeamBet');
 
         return $searcher->search($fields, $options);
     }

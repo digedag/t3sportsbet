@@ -1,4 +1,5 @@
 <?php
+
 use Sys25\RnBase\Utility\Extensions;
 
 if (!defined('TYPO3_MODE')) {
@@ -16,9 +17,8 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['search_Team_getTableMappin
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['search_Team_getJoins_hook'][] = 'tx_t3sportsbet_hooks_Search->getJoinsTeam';
 
 // Hook for feuser search
-// FIXME: switch to rn_base
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['t3users']['search_feuser_getTableMapping_hook'][] = 'tx_t3sportsbet_hooks_searchFeuser->getTableMapping';
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['t3users']['search_feuser_getJoins_hook'][] = 'tx_t3sportsbet_hooks_searchFeuser->getJoins';
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rn_base']['search_FeUser_getTableMapping_hook'][] = 'tx_t3sportsbet_hooks_searchFeuser->getTableMapping';
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rn_base']['search_FeUser_getJoins_hook'][] = 'tx_t3sportsbet_hooks_searchFeuser->getJoins';
 
 // Hook for team marker
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['teamMarker_initRecord'][] = 'tx_t3sportsbet_hooks_Marker->initTeam';

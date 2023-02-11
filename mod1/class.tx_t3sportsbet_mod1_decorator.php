@@ -94,7 +94,7 @@ class tx_t3sportsbet_mod1_decorator
             if (intval($data['nocolumn'])) {
                 continue;
             }
-            $arr[] = intval($data['notitle']) ? '' : $LANG->getLL((isset($data['title']) ? $data['title'] : $column));
+            $arr[] = intval($data['notitle']) ? '' : $LANG->getLL(isset($data['title']) ? $data['title'] : $column);
         }
         if (isset($options['linker'])) {
             $arr[] = $LANG->getLL('label_action');

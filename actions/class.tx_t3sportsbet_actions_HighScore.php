@@ -1,4 +1,9 @@
 <?php
+
+use Sys25\RnBase\Domain\Repository\FeUserRepository;
+use Sys25\RnBase\Frontend\Request\RequestInterface;
+use Sys25\RnBase\Utility\PageBrowser;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -21,23 +26,25 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_action_BaseIOC');
-tx_rnbase::load('tx_t3sportsbet_models_betgame');
-tx_rnbase::load('tx_t3users_models_feuser');
-tx_rnbase::load('tx_t3users_util_ServiceRegistry');
-tx_rnbase::load('tx_t3sportsbet_util_ScopeController');
 
 /**
  * Der View zeigt die Bestenliste an.
  */
 class tx_t3sportsbet_actions_HighScore extends \Sys25\RnBase\Frontend\Controller\AbstractAction
 {
+    private $feuserRepo;
+
+    public function __construct()
+    {
+        $this->feuserRepo = new FeUserRepository();
+    }
+
     /**
-     * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
+     * @param RequestInterface $request
      *
      * @return string error msg or null
      */
-    protected function handleRequest(Sys25\RnBase\Frontend\Request\RequestInterface $request)
+    protected function handleRequest(RequestInterface $request)
     {
         $parameters = $request->getParameters();
         $configurations = $request->getConfigurations();
@@ -55,12 +62,12 @@ class tx_t3sportsbet_actions_HighScore extends \Sys25\RnBase\Frontend\Controller
         $betSrv = tx_t3sportsbet_util_ServiceRegistry::getBetService();
         // $listSize = $betSrv->getResultSize($betsetUids);
         // Die gesamten Daten holen
-        $feuser = tx_t3users_models_feuser::getCurrent();
+        $feuser = $this->feuserRepo->getCurrent();
         $userUids = ($feuser) ? $feuser->getUid() : '';
         $results = $betSrv->getResults($betsetUids, $userUids);
         $listSize = count($results[0]);
 
-        $pageBrowser = tx_rnbase::makeInstance('tx_rnbase_util_PageBrowser', 'bethighscores'.$configurations->getCObj()->data['uid']);
+        $pageBrowser = tx_rnbase::makeInstance(PageBrowser::class, 'bethighscores'.$configurations->getCObj()->data['uid']);
         $pageSize = $this->getPageSize($parameters, $configurations);
         $pageBrowser->setState($parameters, $listSize, $pageSize);
         $limit = $pageBrowser->getState();
@@ -81,8 +88,8 @@ class tx_t3sportsbet_actions_HighScore extends \Sys25\RnBase\Frontend\Controller
     /**
      * Liefert die Anzahl der Ergebnisse pro Seite.
      *
-     * @param array $parameters
-     * @param tx_rnbase_configurations $configurations
+     * @param \Sys25\RnBase\Frontend\Request\ParametersInterface $parameters
+     * @param \Sys25\RnBase\Configuration\ConfigurationInterface $configurations
      *
      * @return int
      */

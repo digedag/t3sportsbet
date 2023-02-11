@@ -6,9 +6,9 @@ if (!defined('TYPO3_MODE')) {
 
 // Add plugin wizard
 if (TYPO3_MODE == 'BE') {
-    ////////////////////////////////
+    // //////////////////////////////
     // Submodul anmelden
-    ////////////////////////////////
+    // //////////////////////////////
     $modName = 'web_CfcLeagueM1';
 
     tx_rnbase_util_Extensions::insertModuleFunction(

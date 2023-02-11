@@ -1,8 +1,17 @@
 <?php
+
+use Sys25\RnBase\Domain\Model\FeUser;
+use Sys25\RnBase\Domain\Repository\FeUserRepository;
+use Sys25\RnBase\Frontend\Marker\BaseMarker;
+use Sys25\RnBase\Frontend\Marker\FormatUtil;
+use Sys25\RnBase\Frontend\Marker\Templates;
+use System25\T3sports\Frontend\Marker\MatchMarker;
+use System25\T3sports\Model\Fixture;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,24 +30,25 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_BaseMarker');
-tx_rnbase::load('tx_cfcleaguefe_util_MatchMarker');
-tx_rnbase::load('tx_rnbase_util_Templates');
 
 /**
  * Diese Klasse ist für die Erstellung von Markerarrays der Tipprunden verantwortlich.
  */
-class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
+class tx_t3sportsbet_util_MatchMarker extends BaseMarker
 {
     public static $betMarker = null;
 
     private $request;
+    private $matchMarker;
+    private $options;
+    private $feuserRepo;
 
     public function __construct($options = [])
     {
         $this->options = $options;
         $this->request = $options['request'];
-        $this->matchMarker = tx_rnbase::makeInstance('tx_cfcleaguefe_util_MatchMarker');
+        $this->matchMarker = tx_rnbase::makeInstance(MatchMarker::class);
+        $this->feuserRepo = new FeUserRepository();
     }
 
     /**
@@ -54,11 +64,9 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
     }
 
     /**
-     * @param string $template
-     *            das HTML-Template
-     * @param tx_cfcleaguefe_models_match $match
-     *            das Spiel
-     * @param tx_rnbase_util_FormatUtil $formatter
+     * @param string $template das HTML-Template
+     * @param Fixture $match das Spiel
+     * @param FormatUtil $formatter
      *            der zu verwendente Formatter
      * @param string $matchConfId
      *            Pfad der TS-Config des Spiels, z.B. 'listView.match.'
@@ -81,10 +89,10 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
         $GLOBALS['TSFE']->register['T3SPORTSBET_BETSTATUS'] = $betset->getMatchState($match);
 
         // Die Tipptendenz mit einblenden
-        if ((self::containsMarker($template, $marker.'_TREND'))) {
+        if (self::containsMarker($template, $marker.'_TREND')) {
             $this->addBetTrend($betset, $match);
         }
-        if ((self::containsMarker($template, $marker.'_STATS'))) {
+        if (self::containsMarker($template, $marker.'_STATS')) {
             $this->addBetStats($betset, $match);
         }
 
@@ -107,7 +115,7 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
      * Tiptrend für das Spiel einsetzen.
      *
      * @param tx_t3sportsbet_models_betset $betset
-     * @param tx_cfcleaguefe_models_match $match
+     * @param Fixture $match
      */
     public function addBetTrend($betset, $match)
     {
@@ -121,7 +129,7 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
      * Diese Daten sind erst nach der Auswertung des Spiels möglich.
      *
      * @param tx_t3sportsbet_models_betset $betset
-     * @param tx_cfcleaguefe_models_match $match
+     * @param Fixture $match
      */
     public function addBetStats($betset, $match)
     {
@@ -137,8 +145,8 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
      * @param string $template
      * @param tx_t3sportsbet_models_betset $betset
      * @param tx_t3sportsbet_models_bet $bet
-     * @param tx_t3users_models_feuser $feuser
-     * @param tx_rnbase_util_FormatUtil $formatter
+     * @param FeUser $feuser
+     * @param FormatUtil $formatter
      *
      * @return string
      */
@@ -154,8 +162,7 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
             $state = $betset->getMatchState($bet->getMatch());
             if ('OPEN' == $state) {
                 // Prüfen, ob der aktuelle User seinen eigenen Tip bearbeiten will
-                tx_rnbase::load('tx_t3users_models_feuser');
-                $currUser = tx_t3users_models_feuser::getCurrent();
+                $currUser = $this->feuserRepo->getCurrent();
                 if (!($currUser && $currUser->getUid() == $feuser->getUid())) {
                     $state = 'CLOSED';
                 }
@@ -168,9 +175,10 @@ class tx_t3sportsbet_util_MatchMarker extends tx_rnbase_util_BaseMarker
                 ->getViewData()
                 ->offsetSet('MATCH_STATE', 'OPEN');
         }
-        $subTemplate = tx_rnbase_util_Templates::getSubpart($template, '###BETSTATUS_'.$state.'###');
+        $markerArray = [];
+        $subTemplate = Templates::getSubpart($template, '###BETSTATUS_'.$state.'###');
         $subpartArray['###BETSTATUS_'.$state.'###'] = $subTemplate;
-        $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray); // , $wrappedSubpartArray);
+        $out = Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray); // , $wrappedSubpartArray);
 
         return $out;
     }

@@ -1,4 +1,5 @@
 <?php
+
 use Sys25\RnBase\Domain\Repository\FeUserRepository;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
@@ -34,11 +35,13 @@ class tx_t3sportsbet_actions_BetList extends \Sys25\RnBase\Frontend\Controller\A
 {
     private $feuserRepo;
     private $matchRepo;
+
     public function __construct()
     {
         $this->feuserRepo = new FeUserRepository();
         $this->matchRepo = new MatchRepository();
     }
+
     /**
      * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
      *

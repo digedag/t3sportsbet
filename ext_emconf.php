@@ -1,12 +1,12 @@
 <?php
 
-//#######################################################################
+// #######################################################################
 // Extension Manager/Repository config file for ext: "t3sportsbet"
 //
 // Manual updates:
 // Only the data in the array - anything else is removed by next write.
 // "version" and "dependencies" must not be touched!
-//#######################################################################
+// #######################################################################
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'T3sports bet system',
@@ -17,7 +17,7 @@ $EM_CONF[$_EXTKEY] = [
     'author_company' => 'System 25',
     'dependencies' => '',
     'module' => '',
-    'version' => '1.0.1',
+    'version' => '1.1.0',
     'state' => 'stable',
     'uploadfolder' => 0,
     'createDirs' => '',
@@ -28,7 +28,6 @@ $EM_CONF[$_EXTKEY] = [
             'rn_base' => '1.16.0-0.0.0',
             'cfc_league' => '1.10.0-0.0.0',
             'cfc_league_fe' => '1.10.0-0.0.0',
-            't3users' => '0.4.0-0.0.0',
         ],
         'conflicts' => [
         ],

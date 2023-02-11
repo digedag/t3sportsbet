@@ -1,13 +1,13 @@
 <?php
 
-defined('TYPO3_MODE') or exit();
+defined('TYPO3_MODE') or exit;
 
 call_user_func(function () {
     $extKey = 't3sportsbet';
 
-    ////////////////////////////////
+    // //////////////////////////////
     // Plugin anmelden
-    ////////////////////////////////
+    // //////////////////////////////
 
     // Einige Felder ausblenden
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['tx_t3sportsbet_main'] = 'layout,select_key,pages,recursive';

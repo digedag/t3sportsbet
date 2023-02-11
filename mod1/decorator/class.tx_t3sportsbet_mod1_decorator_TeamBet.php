@@ -1,5 +1,8 @@
 <?php
 
+use Sys25\RnBase\Domain\Repository\FeUserRepository;
+use System25\T3sports\Model\Team;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -28,9 +31,13 @@
  */
 class tx_t3sportsbet_mod1_decorator_TeamBet
 {
+    private $mod;
+    private $feuserRepo;
+
     public function __construct($mod)
     {
         $this->mod = $mod;
+        $this->feuserRepo = new FeUserRepository();
     }
 
     /**
@@ -69,11 +76,10 @@ class tx_t3sportsbet_mod1_decorator_TeamBet
         } elseif ('finished' == $colName) {
             $ret = $value ? '###LABEL_YES###' : '###LABEL_NO###';
         } elseif ('team' == $colName) {
-            $team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $value);
+            $team = tx_rnbase::makeInstance(Team::class, $value);
             $ret = $team->getName();
         } elseif ('feuser' == $colName) {
-            tx_rnbase::load('tx_t3users_models_feuser');
-            $feuser = tx_t3users_models_feuser::getInstance($value);
+            $feuser = $this->feuserRepo->getInstance($value);
             $ret = $feuser->getProperty('username');
             $ret .= $this->getModule()
                 ->getFormTool()

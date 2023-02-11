@@ -40,7 +40,7 @@ class tx_t3sportsbet_mod1_link_TeamBets implements LinkerInterface
      */
     public function makeLink($item, ToolBox $formTool, $currentPid, $options)
     {
-        //, $GLOBALS['LANG']->getLL('label_edit')
+        // , $GLOBALS['LANG']->getLL('label_edit')
         $out = $formTool->createEditButton('tx_t3sportsbet_teamquestions', $item->getUid());
         $cnt = tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->getBetCount($item);
         if ($cnt) {
