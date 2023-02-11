@@ -15,6 +15,6 @@ if (TYPO3_MODE == 'BE') {
         $modName,
         \Sys25\T3sportsbet\Module\Controller\BetGame::class,
         '',
-        'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_module.name'
+        'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_module.name'
     );
 }

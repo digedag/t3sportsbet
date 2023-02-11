@@ -6,7 +6,7 @@ if (!defined('TYPO3_MODE')) {
 
 $tx_t3sportsbet_betgame = [
     'ctrl' => [
-        'title' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames',
+        'title' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_betgames',
         'label' => 'name',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -62,7 +62,7 @@ $tx_t3sportsbet_betgame = [
             ],
         'name' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames.name',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_betgames.name',
             'config' => [
                 'type' => 'input',
                 'size' => '30',
@@ -71,7 +71,7 @@ $tx_t3sportsbet_betgame = [
             ],
         'competition' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.competition',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.competition',
             'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -84,7 +84,7 @@ $tx_t3sportsbet_betgame = [
             ],
         'points_accurate' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames.points_accurate',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_betgames.points_accurate',
             'config' => [
                 'type' => 'input',
                 'size' => '4',
@@ -99,7 +99,7 @@ $tx_t3sportsbet_betgame = [
             ],
         'points_goalsdiff' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames.points_goalsdiff',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_betgames.points_goalsdiff',
             'config' => [
                 'type' => 'input',
                 'size' => '4',
@@ -114,7 +114,7 @@ $tx_t3sportsbet_betgame = [
             ],
         'points_tendency' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames.points_tendency',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_betgames.points_tendency',
             'config' => [
                 'type' => 'input',
                 'size' => '4',
@@ -129,7 +129,7 @@ $tx_t3sportsbet_betgame = [
             ],
         'draw_if_extratime' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames.draw_if_extratime',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_betgames.draw_if_extratime',
             'config' => [
                 'type' => 'check',
                 'default' => 0,
@@ -137,7 +137,7 @@ $tx_t3sportsbet_betgame = [
             ],
         'draw_if_penalty' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames.draw_if_penalty',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_betgames.draw_if_penalty',
             'config' => [
                 'type' => 'check',
                 'default' => 0,
@@ -145,7 +145,7 @@ $tx_t3sportsbet_betgame = [
             ],
         'lockminutes' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames.lockminutes',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_betgames.lockminutes',
             'config' => [
                 'type' => 'input',
                 'size' => '4',
@@ -160,7 +160,7 @@ $tx_t3sportsbet_betgame = [
         ],
         'comment' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames_comment',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_betgames_comment',
             'config' => [
                 'type' => 'text',
                 'cols' => '30',
@@ -170,7 +170,7 @@ $tx_t3sportsbet_betgame = [
         ],
             //		'ignore_greentable' => Array (
                 //			'exclude' => 0,
-                //			'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_betgames.ignore_greentable',
+                //			'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_betgames.ignore_greentable',
                 //			'config' => Array (
                     //				'type' => 'check',
                 //				'default' => 1

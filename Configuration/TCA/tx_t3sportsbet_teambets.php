@@ -6,7 +6,7 @@ if (!defined('TYPO3_MODE')) {
 
 $tx_t3sportsbet_tb = [
     'ctrl' => [
-        'title' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teambets',
+        'title' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_teambets',
         'label' => 'question',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -25,7 +25,7 @@ $tx_t3sportsbet_tb = [
     'columns' => [
         'question' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teamquestions',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_teamquestions',
             'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -50,7 +50,7 @@ $tx_t3sportsbet_tb = [
 
         'finished' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_bets.finished',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_bets.finished',
             'config' => [
                 'type' => 'check',
                 'default' => '0',
@@ -58,7 +58,7 @@ $tx_t3sportsbet_tb = [
         ],
         'team' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_bets.goals_home',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_bets.goals_home',
             'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -70,7 +70,7 @@ $tx_t3sportsbet_tb = [
         ],
         'points' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_bets.points',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_bets.points',
             'config' => [
                 'type' => 'input',
                 'size' => '4',
@@ -85,7 +85,7 @@ $tx_t3sportsbet_tb = [
         ],
         'possiblepoints' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xml:tx_t3sportsbet_teambets_possiblepoints',
+            'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_teambets_possiblepoints',
             'config' => [
                 'type' => 'input',
                 'size' => '4',

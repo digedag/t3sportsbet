@@ -17,14 +17,14 @@ call_user_func(function () {
 
     $GLOBALS['TCA']['tt_content']['ctrl']['requestUpdate'] .= ',scope.betgame';
 
-    tx_rnbase_util_Extensions::addPiFlexFormValue(
+    \Sys25\RnBase\Utility\Extensions::addPiFlexFormValue(
         'tx_t3sportsbet_main',
         'FILE:EXT:'.$extKey.'/Configuration/Flexform/flexform_main.xml'
     );
 
-    tx_rnbase_util_Extensions::addPlugin(
+    \Sys25\RnBase\Utility\Extensions::addPlugin(
         [
-            'LLL:EXT:'.$extKey.'/Resources/Private/Language/locallang_db.xml:plugin.t3sportsbet.label',
+            'LLL:EXT:'.$extKey.'/Resources/Private/Language/locallang_db.xlf:plugin.t3sportsbet.label',
             'tx_t3sportsbet_main',
         ],
         'list_type',

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" data="2023-02-11T21-47-33" product-name="zsb">
+		<header/>
+		<body>
+			<trans-unit id="tx_t3sportsbet_module.name" xml:space="preserve">
+				<source>T3sports bet game</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.label" xml:space="preserve">
+				<source>T3sports bet system</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.description" xml:space="preserve">
+				<source>A powerful bet system for T3sports</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.tab.common" xml:space="preserve">
+				<source>Common</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.tab.tssetup" xml:space="preserve">
+				<source>Typoscript</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.tssetup" xml:space="preserve">
+				<source>plugin.tx_t3sportsbet_main.</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.action" xml:space="preserve">
+				<source>View</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.action.HighScore" xml:space="preserve">
+				<source>Highscore list</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.action.Summary" xml:space="preserve">
+				<source>Status view for bet system</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.action.GameList" xml:space="preserve">
+				<source>List of bet games</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.action.BetList" xml:space="preserve">
+				<source>List of bet sets</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.action.ScopeSelection" xml:space="preserve">
+				<source>Scope Selection</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.betgame" xml:space="preserve">
+				<source>Betgame</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.betset" xml:space="preserve">
+				<source>Betsets</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.betset.all" xml:space="preserve">
+				<source>All</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.betset.feuserFromRequestAllowed" xml:space="preserve">
+				<source>Allow user from request</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.betsetSelectionInput" xml:space="preserve">
+				<source>Show Selectbox for betset</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.betset.default" xml:space="preserve">
+				<source>Default betset in selectbox (if any)</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.betset.default.first" xml:space="preserve">
+				<source>First</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.betset.default.last" xml:space="preserve">
+				<source>Last</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.highscore.userbet_page" xml:space="preserve">
+				<source>Reviewpage for user bets</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.flexform.template" xml:space="preserve">
+				<source>HTML-Template</source>
+			</trans-unit>
+			<trans-unit id="plugin.t3sportsbet.dp.competition" xml:space="preserve">
+				<source>Complete competition</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_bets" xml:space="preserve">
+				<source>T3sports bet</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betgames" xml:space="preserve">
+				<source>T3sports bet game</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betgames.name" xml:space="preserve">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betgames.competition" xml:space="preserve">
+				<source>Competition</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betgames.dataprovider" xml:space="preserve">
+				<source>Type</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betgames.points_accurate" xml:space="preserve">
+				<source>Points for accurate bet</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betgames.points_goalsdiff" xml:space="preserve">
+				<source>Points for correct goals difference</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betgames.points_tendency" xml:space="preserve">
+				<source>Points for tendency bet</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betgames.draw_if_extratime" xml:space="preserve">
+				<source>Draw if extra time</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betgames.draw_if_penalty" xml:space="preserve">
+				<source>Draw if extra penalty</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betgames.ignore_greentable" xml:space="preserve">
+				<source>Ignore matches judged by court</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betgames.lockminutes" xml:space="preserve">
+				<source>Lock bets before kick off (minutes)</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betgames_comment" xml:space="preserve">
+				<source>Comment</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betsets" xml:space="preserve">
+				<source>T3sports bet set</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betsets.round" xml:space="preserve">
+				<source>Bet round</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betsets.round_name" xml:space="preserve">
+				<source>Round name</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betsets.status" xml:space="preserve">
+				<source>Status</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betsets.status.prepare" xml:space="preserve">
+				<source>Preparation</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betsets.status.open" xml:space="preserve">
+				<source>Open</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betsets.status.finished" xml:space="preserve">
+				<source>Finished</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betsets.t3matches" xml:space="preserve">
+				<source>Matches to bet for</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_bets.goals_home" xml:space="preserve">
+				<source>Goals home</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_bets.goals_guest" xml:space="preserve">
+				<source>Goals guest</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_bets.points" xml:space="preserve">
+				<source>Points</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_bets.finished" xml:space="preserve">
+				<source>Finished</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_betsetresults" xml:space="preserve">
+				<source>T3sports bet set result</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_teamquestions" xml:space="preserve">
+				<source>T3sports team question</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_teamquestions_question" xml:space="preserve">
+				<source>Question</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_teamquestions_openuntil" xml:space="preserve">
+				<source>Open until</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_teamquestions_points" xml:space="preserve">
+				<source>Points</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_teamquestions_teams" xml:space="preserve">
+				<source>Possible teams</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_teamquestions_team" xml:space="preserve">
+				<source>The winning team(s)</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_teambets" xml:space="preserve">
+				<source>T3sports team bet</source>
+			</trans-unit>
+			<trans-unit id="tx_t3sportsbet_teambets_possiblepoints" xml:space="preserve">
+				<source>Possible points</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
