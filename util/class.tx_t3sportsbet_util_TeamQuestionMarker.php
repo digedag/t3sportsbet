@@ -7,8 +7,8 @@ use Sys25\RnBase\Frontend\Marker\ListBuilder;
 use Sys25\RnBase\Frontend\Marker\SimpleMarker;
 use Sys25\RnBase\Frontend\Marker\Templates;
 use Sys25\RnBase\Utility\Logger;
-use System25\ClubMember\Util\ServiceRegistry;
 use System25\T3sports\Frontend\Marker\TeamMarker;
+use System25\T3sports\Utility\ServiceRegistry;
 
 /***************************************************************
  *  Copyright notice
@@ -167,7 +167,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
             $teams[] = $team;
         }
         if ($this->containsMarker($template, $markerPrefix.'_TEAM_')) {
-            $listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
+            $listBuilder = tx_rnbase::makeInstance(ListBuilder::class);
             $template = $listBuilder->render($teams, false, $template, 'tx_cfcleaguefe_util_TeamMarker', $confId.'team.', $markerPrefix.'_TEAM', $formatter, $options);
         }
 

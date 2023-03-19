@@ -495,15 +495,16 @@ GROUP BY feuser, betset
             }
             $fields['BETSETRESULT.FEUSER'][OP_GT_INT] = 0;
             $options['what'] = '
-			FEUSER.uid, sum(tx_t3sportsbet_betsetresults.points) AS betpoints,
-			sum(tx_t3sportsbet_betsetresults.bets) AS betcount
+			FEUSER.uid, sum(BETSETRESULT.points) AS betpoints,
+			sum(BETSETRESULT.bets) AS betcount
 			';
         }
 
         $options['distinct'] = 1;
         $options['orderby']['betpoints'] = 'desc';
-        $options['groupby'] = 'fe_users.uid';
+        $options['groupby'] = 'FEUSER.uid';
         // $options['debug'] = '1';
+        /** @var \Sys25\RnBase\Domain\Collection\BaseCollection $rows */
         $rows = $this->feuserRepo->search($fields, $options);
 
         $userIds = Strings::intExplode(',', $feuserUids);
@@ -511,6 +512,7 @@ GROUP BY feuser, betset
         $userIdx = [];
         $rank = 0;
         $lastPoints = 0;
+        $rows = $rows->toArray();
         for ($i = 0, $cnt = count($rows); $i < $cnt; ++$i) {
             $row = &$rows[$i];
             // Check rank
