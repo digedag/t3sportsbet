@@ -21,14 +21,19 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_model_base');
-tx_rnbase::load('tx_rnbase_util_Dates');
+
+use Sys25\RnBase\Domain\Model\BaseModel;
+use Sys25\RnBase\Utility\Dates;
+use Sys25\RnBase\Utility\Strings;
+use Sys25\T3sportsbet\Model\BetSet;
 
 /**
  * Model for a team question.
  */
-class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base
+class tx_t3sportsbet_models_teamquestion extends BaseModel
 {
+    private $teamUids;
+
     public function getTableName()
     {
         return 'tx_t3sportsbet_teamquestions';
@@ -37,11 +42,11 @@ class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base
     /**
      * Returns the betset.
      *
-     * @return tx_t3sportsbet_models_betset
+     * @return BetSet
      */
     public function getBetSet()
     {
-        return tx_t3sportsbet_models_betset::getBetsetInstance($this->getBetSetUid());
+        return BetSet::getBetsetInstance($this->getBetSetUid());
     }
 
     /**
@@ -96,7 +101,7 @@ class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base
 
     public function getOpenUntilTstamp()
     {
-        return tx_rnbase_util_Dates::datetime_mysql2tstamp($this->getOpenUntil());
+        return Dates::datetime_mysql2tstamp($this->getOpenUntil());
     }
 
     /**
@@ -109,7 +114,7 @@ class tx_t3sportsbet_models_teamquestion extends tx_rnbase_model_base
     public function isWinningBet($bet)
     {
         if (!is_array($this->teamUids)) {
-            $this->teamUids = t3lib_div::intExplode(',', $this->getTeamUid());
+            $this->teamUids = Strings::intExplode(',', $this->getTeamUid());
             $this->teamUids = array_flip($this->teamUids);
         }
 

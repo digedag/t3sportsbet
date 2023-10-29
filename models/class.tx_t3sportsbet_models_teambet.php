@@ -22,12 +22,15 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Sys25\RnBase\Domain\Model\BaseModel;
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
+
 tx_rnbase::load('tx_rnbase_model_base');
 
 /**
  * Model for a bet.
  */
-class tx_t3sportsbet_models_teambet extends tx_rnbase_model_base
+class tx_t3sportsbet_models_teambet extends BaseModel
 {
     public function getTableName()
     {
@@ -41,7 +44,7 @@ class tx_t3sportsbet_models_teambet extends tx_rnbase_model_base
      */
     public function getTeamQuestion()
     {
-        return tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->loadTeamQuestion($this->getTeamQuestionUid());
+        return ServiceRegistry::getTeamBetService()->loadTeamQuestion($this->getTeamQuestionUid());
     }
 
     public function getTeamQuestionUid()

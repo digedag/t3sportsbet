@@ -23,6 +23,8 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
+
 /**
  * Search match bets from database.
  */
@@ -91,7 +93,7 @@ class tx_t3sportsbet_mod1_lister_MatchBet
     {
         /* @var $pager \tx_rnbase_util_BEPager */
         $pager = tx_rnbase::makeInstance('tx_rnbase_util_BEPager', 'matchBetPager', $this->getModule()->getName(), $this->getModule()->getPid());
-        $srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
+        $srv = ServiceRegistry::getBetService();
 
         // Set options
         $options = [

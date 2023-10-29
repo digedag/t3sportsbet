@@ -1,8 +1,11 @@
 <?php
+
+namespace Sys25\T3sportsbet\Model;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,12 +24,14 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_model_base');
+
+use Sys25\RnBase\Domain\Model\BaseModel;
+use System25\T3sports\Model\Fixture;
 
 /**
  * Model for a bet.
  */
-class tx_t3sportsbet_models_bet extends tx_rnbase_model_base
+class Bet extends BaseModel
 {
     public function getTableName()
     {
@@ -36,7 +41,7 @@ class tx_t3sportsbet_models_bet extends tx_rnbase_model_base
     /**
      * Returns the match.
      *
-     * @return tx_cfcleaguefe_models_match
+     * @return Fixture
      */
     public function getMatch()
     {
@@ -46,11 +51,11 @@ class tx_t3sportsbet_models_bet extends tx_rnbase_model_base
     /**
      * Returns the betgame.
      *
-     * @return tx_t3sportsbet_models_betset
+     * @return BetSet
      */
     public function getBetSet()
     {
-        return tx_t3sportsbet_models_betset::getBetsetInstance($this->getProperty('betset'));
+        return BetSet::getBetsetInstance($this->getProperty('betset'));
     }
 
     /**

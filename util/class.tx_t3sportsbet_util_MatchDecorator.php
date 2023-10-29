@@ -23,6 +23,10 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Sys25\RnBase\Backend\Module\IModule;
+use System25\T3sports\Model\Competition;
+use Sys25\T3sportsbet\Model\BetSet;
+
 /**
  * Diese Klasse ist für die Darstellung von Spielen im Backend verantwortlich.
  */
@@ -33,17 +37,17 @@ class tx_t3sportsbet_util_MatchDecorator
     protected $currentRound;
 
     /**
-     * @param \tx_rnbase_mod_IModule $module
-     * @param \tx_t3sportsbet_models_betset $currentRound
+     * @param IModule $module
+     * @param BetSet $currentRound
      */
-    public function __construct($module, tx_t3sportsbet_models_betset $currentRound)
+    public function __construct(IModule $module, BetSet $currentRound)
     {
         $this->module = $module;
         $this->currentRound = $currentRound;
     }
 
     /**
-     * @return tx_rnbase_mod_IModule
+     * @return IModule
      */
     private function getModule()
     {
@@ -58,7 +62,7 @@ class tx_t3sportsbet_util_MatchDecorator
         } elseif ('date' == $colName) {
             $ret = date('H:i d.m.y', $value);
         } elseif ('competition' == $colName) {
-            $comp = tx_cfcleague_models_Competition::getCompetitionInstance($value);
+            $comp = Competition::getCompetitionInstance($value);
             if (!is_object($comp) || !$comp->isValid()) {
                 return '';
             }

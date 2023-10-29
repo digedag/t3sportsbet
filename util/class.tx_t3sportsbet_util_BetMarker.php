@@ -22,27 +22,29 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Sys25\RnBase\Frontend\Marker\BaseMarker;
+use Sys25\RnBase\Frontend\Marker\FormatUtil;
+use Sys25\RnBase\Frontend\Marker\Templates;
+use Sys25\T3sportsbet\Model\Bet;
+
 /**
  * Diese Klasse ist für die Erstellung von Markerarrays der Tips verantwortlich.
  */
-class tx_t3sportsbet_util_BetMarker extends tx_rnbase_util_BaseMarker
+class tx_t3sportsbet_util_BetMarker extends BaseMarker
 {
+    private $options;
+
     public function __construct($options = [])
     {
         $this->options = $options;
     }
 
     /**
-     * @param string $template
-     *            das HTML-Template
-     * @param tx_t3sportsbet_models_bet $bet
-     *            der Tip
-     * @param tx_rnbase_util_FormatUtil $formatter
-     *            der zu verwendente Formatter
-     * @param string $confId
-     *            Pfad der TS-Config des Vereins, z.B. 'listView.round.'
-     * @param string $marker
-     *            Name des Markers für die Tipprunde, z.B. ROUND
+     * @param string $template das HTML-Template
+     * @param Bet $bet der Tip
+     * @param FormatUtil $formatter der zu verwendente Formatter
+     * @param string $confId Pfad der TS-Config des Vereins, z.B. 'listView.round.'
+     * @param string $marker Name des Markers für die Tipprunde, z.B. ROUND
      *
      * @return string das geparste Template
      */
@@ -50,11 +52,12 @@ class tx_t3sportsbet_util_BetMarker extends tx_rnbase_util_BaseMarker
     {
         if (!is_object($bet)) {
             // Ist kein Verein vorhanden wird ein leeres Objekt verwendet.
-            $bet = self::getEmptyInstance('tx_t3sportsbet_models_bet');
+            $bet = self::getEmptyInstance(Bet::class);
         }
         // Es wird das MarkerArray mit den Daten des Tips gefüllt.
         $markerArray = $formatter->getItemMarkerArrayWrapped($bet->getProperty(), $confId, 0, $marker.'_', $bet->getColumnNames());
-        $out = \tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
+        $subpartArray = $wrappedSubpartArray = [];
+        $out = Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
 
         return $out;
     }

@@ -2,10 +2,19 @@
 
 namespace Sys25\T3sportsbet\Module\Controller\BetGame;
 
+use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\T3General;
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
+use Sys25\T3sportsbet\Model\BetSet;
+use tx_rnbase;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2018 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -33,12 +42,12 @@ class ShowBetSet
     protected $doc;
 
     /**
-     * @var \tx_rnbase_mod_IModule
+     * @var IModule
      */
     protected $module;
 
     /**
-     * @var \tx_t3sportsbet_models_betset
+     * @var BetSet
      */
     protected $currentRound;
 
@@ -46,12 +55,13 @@ class ShowBetSet
      * @var \tx_t3sportsbet_models_betgame
      */
     protected $currentGame;
+    private $formTool;
 
     /**
      * Verwaltet die Erstellung von Spielplänen von Ligen.
      *
-     * @param \tx_rnbase_mod_IModule $module
-     * @param \tx_t3sportsbet_models_betset $currentRound
+     * @param IModule $module
+     * @param BetSet $currentRound
      * @param \tx_t3sportsbet_models_betgame $currentGame
      */
     public function __construct($module, $currentRound, $currentGame)
@@ -87,16 +97,17 @@ class ShowBetSet
     {
         $currBetSet = $this->currentRound;
         $options = [];
-        $options['linker'][] = \tx_rnbase::makeInstance('tx_t3sportsbet_mod1_link_MatchBets');
+        $options['linker'][] = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_link_MatchBets');
         $options['module'] = $this->module;
+        $out = '';
 
         $pasteButton = \tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->makePasteButton($this->currentRound, $this->module);
         if ($pasteButton) {
-            $out .= $this->doc->section('Info:', $pasteButton, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+            $out .= $this->doc->section('Info:', $pasteButton, 0, 1, IModFunc::ICON_INFO);
         }
 
         /* @var $searcher \tx_t3sportsbet_mod1_matchsearcher */
-        $searcher = \tx_rnbase::makeInstance(
+        $searcher = tx_rnbase::makeInstance(
             'tx_t3sportsbet_mod1_matchsearcher',
             $this->module,
             $this->currentRound,
@@ -117,9 +128,9 @@ class ShowBetSet
     /**
      * Show a list of bets for a match.
      *
-     * @param \tx_t3sportsbet_models_betset $currBetSet
+     * @param BetSet $currBetSet
      */
-    protected function handleShowBets($currBetSet)
+    protected function handleShowBets(BetSet $currBetSet)
     {
         $matchUids = $this->getFormTool()->getStoredRequestData('showBets', [], $this->module->getName());
         if (0 == $matchUids) {
@@ -127,35 +138,35 @@ class ShowBetSet
         }
 
         $options = ['module' => $this];
-        $lister = \tx_rnbase::makeInstance('tx_t3sportsbet_mod1_lister_MatchBet', $this->module, $options);
+        $lister = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_lister_MatchBet', $this->module, $options);
         $lister->setMatchUids($matchUids);
         $lister->setBetSetUid($currBetSet->getUid());
 
         $list = $lister->getResultList();
-        $out .= $list['pager']."\n".$list['table'];
+        $out = $list['pager']."\n".$list['table'];
         $out .= $this->getFormTool()->createSubmit('showBets[0]', $GLOBALS['LANG']->getLL('label_close'));
 
-        return $this->doc->section($GLOBALS['LANG']->getLL('label_betlist').':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+        return $this->doc->section($GLOBALS['LANG']->getLL('label_betlist').':', $out, 0, 1, IModFunc::ICON_INFO);
     }
 
     /**
      * Reset all bets for a given match.
      *
-     * @param \tx_t3sportsbet_models_betset $currBetSet
+     * @param BetSet $currBetSet
      */
-    protected function handleResetBets($currBetSet)
+    protected function handleResetBets(BetSet $currBetSet)
     {
-        $matchUids = \Tx_Rnbase_Utility_T3General::_GP('resetBets');
+        $matchUids = T3General::_GP('resetBets');
         if (!is_array($matchUids)) {
             return;
         }
 
-        $tce = \Tx_Rnbase_Database_Connection::getInstance()->getTCEmain();
+        $tce = Connection::getInstance()->getTCEmain();
         $details = 'T3sportsbet: All bets for match with uid %s of betset with uid %s were reset.';
         $matchUids = array_keys($matchUids);
         foreach ($matchUids as $uid) {
             // Jetzt alle Tips für das Spiel suchen in dieser Tiprunde suchen und zurücksetzen
-            $srv = \tx_t3sportsbet_util_serviceRegistry::getBetService();
+            $srv = ServiceRegistry::getBetService();
             $srv->resetBets($currBetSet, $uid);
 
             // $tce->BE_USER->writelog($type,$action,$error,$details_nr,$details,$data,$table,$recuid,$recpid,$event_pid,$NEWid);
@@ -167,17 +178,17 @@ class ShowBetSet
     /**
      * Show form to add matches to betset.
      *
-     * @param \tx_t3sportsbet_models_betset $currBetSet
+     * @param BetSet $currBetSet
      *
      * @return string
      */
     protected function handleSaveBetSet($currBetSet)
     {
         $out = '';
-        $button = strlen(\Tx_Rnbase_Utility_T3General::_GP('savebetset')) > 0;
+        $button = strlen(T3General::_GP('savebetset')) > 0;
         if ($button) {
-            $data = \Tx_Rnbase_Utility_T3General::_GP('data');
-            $tce = \Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
+            $data = T3General::_GP('data');
+            $tce = Connection::getInstance()->getTCEmain($data);
             $tce->process_datamap();
             $out .= $GLOBALS['LANG']->getLL('msg_betset_saved');
             $currBetSet->reset();
@@ -196,11 +207,11 @@ class ShowBetSet
     protected function handleAnalyzeBets($betGame)
     {
         $out = '';
-        $button = strlen(\Tx_Rnbase_Utility_T3General::_GP('analyzebets')) > 0;
+        $button = strlen(T3General::_GP('analyzebets')) > 0;
         if ($button) {
-            $betsUpdated = \tx_t3sportsbet_util_serviceRegistry::getBetService()->analyzeBets($betGame);
-            $betsUpdated += \tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->analyzeBets($betGame);
-            \tx_t3sportsbet_util_serviceRegistry::getBetService()->updateBetsetResultsByGame($betGame);
+            $betsUpdated = ServiceRegistry::getBetService()->analyzeBets($betGame);
+            $betsUpdated += ServiceRegistry::getTeamBetService()->analyzeBets($betGame);
+            ServiceRegistry::getBetService()->updateBetsetResultsByGame($betGame);
             $out .= $GLOBALS['LANG']->getLL('msg_bets_finished').':'.$betsUpdated;
         }
 
@@ -210,7 +221,7 @@ class ShowBetSet
     /**
      * Returns the formtool.
      *
-     * @return \tx_rnbase_util_FormTool
+     * @return ToolBox
      */
     protected function getFormTool()
     {

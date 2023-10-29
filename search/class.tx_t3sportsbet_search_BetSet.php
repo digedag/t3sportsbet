@@ -20,7 +20,9 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_SearchBase');
+
+use Sys25\RnBase\Search\SearchBase;
+use Sys25\T3sportsbet\Model\BetSet;
 
 define('MATCHSRV_FIELD_MATCH_COMPETITION', 'MATCH.COMPETITION');
 define('MATCHSRV_FIELD_MATCH_ROUND', 'MATCH.ROUND');
@@ -31,7 +33,7 @@ define('MATCHSRV_FIELD_MATCH_DATE', 'MATCH.DATE');
  *
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_search_BetSet extends tx_rnbase_util_SearchBase
+class tx_t3sportsbet_search_BetSet extends SearchBase
 {
     protected function getTableMappings()
     {
@@ -51,7 +53,7 @@ class tx_t3sportsbet_search_BetSet extends tx_rnbase_util_SearchBase
 
     public function getWrapperClass()
     {
-        return 'tx_t3sportsbet_models_betset';
+        return BetSet::class;
     }
 
     protected function getJoins($tableAliases)

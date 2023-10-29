@@ -21,6 +21,10 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
+use Sys25\RnBase\Search\SearchBase;
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
+
 tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 
 /**
@@ -99,10 +103,10 @@ class tx_t3sportsbet_util_ScopeController
         $fields = [];
         $options = [];
         $options['distinct'] = 1;
-        tx_rnbase::load('tx_rnbase_util_SearchBase');
-        tx_rnbase_util_SearchBase::setConfigFields($fields, $configurations, $confId.'fields.');
-        tx_rnbase_util_SearchBase::setConfigOptions($options, $configurations, $confId.'options.');
-        $srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
+
+        SearchBase::setConfigFields($fields, $configurations, $confId.'fields.');
+        SearchBase::setConfigOptions($options, $configurations, $confId.'options.');
+        $srv = ServiceRegistry::getBetService();
         if (strlen(trim($betgameUid))) {
             $fields['BETSET.BETGAME'][OP_IN_INT] = $betgameUid;
         }

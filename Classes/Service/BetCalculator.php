@@ -1,4 +1,7 @@
 <?php
+
+namespace Sys25\T3sportsbet\Service;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -21,14 +24,15 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('Tx_Rnbase_Service_Base');
+
+use Sys25\T3sportsbet\Model\Bet;
 
 /**
  * This service calculates the points for a bet.
  *
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_services_betcalculator extends Tx_Rnbase_Service_Base
+class BetCalculator
 {
     /**
      * @param tx_t3sportsbet_models_betgame $betgame
@@ -53,7 +57,7 @@ class tx_t3sportsbet_services_betcalculator extends Tx_Rnbase_Service_Base
      * Calculates the points for a bet.
      *
      * @param tx_t3sportsbet_models_betgame $betGame
-     * @param tx_t3sportsbet_models_bet $bet
+     * @param Bet $bet
      */
     public function calculatePoints($betgame, $bet)
     {

@@ -1,5 +1,10 @@
 <?php
 
+namespace Sys25\T3sportsbet\Model;
+
+use Exception;
+use Sys25\RnBase\Domain\Model\BaseModel;
+use Sys25\T3sportsbet\Utility\ServiceRegistry as BetServiceRegistry;
 use System25\T3sports\Model\Fixture;
 use System25\T3sports\Utility\ServiceRegistry;
 
@@ -29,7 +34,7 @@ use System25\T3sports\Utility\ServiceRegistry;
 /**
  * Model for a betset.
  */
-class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
+class BetSet extends BaseModel
 {
     private static $instances = [];
 
@@ -45,7 +50,7 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
      */
     public function getBetgame()
     {
-        return tx_t3sportsbet_models_betgame::getBetgameInstance($this->getProperty('betgame'));
+        return \tx_t3sportsbet_models_betgame::getBetgameInstance($this->getProperty('betgame'));
     }
 
     /**
@@ -97,10 +102,11 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
      *
      * @param Fixture $match
      * @param \Sys25\RnBase\Domain\Model\FeUser $feuser
+     * @deprecated move to repo
      */
     public function getBet($match, $feuser)
     {
-        $service = tx_t3sportsbet_util_serviceRegistry::getBetService();
+        $service = BetServiceRegistry::getBetService();
 
         return $service->getBet($this, $match, $feuser);
     }
@@ -114,7 +120,7 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
      */
     public function getBetCount($match)
     {
-        $service = tx_t3sportsbet_util_serviceRegistry::getBetService();
+        $service = BetServiceRegistry::getBetService();
         $fields['BET.BETSET'][OP_EQ_INT] = $this->getUid();
         $fields['BET.T3MATCH'][OP_EQ_INT] = $match->getUid();
         $options['count'] = 1;
@@ -149,7 +155,7 @@ class tx_t3sportsbet_models_betset extends tx_rnbase_model_base
      *
      * @param int $uid
      *
-     * @return tx_t3sportsbet_models_betset
+     * @return BetSet
      */
     public static function getBetsetInstance($uid)
     {

@@ -7,6 +7,7 @@ use Sys25\RnBase\Frontend\Marker\ListBuilder;
 use Sys25\RnBase\Frontend\Marker\SimpleMarker;
 use Sys25\RnBase\Frontend\Marker\Templates;
 use Sys25\RnBase\Utility\Logger;
+use Sys25\T3sportsbet\Utility\ServiceRegistry as BetServiceRegistry;
 use System25\T3sports\Frontend\Marker\TeamMarker;
 use System25\T3sports\Utility\ServiceRegistry;
 
@@ -127,7 +128,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
      */
     private function addBet($template, $item, $feuser, $formatter, $confId, $marker)
     {
-        $srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
+        $srv = BetServiceRegistry::getTeamBetService();
         $bet = $srv->getTeamBet($item, $feuser);
 
         $template = self::getSimpleMarker()->parseTemplate($template, $bet, $formatter, $confId, $marker);
@@ -154,7 +155,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
      */
     private function addTrend($template, $item, $feuser, $formatter, $confId, $markerPrefix)
     {
-        $trendData = tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->getBetTrend($item);
+        $trendData = BetServiceRegistry::getTeamBetService()->getBetTrend($item);
         // Jetzt die TeamDaten einbauen
         $teams = [];
         for ($i = 0, $cnt = count($trendData); $i < $cnt; ++$i) {
@@ -225,7 +226,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
         $subpartArray = [];
         $subpartArray['###BETSTATUS_OPEN###'] = '';
         $subpartArray['###BETSTATUS_CLOSED###'] = '';
-        $srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
+        $srv = BetServiceRegistry::getTeamBetService();
         $state = $srv->getTeamQuestionStatus($teamQuestion, $feuser);
 
         // Notwendig, damit der Submit-Button eingeblendet wird. Wird im View ausgewertet.
@@ -254,7 +255,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
      */
     private function addTeams($template, $item, $formatter, $confId, $markerPrefix)
     {
-        $children = tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->getTeams4TeamQuestion($item);
+        $children = BetServiceRegistry::getTeamBetService()->getTeams4TeamQuestion($item);
         // Den aktuellen Tip des Users mitgeben
         $options = [];
         $options['teambet'] = $this->findCurrentBet($item, $this->options['feuser']);
@@ -275,7 +276,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
         if (!$feuser) {
             return 0;
         }
-        $bet = tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->getTeamBet($item, $feuser);
+        $bet = BetServiceRegistry::getTeamBetService()->getTeamBet($item, $feuser);
 
         return $bet->isPersisted() ? $bet->getTeamUid() : 0;
     }

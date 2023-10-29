@@ -6,6 +6,8 @@ use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Utility\T3General;
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
+use Sys25\T3sportsbet\Model\BetSet;
 use tx_rnbase;
 
 /***************************************************************
@@ -42,13 +44,13 @@ class AddTeamBets
     protected $module;
 
     /**
-     * @var \tx_t3sportsbet_models_betset
+     * @var BetSet
      */
     protected $currentRound;
 
     /**
      * @param IModule $module
-     * @param \tx_t3sportsbet_models_betset $currentRound
+     * @param BetSet $currentRound
      */
     public function __construct($module, $currentRound)
     {
@@ -84,7 +86,7 @@ class AddTeamBets
         $lister->setBetSetUid($this->currentRound->getUid());
 
         $list = $lister->getResultList();
-        $out .= $this->module->getDoc()->spacer(10);
+        $out = $this->module->getDoc()->spacer(10);
         $out .= $list['pager']."\n<div style=\"clear:both;\"></div>\n".$list['table'];
         $out .= $this->getFormTool()->createNewButton('tx_t3sportsbet_teamquestions', $this->currentRound->getProperty('pid'), $options);
         $out .= $this->module->getDoc()->spacer(10);
@@ -95,11 +97,11 @@ class AddTeamBets
     /**
      * Show a list of bets for a team question.
      *
-     * @param \tx_t3sportsbet_models_betset $currBetSet
+     * @param BetSet $currBetSet
      *
      * @return string
      */
-    private function handleShowTeamBets($currBetSet)
+    private function handleShowTeamBets(BetSet $currBetSet)
     {
         $teamQuestionUid = $this->module->getFormTool()->getStoredRequestData('showTeamBets', [], $this->module->getName());
         if (0 == $teamQuestionUid) {
@@ -117,7 +119,7 @@ class AddTeamBets
         $lister->setTeamQuestionUid($teamQuestionUid);
 
         $list = $lister->getResultList();
-        $out .= $list['pager']."\n".$list['table'];
+        $out = $list['pager']."\n".$list['table'];
         $out .= $this->getFormTool()->createSubmit('showTeamBets[0]', '###LABEL_CLOSE###');
         if (!$currBetSet->isFinished()) {
             $out .= $this->getFormTool()->createSubmit('resetTeamBets['.$teamQuestion->getUid().']', '###LABEL_RESETBETS###', $GLOBALS['LANG']->getLL('msg_resetbets'));
@@ -132,18 +134,18 @@ class AddTeamBets
     /**
      * Show a list of bets for a team question.
      *
-     * @param \tx_t3sportsbet_models_betset $currBetSet
+     * @param BetSet $currBetSet
      *
      * @return string
      */
-    private function handleResetTeamBets($currBetSet)
+    private function handleResetTeamBets(BetSet $currBetSet)
     {
         $data = T3General::_GP('resetTeamBets');
         if (!is_array($data)) {
             return '';
         }
         $itemid = key($data);
-        \tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->resetTeamBets($itemid);
+        ServiceRegistry::getTeamBetService()->resetTeamBets($itemid);
 
         return '';
     }

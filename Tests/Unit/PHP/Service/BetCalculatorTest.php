@@ -1,6 +1,6 @@
 <?php
 
-namespace System25\T3sportsbet\Tests\Service;
+namespace Sys25\T3sportsbet\Tests\Service;
 
 /***************************************************************
 *  Copyright notice

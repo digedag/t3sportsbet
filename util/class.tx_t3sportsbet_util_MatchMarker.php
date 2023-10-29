@@ -5,8 +5,11 @@ use Sys25\RnBase\Domain\Repository\FeUserRepository;
 use Sys25\RnBase\Frontend\Marker\BaseMarker;
 use Sys25\RnBase\Frontend\Marker\FormatUtil;
 use Sys25\RnBase\Frontend\Marker\Templates;
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use System25\T3sports\Frontend\Marker\MatchMarker;
 use System25\T3sports\Model\Fixture;
+use Sys25\T3sportsbet\Model\Bet;
+use Sys25\T3sportsbet\Model\BetSet;
 
 /***************************************************************
  *  Copyright notice
@@ -114,12 +117,12 @@ class tx_t3sportsbet_util_MatchMarker extends BaseMarker
     /**
      * Tiptrend für das Spiel einsetzen.
      *
-     * @param tx_t3sportsbet_models_betset $betset
+     * @param BetSet $betset
      * @param Fixture $match
      */
     public function addBetTrend($betset, $match)
     {
-        $srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
+        $srv = ServiceRegistry::getBetService();
         $trend = $srv->getBetTrend($betset, $match);
         $match->setProperty(array_merge($match->getProperty(), $trend));
     }
@@ -128,12 +131,12 @@ class tx_t3sportsbet_util_MatchMarker extends BaseMarker
      * Tipstatistik für das Spiel einsetzen.
      * Diese Daten sind erst nach der Auswertung des Spiels möglich.
      *
-     * @param tx_t3sportsbet_models_betset $betset
+     * @param BetSet $betset
      * @param Fixture $match
      */
     public function addBetStats($betset, $match)
     {
-        $srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
+        $srv = ServiceRegistry::getBetService();
         $trend = $srv->getBetStats($betset, $match);
 
         $match->setProperty(array_merge($match->getProperty(), $trend));
@@ -143,8 +146,8 @@ class tx_t3sportsbet_util_MatchMarker extends BaseMarker
      * Render form.
      *
      * @param string $template
-     * @param tx_t3sportsbet_models_betset $betset
-     * @param tx_t3sportsbet_models_bet $bet
+     * @param BetSet $betset
+     * @param Bet $bet
      * @param FeUser $feuser
      * @param FormatUtil $formatter
      *

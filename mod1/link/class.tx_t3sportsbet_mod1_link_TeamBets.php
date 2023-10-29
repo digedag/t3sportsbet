@@ -2,6 +2,7 @@
 
 use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\Linker\LinkerInterface;
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
 
 /***************************************************************
 *  Copyright notice
@@ -32,7 +33,7 @@ class tx_t3sportsbet_mod1_link_TeamBets implements LinkerInterface
      * Buttons for team bets.
      *
      * @param tx_t3sportsbet_models_teamquestion $item
-     * @param tx_rnbase_util_FormTool $formTool
+     * @param ToolBox $formTool
      * @param int $currentPid
      * @param array $options
      *
@@ -42,7 +43,7 @@ class tx_t3sportsbet_mod1_link_TeamBets implements LinkerInterface
     {
         // , $GLOBALS['LANG']->getLL('label_edit')
         $out = $formTool->createEditButton('tx_t3sportsbet_teamquestions', $item->getUid());
-        $cnt = tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->getBetCount($item);
+        $cnt = ServiceRegistry::getTeamBetService()->getBetCount($item);
         if ($cnt) {
             $out .= '<br />'.$formTool->createSubmit('showTeamBets['.$item->getUid().']', $GLOBALS['LANG']->getLL('label_showbets').' ('.$cnt.')');
 
@@ -56,6 +57,3 @@ class tx_t3sportsbet_mod1_link_TeamBets implements LinkerInterface
     }
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/link/class.tx_t3sportsbet_mod1_link_TeamBets.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3sportsbet/mod1/link/class.tx_t3sportsbet_mod1_link_TeamBets.php'];
-}

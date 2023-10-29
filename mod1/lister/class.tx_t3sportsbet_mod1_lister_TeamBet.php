@@ -23,6 +23,8 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
+
 /**
  * List team bets.
  */
@@ -94,7 +96,7 @@ class tx_t3sportsbet_mod1_lister_TeamBet
     public function getResultList()
     {
         $pager = tx_rnbase::makeInstance('tx_rnbase_util_BEPager', 'teamBetPager', $this->getMod()->getName(), $this->getMod()->getPid());
-        $srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
+        $srv = ServiceRegistry::getTeamBetService();
 
         // Set options
         $options = [

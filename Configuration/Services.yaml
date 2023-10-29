@@ -1,0 +1,17 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Sys25\T3sportsbet:
+    resource: '../Classes/*'
+    exclude: ['../Classes/Domain/Model/*']
+
+  Sys25\T3sportsbet\Service\BetService:
+    public: true
+  Sys25\T3sportsbet\Service\TeamBetService:
+    public: true
+  Sys25\T3sportsbet\Service\BetCalculator:
+    public: true
+

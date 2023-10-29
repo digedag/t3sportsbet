@@ -22,34 +22,40 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Sys25\RnBase\Frontend\Marker\BaseMarker;
+use Sys25\RnBase\Frontend\Marker\FormatUtil;
+use Sys25\RnBase\Frontend\Marker\ListBuilder;
+use Sys25\RnBase\Search\SearchBase;
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
+use System25\T3sports\Frontend\Marker\MatchMarker;
+use System25\T3sports\Utility\ServiceRegistry as UtilityServiceRegistry;
+use Sys25\T3sportsbet\Model\BetSet;
+
 /**
  * Diese Klasse ist für die Erstellung von Markerarrays der Tipprunden verantwortlich.
  */
-class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
+class tx_t3sportsbet_util_BetSetMarker extends BaseMarker
 {
+    private $options;
+
     public function __construct($options = [])
     {
         $this->options = $options;
     }
 
     /**
-     * @param string $template
-     *            das HTML-Template
-     * @param tx_t3sportsbet_models_betset $betset
-     *            die Tipprunde
-     * @param tx_rnbase_util_FormatUtil $formatter
-     *            der zu verwendente Formatter
-     * @param string $confId
-     *            Pfad der TS-Config des Vereins, z.B. 'listView.round.'
-     * @param string $marker
-     *            Name des Markers für die Tipprunde, z.B. ROUND
+     * @param string $template das HTML-Template
+     * @param BetSet $betset die Tipprunde
+     * @param FormatUtil $formatter der zu verwendente Formatter
+     * @param string $confId Pfad der TS-Config des Vereins, z.B. 'listView.round.'
+     * @param string $marker Name des Markers für die Tipprunde, z.B. ROUND
      *
      * @return string das geparste Template
      */
     public function parseTemplate($template, &$betset, &$formatter, $confId, $marker = 'BETSET')
     {
         if (!is_object($betset)) {
-            $betset = self::getEmptyInstance('tx_t3sportsbet_models_betset');
+            $betset = self::getEmptyInstance(BetSet::class);
         }
         $currItem = isset($this->options['currItem']) ? $this->options['currItem'] : false;
         $betset->setProperty('isCurrent', $currItem && $currItem->getUid() == $betset->getUid());
@@ -65,7 +71,7 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
         $subpartArray = [];
         $wrappedSubpartArray = [];
         $this->prepareLinks($betset, $marker, $markerArray, $subpartArray, $wrappedSubpartArray, $confId, $formatter);
-        $template = tx_rnbase_util_BaseMarker::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
+        $template = BaseMarker::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
 
         $markerArray = [];
         $subpartArray = [];
@@ -75,7 +81,7 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
         $params['marker'] = $marker;
         $params['betset'] = $betset;
         self::callModules($template, $markerArray, $subpartArray, $wrappedSubpartArray, $params, $formatter);
-        $out = tx_rnbase_util_BaseMarker::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
+        $out = BaseMarker::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
 
         return $out;
     }
@@ -83,24 +89,24 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
     /**
      * Add matches of betset.
      *
-     * @param tx_t3sportsbet_models_betset $betset
+     * @param BetSet $betset
      * @param string $template
-     * @param tx_rnbase_util_FormatUtil $formatter
+     * @param FormatUtil $formatter
      * @param string $confId
      * @param string $marker
      *
      * @return string
      */
-    private function _addTeamBets($template, &$betset, &$formatter, $confId, $marker)
+    private function _addTeamBets($template, BetSet $betset, $formatter, $confId, $marker)
     {
-        $srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
+        $srv = ServiceRegistry::getTeamBetService();
         $fields['TEAMQUESTION.BETSET'][OP_EQ_INT] = $betset->getUid();
         $options = [];
-        tx_rnbase_util_SearchBase::setConfigFields($fields, $formatter->configurations, $confId.'fields.');
-        tx_rnbase_util_SearchBase::setConfigOptions($options, $formatter->configurations, $confId.'options.');
+        SearchBase::setConfigFields($fields, $formatter->getConfigurations(), $confId.'fields.');
+        SearchBase::setConfigOptions($options, $formatter->getConfigurations(), $confId.'options.');
         $children = $srv->searchTeamQuestion($fields, $options);
         $markerParams = $this->options;
-        $listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
+        $listBuilder = tx_rnbase::makeInstance(ListBuilder::class);
         $out = $listBuilder->render($children, false, $template, 'tx_t3sportsbet_util_TeamQuestionMarker', $confId, $marker, $formatter, $markerParams);
 
         return $out;
@@ -109,27 +115,27 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
     /**
      * Add matches of betset.
      *
-     * @param tx_t3sportsbet_models_betset $betset
+     * @param BetSet $betset
      * @param string $template
-     * @param tx_rnbase_util_FormatUtil $formatter
+     * @param FormatUtil $formatter
      * @param string $confId
      * @param string $marker
      *
      * @return string
      */
-    private function _addMatches($template, $betset, $formatter, $confId, $marker)
+    private function _addMatches($template, BetSet $betset, $formatter, $confId, $marker)
     {
-        $srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
+        $srv = UtilityServiceRegistry::getMatchService();
         $fields['BETSETMM.UID_LOCAL'][OP_EQ_INT] = $betset->getUid();
         $options = [];
-        tx_rnbase_util_SearchBase::setConfigFields($fields, $formatter->configurations, $confId.'fields.');
-        tx_rnbase_util_SearchBase::setConfigOptions($options, $formatter->configurations, $confId.'options.');
+        SearchBase::setConfigFields($fields, $formatter->configurations, $confId.'fields.');
+        SearchBase::setConfigOptions($options, $formatter->configurations, $confId.'options.');
         $children = $srv->search($fields, $options);
         $markerParams = $this->options;
         $markerParams['betset'] = $betset;
 
-        $listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
-        $out = $listBuilder->render($children, false, $template, 'tx_t3sportsbet_util_MatchMarker', $confId, $marker, $formatter, $markerParams);
+        $listBuilder = tx_rnbase::makeInstance(ListBuilder::class);
+        $out = $listBuilder->render($children, false, $template, MatchMarker::class, $confId, $marker, $formatter, $markerParams);
 
         return $out;
     }
@@ -137,12 +143,12 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
     /**
      * Links vorbereiten.
      *
-     * @param tx_t3sportsbet_models_betset $betset
+     * @param BetSet $betset
      * @param string $marker
      * @param array $markerArray
      * @param array $wrappedSubpartArray
      * @param string $confId
-     * @param tx_rnbase_util_FormatUtil $formatter
+     * @param FormatUtil $formatter
      */
     private function prepareLinks($betset, $marker, &$markerArray, &$subpartArray, &$wrappedSubpartArray, $confId, &$formatter)
     {
@@ -163,21 +169,11 @@ class tx_t3sportsbet_util_BetSetMarker extends tx_rnbase_util_BaseMarker
     /**
      * Initialisiert die Labels für die Club-Klasse.
      *
-     * @param tx_rnbase_util_FormatUtil $formatter
+     * @param FormatUtil $formatter
      * @param array $defaultMarkerArr
      */
     public function initLabelMarkers(&$formatter, $confId, $defaultMarkerArr = 0, $marker = 'ROUND')
     {
-        return $this->prepareLabelMarkers('tx_t3sportsbet_models_betset', $formatter, $confId, $defaultMarkerArr, $marker);
-    }
-
-    /**
-     * Returns a List-Marker instance.
-     *
-     * @return tx_rnbase_util_ListMarker
-     */
-    private function _getListMarker()
-    {
-        return tx_rnbase::makeInstance('tx_rnbase_util_ListMarker');
+        return $this->prepareLabelMarkers(BetSet::class, $formatter, $confId, $defaultMarkerArr, $marker);
     }
 }

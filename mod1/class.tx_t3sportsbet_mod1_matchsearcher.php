@@ -1,11 +1,15 @@
 <?php
 
+use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Competition;
+use System25\T3sports\Module\Utility\Selector;
 use System25\T3sports\Utility\MatchTableBuilder;
 use System25\T3sports\Utility\ServiceRegistry;
+use Sys25\T3sportsbet\Model\BetSet;
 
 /***************************************************************
  *  Copyright notice
@@ -42,19 +46,23 @@ class tx_t3sportsbet_mod1_matchsearcher
 
     private $SEARCH_SETTINGS;
 
-    /** @var tx_cfcleague_selector */
+    /** @var Selector */
     private $selector;
 
     /** @var int */
     private $current_round;
 
-    /** @var \tx_t3sportsbet_models_betset */
+    /** @var BetSet */
     private $currentRound;
 
     /** @var Competition */
     private $currComp;
+    private $options;
+    private $formTool;
+    private $resultSize;
+    private $competitions;
 
-    public function __construct($mod, tx_t3sportsbet_models_betset $currentRound, $options = [])
+    public function __construct(IModule $mod, BetSet $currentRound, array $options = [])
     {
         $this->init($mod, $currentRound, $options);
     }
@@ -65,10 +73,10 @@ class tx_t3sportsbet_mod1_matchsearcher
     }
 
     /**
-     * @param \tx_rnbase_mod_IModule $mod
+     * @param IModule $mod
      * @param array $options
      */
-    private function init($mod, $currentRound, $options)
+    private function init(IModule $mod, BetSet $currentRound, array $options)
     {
         $this->options = $options;
         $this->mod = $mod;
@@ -79,9 +87,8 @@ class tx_t3sportsbet_mod1_matchsearcher
         $this->resultSize = 0;
         $this->data = T3General::_GP('searchdata');
         $this->competitions = $options['competitions'];
-        $this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
-        $this->selector->init($this->getModule()
-            ->getDoc(), $this->getModule());
+        $this->selector = tx_rnbase::makeInstance(Selector::class);
+        $this->selector->init($this->getModule()->getDoc(), $this->getModule());
         // $this->selector->init($mod->doc, $mod->MCONF['name']);
         if (!isset($options['nopersist'])) {
             $this->SEARCH_SETTINGS = BackendUtility::getModuleData([
@@ -96,8 +103,7 @@ class tx_t3sportsbet_mod1_matchsearcher
      * Liefert das Suchformular.
      * Hier die beiden Selectboxen anzeigen.
      *
-     * @param string $label
-     *            Alternatives Label
+     * @param string $label Alternatives Label
      *
      * @return string
      */
@@ -167,7 +173,7 @@ class tx_t3sportsbet_mod1_matchsearcher
     {
         if (empty($matches)) {
             $out = '<p><strong>'.$GLOBALS['LANG']->getLL('msg_no_matches_in_betset').'</strong></p><br/>';
-            $content .= $this->mod->getDoc()->section($headline.':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_FATAL);
+            $content .= $this->mod->getDoc()->section($headline.':', $out, 0, 1, IModFunc::ICON_FATAL);
 
             return;
         }
@@ -207,9 +213,9 @@ class tx_t3sportsbet_mod1_matchsearcher
         global $LANG;
         $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
 
-        $tables = \tx_rnbase::makeInstance(Tables::class);
+        $tables = tx_rnbase::makeInstance(Tables::class);
         $rows = $tables->prepareTable($matches, $columns, $this->formTool, $this->options);
-        $out .= $tables->buildTable($rows[0], $rows[1]);
+        $out = $tables->buildTable($rows[0], $rows[1]);
         $content .= '<h3>'.$headline.'</h3>';
         $content .= $out;
     }

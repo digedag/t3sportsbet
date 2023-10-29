@@ -20,14 +20,16 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_SearchBase');
+
+use Sys25\RnBase\Search\SearchBase;
+use Sys25\T3sportsbet\Model\Bet;
 
 /**
  * Class to search betsets from database.
  *
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_search_Bet extends tx_rnbase_util_SearchBase
+class tx_t3sportsbet_search_Bet extends SearchBase
 {
     protected function getTableMappings()
     {
@@ -47,7 +49,7 @@ class tx_t3sportsbet_search_Bet extends tx_rnbase_util_SearchBase
 
     public function getWrapperClass()
     {
-        return 'tx_t3sportsbet_models_bet';
+        return Bet::class;
     }
 
     protected function getJoins($tableAliases)

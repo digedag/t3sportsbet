@@ -1,8 +1,17 @@
 <?php
+
+namespace Sys25\T3sportsbet\Utility;
+
+use Sys25\RnBase\Utility\Misc;
+use Sys25\T3sportsbet\Service\BetCalculator;
+use Sys25\T3sportsbet\Service\BetService;
+use Sys25\T3sportsbet\Service\TeamBetService;
+use tx_rnbase;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,14 +30,35 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
  * Keine echte Registry, aber eine zentrale Klasse für den Zugriff auf verschiedene
  * Services.
  */
-class tx_t3sportsbet_util_serviceRegistry
+class ServiceRegistry implements \TYPO3\CMS\Core\SingletonInterface
 {
+    private $betService;
+    private $betCalculator;
+    private $teamBetService;
+
+    public function __construct(
+        ?BetService $betService = null,
+        ?BetCalculator $betCalculator = null,
+        ?TeamBetService $teamBetService = null
+    ) {
+        $this->betService = $betService ?? tx_rnbase::makeInstance(BetService::class);
+        $this->betCalculator = $betCalculator ?? tx_rnbase::makeInstance(BetCalculator::class);;
+        $this->teamBetService = $teamBetService ?? tx_rnbase::makeInstance(TeamBetService::class);;
+    }
+
+    /**
+     * @return self
+     */
+    private static function getInstance()
+    {
+        return tx_rnbase::makeInstance(ServiceRegistry::class);
+    }
+
     /**
      * Returns the bet service.
      *
@@ -36,7 +66,7 @@ class tx_t3sportsbet_util_serviceRegistry
      */
     public static function getCalculatorService()
     {
-        return tx_rnbase_util_Misc::getService('t3sportsbet', 'calculator');
+        return self::getInstance()->betCalculator;
     }
 
     /**
@@ -46,17 +76,17 @@ class tx_t3sportsbet_util_serviceRegistry
      */
     public static function getTeamBetService()
     {
-        return tx_rnbase_util_Misc::getService('t3sportsbet', 'teambet');
+        return self::getInstance()->teamBetService;
     }
 
     /**
      * Returns the bet service.
      *
-     * @return tx_t3sportsbet_services_bet
+     * @return BetService
      */
     public static function getBetService()
     {
-        return tx_rnbase_util_Misc::getService('t3sportsbet', 'bet');
+        return self::getInstance()->betService;
     }
 
     /**
@@ -66,7 +96,7 @@ class tx_t3sportsbet_util_serviceRegistry
      */
     public function lookupDataProvider($config)
     {
-        $services = tx_rnbase_util_Misc::lookupServices('t3sportsbet_dataprovider');
+        $services = Misc::lookupServices('t3sportsbet_dataprovider');
         foreach ($services as $subtype => $info) {
             $title = $info['title'];
             if ('LLL:' === substr($title, 0, 4)) {

@@ -23,6 +23,9 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Sys25\RnBase\Backend\Utility\BEPager;
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
+
 /**
  * List team bets.
  */
@@ -93,9 +96,9 @@ class tx_t3sportsbet_mod1_lister_TeamQuestion
 
     public function getResultList()
     {
-        $pager = tx_rnbase::makeInstance('tx_rnbase_util_BEPager', 'teamQuestionPager', $this->getMod()->getName(), $this->getMod()->getPid());
+        $pager = tx_rnbase::makeInstance(BEPager::class, 'teamQuestionPager', $this->getMod()->getName(), $this->getMod()->getPid());
         // Get company service
-        $srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
+        $srv = ServiceRegistry::getTeamBetService();
 
         // Set options
         $options = ['count' => 1];

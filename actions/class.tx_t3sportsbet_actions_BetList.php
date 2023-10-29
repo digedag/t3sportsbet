@@ -5,7 +5,9 @@ use Sys25\RnBase\Frontend\Controller\AbstractAction;
 use Sys25\RnBase\Frontend\Request\RequestInterface;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use System25\T3sports\Model\Repository\MatchRepository;
+use Sys25\T3sportsbet\Model\BetSet;
 
 /***************************************************************
  *  Copyright notice
@@ -86,7 +88,7 @@ class tx_t3sportsbet_actions_BetList extends AbstractAction
         }
         $uids = Strings::intExplode(',', $uids);
         for ($i = 0, $cnt = count($uids); $i < $cnt; ++$i) {
-            $rounds[] = tx_t3sportsbet_models_betset::getBetsetInstance($uids[$i]);
+            $rounds[] = BetSet::getBetsetInstance($uids[$i]);
         }
 
         return $rounds;
@@ -97,7 +99,7 @@ class tx_t3sportsbet_actions_BetList extends AbstractAction
         if (!$feuser) {
             return; // Nicht angemeldet
         }
-        $srv = tx_t3sportsbet_util_serviceRegistry::getBetService();
+        $srv = ServiceRegistry::getBetService();
         $data = T3General::_GP('betset');
         if (!is_array($data)) {
             return;
@@ -105,7 +107,7 @@ class tx_t3sportsbet_actions_BetList extends AbstractAction
         $saveCnt = 0;
         // Die Tips speichern
         foreach ($data as $betsetUid => $matchArr) {
-            $betset = tx_t3sportsbet_models_betset::getBetsetInstance($betsetUid);
+            $betset = BetSet::getBetsetInstance($betsetUid);
             if (!$betset->isValid() || $betset->isFinished()) {
                 continue;
             }
@@ -137,7 +139,7 @@ class tx_t3sportsbet_actions_BetList extends AbstractAction
             }
             $betUid = key($betData);
             $team = current($betData);
-            $srv = tx_t3sportsbet_util_serviceRegistry::getTeamBetService();
+            $srv = ServiceRegistry::getTeamBetService();
             $ret += $srv->saveOrUpdateBet($betQuestion, $feuser, $betUid, $team);
         }
 

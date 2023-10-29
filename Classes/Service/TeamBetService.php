@@ -1,11 +1,15 @@
 <?php
 
+namespace Sys25\T3sportsbet\Service;
+
+use Sys25\RnBase\Cache\CacheManager;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Domain\Model\FeUser;
 use Sys25\RnBase\Domain\Repository\FeUserRepository;
 use Sys25\RnBase\Search\SearchBase;
 use Sys25\RnBase\Utility\Strings;
 use System25\T3sports\Utility\ServiceRegistry;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
@@ -33,7 +37,7 @@ use System25\T3sports\Utility\ServiceRegistry;
 /**
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
+class TeamBetService
 {
     private $feuserRepo;
 
@@ -108,7 +112,7 @@ class tx_t3sportsbet_services_teambet extends Tx_Rnbase_Service_Base
      */
     public function loadTeamQuestion($uid)
     {
-        $cache = tx_rnbase_cache_Manager::getCache('t3sports');
+        $cache = CacheManager::getCache('t3sports');
         $question = $cache->get('t3sbet_tq_'.$uid);
         if (!$question) {
             $question = tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', $uid);

@@ -2,10 +2,17 @@
 
 namespace Sys25\T3sportsbet\Utility;
 
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\Misc;
+use Sys25\RnBase\Utility\Strings;
+use Sys25\RnBase\Utility\T3General;
+use Sys25\T3sportsbet\Model\BetSet;
+use tx_rnbase;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -42,16 +49,15 @@ class ItemFunctions
             return;
         }
         $flex = is_array($config[$rowName]['pi_flexform']) ? $config[$rowName]['pi_flexform'] :
-            \Tx_Rnbase_Utility_T3General::xml2array($config[$rowName]['pi_flexform']);
+            T3General::xml2array($config[$rowName]['pi_flexform']);
         $betgameUid = $flex['data']['sDEF']['lDEF']['scope.betgame']['vDEF'];
         if (!$betgameUid) {
             return;
         }
 
         $options = ['where' => 'tx_t3sportsbet_betsets.betgame = '.$betgameUid];
-        \tx_rnbase::load('tx_rnbase_util_Misc');
-        \tx_rnbase_util_Misc::prepareTSFE();
-        $records = \Tx_Rnbase_Database_Connection::getInstance()->doSelect(
+        Misc::prepareTSFE();
+        $records = Connection::getInstance()->doSelect(
             'round_name, uid',
             'tx_t3sportsbet_betsets',
             $options
@@ -75,9 +81,8 @@ class ItemFunctions
                 return;
             }
             $betset = $this->loadBetset($PA['row']['betset']);
-            $teamQuestion = \tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', $PA['row']['uid']);
-            $betgame = $betset->getBetgame();
-            $teams = \tx_t3sportsbet_util_serviceRegistry::getTeamBetService()->getTeams4TeamQuestion($teamQuestion);
+            $teamQuestion = tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', $PA['row']['uid']);
+            $teams = ServiceRegistry::getTeamBetService()->getTeams4TeamQuestion($teamQuestion);
             foreach ($teams as $team) {
                 $PA['items'][] = [
                     $team->getName(),
@@ -92,7 +97,7 @@ class ItemFunctions
      *
      * @param int $uid
      *
-     * @return \tx_t3sportsbet_models_betset
+     * @return BetSet
      */
     private function loadBetset($fieldData)
     {
@@ -102,13 +107,13 @@ class ItemFunctions
             }
             $row = $fieldData[0]['row'];
 
-            return \tx_rnbase::makeInstance('tx_t3sportsbet_models_betset', $row);
+            return tx_rnbase::makeInstance(BetSet::class, $row);
         } else {
-            $arr = \Tx_Rnbase_Utility_Strings::trimExplode('|', $fieldData);
-            $arr = \Tx_Rnbase_Utility_Strings::trimExplode('_', $arr[0]);
+            $arr = Strings::trimExplode('|', $fieldData);
+            $arr = Strings::trimExplode('_', $arr[0]);
             $uid = (int) $arr[count($arr) - 1];
 
-            return $uid ? \tx_rnbase::makeInstance('tx_t3sportsbet_models_betset', $uid) : false;
+            return $uid ? tx_rnbase::makeInstance(BetSet::class, $uid) : false;
         }
     }
 }

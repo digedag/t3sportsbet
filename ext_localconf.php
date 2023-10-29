@@ -1,7 +1,7 @@
 <?php
 
-if (!defined('TYPO3_MODE')) {
-    exit('Access denied.');
+if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
+  exit('Access denied.');
 }
 
 $_EXTKEY = 't3sportsbet';
@@ -24,44 +24,44 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['teamMarker_initRecord']
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'tx_t3sportsbet_hooks_tce';
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms.php']['getMainFieldsClass'][] = 'tx_t3sportsbet_hooks_tce';
 
-\Sys25\RnBase\Utility\Extensions::addService(
-    $_EXTKEY,
-    't3sportsbet' /* sv type */ ,
-    'tx_t3sportsbet_services_bet' /* sv key */ ,
-    [
-      'title' => 'Bet game', 'description' => 'Working with bet games', 'subtype' => 'bet',
-      'available' => true, 'priority' => 50, 'quality' => 50,
-      'os' => '', 'exec' => '',
-      'classFile' => \Sys25\RnBase\Utility\Extensions::extPath($_EXTKEY).'services/class.tx_t3sportsbet_services_bet.php',
-      'className' => 'tx_t3sportsbet_services_bet',
-    ]
-);
+// \Sys25\RnBase\Utility\Extensions::addService(
+//     $_EXTKEY,
+//     't3sportsbet' /* sv type */ ,
+//     'tx_t3sportsbet_services_bet' /* sv key */ ,
+//     [
+//       'title' => 'Bet game', 'description' => 'Working with bet games', 'subtype' => 'bet',
+//       'available' => true, 'priority' => 50, 'quality' => 50,
+//       'os' => '', 'exec' => '',
+//       'classFile' => \Sys25\RnBase\Utility\Extensions::extPath($_EXTKEY).'services/class.tx_t3sportsbet_services_bet.php',
+//       'className' => 'tx_t3sportsbet_services_bet',
+//     ]
+// );
 
-\Sys25\RnBase\Utility\Extensions::addService(
-    $_EXTKEY,
-    't3sportsbet' /* sv type */ ,
-    'tx_t3sportsbet_services_teambet' /* sv key */ ,
-    [
-      'title' => 'Teambets', 'description' => 'Working with team bets', 'subtype' => 'teambet',
-      'available' => true, 'priority' => 50, 'quality' => 50,
-      'os' => '', 'exec' => '',
-      'classFile' => \Sys25\RnBase\Utility\Extensions::extPath($_EXTKEY).'services/class.tx_t3sportsbet_services_teambet.php',
-      'className' => 'tx_t3sportsbet_services_teambet',
-    ]
-);
+// \Sys25\RnBase\Utility\Extensions::addService(
+//     $_EXTKEY,
+//     't3sportsbet' /* sv type */ ,
+//     'tx_t3sportsbet_services_teambet' /* sv key */ ,
+//     [
+//       'title' => 'Teambets', 'description' => 'Working with team bets', 'subtype' => 'teambet',
+//       'available' => true, 'priority' => 50, 'quality' => 50,
+//       'os' => '', 'exec' => '',
+//       'classFile' => \Sys25\RnBase\Utility\Extensions::extPath($_EXTKEY).'services/class.tx_t3sportsbet_services_teambet.php',
+//       'className' => 'tx_t3sportsbet_services_teambet',
+//     ]
+// );
 
-\Sys25\RnBase\Utility\Extensions::addService(
-    $_EXTKEY,
-    't3sportsbet' /* sv type */ ,
-    'tx_t3sportsbet_services_betcalculator' /* sv key */ ,
-    [
-      'title' => 'Bet calculator', 'description' => 'Calculate points for a bet', 'subtype' => 'calculator',
-      'available' => true, 'priority' => 50, 'quality' => 50,
-      'os' => '', 'exec' => '',
-      'classFile' => \Sys25\RnBase\Utility\Extensions::extPath($_EXTKEY).'services/class.tx_t3sportsbet_services_betcalculator.php',
-      'className' => 'tx_t3sportsbet_services_betcalculator',
-    ]
-);
+// \Sys25\RnBase\Utility\Extensions::addService(
+//     $_EXTKEY,
+//     't3sportsbet' /* sv type */ ,
+//     'tx_t3sportsbet_services_betcalculator' /* sv key */ ,
+//     [
+//       'title' => 'Bet calculator', 'description' => 'Calculate points for a bet', 'subtype' => 'calculator',
+//       'available' => true, 'priority' => 50, 'quality' => 50,
+//       'os' => '', 'exec' => '',
+//       'classFile' => \Sys25\RnBase\Utility\Extensions::extPath($_EXTKEY).'services/class.tx_t3sportsbet_services_betcalculator.php',
+//       'className' => 'tx_t3sportsbet_services_betcalculator',
+//     ]
+// );
 
 if (TYPO3_MODE === 'BE') {
     \Sys25\RnBase\Utility\Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sportsbet/Configuration/TSconfig/modWizards.txt">');

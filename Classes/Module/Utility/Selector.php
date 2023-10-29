@@ -2,10 +2,17 @@
 
 namespace Sys25\T3sportsbet\Module\Utility;
 
+use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\Misc;
+use Sys25\T3sportsbet\Model\BetSet;
+use tx_rnbase;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -37,19 +44,20 @@ class Selector
     private $formTool;
 
     private $modName;
+    private $module;
 
     /**
      * Initialisiert das Objekt mit dem Template und der Modul-Config.
      */
-    public function init($doc, \tx_rnbase_mod_IModule $module)
+    public function init($doc, IModule $module)
     {
         $this->doc = $doc;
         $this->MCONF['name'] = $module->getName(); // deprecated
         $this->modName = $module->getName();
         $this->module = $module;
-        $this->formTool = \tx_rnbase::makeInstance('tx_rnbase_util_FormTool');
+        $this->formTool = tx_rnbase::makeInstance(ToolBox::class);
         $this->formTool->init($this->doc, $module);
-        \tx_rnbase_util_Misc::prepareTSFE();
+        Misc::prepareTSFE();
     }
 
     /**
@@ -95,7 +103,7 @@ class Selector
      * @param int $pid
      * @param \tx_t3sportsbet_models_betgame $game
      *
-     * @return \tx_t3sportsbet_models_betset
+     * @return BetSet
      */
     public function showRoundSelector(&$content, $pid, $game)
     {
@@ -125,7 +133,7 @@ class Selector
                 $menu = $this->renderSelector($menu, $links);
             }
         } else {
-            $menu .= $GLOBALS['LANG']->getLL('msg_no_betset_found');
+            $menu = $GLOBALS['LANG']->getLL('msg_no_betset_found');
         }
 
         // In den Content einbauen
@@ -156,11 +164,11 @@ class Selector
         $options['orderby'] = 'sorting';
         $options['wrapperclass'] = 'tx_t3sportsbet_models_betgame';
 
-        return \Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_t3sportsbet_betgames', $options, 0);
+        return Connection::getInstance()->doSelect('*', 'tx_t3sportsbet_betgames', $options, 0);
     }
 
     /**
-     * @return \tx_rnbase_util_FormTool
+     * @return ToolBox
      */
     private function getFormTool()
     {
