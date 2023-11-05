@@ -48,7 +48,7 @@ class tx_t3sportsbet_util_BetMarker extends BaseMarker
      *
      * @return string das geparste Template
      */
-    public function parseTemplate($template, &$bet, &$formatter, $confId, $marker = 'BET')
+    public function parseTemplate($template, $bet, $formatter, $confId, $marker = 'BET')
     {
         if (!is_object($bet)) {
             // Ist kein Verein vorhanden wird ein leeres Objekt verwendet.

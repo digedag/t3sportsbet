@@ -1,6 +1,7 @@
 <?php
 
 use Sys25\RnBase\Domain\Repository\FeUserRepository;
+use Sys25\T3sportsbet\Model\TeamQuestion;
 use System25\T3sports\Model\Team;
 
 /***************************************************************
@@ -54,7 +55,7 @@ class tx_t3sportsbet_mod1_decorator_TeamBet
      * @param string $value
      * @param string $colName
      * @param array $record
-     * @param tx_t3sportsbet_models_teamquestion $item
+     * @param TeamQuestion $item
      */
     public function format($value, $colName, $record, $item)
     {

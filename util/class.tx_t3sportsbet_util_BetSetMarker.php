@@ -26,10 +26,9 @@ use Sys25\RnBase\Frontend\Marker\BaseMarker;
 use Sys25\RnBase\Frontend\Marker\FormatUtil;
 use Sys25\RnBase\Frontend\Marker\ListBuilder;
 use Sys25\RnBase\Search\SearchBase;
-use Sys25\T3sportsbet\Utility\ServiceRegistry;
-use System25\T3sports\Frontend\Marker\MatchMarker;
-use System25\T3sports\Utility\ServiceRegistry as UtilityServiceRegistry;
 use Sys25\T3sportsbet\Model\BetSet;
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
+use System25\T3sports\Utility\ServiceRegistry as UtilityServiceRegistry;
 
 /**
  * Diese Klasse ist für die Erstellung von Markerarrays der Tipprunden verantwortlich.
@@ -135,7 +134,7 @@ class tx_t3sportsbet_util_BetSetMarker extends BaseMarker
         $markerParams['betset'] = $betset;
 
         $listBuilder = tx_rnbase::makeInstance(ListBuilder::class);
-        $out = $listBuilder->render($children, false, $template, MatchMarker::class, $confId, $marker, $formatter, $markerParams);
+        $out = $listBuilder->render($children, false, $template, tx_t3sportsbet_util_MatchMarker::class, $confId, $marker, $formatter, $markerParams);
 
         return $out;
     }

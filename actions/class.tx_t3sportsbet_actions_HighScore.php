@@ -3,6 +3,7 @@
 use Sys25\RnBase\Domain\Repository\FeUserRepository;
 use Sys25\RnBase\Frontend\Request\RequestInterface;
 use Sys25\RnBase\Utility\PageBrowser;
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
 
 /***************************************************************
  *  Copyright notice
@@ -59,7 +60,7 @@ class tx_t3sportsbet_actions_HighScore extends \Sys25\RnBase\Frontend\Controller
         // Liste von Nutzern
         // Sortiert nach den Punkten in den Tips
         // 1. Abfrage: Anzahl der Nutzer mit Tips
-        $betSrv = tx_t3sportsbet_util_ServiceRegistry::getBetService();
+        $betSrv = ServiceRegistry::getBetService();
         // $listSize = $betSrv->getResultSize($betsetUids);
         // Die gesamten Daten holen
         $feuser = $this->feuserRepo->getCurrent();

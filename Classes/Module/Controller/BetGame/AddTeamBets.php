@@ -8,6 +8,7 @@ use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Utility\T3General;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use Sys25\T3sportsbet\Model\BetSet;
+use Sys25\T3sportsbet\Model\TeamQuestion;
 use tx_rnbase;
 
 /***************************************************************
@@ -109,7 +110,7 @@ class AddTeamBets
         }
 
         // Gehört die Question zum aktuellen Betset
-        $teamQuestion = tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', $teamQuestionUid);
+        $teamQuestion = tx_rnbase::makeInstance(TeamQuestion::class, $teamQuestionUid);
         if ($teamQuestion->getBetSetUid() != $currBetSet->getUid()) {
             return '';
         }

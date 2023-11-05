@@ -22,6 +22,8 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+use Sys25\T3sportsbet\Model\TeamQuestion;
+
 /**
  * Diese Klasse ist für die Darstellung von TeamQuestions im Backend verantwortlich.
  */
@@ -46,7 +48,7 @@ class tx_t3sportsbet_mod1_decorator_TeamQuestion
      * @param string $value
      * @param string $colName
      * @param array $record
-     * @param tx_t3sportsbet_models_teamquestion $item
+     * @param TeamQuestion $item
      */
     public function format($value, $colName, $record, $item)
     {

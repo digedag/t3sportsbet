@@ -24,26 +24,23 @@
 		"typo3-ter/t3sportsbet" : "self.version"
 	},
 	"require" : {
-		"typo3/cms-core": "^8.7 || ^9.5.17 || ^10.4.3 || ^11.5.0",
-		"digedag/cfc-league" : "^1.10.0",
-		"digedag/cfc-league-fe" : "^1.10.0",
+		"typo3/cms-core": "^8.7 || ^9.5.17 || ^10.4.3 || ^11.5.0 || ^12.4",
+		"digedag/cfc-league" : "^1.11.0",
+		"digedag/cfc-league-fe" : "^1.11.0",
 		"digedag/rn-base" : "^1.16"
 	},
 	"require-dev": {
-		"friendsofphp/php-cs-fixer": "^3.1.0",
-		"mikey179/vfsstream": "^1.4 || ^1.6",
-		"nimut/testing-framework": "^4.0 || ^5.0 || ^6.0",
+		"friendsofphp/php-cs-fixer": "^3.0",
+		"mikey179/vfsstream": "^1.6",
+		"typo3/testing-framework": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0",
 		"phpcompatibility/php-compatibility": "^9.3.5",
-		"phpunit/phpunit": "^6.5.14 || ^7.5.20 || ^8.0"
+		"phpunit/phpunit": "^6.5.14 || ^7.5.20 || ^8.0 || ^9.0"
 	},
 	"autoload" : {
 		"classmap" : [
 			"actions/",
 			"hooks/",
 			"mod1/",
-			"models/",
-			"search/",
-			"services/",
 			"util/",
 			"views/"
 		],

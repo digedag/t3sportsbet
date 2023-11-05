@@ -26,6 +26,8 @@ namespace Sys25\T3sportsbet\Service;
  ***************************************************************/
 
 use Sys25\T3sportsbet\Model\Bet;
+use System25\T3sports\Model\Fixture;
+use System25\T3sports\Model\Repository\MatchRepository;
 
 /**
  * This service calculates the points for a bet.
@@ -34,9 +36,17 @@ use Sys25\T3sportsbet\Model\Bet;
  */
 class BetCalculator
 {
+    /** MatchRepository $matchRepo */
+    private $matchRepo;
+
+    public function __construct(MatchRepository $matchRepo = null)
+    {
+        $this->matchRepo = $matchRepo ?? new MatchRepository();
+    }
+
     /**
-     * @param tx_t3sportsbet_models_betgame $betgame
-     * @param tx_cfcleaguefe_models_match $match
+     * @param BetGame $betgame
+     * @param Fixture $match
      */
     public function getGoals($betgame, $match)
     {
@@ -56,12 +66,12 @@ class BetCalculator
     /**
      * Calculates the points for a bet.
      *
-     * @param tx_t3sportsbet_models_betgame $betGame
+     * @param BetGame $betGame
      * @param Bet $bet
      */
     public function calculatePoints($betgame, $bet)
     {
-        $match = $bet->getMatch();
+        $match = $this->matchRepo->findByUid($bet->getFixtureUid());
 
         // TODO: GreenTable kann noch nicht ermittelt werden...
         // 1. Schritt: Spielergebnis ermitteln

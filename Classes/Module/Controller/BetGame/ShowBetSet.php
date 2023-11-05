@@ -7,6 +7,7 @@ use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
+use Sys25\T3sportsbet\Model\BetGame;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use Sys25\T3sportsbet\Model\BetSet;
 use tx_rnbase;
@@ -52,7 +53,7 @@ class ShowBetSet
     protected $currentRound;
 
     /**
-     * @var \tx_t3sportsbet_models_betgame
+     * @var BetGame
      */
     protected $currentGame;
     private $formTool;
@@ -62,7 +63,7 @@ class ShowBetSet
      *
      * @param IModule $module
      * @param BetSet $currentRound
-     * @param \tx_t3sportsbet_models_betgame $currentGame
+     * @param BetGame $currentGame
      */
     public function __construct($module, $currentRound, $currentGame)
     {
@@ -200,7 +201,7 @@ class ShowBetSet
     /**
      * Starts analysis of betgame if button was pressed.
      *
-     * @param \tx_t3sportsbet_models_betgame $betGame
+     * @param BetGame $betGame
      *
      * @return string
      */

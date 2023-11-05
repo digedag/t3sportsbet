@@ -5,9 +5,10 @@ use Sys25\RnBase\Frontend\Controller\AbstractAction;
 use Sys25\RnBase\Frontend\Request\RequestInterface;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
+use Sys25\T3sportsbet\Model\BetSet;
+use Sys25\T3sportsbet\Model\TeamQuestion;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use System25\T3sports\Model\Repository\MatchRepository;
-use Sys25\T3sportsbet\Model\BetSet;
 
 /***************************************************************
  *  Copyright notice
@@ -133,7 +134,7 @@ class tx_t3sportsbet_actions_BetList extends AbstractAction
     {
         $ret = 0;
         foreach ($betArr as $betQuestionUid => $betData) {
-            $betQuestion = tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', intval($betQuestionUid));
+            $betQuestion = tx_rnbase::makeInstance(TeamQuestion::class, intval($betQuestionUid));
             if (!$betQuestion->isValid()) {
                 return 0;
             }

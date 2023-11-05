@@ -23,6 +23,10 @@
  ***************************************************************/
 
 use Sys25\RnBase\Search\SearchBase;
+use Sys25\RnBase\Utility\Misc;
+use Sys25\RnBase\Utility\Strings;
+use Sys25\T3sportsbet\Model\BetGame;
+use Sys25\T3sportsbet\Model\BetSet;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 
 tx_rnbase::load('Tx_Rnbase_Utility_Strings');
@@ -67,7 +71,7 @@ class tx_t3sportsbet_util_ScopeController
      * Durch den Aufruf werden gleichzeitig die Daten für die Select-Boxen
      * vorbereitet und in die viewData der Config gelegt.
      *
-     * @return array[tx_t3sportsbet_models_betset] betsets to show
+     * @return BetSet[] betsets to show
      */
     public static function handleCurrentBetset(Sys25\RnBase\Frontend\Request\RequestInterface $request, $options)
     {
@@ -80,8 +84,7 @@ class tx_t3sportsbet_util_ScopeController
         $betsetUids = $configurations->get($configKey.'betset');
         $betsetStatus = $configurations->get($configKey.'betsetStatus');
         $rounds = self::getBetsets($betgame, $betsetStatus, $betsetUids, $configurations, $configKey);
-        tx_rnbase::load('tx_rnbase_util_Misc');
-        $ret = tx_rnbase_util_Misc::objImplode(',', $rounds);
+        $ret = Misc::objImplode(',', $rounds);
 
         // Soll eine SelectBox für die Tiprunde gezeigt werden?
         if ($configurations->get($configKey.'betsetInput')) {
@@ -122,11 +125,10 @@ class tx_t3sportsbet_util_ScopeController
 
     public static function getBetgamesFromScope($uids)
     {
-        $uids = Tx_Rnbase_Utility_Strings::intExplode(',', $uids);
+        $uids = Strings::intExplode(',', $uids);
         $rounds = [];
-        tx_rnbase::load('tx_t3sportsbet_models_betgame');
         for ($i = 0, $cnt = count($uids); $i < $cnt; ++$i) {
-            $rounds[] = tx_t3sportsbet_models_betgame::getBetgameInstance($uids[$i]);
+            $rounds[] = BetGame::getBetgameInstance($uids[$i]);
         }
 
         return $rounds;
@@ -134,11 +136,10 @@ class tx_t3sportsbet_util_ScopeController
 
     public static function getRoundsFromScope($uids)
     {
-        $uids = Tx_Rnbase_Utility_Strings::intExplode(',', $uids);
+        $uids = Strings::intExplode(',', $uids);
         $rounds = [];
-        tx_rnbase::load('tx_t3sportsbet_models_betset');
         for ($i = 0, $cnt = count($uids); $i < $cnt; ++$i) {
-            $rounds[] = tx_t3sportsbet_models_betset::getBetsetInstance($uids[$i]);
+            $rounds[] = BetSet::getBetsetInstance($uids[$i]);
         }
 
         return $rounds;

@@ -5,11 +5,12 @@ use Sys25\RnBase\Domain\Repository\FeUserRepository;
 use Sys25\RnBase\Frontend\Marker\BaseMarker;
 use Sys25\RnBase\Frontend\Marker\FormatUtil;
 use Sys25\RnBase\Frontend\Marker\Templates;
+use Sys25\T3sportsbet\Model\Bet;
+use Sys25\T3sportsbet\Model\BetSet;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use System25\T3sports\Frontend\Marker\MatchMarker;
 use System25\T3sports\Model\Fixture;
-use Sys25\T3sportsbet\Model\Bet;
-use Sys25\T3sportsbet\Model\BetSet;
+use System25\T3sports\Model\Repository\MatchRepository;
 
 /***************************************************************
  *  Copyright notice
@@ -39,12 +40,14 @@ use Sys25\T3sportsbet\Model\BetSet;
  */
 class tx_t3sportsbet_util_MatchMarker extends BaseMarker
 {
-    public static $betMarker = null;
+    public static $betMarker;
 
     private $request;
     private $matchMarker;
     private $options;
     private $feuserRepo;
+    private $matchRepo;
+    private $betSrv;
 
     public function __construct($options = [])
     {
@@ -52,6 +55,8 @@ class tx_t3sportsbet_util_MatchMarker extends BaseMarker
         $this->request = $options['request'];
         $this->matchMarker = tx_rnbase::makeInstance(MatchMarker::class);
         $this->feuserRepo = new FeUserRepository();
+        $this->matchRepo = new MatchRepository();
+        $this->betSrv = ServiceRegistry::getBetService();
     }
 
     /**
@@ -69,17 +74,15 @@ class tx_t3sportsbet_util_MatchMarker extends BaseMarker
     /**
      * @param string $template das HTML-Template
      * @param Fixture $match das Spiel
-     * @param FormatUtil $formatter
-     *            der zu verwendente Formatter
-     * @param string $matchConfId
-     *            Pfad der TS-Config des Spiels, z.B. 'listView.match.'
-     * @param string $matchMarker
-     *            Name des Markers für ein Spiel, z.B. MATCH
+     * @param FormatUtil $formatter der zu verwendente Formatter
+     * @param string $matchConfId Pfad der TS-Config des Spiels, z.B. 'listView.match.'
+     * @param string $matchMarker Name des Markers für ein Spiel, z.B. MATCH
      *
      * @return string das geparste Template
      */
-    public function parseTemplate($template, &$match, &$formatter, $confId, $marker = 'MATCH')
+    public function parseTemplate($template, $match, $formatter, $confId, $marker = 'MATCH')
     {
+        /** @var BetSet $betset */
         $betset = $this->options['betset'];
         $feuser = $this->options['feuser'];
 
@@ -106,7 +109,8 @@ class tx_t3sportsbet_util_MatchMarker extends BaseMarker
             ->get('qualifier'));
 
         $this->pushTT('setForm');
-        $bet = $betset->getBet($match, $feuser);
+
+        $bet = $this->betSrv->getBet($betset, $match, $feuser);
         $template = $this->setForm($template, $betset, $bet, $feuser, $formatter);
         $this->pullTT();
         $template = self::getBetMarker()->parseTemplate($template, $bet, $formatter, $confId.'bet.', $marker.'_BET');
@@ -162,7 +166,7 @@ class tx_t3sportsbet_util_MatchMarker extends BaseMarker
         // Gleiches gilt, wenn der aktuelle User != FE-User ist
         $state = 'CLOSED';
         if ($feuser) {
-            $state = $betset->getMatchState($bet->getMatch());
+            $state = $betset->getMatchState($this->matchRepo->findByUid($bet->getFixtureUid()));
             if ('OPEN' == $state) {
                 // Prüfen, ob der aktuelle User seinen eigenen Tip bearbeiten will
                 $currUser = $this->feuserRepo->getCurrent();

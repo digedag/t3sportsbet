@@ -1,4 +1,7 @@
 <?php
+
+namespace Sys25\T3sportsbet\Search;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -20,14 +23,16 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_SearchBase');
+
+use Sys25\RnBase\Search\SearchBase;
+use Sys25\T3sportsbet\Model\TeamQuestion;
 
 /**
  * Class to search team questions from database.
  *
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_search_TeamQuestion extends tx_rnbase_util_SearchBase
+class TeamQuestionSearch extends SearchBase
 {
     protected function getTableMappings()
     {
@@ -55,7 +60,7 @@ class tx_t3sportsbet_search_TeamQuestion extends tx_rnbase_util_SearchBase
 
     public function getWrapperClass()
     {
-        return 'tx_t3sportsbet_models_teamquestion';
+        return TeamQuestion::class;
     }
 
     protected function getJoins($tableAliases)

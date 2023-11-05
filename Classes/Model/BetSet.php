@@ -2,7 +2,6 @@
 
 namespace Sys25\T3sportsbet\Model;
 
-use Exception;
 use Sys25\RnBase\Domain\Model\BaseModel;
 use Sys25\T3sportsbet\Utility\ServiceRegistry as BetServiceRegistry;
 use System25\T3sports\Model\Fixture;
@@ -46,11 +45,11 @@ class BetSet extends BaseModel
     /**
      * Returns the betgame.
      *
-     * @return tx_t3sportsbet_models_betgame
+     * @return BetGame
      */
     public function getBetgame()
     {
-        return \tx_t3sportsbet_models_betgame::getBetgameInstance($this->getProperty('betgame'));
+        return BetGame::getBetgameInstance($this->getProperty('betgame'));
     }
 
     /**
@@ -71,7 +70,7 @@ class BetSet extends BaseModel
             return 'FINISHED';
         }
         $state = 'OPEN';
-        $now = tx_t3sportsbet_util_library::getNow();
+        $now = \tx_t3sportsbet_util_library::getNow();
         $lock = $this->getBetgame()->getLockMinutes() * 60;
 
         $matchDate = $match->getProperty('date');
@@ -102,6 +101,7 @@ class BetSet extends BaseModel
      *
      * @param Fixture $match
      * @param \Sys25\RnBase\Domain\Model\FeUser $feuser
+     *
      * @deprecated move to repo
      */
     public function getBet($match, $feuser)
@@ -124,6 +124,7 @@ class BetSet extends BaseModel
         $fields['BET.BETSET'][OP_EQ_INT] = $this->getUid();
         $fields['BET.T3MATCH'][OP_EQ_INT] = $match->getUid();
         $options['count'] = 1;
+
         // $options['debug'] = 1;
         return $service->searchBet($fields, $options);
     }
@@ -161,7 +162,7 @@ class BetSet extends BaseModel
     {
         $uid = intval($uid);
         if (!$uid) {
-            throw new Exception('Invalid uid for betset');
+            throw new \Exception('Invalid uid for betset');
         }
         if (!is_object(self::$instances[$uid])) {
             self::$instances[$uid] = new self($uid);

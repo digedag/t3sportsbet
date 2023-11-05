@@ -6,8 +6,8 @@ use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Misc;
+use Sys25\T3sportsbet\Model\BetGame;
 use Sys25\T3sportsbet\Model\BetSet;
-use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
@@ -55,7 +55,7 @@ class Selector
         $this->MCONF['name'] = $module->getName(); // deprecated
         $this->modName = $module->getName();
         $this->module = $module;
-        $this->formTool = tx_rnbase::makeInstance(ToolBox::class);
+        $this->formTool = \tx_rnbase::makeInstance(ToolBox::class);
         $this->formTool->init($this->doc, $module);
         Misc::prepareTSFE();
     }
@@ -64,7 +64,7 @@ class Selector
      * Darstellung der Select-Box mit allen Ligen der übergebenen Seite.
      * Es wird auf die aktuelle Liga eingestellt.
      *
-     * @return \tx_t3sportsbet_models_betgame den aktuellen Wettbewerb als Objekt oder 0
+     * @return BetGame den aktuellen Wettbewerb als Objekt oder 0
      */
     public function showGameSelector(&$content, $pid, $games = 0)
     {
@@ -101,7 +101,7 @@ class Selector
      *
      * @param string $content
      * @param int $pid
-     * @param \tx_t3sportsbet_models_betgame $game
+     * @param BetGame $game
      *
      * @return BetSet
      */
@@ -162,7 +162,7 @@ class Selector
         $options = [];
         $options['where'] = 'pid="'.$pid.'"';
         $options['orderby'] = 'sorting';
-        $options['wrapperclass'] = 'tx_t3sportsbet_models_betgame';
+        $options['wrapperclass'] = BetGame::class;
 
         return Connection::getInstance()->doSelect('*', 'tx_t3sportsbet_betgames', $options, 0);
     }

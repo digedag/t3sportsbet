@@ -1,8 +1,13 @@
 <?php
+
+namespace Sys25\T3sportsbet\Model;
+
+use Sys25\RnBase\Domain\Model\BaseModel;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,12 +26,11 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_model_base');
 
 /**
  * Model for a betset result.
  */
-class tx_t3sportsbet_models_betsetresult extends tx_rnbase_model_base
+class BetSetResult extends BaseModel
 {
     public function getTableName()
     {

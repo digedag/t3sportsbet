@@ -1,4 +1,7 @@
 <?php
+
+namespace Sys25\T3sportsbet\Search;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -33,7 +36,7 @@ define('MATCHSRV_FIELD_MATCH_DATE', 'MATCH.DATE');
  *
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_search_BetSet extends SearchBase
+class BetSetSearch extends SearchBase
 {
     protected function getTableMappings()
     {

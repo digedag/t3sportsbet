@@ -7,6 +7,7 @@ use Sys25\RnBase\Frontend\Marker\ListBuilder;
 use Sys25\RnBase\Frontend\Marker\SimpleMarker;
 use Sys25\RnBase\Frontend\Marker\Templates;
 use Sys25\RnBase\Utility\Logger;
+use Sys25\T3sportsbet\Model\TeamQuestion;
 use Sys25\T3sportsbet\Utility\ServiceRegistry as BetServiceRegistry;
 use System25\T3sports\Frontend\Marker\TeamMarker;
 use System25\T3sports\Utility\ServiceRegistry;
@@ -39,9 +40,9 @@ use System25\T3sports\Utility\ServiceRegistry;
  */
 class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
 {
-    public static $simpleMarker = null;
+    public static $simpleMarker;
 
-    public static $teamMarker = null;
+    public static $teamMarker;
     private $options;
 
     public function __construct($options = [])
@@ -51,7 +52,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
 
     /**
      * @param string $template das HTML-Template
-     * @param tx_t3sportsbet_models_teamquestion $item
+     * @param TeamQuestion $item
      * @param FormatUtil $formatter der zu verwendente Formatter
      * @param string $confId Pfad der TS-Config des Vereins, z.B. 'listView.round.'
      * @param string $marker Name des Markers für die Tipprunde, z.B. ROUND
@@ -62,7 +63,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
     {
         if (!is_object($item)) {
             // Ist kein Verein vorhanden wird ein leeres Objekt verwendet.
-            $item = self::getEmptyInstance('tx_t3sportsbet_models_teamquestion');
+            $item = self::getEmptyInstance(TeamQuestion::class);
         }
         $feuser = $this->options['feuser'];
 
@@ -92,7 +93,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
     }
 
     /**
-     * @return tx_rnbase_util_SimpleMarker
+     * @return SimpleMarker
      */
     private static function getSimpleMarker()
     {
@@ -118,7 +119,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
     /**
      * Add team selection.
      *
-     * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+     * @param TeamQuestion $teamQuestion
      * @param string $template
      * @param FormatUtil $formatter
      * @param string $confId
@@ -126,7 +127,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
      *
      * @return string
      */
-    private function addBet($template, $item, $feuser, $formatter, $confId, $marker)
+    private function addBet($template, TeamQuestion $item, $feuser, $formatter, $confId, $marker)
     {
         $srv = BetServiceRegistry::getTeamBetService();
         $bet = $srv->getTeamBet($item, $feuser);
@@ -145,7 +146,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
     /**
      * Add bet trend.
      *
-     * @param tx_t3sportsbet_models_teamquestion $item
+     * @param TeamQuestion $item
      * @param string $template
      * @param FormatUtil $formatter
      * @param string $confId
@@ -153,7 +154,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
      *
      * @return string
      */
-    private function addTrend($template, $item, $feuser, $formatter, $confId, $markerPrefix)
+    private function addTrend($template, TeamQuestion $item, $feuser, $formatter, $confId, $markerPrefix)
     {
         $trendData = BetServiceRegistry::getTeamBetService()->getBetTrend($item);
         // Jetzt die TeamDaten einbauen
@@ -190,10 +191,10 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
     }
 
     /**
-     * @param tx_t3sportsbet_models_teamquestion $item
+     * @param TeamQuestion $item
      * @param \System25\T3sports\Model\Team[] $teams
      */
-    private function makeChartDataProvider($item, $teams)
+    private function makeChartDataProvider(TeamQuestion $item, $teams)
     {
         $dp = tx_rnbase::makeInstance('tx_rnbase_plot_DataProvider');
         $dp->setChartTitle($item->getQuestion());
@@ -213,7 +214,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
     /**
      * Set state subpart.
      *
-     * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+     * @param TeamQuestion $teamQuestion
      * @param string $template
      * @param FormatUtil $formatter
      * @param string $confId
@@ -221,7 +222,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
      *
      * @return string
      */
-    private function handleStatePart($template, $teamQuestion, $feuser, $formatter)
+    private function handleStatePart($template, TeamQuestion $teamQuestion, $feuser, $formatter)
     {
         $subpartArray = [];
         $subpartArray['###BETSTATUS_OPEN###'] = '';
@@ -248,12 +249,12 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
      * Hinzufügen der Teams.
      *
      * @param string $template HTML-Template
-     * @param tx_t3sportsbet_models_teamquestion $item
+     * @param TeamQuestion $item
      * @param FormatUtil $formatter
      * @param string $confId Config-String
      * @param string $markerPrefix
      */
-    private function addTeams($template, $item, $formatter, $confId, $markerPrefix)
+    private function addTeams($template, TeamQuestion $item, $formatter, $confId, $markerPrefix)
     {
         $children = BetServiceRegistry::getTeamBetService()->getTeams4TeamQuestion($item);
         // Den aktuellen Tip des Users mitgeben
@@ -269,9 +270,9 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
      * Returns the UID of current teambet for given user.
      *
      * @param FeUser $feuser
-     * @param tx_t3sportsbet_models_teamquestion $item
+     * @param TeamQuestion $item
      */
-    private function findCurrentBet($item, $feuser)
+    private function findCurrentBet(TeamQuestion $item, $feuser)
     {
         if (!$feuser) {
             return 0;
@@ -282,11 +283,11 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
     }
 
     /**
-     * @param tx_t3sportsbet_models_teamquestion $item
+     * @param TeamQuestion $item
      * @param string $template
      * @param string $marker
      */
-    private function prepare($item, $template, $marker)
+    private function prepare(TeamQuestion $item, $template, $marker)
     {
         $item->setProperty('openuntiltstamp', $item->getOpenUntilTstamp());
     }

@@ -1,4 +1,7 @@
 <?php
+
+namespace Sys25\T3sportsbet\Model;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -25,12 +28,11 @@
 use Sys25\RnBase\Domain\Model\BaseModel;
 use Sys25\RnBase\Utility\Dates;
 use Sys25\RnBase\Utility\Strings;
-use Sys25\T3sportsbet\Model\BetSet;
 
 /**
  * Model for a team question.
  */
-class tx_t3sportsbet_models_teamquestion extends BaseModel
+class TeamQuestion extends BaseModel
 {
     private $teamUids;
 
@@ -107,7 +109,7 @@ class tx_t3sportsbet_models_teamquestion extends BaseModel
     /**
      * Whether or not the given bet wins.
      *
-     * @param tx_t3sportsbet_models_teambet $bet
+     * @param TeamBet $bet
      *
      * @return bool
      */

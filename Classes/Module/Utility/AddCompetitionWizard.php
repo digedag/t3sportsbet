@@ -2,6 +2,8 @@
 
 namespace Sys25\T3sportsbet\Module\Utility;
 
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Repository\MatchRepository;
 use System25\T3sports\Utility\MatchTableBuilder;
 
@@ -38,8 +40,8 @@ class AddCompetitionWizard
     /**
      * Handle the wizard.
      *
-     * @param \tx_rnbase_mod_IModule $mod
-     * @param \tx_t3sportsbet_models_betgame $betgame
+     * @param IModule $mod
+     * @param BetGame $betgame
      *
      * @return string
      */
@@ -48,7 +50,7 @@ class AddCompetitionWizard
         $this->mod = $mod;
         $this->doc = $mod->getDoc();
         $this->formTool = $mod->getFormTool();
-        $comp2set = strlen(\Tx_Rnbase_Utility_T3General::_GP('comp2betset')) > 0; // Wurde der Submit-Button gedrückt?
+        $comp2set = strlen(T3General::_GP('comp2betset')) > 0; // Wurde der Submit-Button gedrückt?
         $out = '';
         if ($comp2set) {
             $out .= $this->handleCompetition2Betgame($betgame);
@@ -62,13 +64,13 @@ class AddCompetitionWizard
     /**
      * Zeigt die Infoseite mit den möglichen Optionen.
      *
-     * @param \tx_t3sportsbet_models_betgame $betgame
+     * @param BetGame $betgame
      *
      * @return string
      */
     private function showInfoPage($betgame)
     {
-        $out .= $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_add_competition'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+        $out = $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_add_competition'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
         $out .= $this->doc->spacer(15);
 
         $comps = $betgame->getCompetitions();
@@ -100,7 +102,7 @@ class AddCompetitionWizard
     /**
      * Erstellt aus dem aktuellen Wettbewerb die notwendigen Tiprunden.
      *
-     * @param \tx_t3sportsbet_models_betgame $betgame
+     * @param BetGame $betgame
      *
      * @return string
      */
@@ -133,7 +135,7 @@ class AddCompetitionWizard
             $data['tx_t3sportsbet_betsets']['NEW'.$key]['round'] = $key;
             $data['tx_t3sportsbet_betsets']['NEW'.$key]['round_name'] = $key.' ###LABEL_ROUNDNAMEDEFAULT###';
         }
-        $tce = \Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
+        $tce = Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
         $out .= $GLOBALS['LANG']->getLL('msg_add_competition_finished');
 

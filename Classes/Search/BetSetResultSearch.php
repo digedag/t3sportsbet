@@ -1,4 +1,7 @@
 <?php
+
+namespace Sys25\T3sportsbet\Search;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -20,14 +23,17 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_SearchBase');
+
+use Sys25\RnBase\Search\SearchBase;
+use Sys25\RnBase\Utility\Misc;
+use Sys25\T3sportsbet\Model\BetSetResult;
 
 /**
  * Class to search betset results from database.
  *
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_search_BetSetResult extends tx_rnbase_util_SearchBase
+class BetSetResultSearch extends SearchBase
 {
     protected function getTableMappings()
     {
@@ -37,7 +43,7 @@ class tx_t3sportsbet_search_BetSetResult extends tx_rnbase_util_SearchBase
         $tableMapping['BETGAME'] = 'tx_t3sportsbet_betgames';
 
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('t3sportsbet', 'search_BetSetResult_getTableMapping_hook', [
+        Misc::callHook('t3sportsbet', 'search_BetSetResult_getTableMapping_hook', [
             'tableMapping' => &$tableMapping,
         ], $this);
 
@@ -51,7 +57,7 @@ class tx_t3sportsbet_search_BetSetResult extends tx_rnbase_util_SearchBase
 
     public function getWrapperClass()
     {
-        return 'tx_t3sportsbet_models_betsetresult';
+        return BetSetResult::class;
     }
 
     protected function useAlias()
@@ -75,7 +81,7 @@ class tx_t3sportsbet_search_BetSetResult extends tx_rnbase_util_SearchBase
         }
 
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('t3sportsbet', 'search_BetSetResult_getJoins_hook', [
+        Misc::callHook('t3sportsbet', 'search_BetSetResult_getJoins_hook', [
             'join' => &$join,
             'tableAliases' => $tableAliases,
         ], $this);

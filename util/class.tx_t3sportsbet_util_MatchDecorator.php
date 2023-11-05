@@ -24,8 +24,8 @@
  ***************************************************************/
 
 use Sys25\RnBase\Backend\Module\IModule;
-use System25\T3sports\Model\Competition;
 use Sys25\T3sportsbet\Model\BetSet;
+use System25\T3sports\Model\Competition;
 
 /**
  * Diese Klasse ist für die Darstellung von Spielen im Backend verantwortlich.

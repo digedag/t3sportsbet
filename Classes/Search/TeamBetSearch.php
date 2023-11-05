@@ -1,4 +1,7 @@
 <?php
+
+namespace Sys25\T3sportsbet\Search;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -22,47 +25,47 @@
  ***************************************************************/
 
 use Sys25\RnBase\Search\SearchBase;
-use Sys25\T3sportsbet\Model\Bet;
+use Sys25\T3sportsbet\Model\TeamBet;
 
 /**
- * Class to search betsets from database.
+ * Class to search teambets from database.
  *
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_search_Bet extends SearchBase
+class TeamBetSearch extends SearchBase
 {
     protected function getTableMappings()
     {
         $tableMapping = [];
-        $tableMapping['BET'] = 'tx_t3sportsbet_bets';
+        $tableMapping['TEAMBET'] = 'tx_t3sportsbet_teambets';
         $tableMapping['BETSET'] = 'tx_t3sportsbet_betsets';
+        $tableMapping['TEAMQUESTION'] = 'tx_t3sportsbet_teamquestions';
         $tableMapping['BETGAME'] = 'tx_t3sportsbet_betgames';
-        $tableMapping['MATCH'] = 'tx_cfcleague_games';
 
         return $tableMapping;
     }
 
     protected function getBaseTable()
     {
-        return 'tx_t3sportsbet_bets';
+        return 'tx_t3sportsbet_teambets';
     }
 
     public function getWrapperClass()
     {
-        return Bet::class;
+        return TeamBet::class;
     }
 
     protected function getJoins($tableAliases)
     {
         $join = '';
+        if (isset($tableAliases['TEAMQUESTION']) || isset($tableAliases['BETSET']) || isset($tableAliases['BETGAME'])) {
+            $join .= ' JOIN tx_t3sportsbet_teamquestions ON tx_t3sportsbet_teambets.question = tx_t3sportsbet_teamquestions.uid ';
+        }
         if (isset($tableAliases['BETSET']) || isset($tableAliases['BETGAME'])) {
-            $join .= ' JOIN tx_t3sportsbet_betsets ON tx_t3sportsbet_bets.betset = tx_t3sportsbet_betsets.uid ';
+            $join .= ' JOIN tx_t3sportsbet_betsets ON tx_t3sportsbet_teamquestions.betset = tx_t3sportsbet_betsets.uid ';
         }
         if (isset($tableAliases['BETGAME'])) {
             $join .= ' JOIN tx_t3sportsbet_betgames ON tx_t3sportsbet_betsets.betgame = tx_t3sportsbet_betgames.uid ';
-        }
-        if (isset($tableAliases['MATCH'])) {
-            $join .= ' JOIN tx_cfcleague_games ON tx_t3sportsbet_bets.t3match = tx_cfcleague_games.uid ';
         }
 
         return $join;

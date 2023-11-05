@@ -8,8 +8,12 @@ use Sys25\RnBase\Domain\Model\FeUser;
 use Sys25\RnBase\Domain\Repository\FeUserRepository;
 use Sys25\RnBase\Search\SearchBase;
 use Sys25\RnBase\Utility\Strings;
+use Sys25\T3sportsbet\Model\BetGame;
+use Sys25\T3sportsbet\Model\TeamBet;
+use Sys25\T3sportsbet\Model\TeamQuestion;
+use Sys25\T3sportsbet\Search\TeamBetSearch;
+use Sys25\T3sportsbet\Search\TeamQuestionSearch;
 use System25\T3sports\Utility\ServiceRegistry;
-use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
@@ -49,11 +53,11 @@ class TeamBetService
     /**
      * Analyze teambets of a betgame.
      *
-     * @param tx_t3sportsbet_models_betgame $betGame
+     * @param BetGame $betGame
      *
      * @return int number of finished bets
      */
-    public function analyzeBets($betGame)
+    public function analyzeBets(BetGame $betGame)
     {
         $fields = $options = [];
         // Ablauf
@@ -108,14 +112,14 @@ class TeamBetService
      *
      * @param int $uid
      *
-     * @return tx_t3sportsbet_models_teamquestion
+     * @return TeamQuestion
      */
     public function loadTeamQuestion($uid)
     {
         $cache = CacheManager::getCache('t3sports');
         $question = $cache->get('t3sbet_tq_'.$uid);
         if (!$question) {
-            $question = tx_rnbase::makeInstance('tx_t3sportsbet_models_teamquestion', $uid);
+            $question = \tx_rnbase::makeInstance(TeamQuestion::class, $uid);
             $cache->set('t3sbet_tq_'.$uid, $question);
         }
 
@@ -125,7 +129,7 @@ class TeamBetService
     /**
      * Returns the number of bets for a teamquestion.
      *
-     * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+     * @param TeamQuestion $teamQuestion
      *
      * @return int
      */
@@ -140,13 +144,13 @@ class TeamBetService
 
     /**
      * Returns the teambet for a user
-     * If no bet is found this method return a dummy instance of tx_t3sportsbet_models_teambet
+     * If no bet is found this method return a dummy instance of TeamBet
      * with uid=0.
      *
-     * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+     * @param TeamQuestion $teamQuestion
      * @param FeUser $feuser
      *
-     * @return tx_t3sportsbet_models_teambet
+     * @return TeamBet
      */
     public function getTeamBet($teamQuestion, $feuser)
     {
@@ -163,7 +167,7 @@ class TeamBetService
         $bet = count($ret) ? $ret[0] : null;
         if (!$bet) {
             // No bet in database found. Create dummy instance
-            $bet = tx_rnbase::makeInstance('tx_t3sportsbet_models_teambet', [
+            $bet = \tx_rnbase::makeInstance(TeamBet::class, [
                 'uid' => 0,
                 'question' => $teamQuestion->getUid(),
                 'fe_user' => $feuser ? $feuser->getUid() : 0,
@@ -176,10 +180,10 @@ class TeamBetService
     /**
      * Is a teambet possible for a user.
      *
-     * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+     * @param TeamQuestion $teamQuestion
      * @param FeUser $feuser
      */
-    public function getTeamQuestionStatus($teamQuestion, $feuser)
+    public function getTeamQuestionStatus(TeamQuestion $teamQuestion, $feuser)
     {
         $state = 'CLOSED';
         if ($feuser) {
@@ -199,9 +203,9 @@ class TeamBetService
     /**
      * Load all possible teams for a given teamquestion.
      *
-     * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+     * @param TeamQuestion $teamQuestion
      */
-    public function getTeams4TeamQuestion($teamQuestion)
+    public function getTeams4TeamQuestion(TeamQuestion $teamQuestion)
     {
         $srv = ServiceRegistry::getTeamService();
         $fields = [];
@@ -217,9 +221,9 @@ class TeamBetService
     /**
      * Load all teams for a given betgame.
      *
-     * @param tx_t3sportsbet_models_betgame $betgame
+     * @param BetGame $betgame
      */
-    public function getTeams4Betgame($betgame)
+    public function getTeams4Betgame(BetGame $betgame)
     {
         // $betgame->getCompetitions();
         // Search for teams
@@ -236,11 +240,11 @@ class TeamBetService
     /**
      * Returns the bet trend for a single teambet.
      *
-     * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+     * @param TeamQuestion $teamQuestion
      *
      * @return array
      */
-    public function getBetTrend($teamQuestion)
+    public function getBetTrend(TeamQuestion $teamQuestion)
     {
         // Wir suchen jeweils die Anzahl der Tips pro Team
         // SELECT count(team), team FROM `tx_t3sportsbet_teambets` WHERE question=1 GROUP BY team
@@ -265,14 +269,14 @@ class TeamBetService
     /**
      * Save or update a teambet from fe request.
      *
-     * @param tx_t3sportsbet_models_teamquestion $teamQuestion
+     * @param TeamQuestion $teamQuestion
      * @param FeUser $feuser
      * @param int $betUid
      * @param int $teamUid
      *
      * @return int 0/1 whether the bet was saved or not
      */
-    public function saveOrUpdateBet($teamQuestion, $feuser, $betUid, $teamUid)
+    public function saveOrUpdateBet(TeamQuestion $teamQuestion, $feuser, $betUid, $teamUid)
     {
         $betset = $teamQuestion->getBetSet();
         if (!$teamQuestion->isOpen()) {
@@ -294,7 +298,7 @@ class TeamBetService
         $betUid = intval($betUid);
         if ($betUid) {
             // Update bet
-            $bet = tx_rnbase::makeInstance('tx_t3sportsbet_models_teambet', $betUid);
+            $bet = \tx_rnbase::makeInstance(TeamBet::class, $betUid);
             if ($bet->getProperty('feuser') != $feuser->getUid()) {
                 return 0;
             }
@@ -323,14 +327,14 @@ class TeamBetService
 
     public function searchTeamQuestion($fields, $options)
     {
-        $searcher = SearchBase::getInstance('tx_t3sportsbet_search_TeamQuestion');
+        $searcher = SearchBase::getInstance(TeamQuestionSearch::class);
 
         return $searcher->search($fields, $options);
     }
 
     public function searchTeamBet($fields, $options)
     {
-        $searcher = SearchBase::getInstance('tx_t3sportsbet_search_TeamBet');
+        $searcher = SearchBase::getInstance(TeamBetSearch::class);
 
         return $searcher->search($fields, $options);
     }

@@ -1,4 +1,7 @@
 <?php
+
+namespace Sys25\T3sportsbet\Model;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -27,11 +30,10 @@ use Sys25\RnBase\Utility\Strings;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use System25\T3sports\Model\Competition;
 
-
 /**
  * Model for a betgame.
  */
-class tx_t3sportsbet_models_betgame extends BaseModel
+class BetGame extends BaseModel
 {
     private static $instances = [];
 
@@ -47,13 +49,13 @@ class tx_t3sportsbet_models_betgame extends BaseModel
      *
      * @param int $uid
      *
-     * @return tx_t3sportsbet_models_betgame
+     * @return self
      */
     public static function getBetgameInstance($uid)
     {
         $uid = (int) $uid;
         if (!$uid) {
-            throw new Exception('Invalid uid for betgame');
+            throw new \Exception('Invalid uid for betgame');
         }
         if (!is_object(self::$instances[$uid])) {
             self::$instances[$uid] = new self($uid);
@@ -134,12 +136,11 @@ class tx_t3sportsbet_models_betgame extends BaseModel
     /**
      * Returns the competition for a static bet game.
      *
-     * @return array of tx_cfcleague_models_Competition
+     * @return Competition[]
      */
     public function getCompetitions()
     {
         $ret = [];
-        tx_rnbase::load('tx_cfcleague_models_Competition');
         $uids = $this->getProperty('competition');
         if ($uids) {
             $uids = Strings::intExplode(',', $uids);

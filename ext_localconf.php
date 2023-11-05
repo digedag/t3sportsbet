@@ -63,7 +63,6 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms.php']['get
 //     ]
 // );
 
-if (TYPO3_MODE === 'BE') {
-    \Sys25\RnBase\Utility\Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sportsbet/Configuration/TSconfig/modWizards.txt">');
-    \Sys25\RnBase\Utility\Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sportsbet/Configuration/TSconfig/pageTSconfig.txt">');
+if (TYPO3_MODE === 'BE' && !\Sys25\RnBase\Utility\TYPO3::isTYPO121OrHigher()) {
+    \Sys25\RnBase\Utility\Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sportsbet/Configuration/page.tsconfig">');
 }

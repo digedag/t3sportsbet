@@ -6,7 +6,6 @@ use Sys25\RnBase\Utility\Misc;
 use Sys25\T3sportsbet\Service\BetCalculator;
 use Sys25\T3sportsbet\Service\BetService;
 use Sys25\T3sportsbet\Service\TeamBetService;
-use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
@@ -42,13 +41,13 @@ class ServiceRegistry implements \TYPO3\CMS\Core\SingletonInterface
     private $teamBetService;
 
     public function __construct(
-        ?BetService $betService = null,
-        ?BetCalculator $betCalculator = null,
-        ?TeamBetService $teamBetService = null
+        BetService $betService = null,
+        BetCalculator $betCalculator = null,
+        TeamBetService $teamBetService = null
     ) {
-        $this->betService = $betService ?? tx_rnbase::makeInstance(BetService::class);
-        $this->betCalculator = $betCalculator ?? tx_rnbase::makeInstance(BetCalculator::class);;
-        $this->teamBetService = $teamBetService ?? tx_rnbase::makeInstance(TeamBetService::class);;
+        $this->betService = $betService ?? \tx_rnbase::makeInstance(BetService::class);
+        $this->betCalculator = $betCalculator ?? \tx_rnbase::makeInstance(BetCalculator::class);
+        $this->teamBetService = $teamBetService ?? \tx_rnbase::makeInstance(TeamBetService::class);
     }
 
     /**
@@ -56,7 +55,7 @@ class ServiceRegistry implements \TYPO3\CMS\Core\SingletonInterface
      */
     private static function getInstance()
     {
-        return tx_rnbase::makeInstance(ServiceRegistry::class);
+        return \tx_rnbase::makeInstance(ServiceRegistry::class);
     }
 
     /**

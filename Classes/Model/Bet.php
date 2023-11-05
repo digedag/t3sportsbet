@@ -26,7 +26,6 @@ namespace Sys25\T3sportsbet\Model;
  ***************************************************************/
 
 use Sys25\RnBase\Domain\Model\BaseModel;
-use System25\T3sports\Model\Fixture;
 
 /**
  * Model for a bet.
@@ -38,14 +37,9 @@ class Bet extends BaseModel
         return 'tx_t3sportsbet_bets';
     }
 
-    /**
-     * Returns the match.
-     *
-     * @return Fixture
-     */
-    public function getMatch()
+    public function getFixtureUid(): int
     {
-        return tx_cfcleaguefe_models_match::getMatchInstance($this->getProperty('t3match'));
+        return $this->getProperty('t3match');
     }
 
     /**

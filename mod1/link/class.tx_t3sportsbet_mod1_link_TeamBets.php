@@ -32,7 +32,7 @@ class tx_t3sportsbet_mod1_link_TeamBets implements LinkerInterface
     /**
      * Buttons for team bets.
      *
-     * @param tx_t3sportsbet_models_teamquestion $item
+     * @param TeamQuestion $item
      * @param ToolBox $formTool
      * @param int $currentPid
      * @param array $options

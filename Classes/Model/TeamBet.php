@@ -1,4 +1,7 @@
 <?php
+
+namespace Sys25\T3sportsbet\Model;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -25,12 +28,10 @@
 use Sys25\RnBase\Domain\Model\BaseModel;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 
-tx_rnbase::load('tx_rnbase_model_base');
-
 /**
  * Model for a bet.
  */
-class tx_t3sportsbet_models_teambet extends BaseModel
+class TeamBet extends BaseModel
 {
     public function getTableName()
     {
@@ -40,7 +41,7 @@ class tx_t3sportsbet_models_teambet extends BaseModel
     /**
      * Returns the team question.
      *
-     * @return tx_t3sportsbet_models_teamquestion
+     * @return TeamQuestion
      */
     public function getTeamQuestion()
     {
