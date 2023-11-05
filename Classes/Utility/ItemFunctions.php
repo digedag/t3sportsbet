@@ -8,6 +8,7 @@ use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
 use Sys25\T3sportsbet\Model\BetSet;
 use Sys25\T3sportsbet\Model\TeamQuestion;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
@@ -81,7 +82,7 @@ class ItemFunctions
                 return;
             }
             $betset = $this->loadBetset($PA['row']['betset']);
-            $teamQuestion = \tx_rnbase::makeInstance(TeamQuestion::class, $PA['row']['uid']);
+            $teamQuestion = tx_rnbase::makeInstance(TeamQuestion::class, $PA['row']['uid']);
             $teams = ServiceRegistry::getTeamBetService()->getTeams4TeamQuestion($teamQuestion);
             foreach ($teams as $team) {
                 $PA['items'][] = [
@@ -107,13 +108,13 @@ class ItemFunctions
             }
             $row = $fieldData[0]['row'];
 
-            return \tx_rnbase::makeInstance(BetSet::class, $row);
+            return tx_rnbase::makeInstance(BetSet::class, $row);
         } else {
             $arr = Strings::trimExplode('|', $fieldData);
             $arr = Strings::trimExplode('_', $arr[0]);
             $uid = (int) $arr[count($arr) - 1];
 
-            return $uid ? \tx_rnbase::makeInstance(BetSet::class, $uid) : false;
+            return $uid ? tx_rnbase::makeInstance(BetSet::class, $uid) : false;
         }
     }
 }

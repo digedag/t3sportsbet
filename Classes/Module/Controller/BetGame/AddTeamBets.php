@@ -6,9 +6,9 @@ use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Utility\T3General;
-use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use Sys25\T3sportsbet\Model\BetSet;
 use Sys25\T3sportsbet\Model\TeamQuestion;
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use tx_rnbase;
 
 /***************************************************************

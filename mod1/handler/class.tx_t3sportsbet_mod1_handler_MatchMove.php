@@ -27,9 +27,9 @@ use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
+use Sys25\T3sportsbet\Model\BetSet;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use System25\T3sports\Model\Fixture;
-use Sys25\T3sportsbet\Model\BetSet;
 
 class tx_t3sportsbet_mod1_handler_MatchMove
 {

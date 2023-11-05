@@ -12,10 +12,11 @@ use Sys25\RnBase\Configuration\ConfigurationInterface;
 use Sys25\RnBase\Frontend\Marker\FormatUtil;
 use Sys25\RnBase\Frontend\Marker\Templates;
 use Sys25\RnBase\Utility\Logger;
+use Sys25\T3sportsbet\Model\BetSet;
 use Sys25\T3sportsbet\Module\Utility\AddCompetitionWizard;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
-use Sys25\T3sportsbet\Model\BetSet;
 use tx_rnbase;
+use tx_t3sportsbet_mod1_handler_MatchMove;
 
 /**
  * *************************************************************
@@ -96,20 +97,20 @@ class BetGame extends BaseModFunc
             return $content;
         }
         $content = '';
-//        $this->getModule()->selector = $selector;
+        //        $this->getModule()->selector = $selector;
 
         $currentRound = $this->selector->showRoundSelector($selector, $this->getModule()->getPid(), $currentGame);
         if (!$currentRound) {
             /* @var $wizard AddCompetitionWizard */
-            $wizard = \tx_rnbase::makeInstance(AddCompetitionWizard::class);
+            $wizard = tx_rnbase::makeInstance(AddCompetitionWizard::class);
             $content .= $wizard->handleRequest($this->getModule(), $currentGame);
 
             return $content;
         }
-//        $this->getModule()->selector = $selector;
+        //        $this->getModule()->selector = $selector;
 
         // RequestHandler aufrufen.
-        $content .= \tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->handleRequest($this->getModule());
+        $content .= tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->handleRequest($this->getModule());
 
         $menu = $formTool->showTabMenu($this->getModule()
             ->getPid(), 'bettools', $this->getModule()

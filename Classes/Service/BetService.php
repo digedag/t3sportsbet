@@ -18,6 +18,7 @@ use Sys25\T3sportsbet\Search\BetSetSearch;
 use Sys25\T3sportsbet\Utility\ServiceRegistry as BetServiceRegistry;
 use System25\T3sports\Model\Fixture;
 use System25\T3sports\Utility\ServiceRegistry;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
@@ -274,10 +275,10 @@ GROUP BY feuser, betset
     {
         // Zuordnung Spiel im neuen Betset anlegen -> Exception, wenn schon vorhanden
         /** @var BetSet $newBetSet */
-        $newBetSet = \tx_rnbase::makeInstance(BetSet::class, $newBetsetUid);
+        $newBetSet = tx_rnbase::makeInstance(BetSet::class, $newBetsetUid);
         $matchesInNewBetSet = $this->findMatchUidsByBetSet($newBetSet);
         if (in_array($matchUid, $matchesInNewBetSet)) {
-            throw new \Exception('Match is already in betset');
+            throw new Exception('Match is already in betset');
         }
         // Zuordnung Spiel im alten Betset entfernen
         $where = 'uid_local='.$oldBetsetUid.' AND uid_foreign='.$matchUid.' AND tablenames=\'tx_cfcleague_games\'';
@@ -285,7 +286,7 @@ GROUP BY feuser, betset
             'uid_local' => $newBetsetUid,
         ]);
         if (0 == $rows) {
-            throw new \Exception('Match ('.$matchUid.') not found in old betset ('.$oldBetsetUid.')!');
+            throw new Exception('Match ('.$matchUid.') not found in old betset ('.$oldBetsetUid.')!');
         }
         // Alle Bets auf das neue Betset umstellen
         $where = 'betset='.$oldBetsetUid.' AND t3match='.$matchUid;
@@ -376,7 +377,7 @@ GROUP BY feuser, betset
         $bet = count($ret) ? $ret[0] : null;
         if (!$bet) {
             // No bet in database found. Create dummy instance
-            $bet = \tx_rnbase::makeInstance(Bet::class, [
+            $bet = tx_rnbase::makeInstance(Bet::class, [
                 'uid' => 0,
                 'betset' => $betset->getUid(),
                 'fe_user' => $feuser ? $feuser->getUid() : null,
@@ -655,7 +656,7 @@ GROUP BY feuser, betset
         $betUid = intval($betUid);
         if ($betUid) {
             // Update bet
-            $bet = \tx_rnbase::makeInstance(Bet::class, $betUid);
+            $bet = tx_rnbase::makeInstance(Bet::class, $betUid);
             if ($bet->getProperty('fe_user') != $feuser->getUid()) {
                 return 0;
             }

@@ -5,11 +5,11 @@ use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Utility\T3General;
+use Sys25\T3sportsbet\Model\BetSet;
 use System25\T3sports\Model\Competition;
 use System25\T3sports\Module\Utility\Selector;
 use System25\T3sports\Utility\MatchTableBuilder;
 use System25\T3sports\Utility\ServiceRegistry;
-use Sys25\T3sportsbet\Model\BetSet;
 
 /***************************************************************
  *  Copyright notice

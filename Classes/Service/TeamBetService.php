@@ -14,6 +14,7 @@ use Sys25\T3sportsbet\Model\TeamQuestion;
 use Sys25\T3sportsbet\Search\TeamBetSearch;
 use Sys25\T3sportsbet\Search\TeamQuestionSearch;
 use System25\T3sports\Utility\ServiceRegistry;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
@@ -119,7 +120,7 @@ class TeamBetService
         $cache = CacheManager::getCache('t3sports');
         $question = $cache->get('t3sbet_tq_'.$uid);
         if (!$question) {
-            $question = \tx_rnbase::makeInstance(TeamQuestion::class, $uid);
+            $question = tx_rnbase::makeInstance(TeamQuestion::class, $uid);
             $cache->set('t3sbet_tq_'.$uid, $question);
         }
 
@@ -167,7 +168,7 @@ class TeamBetService
         $bet = count($ret) ? $ret[0] : null;
         if (!$bet) {
             // No bet in database found. Create dummy instance
-            $bet = \tx_rnbase::makeInstance(TeamBet::class, [
+            $bet = tx_rnbase::makeInstance(TeamBet::class, [
                 'uid' => 0,
                 'question' => $teamQuestion->getUid(),
                 'fe_user' => $feuser ? $feuser->getUid() : 0,
@@ -298,7 +299,7 @@ class TeamBetService
         $betUid = intval($betUid);
         if ($betUid) {
             // Update bet
-            $bet = \tx_rnbase::makeInstance(TeamBet::class, $betUid);
+            $bet = tx_rnbase::makeInstance(TeamBet::class, $betUid);
             if ($bet->getProperty('feuser') != $feuser->getUid()) {
                 return 0;
             }

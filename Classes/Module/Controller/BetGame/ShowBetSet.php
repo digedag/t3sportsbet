@@ -8,9 +8,10 @@ use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
 use Sys25\T3sportsbet\Model\BetGame;
-use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use Sys25\T3sportsbet\Model\BetSet;
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use tx_rnbase;
+use tx_t3sportsbet_mod1_handler_MatchMove;
 
 /***************************************************************
  *  Copyright notice
@@ -102,7 +103,7 @@ class ShowBetSet
         $options['module'] = $this->module;
         $out = '';
 
-        $pasteButton = \tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->makePasteButton($this->currentRound, $this->module);
+        $pasteButton = tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->makePasteButton($this->currentRound, $this->module);
         if ($pasteButton) {
             $out .= $this->doc->section('Info:', $pasteButton, 0, 1, IModFunc::ICON_INFO);
         }

@@ -6,6 +6,8 @@ use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Repository\MatchRepository;
 use System25\T3sports\Utility\MatchTableBuilder;
+use tx_rnbase;
+use tx_rnbase_mod_IModFunc;
 
 /**
  * *************************************************************
@@ -70,14 +72,14 @@ class AddCompetitionWizard
      */
     private function showInfoPage($betgame)
     {
-        $out = $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_add_competition'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+        $out = $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_add_competition'), 0, 1, tx_rnbase_mod_IModFunc::ICON_INFO);
         $out .= $this->doc->spacer(15);
 
         $comps = $betgame->getCompetitions();
         $options = [];
 
         if (!count($comps)) {
-            $out .= $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_no_competition_in_betgame'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+            $out .= $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_no_competition_in_betgame'), 0, 1, tx_rnbase_mod_IModFunc::ICON_WARN);
             $options['title'] = '###LABEL_EDITBETGAME###';
             $out .= $this->formTool->createEditButton('tx_t3sportsbet_betgames', $betgame->getUid(), $options);
         } else {
@@ -112,7 +114,7 @@ class AddCompetitionWizard
         $compId = $menu['value'];
         $matches = $this->loadMatches($compId);
         if (!count($matches)) {
-            return $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_no_matchs_found'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+            return $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_no_matchs_found'), 0, 1, tx_rnbase_mod_IModFunc::ICON_WARN);
         }
 
         $lastRound = -1;
@@ -139,12 +141,12 @@ class AddCompetitionWizard
         $tce->process_datamap();
         $out .= $GLOBALS['LANG']->getLL('msg_add_competition_finished');
 
-        return (strlen($out)) ? $this->mod->doc->section('###LABEL_INFO###:', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO) : '';
+        return (strlen($out)) ? $this->mod->doc->section('###LABEL_INFO###:', $out, 0, 1, tx_rnbase_mod_IModFunc::ICON_INFO) : '';
     }
 
     private function loadMatches($compId)
     {
-        $matchTable = \tx_rnbase::makeInstance(MatchTableBuilder::class);
+        $matchTable = tx_rnbase::makeInstance(MatchTableBuilder::class);
         $matchTable->setCompetitions($compId);
         $matchTable->setIgnoreDummy();
         $fields = $options = [];

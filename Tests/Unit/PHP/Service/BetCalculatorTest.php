@@ -3,7 +3,6 @@
 namespace Sys25\T3sportsbet\Tests\Service;
 
 use Sys25\RnBase\Testing\BaseTestCase;
-use Sys25\RnBase\Utility\Extensions;
 use Sys25\RnBase\Utility\Spyc;
 use Sys25\T3sportsbet\Model\Bet;
 use Sys25\T3sportsbet\Model\BetGame;
@@ -48,7 +47,7 @@ class BetCalculatorTest extends BaseTestCase
         // bet
         $bet = $this->getBet(2, 1);
         // srv
-        $calculator = \tx_rnbase::makeInstance(BetCalculator::class);
+        $calculator = tx_rnbase::makeInstance(BetCalculator::class);
         // Matches
         $matches = $this->getMatches();
 
@@ -84,7 +83,7 @@ class BetCalculatorTest extends BaseTestCase
         $betgame = $this->getBetgame(5, 0, 1, 1);
         $betgame2 = $this->getBetgame(5, 0, 1, 0);
         $betgame3 = $this->getBetgame(5, 2, 1, 0, 1);
-        $calculator = \tx_rnbase::makeInstance(BetCalculator::class);
+        $calculator = tx_rnbase::makeInstance(BetCalculator::class);
         $matches = $this->getMatches();
         $bet = $this->getBet(3, 1);
         $bet->setProperty('t3match', $matches['match_3_1_et']->getUid());
@@ -121,7 +120,7 @@ class BetCalculatorTest extends BaseTestCase
         // Ohne Tordiff testen
         $betgame = $this->getBetgame(5, 0, 1);
         $bet = $this->getBet(2, 1);
-        $calculator = \tx_rnbase::makeInstance(BetCalculator::class);
+        $calculator = tx_rnbase::makeInstance(BetCalculator::class);
         $matches = $this->getMatches();
 
         $bet->setProperty('t3match', $matches['match_1_0']->getUid());
@@ -144,7 +143,7 @@ class BetCalculatorTest extends BaseTestCase
     public function testGetGoals()
     {
         $betgame3 = $this->getBetgame(5, 2, 1, 0, 1);
-        $calculator = \tx_rnbase::makeInstance(BetCalculator::class);
+        $calculator = tx_rnbase::makeInstance(BetCalculator::class);
         $matches = $this->getMatches();
         list($goalsHome, $goalsGuest) = $calculator->getGoals($betgame3, $matches['match_7_6_ap']);
         $this->assertEquals('4:4', $goalsHome.':'.$goalsGuest, '7:6 n.E. (3:3, 4:4) Tipspiel (Unentschieden nach Elfm.) sollte 4:4 sein');
@@ -182,7 +181,7 @@ class BetCalculatorTest extends BaseTestCase
         foreach ($matches as $match) {
             // Die Spiele in das Instance-Array legen
             // FIXME: das geht so nicht mehr
-//            \tx_cfcleaguefe_models_match::addInstance($match);
+            //            \tx_cfcleaguefe_models_match::addInstance($match);
         }
         reset($matches);
 

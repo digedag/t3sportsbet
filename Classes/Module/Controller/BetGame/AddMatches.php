@@ -7,9 +7,11 @@ use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
-use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use Sys25\T3sportsbet\Model\BetSet;
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use tx_rnbase;
+use tx_rnbase_mod_IModFunc;
+use tx_rnbase_mod_IModule;
 
 /**
  * *************************************************************
@@ -42,7 +44,7 @@ use tx_rnbase;
 class AddMatches
 {
     /**
-     * @var \tx_rnbase_mod_IModule
+     * @var tx_rnbase_mod_IModule
      */
     private $mod;
 
@@ -90,7 +92,7 @@ class AddMatches
      */
     private function handleNoCompetitions($currBetSet)
     {
-        $out = $this->mod->getDoc()->section('Info:', $GLOBALS['LANG']->getLL('msg_no_competition_in_betgame'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+        $out = $this->mod->getDoc()->section('Info:', $GLOBALS['LANG']->getLL('msg_no_competition_in_betgame'), 0, 1, tx_rnbase_mod_IModFunc::ICON_WARN);
         $out .= $this->mod->getDoc()->spacer(10);
         $out .= $this->getFormTool()->form->getSoloField('tx_t3sportsbet_betgames', $currBetSet->getBetgame()->getProperty(), 'competition');
         $out .= $this->getFormTool()->createSubmit('updateBetgame', $GLOBALS['LANG']->getLL('btn_update'));
@@ -184,6 +186,6 @@ class AddMatches
             }
         }
 
-        return (strlen($out)) ? $this->mod->getDoc()->section('###LABEL_INFO###'.':', $out, 0, 1, IModFunc::ICON_INFO) : '';
+        return (strlen($out)) ? $this->mod->getDoc()->section('###LABEL_INFO###:', $out, 0, 1, IModFunc::ICON_INFO) : '';
     }
 }

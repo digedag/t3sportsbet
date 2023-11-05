@@ -2,10 +2,12 @@
 
 namespace Sys25\T3sportsbet\Model;
 
+use Exception;
 use Sys25\RnBase\Domain\Model\BaseModel;
 use Sys25\T3sportsbet\Utility\ServiceRegistry as BetServiceRegistry;
 use System25\T3sports\Model\Fixture;
 use System25\T3sports\Utility\ServiceRegistry;
+use tx_t3sportsbet_util_library;
 
 /***************************************************************
  *  Copyright notice
@@ -70,7 +72,7 @@ class BetSet extends BaseModel
             return 'FINISHED';
         }
         $state = 'OPEN';
-        $now = \tx_t3sportsbet_util_library::getNow();
+        $now = tx_t3sportsbet_util_library::getNow();
         $lock = $this->getBetgame()->getLockMinutes() * 60;
 
         $matchDate = $match->getProperty('date');
@@ -162,7 +164,7 @@ class BetSet extends BaseModel
     {
         $uid = intval($uid);
         if (!$uid) {
-            throw new \Exception('Invalid uid for betset');
+            throw new Exception('Invalid uid for betset');
         }
         if (!is_object(self::$instances[$uid])) {
             self::$instances[$uid] = new self($uid);

@@ -82,6 +82,6 @@ class ShowBets
         $out = $list['pager']."\n".$list['table'];
 
         return '<h2>###LABEL_BETLIST###</h2>'.$out;
-//        return $this->doc->section('###LABEL_BETLIST###'.':',$out,0,1,\tx_rnbase_mod_IModFunc::ICON_INFO);
+        //        return $this->doc->section('###LABEL_BETLIST###'.':',$out,0,1,\tx_rnbase_mod_IModFunc::ICON_INFO);
     }
 }

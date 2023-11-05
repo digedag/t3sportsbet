@@ -8,6 +8,7 @@ use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Misc;
 use Sys25\T3sportsbet\Model\BetGame;
 use Sys25\T3sportsbet\Model\BetSet;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
@@ -55,7 +56,7 @@ class Selector
         $this->MCONF['name'] = $module->getName(); // deprecated
         $this->modName = $module->getName();
         $this->module = $module;
-        $this->formTool = \tx_rnbase::makeInstance(ToolBox::class);
+        $this->formTool = tx_rnbase::makeInstance(ToolBox::class);
         $this->formTool->init($this->doc, $module);
         Misc::prepareTSFE();
     }

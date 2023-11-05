@@ -56,4 +56,3 @@ class tx_t3sportsbet_mod1_link_TeamBets implements LinkerInterface
         return $out;
     }
 }
-

@@ -25,6 +25,7 @@ namespace Sys25\T3sportsbet\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Exception;
 use Sys25\RnBase\Domain\Model\BaseModel;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
@@ -55,7 +56,7 @@ class BetGame extends BaseModel
     {
         $uid = (int) $uid;
         if (!$uid) {
-            throw new \Exception('Invalid uid for betgame');
+            throw new Exception('Invalid uid for betgame');
         }
         if (!is_object(self::$instances[$uid])) {
             self::$instances[$uid] = new self($uid);
