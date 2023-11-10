@@ -2,11 +2,21 @@
 
 namespace Sys25\T3sportsbet\Module\Controller\BetGame;
 
+use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\T3General;
+use Sys25\T3sportsbet\Model\BetSet;
+use Sys25\T3sportsbet\Module\Lister\MatchLister;
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
+use tx_rnbase;
+
 /**
  * *************************************************************
  * Copyright notice.
  *
- * (c) 2008-2019 Rene Nitzsche (rene@system25.de)
+ * (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -33,18 +43,18 @@ namespace Sys25\T3sportsbet\Module\Controller\BetGame;
 class AddMatches
 {
     /**
-     * @var \tx_rnbase_mod_IModule
+     * @var IModule
      */
     private $mod;
 
     /**
-     * @var \tx_t3sportsbet_models_betset
+     * @var BetSet
      */
     protected $currentRound;
 
     /**
-     * @param \tx_rnbase_mod_IModule $mod
-     * @param \tx_t3sportsbet_models_betset $currBetSet
+     * @param IModule $mod
+     * @param BetSet $currBetSet
      */
     public function __construct($mod, $currBetSet)
     {
@@ -55,14 +65,14 @@ class AddMatches
     /**
      * Ausführung des Requests.
      *
-     * @param \tx_t3sportsbet_models_betset $currBetSet
+     * @param BetSet $currBetSet
      *
      * @return string
      */
     public function show()
     {
         $currBetSet = $this->currentRound;
-        $out .= $this->handleAddCompetition();
+        $out = $this->handleAddCompetition();
         $competitions = $currBetSet->getBetgame()->getCompetitions();
         if (!count($competitions)) {
             $out .= $this->handleNoCompetitions($currBetSet);
@@ -77,11 +87,11 @@ class AddMatches
     /**
      * Sollte aufgerufen werden, wenn keine Wettberbe im Tipspiel zugeordnet sind.
      *
-     * @param \tx_t3sportsbet_models_betset $currBetSet
+     * @param BetSet $currBetSet
      */
     private function handleNoCompetitions($currBetSet)
     {
-        $out .= $this->mod->getDoc()->section('Info:', $GLOBALS['LANG']->getLL('msg_no_competition_in_betgame'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+        $out = $this->mod->getDoc()->section('Info:', $GLOBALS['LANG']->getLL('msg_no_competition_in_betgame'), 0, 1, IModFunc::ICON_WARN);
         $out .= $this->mod->getDoc()->spacer(10);
         $out .= $this->getFormTool()->form->getSoloField('tx_t3sportsbet_betgames', $currBetSet->getBetgame()->getProperty(), 'competition');
         $out .= $this->getFormTool()->createSubmit('updateBetgame', $GLOBALS['LANG']->getLL('btn_update'));
@@ -92,7 +102,7 @@ class AddMatches
     /**
      * Liefert das FormTool.
      *
-     * @return \tx_rnbase_util_FormTool
+     * @return ToolBox
      */
     private function getFormTool()
     {
@@ -102,7 +112,7 @@ class AddMatches
     /**
      * Shows a list of matches.
      *
-     * @param \tx_t3sportsbet_models_betset $currBetSet
+     * @param BetSet $currBetSet
      * @param array $competitions
      *
      * @return string
@@ -111,16 +121,16 @@ class AddMatches
     {
         $options = ['checkbox' => 1];
 
-        $srv = \tx_t3sportsbet_util_serviceRegistry::getBetService();
+        $srv = ServiceRegistry::getBetService();
         $matches = $srv->findMatchUids($currBetSet->getBetgame());
         foreach ($matches as $match) {
             $options['dontcheck'][$match['uid']] = $GLOBALS['LANG']->getLL('msg_match_already_joined');
         }
         $options['competitions'] = $competitions;
         $options['ignoreDummies'] = 1;
-        /* @var $searcher \tx_t3sportsbet_mod1_matchsearcher */
-        $searcher = \tx_rnbase::makeInstance(
-            'tx_t3sportsbet_mod1_matchsearcher',
+        /** @var MatchLister $searcher */
+        $searcher = tx_rnbase::makeInstance(
+            MatchLister::class,
             $this->mod,
             $currBetSet,
             $options
@@ -144,10 +154,10 @@ class AddMatches
      */
     private function handleAddCompetition()
     {
-        $buttonPressed = strlen(\Tx_Rnbase_Utility_T3General::_GP('updateBetgame')) > 0; // Wurde der Submit-Button gedrückt?
+        $buttonPressed = strlen(T3General::_GP('updateBetgame')) > 0; // Wurde der Submit-Button gedrückt?
         if ($buttonPressed) {
-            $data = \Tx_Rnbase_Utility_T3General::_GP('data');
-            $tce = \Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data, []);
+            $data = T3General::_GP('data');
+            $tce = Connection::getInstance()->getTCEmain($data, []);
             $tce->process_datamap();
         }
     }
@@ -155,26 +165,26 @@ class AddMatches
     /**
      * Add matches to a betset.
      *
-     * @param \tx_t3sportsbet_models_betset $currBetSet
+     * @param BetSet $currBetSet
      *
      * @return string
      */
     private function handleAddMatches($currBetSet)
     {
         $out = '';
-        $match2set = strlen(\Tx_Rnbase_Utility_T3General::_GP('match2betset')) > 0; // Wurde der Submit-Button gedrückt?
+        $match2set = strlen(T3General::_GP('match2betset')) > 0; // Wurde der Submit-Button gedrückt?
         if ($match2set) {
-            $matchUids = \Tx_Rnbase_Utility_T3General::_GP('checkEntry');
+            $matchUids = T3General::_GP('checkEntry');
             if (!is_array($matchUids) || !count($matchUids)) {
                 $out = $GLOBALS['LANG']->getLL('msg_no_match_selected').'<br/>';
             } else {
                 // Die Spiele setzen
-                $service = \tx_t3sportsbet_util_serviceRegistry::getBetService();
+                $service = ServiceRegistry::getBetService();
                 $cnt = $service->addMatchesTCE($currBetSet, $matchUids);
                 $out = $cnt.' '.$GLOBALS['LANG']->getLL('msg_matches_added');
             }
         }
 
-        return (strlen($out)) ? $this->mod->getDoc()->section('###LABEL_INFO###'.':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO) : '';
+        return (strlen($out)) ? $this->mod->getDoc()->section('###LABEL_INFO###:', $out, 0, 1, IModFunc::ICON_INFO) : '';
     }
 }

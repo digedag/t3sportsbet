@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" data="2023-11-10T14-25-56" product-name="zsb">
+		<header/>
+		<body>
+			<trans-unit id="error" xml:space="preserve">
+				<source>Error</source>
+				<target>Fehler</target>
+			</trans-unit>
+			<trans-unit id="error_nobetgame_defined" xml:space="preserve">
+				<source>No betgame defined in flexform or Typoscript!</source>
+				<target>Es wurde kein Tippspiel im Flexform oder Typoscript angegeben!</target>
+			</trans-unit>
+			<trans-unit id="error_nobetsets_defined" xml:space="preserve">
+				<source>No betsets found for betgame!</source>
+				<target>Es wurden keine Tipprunden für das Tippspiel gefunden!</target>
+			</trans-unit>
+			<trans-unit id="label_savebets" xml:space="preserve">
+				<source>Save bets</source>
+				<target>Tipps speichern</target>
+			</trans-unit>
+			<trans-unit id="label_rank" xml:space="preserve">
+				<source>Rank</source>
+				<target>Position</target>
+			</trans-unit>
+			<trans-unit id="label_name" xml:space="preserve">
+				<source>Name</source>
+				<target>Name</target>
+			</trans-unit>
+			<trans-unit id="label_city" xml:space="preserve">
+				<source>City</source>
+				<target>Wohnort</target>
+			</trans-unit>
+			<trans-unit id="label_points" xml:space="preserve">
+				<source>Points</source>
+				<target>Punkte</target>
+			</trans-unit>
+			<trans-unit id="label_avgpoints" xml:space="preserve">
+				<source>&amp;Oslash; Pts</source>
+				<target>&amp;Oslash;</target>
+			</trans-unit>
+			<trans-unit id="label_betcount" xml:space="preserve">
+				<source>Bets</source>
+				<target>Tipps</target>
+			</trans-unit>
+			<trans-unit id="label_page" xml:space="preserve">
+				<source>Page</source>
+				<target>Seite</target>
+			</trans-unit>
+			<trans-unit id="label_matchdate" xml:space="preserve">
+				<source>Date</source>
+				<target>Datum</target>
+			</trans-unit>
+			<trans-unit id="label_home" xml:space="preserve">
+				<source>Home</source>
+				<target>Heim</target>
+			</trans-unit>
+			<trans-unit id="label_guest" xml:space="preserve">
+				<source>Guest</source>
+				<target>Gast</target>
+			</trans-unit>
+			<trans-unit id="label_agegroup" xml:space="preserve">
+				<source>Age group</source>
+				<target>Altersklasse</target>
+			</trans-unit>
+			<trans-unit id="label_score" xml:space="preserve">
+				<source>Score</source>
+				<target>Resultat</target>
+			</trans-unit>
+			<trans-unit id="label_bet" xml:space="preserve">
+				<source>Bet</source>
+				<target>Tipp</target>
+			</trans-unit>
+			<trans-unit id="label_login" xml:space="preserve">
+				<source>Please login to make your bets!</source>
+				<target>Bitte melden Sie sich an, um einen Tipp abzugeben!</target>
+			</trans-unit>
+			<trans-unit id="label_trend" xml:space="preserve">
+				<source>Trend</source>
+				<target>Toto-Trend</target>
+			</trans-unit>
+			<trans-unit id="label_stats" xml:space="preserve">
+				<source>Statistics</source>
+				<target>Statistik</target>
+			</trans-unit>
+			<trans-unit id="label_betlistof" xml:space="preserve">
+				<source>Bets of:</source>
+				<target>Die Tipps von:</target>
+			</trans-unit>
+			<trans-unit id="label_tobescored" xml:space="preserve">
+				<source>To be scored</source>
+				<target>Auswertung folgt</target>
+			</trans-unit>
+			<trans-unit id="msg_no_betsets_found" xml:space="preserve">
+				<source>No betsets found in this view!</source>
+				<target>In dieser Ansicht wurden leider keine Spiele gefunden!</target>
+			</trans-unit>
+			<trans-unit id="label_bets_saved" xml:space="preserve">
+				<source>Bets successfully saved.</source>
+				<target>Die Tipps wurden erfolgreich gespeichert.</target>
+			</trans-unit>
+			<trans-unit id="label_changed_bets" xml:space="preserve">
+				<source>Changed bets</source>
+				<target>Veränderte Tips</target>
+			</trans-unit>
+			<trans-unit id="label_specialbet" xml:space="preserve">
+				<source>Special bet</source>
+				<target>Zusatz-Tipp</target>
+			</trans-unit>
+			<trans-unit id="label_nobetfound" xml:space="preserve">
+				<source>No bet found.</source>
+				<target>Es wurde noch kein Tipp abgegeben.</target>
+			</trans-unit>
+			<trans-unit id="label_possible_points_for_bet" xml:space="preserve">
+				<source>Possible points for bet</source>
+				<target>Mögliche Punkte für vorhandenen Tipp</target>
+			</trans-unit>
+			<trans-unit id="label_possible_points_for_newbet" xml:space="preserve">
+				<source>Possible points for new bet</source>
+				<target>Mögliche Punkte für neuen Tipp</target>
+			</trans-unit>
+			<trans-unit id="label_open_until" xml:space="preserve">
+				<source>Open until</source>
+				<target>Letzte Tippabgabe bis</target>
+			</trans-unit>
+			<trans-unit id="label_your_bet" xml:space="preserve">
+				<source>Your bet</source>
+				<target>Ihr Tipp</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

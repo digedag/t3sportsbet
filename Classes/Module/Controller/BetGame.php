@@ -2,13 +2,27 @@
 
 namespace Sys25\T3sportsbet\Module\Controller;
 
+use Exception;
+use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Backend\Module\BaseModFunc;
+use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Backend\Utility\Tables;
+use Sys25\RnBase\Configuration\ConfigurationInterface;
+use Sys25\RnBase\Frontend\Marker\FormatUtil;
+use Sys25\RnBase\Frontend\Marker\Templates;
+use Sys25\RnBase\Utility\Logger;
+use Sys25\T3sportsbet\Model\BetSet;
+use Sys25\T3sportsbet\Module\Handler\MatchMoveHandler;
 use Sys25\T3sportsbet\Module\Utility\AddCompetitionWizard;
+use Sys25\T3sportsbet\Utility\ServiceRegistry;
+use tx_rnbase;
 
 /**
  * *************************************************************
  * Copyright notice.
  *
- * (c) 2008-2020 Rene Nitzsche (rene@system25.de)
+ * (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -32,10 +46,11 @@ use Sys25\T3sportsbet\Module\Utility\AddCompetitionWizard;
 /**
  * Die Klasse ist die Einstiegsklasse für das Modul "Tippspiel".
  */
-class BetGame extends \tx_rnbase_mod_BaseModFunc
+class BetGame extends BaseModFunc
 {
     /** @var \Sys25\T3sportsbet\Module\Utility\Selector */
     private $selector;
+    public $betset;
 
     /**
      * Method getFuncId.
@@ -47,53 +62,55 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
         return 'funcbetgame';
     }
 
-    public function init(\tx_rnbase_mod_IModule $module, $conf)
+    public function init(IModule $module, $conf)
     {
         parent::init($module, $conf);
-        $GLOBALS['LANG']->includeLLFile('EXT:t3sportsbet/mod1/locallang.xml');
+        $GLOBALS['LANG']->includeLLFile('EXT:t3sportsbet/Resources/Private/Language/locallang_mod.xlf');
     }
 
     /**
      * @param string $template
-     * @param \tx_rnbase_configurations $configurations
-     * @param \tx_rnbase_util_FormatUtil $formatter
-     * @param \tx_rnbase_util_FormTool $formTool
+     * @param ConfigurationInterface $configurations
+     * @param FormatUtil $formatter
+     * @param ToolBox $formTool
      *
      * @return string
      */
     protected function getContent($template, &$configurations, &$formatter, $formTool)
     {
         global $LANG;
-        $this->selector = \tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Utility\Selector::class);
+        $this->selector = tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Utility\Selector::class);
         $this->selector->init($this->getModule()->getDoc(), $this->getModule());
 
+        $content = '';
         $selector = '';
         // Anzeige der vorhandenen Tipspiele
         $currentGame = $this->selector->showGameSelector($selector, $this->getModule()->getPid());
+
         if (!$currentGame) {
             $content .= $this->getModule()
                 ->getDoc()
-                ->section('Info:', $LANG->getLL('msg_no_game_in_page'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+                ->section('Info:', $LANG->getLL('msg_no_game_in_page'), 0, 1, IModFunc::ICON_WARN);
             $content .= '<p style="margin-top:5px; font-weight:bold;">'.$formTool->createNewLink('tx_t3sportsbet_betgames', $this->getModule()
                 ->getPid(), $LANG->getLL('msg_create_new_game')).'</p>';
 
             return $content;
         }
         $content = '';
-        $this->getModule()->selector = $selector;
+        $this->getModule()->setSelector($selector);
 
         $currentRound = $this->selector->showRoundSelector($selector, $this->getModule()->getPid(), $currentGame);
         if (!$currentRound) {
             /* @var $wizard AddCompetitionWizard */
-            $wizard = \tx_rnbase::makeInstance(AddCompetitionWizard::class);
+            $wizard = tx_rnbase::makeInstance(AddCompetitionWizard::class);
             $content .= $wizard->handleRequest($this->getModule(), $currentGame);
 
             return $content;
         }
-        $this->getModule()->selector = $selector;
+        $this->getModule()->setSelector($selector);
 
         // RequestHandler aufrufen.
-        $content .= \tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->handleRequest($this->getModule());
+        $content .= MatchMoveHandler::getInstance()->handleRequest($this->getModule());
 
         $menu = $formTool->showTabMenu($this->getModule()
             ->getPid(), 'bettools', $this->getModule()
@@ -112,35 +129,35 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
             $funcContent = '';
             switch ($menu['value']) {
                 case 0:
-                    $handler = \tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\ShowBetSet::class, $this->getModule(), $currentRound, $currentGame);
+                    $handler = tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\ShowBetSet::class, $this->getModule(), $currentRound, $currentGame);
                     $funcContent .= $handler->handleRequest();
                     $funcContent .= $handler->show();
 
                     break;
                 case 1:
-                    $handler = \tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\AddMatches::class, $this->getModule(), $currentRound);
+                    $handler = tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\AddMatches::class, $this->getModule(), $currentRound);
                     $funcContent .= $handler->show();
 
                     break;
                 case 2:
-                    $handler = \tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\AddTeamBets::class, $this->getModule(), $currentRound);
+                    $handler = tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\AddTeamBets::class, $this->getModule(), $currentRound);
                     $funcContent .= $handler->handleRequest();
                     $funcContent .= $handler->show();
 
                     break;
                 case 3:
-                    $handler = \tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\ShowBets::class, $this->getModule(), $currentRound);
+                    $handler = tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\ShowBets::class, $this->getModule(), $currentRound);
                     $funcContent .= $handler->show();
                     // $funcContent .= $this->showBets($currentRound);
                     break;
             }
             $funcContent .= $this->showInfobar($currentRound);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $msg = '<h2>FATAL ERROR: </h2><pre>';
             // $e->getMessage();
             $msg .= $e->__toString();
             $msg .= '</pre>';
-            \tx_rnbase_util_Logger::warn('Exception in BE module.', 't3sportsbet', [
+            Logger::warn('Exception in BE module.', 't3sportsbet', [
                 'Exception' => $e->getMessage(),
             ]);
             $content .= $msg;
@@ -151,8 +168,8 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
 
         $content .= $formTool->form->printNeededJSFunctions();
 
-        $modContent = \tx_rnbase_util_Templates::getSubpart($template, '###MAIN###');
-        $modContent = \tx_rnbase_util_Templates::substituteMarkerArrayCached($modContent, [
+        $modContent = Templates::getSubpart($template, '###MAIN###');
+        $modContent = Templates::substituteMarkerArrayCached($modContent, [
             '###CONTENT###' => $content,
         ]);
 
@@ -162,13 +179,13 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
     /**
      * Shows some information about current betset.
      *
-     * @param \tx_t3sportsbet_models_betset $currBetSet
+     * @param BetSet $currBetSet
      *
      * @return string
      */
-    protected function showInfoBar($currBetSet)
+    protected function showInfoBar(?BetSet $currBetSet)
     {
-        $srv = \tx_t3sportsbet_util_serviceRegistry::getBetService();
+        $srv = ServiceRegistry::getBetService();
         $dates = $srv->getBetsetDateRange($currBetSet);
         if (!$dates) {
             return '';
@@ -208,10 +225,10 @@ class BetGame extends \tx_rnbase_mod_BaseModFunc
             '###LABEL_BETSETINFO_BETCOUNT###',
             $srv->getBetSize($currBetSet),
         ];
-        // $out .= $this->doc->table($row, $this->getTableLayout());
-        /* @var $tables \Tx_Rnbase_Backend_Utility_Tables */
-        $tables = \tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
-        $out .= $tables->buildTable($row, $this->getInfoTableLayout());
+
+        /** @var $tables Tables */
+        $tables = tx_rnbase::makeInstance(Tables::class);
+        $out = $tables->buildTable($row, $this->getInfoTableLayout());
 
         return $out;
     }

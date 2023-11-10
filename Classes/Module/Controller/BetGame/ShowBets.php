@@ -2,10 +2,15 @@
 
 namespace Sys25\T3sportsbet\Module\Controller\BetGame;
 
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\T3sportsbet\Model\BetSet;
+use Sys25\T3sportsbet\Module\Lister\MatchBetLister;
+use tx_rnbase;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -33,20 +38,21 @@ class ShowBets
     protected $doc;
 
     /**
-     * @var \tx_rnbase_mod_IModule
+     * @var IModule
      */
     protected $module;
 
     /**
-     * @var \tx_t3sportsbet_models_betset
+     * @var BetSet
      */
     protected $currentRound;
+    private $formTool;
 
     /**
      * Verwaltet die Erstellung von Spielplänen von Ligen.
      *
-     * @param \tx_rnbase_mod_IModule $module
-     * @param \tx_t3sportsbet_models_betset $currentRound
+     * @param IModule $module
+     * @param BetSet $currentRound
      */
     public function __construct($module, $currentRound)
     {
@@ -71,12 +77,12 @@ class ShowBets
     public function show()
     {
         // Alle Tips für dieses Betset suchen
-        $lister = \tx_rnbase::makeInstance('tx_t3sportsbet_mod1_lister_MatchBet', $this->module, []);
+        $lister = tx_rnbase::makeInstance(MatchBetLister::class, $this->module, []);
         $lister->setBetSetUid($this->currentRound->getUid());
         $list = $lister->getResultList();
-        $out .= $list['pager']."\n".$list['table'];
+        $out = $list['pager']."\n".$list['table'];
 
         return '<h2>###LABEL_BETLIST###</h2>'.$out;
-//        return $this->doc->section('###LABEL_BETLIST###'.':',$out,0,1,\tx_rnbase_mod_IModFunc::ICON_INFO);
+        //        return $this->doc->section('###LABEL_BETLIST###'.':',$out,0,1,\tx_rnbase_mod_IModFunc::ICON_INFO);
     }
 }

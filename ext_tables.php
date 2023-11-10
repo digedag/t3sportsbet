@@ -1,6 +1,6 @@
 <?php
 
-if (!defined('TYPO3_MODE')) {
+if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
     exit('Access denied.');
 }
 
@@ -11,7 +11,7 @@ if (TYPO3_MODE == 'BE') {
     // //////////////////////////////
     $modName = 'web_CfcLeagueM1';
 
-    tx_rnbase_util_Extensions::insertModuleFunction(
+    \Sys25\RnBase\Utility\Extensions::insertModuleFunction(
         $modName,
         \Sys25\T3sportsbet\Module\Controller\BetGame::class,
         '',

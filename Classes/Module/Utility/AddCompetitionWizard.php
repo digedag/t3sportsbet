@@ -2,8 +2,12 @@
 
 namespace Sys25\T3sportsbet\Module\Utility;
 
+use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Repository\MatchRepository;
 use System25\T3sports\Utility\MatchTableBuilder;
+use tx_rnbase;
 
 /**
  * *************************************************************
@@ -35,20 +39,24 @@ use System25\T3sports\Utility\MatchTableBuilder;
  */
 class AddCompetitionWizard
 {
+    private $mod;
+    private $doc;
+    private $formTool;
+
     /**
      * Handle the wizard.
      *
-     * @param \tx_rnbase_mod_IModule $mod
-     * @param \tx_t3sportsbet_models_betgame $betgame
+     * @param IModule $mod
+     * @param BetGame $betgame
      *
      * @return string
      */
-    public function handleRequest(&$mod, $betgame)
+    public function handleRequest($mod, $betgame)
     {
         $this->mod = $mod;
         $this->doc = $mod->getDoc();
         $this->formTool = $mod->getFormTool();
-        $comp2set = strlen(\Tx_Rnbase_Utility_T3General::_GP('comp2betset')) > 0; // Wurde der Submit-Button gedrückt?
+        $comp2set = strlen(T3General::_GP('comp2betset')) > 0; // Wurde der Submit-Button gedrückt?
         $out = '';
         if ($comp2set) {
             $out .= $this->handleCompetition2Betgame($betgame);
@@ -62,20 +70,20 @@ class AddCompetitionWizard
     /**
      * Zeigt die Infoseite mit den möglichen Optionen.
      *
-     * @param \tx_t3sportsbet_models_betgame $betgame
+     * @param BetGame $betgame
      *
      * @return string
      */
     private function showInfoPage($betgame)
     {
-        $out .= $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_add_competition'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+        $out = $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_add_competition'), 0, 1, IModFunc::ICON_INFO);
         $out .= $this->doc->spacer(15);
 
         $comps = $betgame->getCompetitions();
         $options = [];
 
         if (!count($comps)) {
-            $out .= $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_no_competition_in_betgame'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+            $out .= $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_no_competition_in_betgame'), 0, 1, IModFunc::ICON_WARN);
             $options['title'] = '###LABEL_EDITBETGAME###';
             $out .= $this->formTool->createEditButton('tx_t3sportsbet_betgames', $betgame->getUid(), $options);
         } else {
@@ -85,7 +93,6 @@ class AddCompetitionWizard
             $out .= $this->formTool->createSubmit('comp2betset', '###LABEL_JOIN_COMPETITION###', $GLOBALS['LANG']->getLL('msg_join_competition'));
         }
         $out .= $this->doc->spacer(15);
-        // t3lib_div::debug($betgame->getCompetitions(), 'tx_t3sportsbet_mod1_addCompetitionWizard'); // TODO: remove me
 
         // $out .= $this->handleCompetition2Betgame($searcher->getCompetition());
         $params = [];
@@ -100,7 +107,7 @@ class AddCompetitionWizard
     /**
      * Erstellt aus dem aktuellen Wettbewerb die notwendigen Tiprunden.
      *
-     * @param \tx_t3sportsbet_models_betgame $betgame
+     * @param BetGame $betgame
      *
      * @return string
      */
@@ -110,7 +117,7 @@ class AddCompetitionWizard
         $compId = $menu['value'];
         $matches = $this->loadMatches($compId);
         if (!count($matches)) {
-            return $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_no_matchs_found'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+            return $this->doc->section('###LABEL_INFO###:', $GLOBALS['LANG']->getLL('msg_no_matchs_found'), 0, 1, IModFunc::ICON_WARN);
         }
 
         $lastRound = -1;
@@ -133,16 +140,16 @@ class AddCompetitionWizard
             $data['tx_t3sportsbet_betsets']['NEW'.$key]['round'] = $key;
             $data['tx_t3sportsbet_betsets']['NEW'.$key]['round_name'] = $key.' ###LABEL_ROUNDNAMEDEFAULT###';
         }
-        $tce = \Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
+        $tce = Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
-        $out .= $GLOBALS['LANG']->getLL('msg_add_competition_finished');
+        $out = $GLOBALS['LANG']->getLL('msg_add_competition_finished');
 
-        return (strlen($out)) ? $this->mod->doc->section('###LABEL_INFO###:', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO) : '';
+        return (strlen($out)) ? $this->mod->doc->section('###LABEL_INFO###:', $out, 0, 1, IModFunc::ICON_INFO) : '';
     }
 
     private function loadMatches($compId)
     {
-        $matchTable = \tx_rnbase::makeInstance(MatchTableBuilder::class);
+        $matchTable = tx_rnbase::makeInstance(MatchTableBuilder::class);
         $matchTable->setCompetitions($compId);
         $matchTable->setIgnoreDummy();
         $fields = $options = [];

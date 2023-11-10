@@ -24,30 +24,20 @@
 		"typo3-ter/t3sportsbet" : "self.version"
 	},
 	"require" : {
-		"typo3/cms-core": "^8.7 || ^9.5.17 || ^10.4.3 || ^11.5.0",
-		"digedag/cfc-league" : "^1.10.0",
-		"digedag/cfc-league-fe" : "^1.10.0",
+		"typo3/cms-core": "^8.7 || ^9.5.17 || ^10.4.3 || ^11.5.0 || ^12.4",
+		"digedag/cfc-league" : "^1.11.0",
+		"digedag/cfc-league-fe" : "^1.11.0",
 		"digedag/rn-base" : "^1.16"
 	},
 	"require-dev": {
-		"friendsofphp/php-cs-fixer": "^3.1.0",
-		"mikey179/vfsstream": "^1.4 || ^1.6",
-		"nimut/testing-framework": "^4.0 || ^5.0 || ^6.0",
+		"friendsofphp/php-cs-fixer": "^3.0",
+		"mikey179/vfsstream": "^1.6",
+		"typo3/testing-framework": "^2.0 || ^3.0 || ^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0",
 		"phpcompatibility/php-compatibility": "^9.3.5",
-		"phpunit/phpunit": "^6.5.14 || ^7.5.20 || ^8.0"
+		"phpunit/phpunit": "^6.5.14 || ^7.5.20 || ^8.0 || ^9.0"
 	},
 	"autoload" : {
-		"classmap" : [
-			"actions/",
-			"hooks/",
-			"mod1/",
-			"models/",
-			"search/",
-			"services/",
-			"util/",
-			"views/"
-		],
-        "psr-4": {"Sys25\\T3sportsbet\\" : "Classes"}
+		"psr-4": {"Sys25\\T3sportsbet\\" : "Classes"}
 	},
 	"autoload-dev": {
 		"psr-4": {
@@ -69,21 +59,26 @@
  		}
 	},
 	"scripts": {
-		"test:phplint": "find *.php Classes Configuration Tests hooks mod1 models search services util views -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l",
+		"test:phplint": "find *.php Classes Configuration Tests -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l",
 		"test:phpcompat": ".Build/bin/phpcs --ignore=.Build/*,Resources/* -p . --standard=.Build/vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion ",
 		"post-autoload-dump": [
 			"mkdir -p .Build/Web/typo3conf/ext/",
 			"[ -L .Build/Web/typo3conf/ext/t3sportsbet ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/t3sportsbet"
 		]
 	},
-    "extra": {
-        "typo3/cms": {
-            "cms-package-dir": "{$vendor-dir}/typo3/cms",
-            "extension-key": "t3sportsbet",
-            "web-dir": ".Build/Web"
-        },
-        "branch-alias": {
-            "dev-master": "0.x-dev"
-        }
-    }
+	"extra": {
+		"typo3/cms": {
+			"cms-package-dir": "{$vendor-dir}/typo3/cms",
+			"extension-key": "t3sportsbet",
+			"web-dir": ".Build/Web"
+		},
+		"typo3/class-alias-loader": {
+			"class-alias-maps": [
+				"Migrations/Code/ClassAliasMap.php"
+			]
+		},
+		"branch-alias": {
+			"dev-master": "0.x-dev"
+		}
+	}
 }

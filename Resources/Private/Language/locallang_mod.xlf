@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" data="2023-11-10T14-18-43" product-name="zsb">
+        <header/>
+        <body>
+            <trans-unit id="msg_no_game_in_page" xml:space="preserve">
+                <source>No game found in page.</source>
+            </trans-unit>
+            <trans-unit id="msg_no_betset_found" xml:space="preserve">
+                <source>No betset found.</source>
+            </trans-unit>
+            <trans-unit id="label_add_matches" xml:space="preserve">
+                <source>Add matches to betset</source>
+            </trans-unit>
+            <trans-unit id="label_hide_add_matches" xml:space="preserve">
+                <source>Hide match selection</source>
+            </trans-unit>
+            <trans-unit id="label_change_state" xml:space="preserve">
+                <source>Change state</source>
+            </trans-unit>
+            <trans-unit id="label_create_betset" xml:space="preserve">
+                <source>Create a new betset</source>
+            </trans-unit>
+            <trans-unit id="label_info" xml:space="preserve">
+                <source>Info</source>
+            </trans-unit>
+            <trans-unit id="label_error" xml:space="preserve">
+                <source>Error</source>
+            </trans-unit>
+            <trans-unit id="label_close" xml:space="preserve">
+                <source>Close</source>
+            </trans-unit>
+            <trans-unit id="label_matchlist" xml:space="preserve">
+                <source>List of matches</source>
+            </trans-unit>
+            <trans-unit id="label_save" xml:space="preserve">
+                <source>Save</source>
+            </trans-unit>
+            <trans-unit id="label_edit" xml:space="preserve">
+                <source>Edit</source>
+            </trans-unit>
+            <trans-unit id="label_analyzebets" xml:space="preserve">
+                <source>Analyze bets</source>
+            </trans-unit>
+            <trans-unit id="label_betlist" xml:space="preserve">
+                <source>List of bets</source>
+            </trans-unit>
+            <trans-unit id="label_betcount" xml:space="preserve">
+                <source>Number of bets found</source>
+            </trans-unit>
+            <trans-unit id="label_uid" xml:space="preserve">
+                <source>UID</source>
+            </trans-unit>
+            <trans-unit id="label_tstamp" xml:space="preserve">
+                <source>Last update</source>
+            </trans-unit>
+            <trans-unit id="label_match" xml:space="preserve">
+                <source>Match</source>
+            </trans-unit>
+            <trans-unit id="label_group" xml:space="preserve">
+                <source>Group</source>
+            </trans-unit>
+            <trans-unit id="label_feuser" xml:space="preserve">
+                <source>User</source>
+            </trans-unit>
+            <trans-unit id="label_bet" xml:space="preserve">
+                <source>Bet</source>
+            </trans-unit>
+            <trans-unit id="label_points" xml:space="preserve">
+                <source>Points</source>
+            </trans-unit>
+            <trans-unit id="label_openuntil" xml:space="preserve">
+                <source>Open until</source>
+            </trans-unit>
+            <trans-unit id="label_betsetinfo" xml:space="preserve">
+                <source>Information about current betset</source>
+            </trans-unit>
+            <trans-unit id="label_betsetinfo_highdate" xml:space="preserve">
+                <source>Last kickoff date</source>
+            </trans-unit>
+            <trans-unit id="label_betsetinfo_lowdate" xml:space="preserve">
+                <source>First kickoff date</source>
+            </trans-unit>
+            <trans-unit id="label_betsetinfo_nextdate" xml:space="preserve">
+                <source>Next kickoff date</source>
+            </trans-unit>
+            <trans-unit id="label_betsetinfo_matchcount" xml:space="preserve">
+                <source>Number of selected matches</source>
+            </trans-unit>
+            <trans-unit id="label_betsetinfo_usercount" xml:space="preserve">
+                <source>Number of users with bets</source>
+            </trans-unit>
+            <trans-unit id="label_betsetinfo_betcount" xml:space="preserve">
+                <source>Number of bets</source>
+            </trans-unit>
+            <trans-unit id="tx_t3sportsbet_module.betStatus_0" xml:space="preserve">
+                <source>Prepare</source>
+            </trans-unit>
+            <trans-unit id="tx_t3sportsbet_module.betStatus_1" xml:space="preserve">
+                <source>Open</source>
+            </trans-unit>
+            <trans-unit id="tx_t3sportsbet_module.betStatus_2" xml:space="preserve">
+                <source>Closed</source>
+            </trans-unit>
+            <trans-unit id="label_showbets" xml:space="preserve">
+                <source>Show bets</source>
+            </trans-unit>
+            <trans-unit id="label_result" xml:space="preserve">
+                <source>Score</source>
+            </trans-unit>
+            <trans-unit id="label_resetbets" xml:space="preserve">
+                <source>Reset bets</source>
+            </trans-unit>
+            <trans-unit id="msg_resetbets" xml:space="preserve">
+                <source>Do you really want to reset these bets?</source>
+            </trans-unit>
+            <trans-unit id="label_join_matches" xml:space="preserve">
+                <source>Join matches</source>
+            </trans-unit>
+            <trans-unit id="msg_join_matches" xml:space="preserve">
+                <source>Do you really want to add these matches?</source>
+            </trans-unit>
+            <trans-unit id="label_editbetgame" xml:space="preserve">
+                <source>Edit betgame</source>
+            </trans-unit>
+            <trans-unit id="label_roundnamedefault" xml:space="preserve">
+                <source>. round</source>
+            </trans-unit>
+            <trans-unit id="label_paste_match" xml:space="preserve">
+                <source>Paste selected match %s to current betset</source>
+            </trans-unit>
+            <trans-unit id="label_msg_paste_match" xml:space="preserve">
+                <source>Do you really want to paste the currently selected match to this betset?</source>
+            </trans-unit>
+            <trans-unit id="label_msg_matchmoved" xml:space="preserve">
+                <source>Match successfully moved to new betset.</source>
+            </trans-unit>
+            <trans-unit id="label_btn_newteambet" xml:space="preserve">
+                <source>Create new teambet</source>
+            </trans-unit>
+            <trans-unit id="label_possiblepoints" xml:space="preserve">
+                <source>Possible points</source>
+            </trans-unit>
+            <trans-unit id="label_team" xml:space="preserve">
+                <source>Team</source>
+            </trans-unit>
+            <trans-unit id="label_finished" xml:space="preserve">
+                <source>Finished</source>
+            </trans-unit>
+            <trans-unit id="label_yes" xml:space="preserve">
+                <source>Yes</source>
+            </trans-unit>
+            <trans-unit id="label_no" xml:space="preserve">
+                <source>No</source>
+            </trans-unit>
+            <trans-unit id="label_join_competition" xml:space="preserve">
+                <source>Create betgame from competition</source>
+            </trans-unit>
+            <trans-unit id="msg_add_competition" xml:space="preserve">
+                <source>At this point you can add a complete competition to this betgame.
+			There will be a new betset created for each round. Alternatively you can create individual betsets 
+			by manually selecting matches to bet for.</source>
+            </trans-unit>
+            <trans-unit id="msg_join_competition" xml:space="preserve">
+                <source>Do you really want to add the complete competition to current betgame? There will be a new betset created for each round.</source>
+            </trans-unit>
+            <trans-unit id="msg_add_competition_finished" xml:space="preserve">
+                <source>All betsets were successfully created.</source>
+            </trans-unit>
+            <trans-unit id="msg_no_matchs_found" xml:space="preserve">
+                <source>Current competition contains no matches.</source>
+            </trans-unit>
+            <trans-unit id="msg_betset_saved" xml:space="preserve">
+                <source>Betset was saved.</source>
+            </trans-unit>
+            <trans-unit id="tab_control" xml:space="preserve">
+                <source>Overview</source>
+            </trans-unit>
+            <trans-unit id="tab_addmatches" xml:space="preserve">
+                <source>Add matches</source>
+            </trans-unit>
+            <trans-unit id="tab_addteambets" xml:space="preserve">
+                <source>Manage teambets</source>
+            </trans-unit>
+            <trans-unit id="tab_bets" xml:space="preserve">
+                <source>Show bets</source>
+            </trans-unit>
+            <trans-unit id="label_question" xml:space="preserve">
+                <source>Question</source>
+            </trans-unit>
+            <trans-unit id="msg_no_competition_in_betgame" xml:space="preserve">
+                <source>No competition in betgame found. You have to add one or more competitions in your betgame to enable this function.</source>
+            </trans-unit>
+            <trans-unit id="msg_no_matches_in_betset" xml:space="preserve">
+                <source>No matches in betset found.</source>
+            </trans-unit>
+            <trans-unit id="msg_no_bets_found" xml:space="preserve">
+                <source>No bets found.</source>
+            </trans-unit>
+            <trans-unit id="msg_no_round_in_competition" xml:space="preserve">
+                <source>No round in competition found.</source>
+            </trans-unit>
+            <trans-unit id="msg_match_already_joined" xml:space="preserve">
+                <source>Match already joined in betset.</source>
+            </trans-unit>
+            <trans-unit id="msg_found_match" xml:space="preserve">
+                <source>match found</source>
+            </trans-unit>
+            <trans-unit id="msg_found_matches" xml:space="preserve">
+                <source>matches found</source>
+            </trans-unit>
+            <trans-unit id="msg_no_match_selected" xml:space="preserve">
+                <source>No match selected.</source>
+            </trans-unit>
+            <trans-unit id="msg_matches_added" xml:space="preserve">
+                <source>matches added to betset.</source>
+            </trans-unit>
+            <trans-unit id="msg_bets_finished" xml:space="preserve">
+                <source>Number of finished bets</source>
+            </trans-unit>
+            <trans-unit id="msg_create_new_game" xml:space="preserve">
+                <source>Create a new bet game at this page now!</source>
+            </trans-unit>
+            <trans-unit id="label_msg_no_items_found" xml:space="preserve">
+                <source>No items found.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

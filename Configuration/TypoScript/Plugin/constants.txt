@@ -2,11 +2,11 @@
 
 plugin.tx_t3sportsbet_main {
   # cat=T3sportsbet (Templates)/betlist; type=string;label=HTML Template for bet list
-  betlistTemplate = EXT:t3sportsbet/templates/betlist.html
+  betlistTemplate = EXT:t3sportsbet/Resources/Private/Templates/Html/betlist.html
   # cat=T3sportsbet (Templates)/highscore; type=string;label=HTML Template for highscore list
-  highscoreTemplate = EXT:t3sportsbet/templates/highscore.html
+  highscoreTemplate = EXT:t3sportsbet/Resources/Private/Templates/Html/highscore.html
   # cat=T3sportsbet (Templates)/scope; type=string;label=HTML Template for scope selection
-  scopeTemplate = EXT:t3sportsbet/templates/scope.html
+  scopeTemplate = EXT:t3sportsbet/Resources/Private/Templates/Html/scope.html
 
   # cat=T3sportsbet (pages)/userpage; type=int+;label=PID of page to show finished bets of a feuser
   userbetspage = 0
