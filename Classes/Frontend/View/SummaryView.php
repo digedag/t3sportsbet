@@ -32,7 +32,7 @@ use Sys25\RnBase\Frontend\View\Marker\BaseView;
 /**
  * Viewklasse für die Darstellung von Nutzerinformationen aus der DB.
  */
-class tx_t3sportsbet_views_Summary extends BaseView
+class SummaryView extends BaseView
 {
     /**
      * @param string $template
