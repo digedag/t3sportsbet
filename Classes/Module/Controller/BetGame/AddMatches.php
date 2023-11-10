@@ -11,8 +11,6 @@ use Sys25\T3sportsbet\Model\BetSet;
 use Sys25\T3sportsbet\Module\Lister\MatchLister;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use tx_rnbase;
-use tx_rnbase_mod_IModFunc;
-use tx_rnbase_mod_IModule;
 
 /**
  * *************************************************************

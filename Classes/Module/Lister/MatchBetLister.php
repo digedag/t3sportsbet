@@ -35,13 +35,14 @@ use Sys25\T3sportsbet\Module\Decorator\BetDecorator;
 use Sys25\T3sportsbet\Module\Decorator\StaticBetDecorator;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use tx_rnbase;
+use tx_rnbase_mod_IModule;
 
 /**
  * Search match bets from database.
  */
 class MatchBetLister
 {
-    /** @var \tx_rnbase_mod_IModule */
+    /** @var tx_rnbase_mod_IModule */
     private $mod;
 
     private $data;

@@ -1,6 +1,5 @@
 <?php
 
-
 if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
     exit('Access denied.');
 }
@@ -16,8 +15,8 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['search_Team_getTableMappin
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['search_Team_getJoins_hook'][] = \Sys25\T3sportsbet\Hook\SearchHook::class.'->getJoinsTeam';
 
 // Hook for feuser search
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rn_base']['search_FeUser_getTableMapping_hook'][] = \Sys25\T3sportsbet\Hook\SearchFeuserHook::class . '->getTableMapping';
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rn_base']['search_FeUser_getJoins_hook'][] = \Sys25\T3sportsbet\Hook\SearchFeuserHook::class . '->getJoins';
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rn_base']['search_FeUser_getTableMapping_hook'][] = \Sys25\T3sportsbet\Hook\SearchFeuserHook::class.'->getTableMapping';
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rn_base']['search_FeUser_getJoins_hook'][] = \Sys25\T3sportsbet\Hook\SearchFeuserHook::class.'->getJoins';
 
 // Hook for team marker
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['teamMarker_initRecord'][] = \Sys25\T3sportsbet\Hook\MarkerHook::class.'->initTeam';

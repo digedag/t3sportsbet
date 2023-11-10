@@ -31,7 +31,6 @@ use Sys25\RnBase\Utility\Misc;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\T3sportsbet\Model\BetGame;
 use Sys25\T3sportsbet\Model\BetSet;
-use Sys25\T3sportsbet\Utility\ServiceRegistry;
 
 /**
  * Auswahl des Scopes im FE bereitstellen.

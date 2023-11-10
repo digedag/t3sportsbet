@@ -7,7 +7,6 @@ use Sys25\RnBase\Domain\Repository\FeUserRepository;
 use Sys25\RnBase\Frontend\Marker\BaseMarker;
 use Sys25\RnBase\Frontend\Marker\FormatUtil;
 use Sys25\RnBase\Frontend\Marker\Templates;
-use Sys25\T3sportsbet\Frontend\Marker\BetMarker;
 use Sys25\T3sportsbet\Model\Bet;
 use Sys25\T3sportsbet\Model\BetSet;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;

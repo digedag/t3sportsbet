@@ -8,7 +8,6 @@ use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Repository\MatchRepository;
 use System25\T3sports\Utility\MatchTableBuilder;
 use tx_rnbase;
-use tx_rnbase_mod_IModFunc;
 
 /**
  * *************************************************************
@@ -43,6 +42,7 @@ class AddCompetitionWizard
     private $mod;
     private $doc;
     private $formTool;
+
     /**
      * Handle the wizard.
      *
