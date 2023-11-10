@@ -38,11 +38,9 @@
 	},
 	"autoload" : {
 		"classmap" : [
-			"actions/",
 			"hooks/",
 			"mod1/",
-			"util/",
-			"views/"
+			"util/"
 		],
         "psr-4": {"Sys25\\T3sportsbet\\" : "Classes"}
 	},
@@ -73,14 +71,19 @@
 			"[ -L .Build/Web/typo3conf/ext/t3sportsbet ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/t3sportsbet"
 		]
 	},
-    "extra": {
-        "typo3/cms": {
-            "cms-package-dir": "{$vendor-dir}/typo3/cms",
-            "extension-key": "t3sportsbet",
-            "web-dir": ".Build/Web"
-        },
-        "branch-alias": {
-            "dev-master": "0.x-dev"
-        }
-    }
+	"extra": {
+		"typo3/cms": {
+			"cms-package-dir": "{$vendor-dir}/typo3/cms",
+			"extension-key": "t3sportsbet",
+			"web-dir": ".Build/Web"
+		},
+		"typo3/class-alias-loader": {
+			"class-alias-maps": [
+				"Migrations/Code/ClassAliasMap.php"
+			]
+		},
+		"branch-alias": {
+			"dev-master": "0.x-dev"
+		}
+	}
 }

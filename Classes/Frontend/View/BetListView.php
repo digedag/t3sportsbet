@@ -1,9 +1,18 @@
 <?php
 
+namespace Sys25\T3sportsbet\Frontend\View;
+
+use Sys25\RnBase\Frontend\Marker\BaseMarker;
+use Sys25\RnBase\Frontend\Marker\ListBuilder;
+use Sys25\RnBase\Frontend\Marker\Templates;
+use Sys25\RnBase\Frontend\Request\RequestInterface;
+use Sys25\RnBase\Frontend\View\ContextInterface;
+use tx_rnbase;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,23 +31,22 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_t3sportsbet_util_FeUserMarker');
 
 /**
  * Viewklasse für die Darstellung von Tipplisten.
  */
-class tx_t3sportsbet_views_BetList extends \Sys25\RnBase\Frontend\View\Marker\BaseView
+class BetListView extends \Sys25\RnBase\Frontend\View\Marker\BaseView
 {
     /**
      * Erstellt die Ausgabe für die Liste der Tiprunden.
      *
      * @param string $template
-     * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
+     * @param RequestInterface $request
      * @param tx_rnbase_util_FormatUtil $formatter
      *
      * @return string
      */
-    protected function createOutput($template, Sys25\RnBase\Frontend\Request\RequestInterface $request, $formatter)
+    protected function createOutput($template, RequestInterface $request, $formatter)
     {
         $viewData = $request->getViewContext();
         // Wir holen die Daten von der Action ab
@@ -79,7 +87,7 @@ class tx_t3sportsbet_views_BetList extends \Sys25\RnBase\Frontend\View\Marker\Ba
 
         $betsets = $viewData->offsetGet('rounds');
         if (count($betsets)) {
-            $listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
+            $listBuilder = tx_rnbase::makeInstance(ListBuilder::class);
             $template = $listBuilder->render($betsets, $viewData, $template, 'tx_t3sportsbet_util_BetSetMarker', 'betlist.betset.', 'BETSET', $formatter, $params);
             // $markerArray['###ACTION_URI###'] = $this->createPageUri($configurations);
             $data['ACTION_URI'] = $this->createPageUri($request);
@@ -103,8 +111,8 @@ class tx_t3sportsbet_views_BetList extends \Sys25\RnBase\Frontend\View\Marker\Ba
         }
 
         $markerArray = $formatter->getItemMarkerArrayWrapped($data, 'betlist.');
-        tx_rnbase_util_BaseMarker::callModules($template, $markerArray, $subpartArray, $wrappedSubpartArray, $params, $formatter);
-        $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
+        BaseMarker::callModules($template, $markerArray, $subpartArray, $wrappedSubpartArray, $params, $formatter);
+        $out = Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
 
         return $out;
     }
@@ -112,7 +120,7 @@ class tx_t3sportsbet_views_BetList extends \Sys25\RnBase\Frontend\View\Marker\Ba
     /**
      * @param tx_rnbase_configurations $configurations
      */
-    protected function createPageUri(Sys25\RnBase\Frontend\Request\RequestInterface $request, $params = [])
+    protected function createPageUri(RequestInterface $request, $params = [])
     {
         $configurations = $request->getConfigurations();
         $link = $configurations->createLink();
@@ -132,7 +140,7 @@ class tx_t3sportsbet_views_BetList extends \Sys25\RnBase\Frontend\View\Marker\Ba
             // Die Betsets liegen in einem Hash, sie müssen aber in ein einfaches Array
             $betsets = array_values($betsets);
         }
-        $listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
+        $listBuilder = tx_rnbase::makeInstance(ListBuilder::class);
         $template = $listBuilder->render($betsets, $viewData, $template, 'tx_t3sportsbet_util_BetSetMarker', $confId.'selection.', $markerName.'_SELECTION', $formatter, [
             'currItem' => $currItem,
         ]);
@@ -147,7 +155,7 @@ class tx_t3sportsbet_views_BetList extends \Sys25\RnBase\Frontend\View\Marker\Ba
      *
      * @return string
      */
-    protected function getMainSubpart(Sys25\RnBase\Frontend\View\ContextInterface $viewData)
+    protected function getMainSubpart(ContextInterface $viewData)
     {
         return '###BETLIST###';
     }

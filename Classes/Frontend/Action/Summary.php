@@ -1,8 +1,13 @@
 <?php
+
+namespace Sys25\T3sportsbet\Frontend\Action;
+
+use Sys25\RnBase\Frontend\Request\RequestInterface;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,36 +27,30 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Viewklasse für die Darstellung von Nutzerinformationen aus der DB.
- */
-class tx_t3sportsbet_views_Summary extends tx_rnbase_view_Base
+class Summary extends \Sys25\RnBase\Frontend\Controller\AbstractAction
 {
     /**
-     * @param string $template
-     * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
-     * @param tx_rnbase_util_FormatUtil $formatter
+     * @param RequestInterface $request
      *
-     * @return string
+     * @return string error msg or null
      */
-    protected function createOutput($template, Sys25\RnBase\Frontend\Request\RequestInterface $request, $formatter)
+    protected function handleRequest(RequestInterface $request)
     {
-        // Wir holen die Daten von der Action ab
-        $data = &$request->getViewContext()->offsetGet('data');
-        $out = $data;
+        // Über die viewdata können wir Daten in den View transferieren
+        $request->getViewContext()->offsetSet('data', 'test');
 
-        return $out;
+        // Wenn wir hier direkt etwas zurückgeben, wird der View nicht
+        // aufgerufen. Eher für Abbruch im Fehlerfall gedacht.
+        return null;
     }
 
-    /**
-     * Subpart der im HTML-Template geladen werden soll.
-     * Dieser wird der Methode
-     * createOutput automatisch als $template übergeben.
-     *
-     * @return string
-     */
-    protected function getMainSubpart(Sys25\RnBase\Frontend\View\ContextInterface $viewData)
+    protected function getTemplateName()
     {
-        return '###SUMMARY###';
+        return 'summary';
+    }
+
+    protected function getViewClassName()
+    {
+        return 'tx_t3sportsbet_views_Summary';
     }
 }

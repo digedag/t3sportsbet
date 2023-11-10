@@ -1,14 +1,19 @@
 <?php
 
+namespace Sys25\T3sportsbet\Frontend\Action;
+
 use Sys25\RnBase\Domain\Repository\FeUserRepository;
 use Sys25\RnBase\Frontend\Request\RequestInterface;
 use Sys25\RnBase\Utility\PageBrowser;
+use Sys25\T3sportsbet\Frontend\View\HighScoreView;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
+use tx_rnbase;
+use tx_t3sportsbet_util_ScopeController as ScopeController;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -31,7 +36,7 @@ use Sys25\T3sportsbet\Utility\ServiceRegistry;
 /**
  * Der View zeigt die Bestenliste an.
  */
-class tx_t3sportsbet_actions_HighScore extends \Sys25\RnBase\Frontend\Controller\AbstractAction
+class HighScore extends \Sys25\RnBase\Frontend\Controller\AbstractAction
 {
     private $feuserRepo;
 
@@ -50,8 +55,8 @@ class tx_t3sportsbet_actions_HighScore extends \Sys25\RnBase\Frontend\Controller
         $parameters = $request->getParameters();
         $configurations = $request->getConfigurations();
         // Mit den Betsets kann man Zwischenauswertungen machen
-        $scopeArr = tx_t3sportsbet_util_ScopeController::handleCurrentScope($request, []);
-        $betgames = tx_t3sportsbet_util_ScopeController::getBetgamesFromScope($scopeArr['BETGAME_UIDS']);
+        $scopeArr = ScopeController::handleCurrentScope($request, []);
+        $betgames = ScopeController::getBetgamesFromScope($scopeArr['BETGAME_UIDS']);
         $betsetUids = $scopeArr['BETSET_UIDS'];
         // Um etwas zu zeigen, benötigen wir Betset-Ids
         if (!$betsetUids) {
@@ -106,6 +111,6 @@ class tx_t3sportsbet_actions_HighScore extends \Sys25\RnBase\Frontend\Controller
 
     protected function getViewClassName()
     {
-        return 'tx_t3sportsbet_views_HighScore';
+        return HighScoreView::class;
     }
 }

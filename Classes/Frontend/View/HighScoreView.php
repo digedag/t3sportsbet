@@ -1,5 +1,7 @@
 <?php
 
+namespace Sys25\T3sportsbet\Frontend\View;
+
 use Sys25\RnBase\Domain\Model\FeUser;
 use Sys25\RnBase\Domain\Repository\FeUserRepository;
 use Sys25\RnBase\Frontend\Marker\BaseMarker;
@@ -8,6 +10,7 @@ use Sys25\RnBase\Frontend\Marker\Templates;
 use Sys25\RnBase\Frontend\Request\RequestInterface;
 use Sys25\RnBase\Frontend\View\ContextInterface;
 use Sys25\RnBase\Frontend\View\Marker\BaseView;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
@@ -35,7 +38,7 @@ use Sys25\RnBase\Frontend\View\Marker\BaseView;
 /**
  * Viewklasse für die Darstellung der Bestenliste.
  */
-class tx_t3sportsbet_views_HighScore extends BaseView
+class HighScoreView extends BaseView
 {
     private $feuserRepo;
 

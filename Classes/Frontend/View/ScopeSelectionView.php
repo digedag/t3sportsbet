@@ -1,8 +1,18 @@
 <?php
+
+namespace Sys25\T3sportsbet\Frontend\View;
+
+use Sys25\RnBase\Frontend\Marker\BaseMarker;
+use Sys25\RnBase\Frontend\Marker\ListBuilder;
+use Sys25\RnBase\Frontend\Marker\Templates;
+use Sys25\RnBase\Frontend\Request\RequestInterface;
+use Sys25\RnBase\Frontend\View\ContextInterface;
+use tx_rnbase;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,22 +31,20 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_BaseMarker');
-tx_rnbase::load('tx_rnbase_util_ListBuilder');
 
 /**
  * Viewklasse für die Darstellung der Bestenliste.
  */
-class tx_t3sportsbet_views_ScopeSelection extends \Sys25\RnBase\Frontend\View\Marker\BaseView
+class ScopeSelectionView extends \Sys25\RnBase\Frontend\View\Marker\BaseView
 {
     /**
      * @param string $template
-     * @param \Sys25\RnBase\Frontend\Request\RequestInterface $request
+     * @param RequestInterface $request
      * @param tx_rnbase_util_FormatUtil $formatter
      *
      * @return string
      */
-    protected function createOutput($template, Sys25\RnBase\Frontend\Request\RequestInterface $request, $formatter)
+    protected function createOutput($template, RequestInterface $request, $formatter)
     {
         $viewData = $request->getViewContext();
         // Wenn Selectbox für Tiprunde gezeigt werden soll, dann Abschnitt erstellen
@@ -46,8 +54,8 @@ class tx_t3sportsbet_views_ScopeSelection extends \Sys25\RnBase\Frontend\View\Ma
         $params = ['confid' => $request->getConfId()];
         $markerArray = $subpartArray = $wrappedSubpartArray = [];
 
-        tx_rnbase_util_BaseMarker::callModules($template, $markerArray, $subpartArray, $wrappedSubpartArray, $params, $formatter);
-        $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
+        BaseMarker::callModules($template, $markerArray, $subpartArray, $wrappedSubpartArray, $params, $formatter);
+        $out = Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
 
         return $out;
     }
@@ -60,7 +68,7 @@ class tx_t3sportsbet_views_ScopeSelection extends \Sys25\RnBase\Frontend\View\Ma
             // Die Betsets liegen in einem Hash, sie müssen aber in ein einfaches Array
             $betsets = array_values($betsets);
         }
-        $listBuilder = tx_rnbase::makeInstance('tx_rnbase_util_ListBuilder');
+        $listBuilder = tx_rnbase::makeInstance(ListBuilder::class);
         $template = $listBuilder->render($betsets, $viewData, $template, 'tx_t3sportsbet_util_BetSetMarker', $confId, $markerName, $formatter, [
             'currItem' => $currItem,
         ]);
@@ -75,7 +83,7 @@ class tx_t3sportsbet_views_ScopeSelection extends \Sys25\RnBase\Frontend\View\Ma
      *
      * @return string
      */
-    protected function getMainSubpart(Sys25\RnBase\Frontend\View\ContextInterface $viewData)
+    protected function getMainSubpart(ContextInterface $viewData)
     {
         return '###SCOPE###';
     }

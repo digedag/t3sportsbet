@@ -1,14 +1,19 @@
 <?php
 
+namespace Sys25\T3sportsbet\Frontend\Action;
+
 use Sys25\RnBase\Domain\Repository\FeUserRepository;
 use Sys25\RnBase\Frontend\Controller\AbstractAction;
 use Sys25\RnBase\Frontend\Request\RequestInterface;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
+use Sys25\T3sportsbet\Frontend\View\BetListView;
 use Sys25\T3sportsbet\Model\BetSet;
 use Sys25\T3sportsbet\Model\TeamQuestion;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use System25\T3sports\Model\Repository\MatchRepository;
+use tx_rnbase;
+use tx_t3sportsbet_util_ScopeController as ScopeController;
 
 /***************************************************************
  *  Copyright notice
@@ -36,7 +41,7 @@ use System25\T3sports\Model\Repository\MatchRepository;
 /**
  * Der View zeigt Tiprunden an und speichert Veränderungen.
  */
-class tx_t3sportsbet_actions_BetList extends AbstractAction
+class BetList extends AbstractAction
 {
     private $feuserRepo;
     private $matchRepo;
@@ -60,14 +65,14 @@ class tx_t3sportsbet_actions_BetList extends AbstractAction
         $viewData = $request->getViewContext();
         $viewData->offsetSet('currfeuser', $feuser);
 
-        $scopeArr = tx_t3sportsbet_util_ScopeController::handleCurrentScope($request, []);
-        $betgames = tx_t3sportsbet_util_ScopeController::getBetgamesFromScope($scopeArr['BETGAME_UIDS']);
+        $scopeArr = ScopeController::handleCurrentScope($request, []);
+        $betgames = ScopeController::getBetgamesFromScope($scopeArr['BETGAME_UIDS']);
         $rounds = $this->getRoundsFromScope($scopeArr['BETSET_UIDS']);
         $this->handleSubmit($feuser, $viewData);
 
         if ($configurations->get('betlist.feuserFromRequestAllowed')) {
             // Der Nutzer, dessen Tips gezeigt werden kann per Request übergeben werden
-            $uid = (int) $parameters->offsetGet('feuserId');
+            $uid = (int) $parameters->get('feuserId');
             if ($uid) {
                 $feuser = $this->feuserRepo->getInstance($uid);
             }
@@ -154,6 +159,6 @@ class tx_t3sportsbet_actions_BetList extends AbstractAction
 
     protected function getViewClassName()
     {
-        return 'tx_t3sportsbet_views_BetList';
+        return BetListView::class;
     }
 }

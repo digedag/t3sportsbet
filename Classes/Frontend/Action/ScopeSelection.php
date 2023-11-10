@@ -1,6 +1,10 @@
 <?php
 
+namespace Sys25\T3sportsbet\Frontend\Action;
+
 use Sys25\RnBase\Frontend\Request\RequestInterface;
+use Sys25\T3sportsbet\Frontend\View\ScopeSelectionView;
+use tx_t3sportsbet_util_ScopeController as ScopeController;
 
 /***************************************************************
  *  Copyright notice
@@ -28,7 +32,7 @@ use Sys25\RnBase\Frontend\Request\RequestInterface;
 /**
  * Der View zeigt Auswahlbox für Tiprunden an und speichert Veränderungen.
  */
-class tx_t3sportsbet_actions_ScopeSelection extends \Sys25\RnBase\Frontend\Controller\AbstractAction
+class ScopeSelection extends \Sys25\RnBase\Frontend\Controller\AbstractAction
 {
     /**
      * @param RequestInterface $request
@@ -41,9 +45,9 @@ class tx_t3sportsbet_actions_ScopeSelection extends \Sys25\RnBase\Frontend\Contr
         // Dies wird per Config festgelegt
         $options = [];
         $options['betsetkey'] = 'scope.';
-        $scopeArr = tx_t3sportsbet_util_ScopeController::handleCurrentScope($request, $options);
-        $betgames = tx_t3sportsbet_util_ScopeController::getBetgamesFromScope($scopeArr['BETGAME_UIDS']);
-        $rounds = tx_t3sportsbet_util_ScopeController::getRoundsFromScope($scopeArr['BETSET_UIDS']);
+        $scopeArr = ScopeController::handleCurrentScope($request, $options);
+        $betgames = ScopeController::getBetgamesFromScope($scopeArr['BETGAME_UIDS']);
+        $rounds = ScopeController::getRoundsFromScope($scopeArr['BETSET_UIDS']);
 
         $viewData = $request->getViewContext();
         $viewData->offsetSet('betgame', $betgames[0]);
@@ -61,6 +65,6 @@ class tx_t3sportsbet_actions_ScopeSelection extends \Sys25\RnBase\Frontend\Contr
 
     protected function getViewClassName()
     {
-        return 'tx_t3sportsbet_views_ScopeSelection';
+        return ScopeSelectionView::class;
     }
 }
