@@ -17,7 +17,7 @@ $EM_CONF[$_EXTKEY] = [
     'author_company' => 'System 25',
     'dependencies' => '',
     'module' => '',
-    'version' => '1.1.0',
+    'version' => '1.2.0',
     'state' => 'stable',
     'uploadfolder' => 0,
     'createDirs' => '',
@@ -26,8 +26,8 @@ $EM_CONF[$_EXTKEY] = [
         'depends' => [
             'typo3' => '8.7.0-11.5.99',
             'rn_base' => '1.16.0-0.0.0',
-            'cfc_league' => '1.10.0-0.0.0',
-            'cfc_league_fe' => '1.10.0-0.0.0',
+            'cfc_league' => '1.11.0-0.0.0',
+            'cfc_league_fe' => '1.11.0-0.0.0',
         ],
         'conflicts' => [
         ],

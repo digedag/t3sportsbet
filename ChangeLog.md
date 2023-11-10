@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+v1.2.0 (10.11.2023)
+ * Update to support T3sports 1.11.x
+ * All classes moves to PSR-4 namespaces
+ * Support for T3 12 still in progress
+
 v1.0.1 (13.05.2021)
  * Fix travis build
 
