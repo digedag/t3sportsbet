@@ -1,8 +1,11 @@
 <?php
+
+namespace Sys25\T3sportsbet\Utility;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,6 +25,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Sys25\RnBase\Frontend\Request\RequestInterface;
 use Sys25\RnBase\Search\SearchBase;
 use Sys25\RnBase\Utility\Misc;
 use Sys25\RnBase\Utility\Strings;
@@ -29,12 +33,10 @@ use Sys25\T3sportsbet\Model\BetGame;
 use Sys25\T3sportsbet\Model\BetSet;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 
-tx_rnbase::load('Tx_Rnbase_Utility_Strings');
-
 /**
  * Auswahl des Scopes im FE bereitstellen.
  */
-class tx_t3sportsbet_util_ScopeController
+class ScopeController
 {
     // Speichert die UID des aktuellen cObject
     private static $_cObjectUID = [];
@@ -47,7 +49,7 @@ class tx_t3sportsbet_util_ScopeController
      *
      * @return array mit den UIDs als String
      */
-    public static function handleCurrentScope(Sys25\RnBase\Frontend\Request\RequestInterface $request, $options = [])
+    public static function handleCurrentScope(RequestInterface $request, $options = [])
     {
         $ret = [];
         $ret['BETGAME_UIDS'] = self::handleCurrentBetgame($request, $options);
@@ -56,7 +58,7 @@ class tx_t3sportsbet_util_ScopeController
         return $ret;
     }
 
-    protected static function handleCurrentBetgame(Sys25\RnBase\Frontend\Request\RequestInterface $request, &$options)
+    protected static function handleCurrentBetgame(RequestInterface $request, array &$options)
     {
         // Erstmal nur ein Tipspiel im Scope erlaubt
         $configurations = $request->getConfigurations();
@@ -73,7 +75,7 @@ class tx_t3sportsbet_util_ScopeController
      *
      * @return BetSet[] betsets to show
      */
-    public static function handleCurrentBetset(Sys25\RnBase\Frontend\Request\RequestInterface $request, $options)
+    public static function handleCurrentBetset(RequestInterface $request, array $options)
     {
         $configurations = $request->getConfigurations();
         $parameters = $request->getParameters();

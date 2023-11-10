@@ -1,8 +1,13 @@
 <?php
+
+namespace Sys25\T3sportsbet\Hook;
+
+use System25\T3sports\Frontend\Marker\TeamMarker;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2010 Rene Nitzsche
+ *  (c) 2008-2023 Rene Nitzsche
  *  Contact: rene@system25.de
  *  All rights reserved
  *
@@ -26,13 +31,13 @@
  *
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_hooks_Marker
+class MarkerHook
 {
     /**
      * Extend teamMarker for currently selected teambet team.
      *
      * @param array $params
-     * @param tx_cfcleaguefe_util_TeamMarker $parent
+     * @param TeamMarker $parent
      */
     public function initTeam($params, $parent)
     {

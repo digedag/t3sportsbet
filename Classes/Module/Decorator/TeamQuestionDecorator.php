@@ -1,8 +1,11 @@
 <?php
+
+namespace Sys25\T3sportsbet\Module\Decorator;
+
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010-2019 Rene Nitzsche (rene@system25.de)
+*  (c) 2010-2023 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,8 +30,10 @@ use Sys25\T3sportsbet\Model\TeamQuestion;
 /**
  * Diese Klasse ist für die Darstellung von TeamQuestions im Backend verantwortlich.
  */
-class tx_t3sportsbet_mod1_decorator_TeamQuestion
+class TeamQuestionDecorator
 {
+    private $mod;
+
     public function __construct($mod)
     {
         $this->mod = $mod;

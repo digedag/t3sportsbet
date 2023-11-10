@@ -1,8 +1,13 @@
 <?php
+
+namespace Sys25\T3sportsbet\Module\Decorator;
+
+use Sys25\RnBase\Backend\Utility\Icons;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,8 +29,9 @@
 
 /**
  * Die Klasse zeigt Objekte im Backend an.
+ * TODO: den sinn dieser Klasse prüfen. Gibt es da was Allgemeines?
  */
-class tx_t3sportsbet_mod1_decorator
+class StaticBetDecorator
 {
     public static function prepareRecords($records, $columns, $formTool, $options)
     {
@@ -44,7 +50,7 @@ class tx_t3sportsbet_mod1_decorator
                 if (!is_array($options['dontcheck']) || !array_key_exists($dataArr['uid'], $options['dontcheck'])) {
                     $row[] = $formTool->createCheckbox('checkMatch[]', $dataArr['uid']);
                 } else {
-                    $row[] = '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/zoom2.gif', 'width="11" height="12"').' title="Info: '.$options['dontcheck'][$dataArr['uid']].'" border="0" alt="" />';
+                    $row[] = '<img'.Icons::skinImg($GLOBALS['BACK_PATH'], 'gfx/zoom2.gif', 'width="11" height="12"').' title="Info: '.$options['dontcheck'][$dataArr['uid']].'" border="0" alt="" />';
                 }
             }
             reset($columns);
@@ -83,7 +89,7 @@ class tx_t3sportsbet_mod1_decorator
      *
      * @return array
      */
-    public static function getHeadline($columns, $options)
+    private static function getHeadline($columns, $options)
     {
         global $LANG;
         $arr = [];
@@ -103,7 +109,7 @@ class tx_t3sportsbet_mod1_decorator
         return $arr;
     }
 
-    public static function addLinker($options, $obj, $formTool)
+    private static function addLinker($options, $obj, $formTool)
     {
         $out = '';
         if (isset($options['linker'])) {

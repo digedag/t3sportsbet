@@ -1,16 +1,20 @@
 <?php
 
+namespace Sys25\T3sportsbet\Frontend\Marker;
+
 use Sys25\RnBase\Domain\Model\FeUser;
 use Sys25\RnBase\Domain\Repository\FeUserRepository;
 use Sys25\RnBase\Frontend\Marker\BaseMarker;
 use Sys25\RnBase\Frontend\Marker\FormatUtil;
 use Sys25\RnBase\Frontend\Marker\Templates;
+use Sys25\T3sportsbet\Frontend\Marker\BetMarker;
 use Sys25\T3sportsbet\Model\Bet;
 use Sys25\T3sportsbet\Model\BetSet;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
-use System25\T3sports\Frontend\Marker\MatchMarker;
+use System25\T3sports\Frontend\Marker\MatchMarker as T3SMatchMarker;
 use System25\T3sports\Model\Fixture;
 use System25\T3sports\Model\Repository\MatchRepository;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
@@ -38,7 +42,7 @@ use System25\T3sports\Model\Repository\MatchRepository;
 /**
  * Diese Klasse ist für die Erstellung von Markerarrays der Tipprunden verantwortlich.
  */
-class tx_t3sportsbet_util_MatchMarker extends BaseMarker
+class MatchMarker extends BaseMarker
 {
     public static $betMarker;
 
@@ -53,19 +57,19 @@ class tx_t3sportsbet_util_MatchMarker extends BaseMarker
     {
         $this->options = $options;
         $this->request = $options['request'];
-        $this->matchMarker = tx_rnbase::makeInstance(MatchMarker::class);
+        $this->matchMarker = tx_rnbase::makeInstance(T3SMatchMarker::class);
         $this->feuserRepo = new FeUserRepository();
         $this->matchRepo = new MatchRepository();
         $this->betSrv = ServiceRegistry::getBetService();
     }
 
     /**
-     * @return tx_t3sportsbet_util_BetMarker
+     * @return BetMarker
      */
     private static function getBetMarker()
     {
         if (!self::$betMarker) {
-            self::$betMarker = tx_rnbase::makeInstance('tx_t3sportsbet_util_BetMarker');
+            self::$betMarker = tx_rnbase::makeInstance(BetMarker::class);
         }
 
         return self::$betMarker;

@@ -1,5 +1,7 @@
 <?php
 
+namespace Sys25\T3sportsbet\Hook;
+
 use Sys25\RnBase\Database\Query\Join;
 
 /***************************************************************
@@ -25,25 +27,33 @@ use Sys25\RnBase\Database\Query\Join;
  ***************************************************************/
 
 /**
- * Make additional join for feuser search to table tx_t3sportsbet_bets.
+ * Make additional join for match search to table tx_t3sportsbet_betsets_mm.
  *
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_hooks_searchFeuser
+class SearchHook
 {
-    public function getTableMapping($params, $parent)
+    public function getTableMappingMatch($params, $parent)
     {
-        $params['tableMapping']['BET'] = 'tx_t3sportsbet_bets';
-        $params['tableMapping']['BETSETRESULT'] = 'tx_t3sportsbet_betsetresults';
+        $params['tableMapping']['BETSETMM'] = 'tx_t3sportsbet_betsets_mm';
     }
 
-    public function getJoins($params, $parent)
+    public function getJoinsMatch($params, $parent)
     {
-        if (isset($params['tableAliases']['BET'])) {
-            $params['join'][] = new Join('FEUSER', 'tx_t3sportsbet_bets', 'FEUSER.uid = BET.fe_user', 'BET');
+        if (isset($params['tableAliases']['BETSETMM'])) {
+            $params['join'][] = new Join('MATCH', 'tx_t3sportsbet_betsets_mm', 'MATCH.uid = BETSETMM.uid_foreign', 'BETSETMM');
         }
-        if (isset($params['tableAliases']['BETSETRESULT'])) {
-            $params['join'][] = new Join('FEUSER', 'tx_t3sportsbet_betsetresults', 'FEUSER.uid = BETSETRESULT.feuser', 'BETSETRESULT');
+    }
+
+    public function getTableMappingTeam($params, $parent)
+    {
+        $params['tableMapping']['TEAMQUESTIONMM'] = 'tx_t3sportsbet_teamquestions_mm';
+    }
+
+    public function getJoinsTeam($params, $parent)
+    {
+        if (isset($params['tableAliases']['TEAMQUESTIONMM'])) {
+            $params['join'][] = new Join('TEAM', 'tx_t3sportsbet_teamquestions_mm', 'TEAM.uid = TEAMQUESTIONMM.uid_foreign', 'TEAMQUESTIONMM');
         }
     }
 }

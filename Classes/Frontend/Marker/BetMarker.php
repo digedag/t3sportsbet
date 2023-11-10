@@ -1,8 +1,10 @@
 <?php
+namespace Sys25\T3sportsbet\Frontend\Marker;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +32,7 @@ use Sys25\T3sportsbet\Model\Bet;
 /**
  * Diese Klasse ist für die Erstellung von Markerarrays der Tips verantwortlich.
  */
-class tx_t3sportsbet_util_BetMarker extends BaseMarker
+class BetMarker extends BaseMarker
 {
     private $options;
 

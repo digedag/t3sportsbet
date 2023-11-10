@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" data="2023-11-10T14-18-43" product-name="zsb">
+        <header/>
+        <body>
+            <trans-unit id="msg_no_game_in_page" xml:space="preserve">
+                <source>No game found in page.</source>
+                <target>Es wurde kein Tipspiel auf der Seite gefunden.</target>
+            </trans-unit>
+            <trans-unit id="msg_no_betset_found" xml:space="preserve">
+                <source>No betset found.</source>
+                <target>Keine Tiprunde gefunden.</target>
+            </trans-unit>
+            <trans-unit id="label_add_matches" xml:space="preserve">
+                <source>Add matches to betset</source>
+                <target>Der Tiprunde Spiele hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="label_hide_add_matches" xml:space="preserve">
+                <source>Hide match selection</source>
+                <target>Spielauswahl ausblenden</target>
+            </trans-unit>
+            <trans-unit id="label_change_state" xml:space="preserve">
+                <source>Change state</source>
+                <target>Status ändern</target>
+            </trans-unit>
+            <trans-unit id="label_create_betset" xml:space="preserve">
+                <source>Create a new betset</source>
+                <target>Eine neue Tiprunde anlegen</target>
+            </trans-unit>
+            <trans-unit id="label_info" xml:space="preserve">
+                <source>Info</source>
+                <target>Hinweis</target>
+            </trans-unit>
+            <trans-unit id="label_error" xml:space="preserve">
+                <source>Error</source>
+                <target>Fehler</target>
+            </trans-unit>
+            <trans-unit id="label_close" xml:space="preserve">
+                <source>Close</source>
+                <target>Schließen</target>
+            </trans-unit>
+            <trans-unit id="label_matchlist" xml:space="preserve">
+                <source>List of matches</source>
+                <target>Liste der Spiele</target>
+            </trans-unit>
+            <trans-unit id="label_save" xml:space="preserve">
+                <source>Save</source>
+                <target>Speichern</target>
+            </trans-unit>
+            <trans-unit id="label_edit" xml:space="preserve">
+                <source>Edit</source>
+                <target>Bearbeiten</target>
+            </trans-unit>
+            <trans-unit id="label_analyzebets" xml:space="preserve">
+                <source>Analyze bets</source>
+                <target>Tips auswerten</target>
+            </trans-unit>
+            <trans-unit id="label_betlist" xml:space="preserve">
+                <source>List of bets</source>
+                <target>Liste von Tips</target>
+            </trans-unit>
+            <trans-unit id="label_betcount" xml:space="preserve">
+                <source>Number of bets found</source>
+                <target>Gesamtanzahl Tips</target>
+            </trans-unit>
+            <trans-unit id="label_uid" xml:space="preserve">
+                <source>UID</source>
+                <target/>
+            </trans-unit>
+            <trans-unit id="label_tstamp" xml:space="preserve">
+                <source>Last update</source>
+                <target>Letzte Änderung</target>
+            </trans-unit>
+            <trans-unit id="label_match" xml:space="preserve">
+                <source>Match</source>
+                <target>Spiel</target>
+            </trans-unit>
+            <trans-unit id="label_group" xml:space="preserve">
+                <source>Group</source>
+                <target>Alterklasse</target>
+            </trans-unit>
+            <trans-unit id="label_feuser" xml:space="preserve">
+                <source>User</source>
+                <target>FE-User</target>
+            </trans-unit>
+            <trans-unit id="label_bet" xml:space="preserve">
+                <source>Bet</source>
+                <target>Tip</target>
+            </trans-unit>
+            <trans-unit id="label_points" xml:space="preserve">
+                <source>Points</source>
+                <target>Punkte</target>
+            </trans-unit>
+            <trans-unit id="label_openuntil" xml:space="preserve">
+                <source>Open until</source>
+                <target>Offen bis</target>
+            </trans-unit>
+            <trans-unit id="label_betsetinfo" xml:space="preserve">
+                <source>Information about current betset</source>
+                <target>Informationen über die aktuelle Tiprunde</target>
+            </trans-unit>
+            <trans-unit id="label_betsetinfo_highdate" xml:space="preserve">
+                <source>Last kickoff date</source>
+                <target>Letztes Spiel</target>
+            </trans-unit>
+            <trans-unit id="label_betsetinfo_lowdate" xml:space="preserve">
+                <source>First kickoff date</source>
+                <target>Erstes Spiel</target>
+            </trans-unit>
+            <trans-unit id="label_betsetinfo_nextdate" xml:space="preserve">
+                <source>Next kickoff date</source>
+                <target>Nächstes Spiel</target>
+            </trans-unit>
+            <trans-unit id="label_betsetinfo_matchcount" xml:space="preserve">
+                <source>Number of selected matches</source>
+                <target>Anzahl von Spielen</target>
+            </trans-unit>
+            <trans-unit id="label_betsetinfo_usercount" xml:space="preserve">
+                <source>Number of users with bets</source>
+                <target>Anzahl Nutzer mit Tips</target>
+            </trans-unit>
+            <trans-unit id="label_betsetinfo_betcount" xml:space="preserve">
+                <source>Number of bets</source>
+                <target>Anzahl Tips</target>
+            </trans-unit>
+            <trans-unit id="tx_t3sportsbet_module.betStatus_0" xml:space="preserve">
+                <source>Prepare</source>
+                <target>Vorb.</target>
+            </trans-unit>
+            <trans-unit id="tx_t3sportsbet_module.betStatus_1" xml:space="preserve">
+                <source>Open</source>
+                <target>Offen</target>
+            </trans-unit>
+            <trans-unit id="tx_t3sportsbet_module.betStatus_2" xml:space="preserve">
+                <source>Closed</source>
+                <target>Geschl.</target>
+            </trans-unit>
+            <trans-unit id="label_showbets" xml:space="preserve">
+                <source>Show bets</source>
+                <target>Tips anzeigen</target>
+            </trans-unit>
+            <trans-unit id="label_result" xml:space="preserve">
+                <source>Score</source>
+                <target>Ergebnis</target>
+            </trans-unit>
+            <trans-unit id="label_resetbets" xml:space="preserve">
+                <source>Reset bets</source>
+                <target>Tips zurücksetzen</target>
+            </trans-unit>
+            <trans-unit id="msg_resetbets" xml:space="preserve">
+                <source>Do you really want to reset these bets?</source>
+                <target>Sollen die Tips für dieses Spiel wirklich zurückgesetzt werden?</target>
+            </trans-unit>
+            <trans-unit id="label_join_matches" xml:space="preserve">
+                <source>Join matches</source>
+                <target>Spiel zuordnen</target>
+            </trans-unit>
+            <trans-unit id="msg_join_matches" xml:space="preserve">
+                <source>Do you really want to add these matches?</source>
+                <target>Sollen diese Spiele wirklich zugeordnet werden?</target>
+            </trans-unit>
+            <trans-unit id="label_editbetgame" xml:space="preserve">
+                <source>Edit betgame</source>
+                <target>Tipspiel bearbeiten</target>
+            </trans-unit>
+            <trans-unit id="label_roundnamedefault" xml:space="preserve">
+                <source>. round</source>
+                <target>. Tiprunde</target>
+            </trans-unit>
+            <trans-unit id="label_paste_match" xml:space="preserve">
+                <source>Paste selected match %s to current betset</source>
+                <target>Ausgewähltes Spiel %s in aktuelle Tipprunde einfügen.</target>
+            </trans-unit>
+            <trans-unit id="label_msg_paste_match" xml:space="preserve">
+                <source>Do you really want to paste the currently selected match to this betset?</source>
+                <target>Wollen Sie das ausgewählte Spiel wirklich in aktuelle Tipprunde einfügen?</target>
+            </trans-unit>
+            <trans-unit id="label_msg_matchmoved" xml:space="preserve">
+                <source>Match successfully moved to new betset.</source>
+                <target>Das Spiel wurde erfolgreich in die neue Tipprunde eingefügt.</target>
+            </trans-unit>
+            <trans-unit id="label_btn_newteambet" xml:space="preserve">
+                <source>Create new teambet</source>
+                <target>Neue Teamfrage anlegen</target>
+            </trans-unit>
+            <trans-unit id="label_possiblepoints" xml:space="preserve">
+                <source>Possible points</source>
+                <target>Mögliche Punkte</target>
+            </trans-unit>
+            <trans-unit id="label_team" xml:space="preserve">
+                <source>Team</source>
+                <target>Team</target>
+            </trans-unit>
+            <trans-unit id="label_finished" xml:space="preserve">
+                <source>Finished</source>
+                <target>Beendet</target>
+            </trans-unit>
+            <trans-unit id="label_yes" xml:space="preserve">
+                <source>Yes</source>
+                <target>Ja</target>
+            </trans-unit>
+            <trans-unit id="label_no" xml:space="preserve">
+                <source>No</source>
+                <target>Nein</target>
+            </trans-unit>
+            <trans-unit id="label_join_competition" xml:space="preserve">
+                <source>Create betgame from competition</source>
+                <target>Tipspiel aus dem Wettbewerb erzeugen</target>
+            </trans-unit>
+            <trans-unit id="msg_add_competition" xml:space="preserve">
+                <source>At this point you can add a complete competition to this betgame.
+			There will be a new betset created for each round. Alternatively you can create individual betsets 
+			by manually selecting matches to bet for.</source>
+                <target>Zu diesem Zeitpunkt können Sie aus dem gewählten Wettbewerb ein komplettes Tipspiel generieren.
+			Für jeden Spieltag wird eine neue Tiprunde angelegt. Alternativ können Sie natürlich die Tiprunden natürlich auch individuell gestalten.</target>
+            </trans-unit>
+            <trans-unit id="msg_join_competition" xml:space="preserve">
+                <source>Do you really want to add the complete competition to current betgame? There will be a new betset created for each round.</source>
+                <target>Soll wirklich der komplette Wettbewerb dem Tipspiel hinzugefügt werden? Es wird für jeden Spieltag eine neue Tiprunde angelegt.</target>
+            </trans-unit>
+            <trans-unit id="msg_add_competition_finished" xml:space="preserve">
+                <source>All betsets were successfully created.</source>
+                <target>Das Tipspiel wurde erfolgreich angelegt.</target>
+            </trans-unit>
+            <trans-unit id="msg_no_matchs_found" xml:space="preserve">
+                <source>Current competition contains no matches.</source>
+                <target>Der Wettbewerb enthält keine Spiele.</target>
+            </trans-unit>
+            <trans-unit id="msg_betset_saved" xml:space="preserve">
+                <source>Betset was saved.</source>
+                <target>Die Tiprunde wurde gespeichert.</target>
+            </trans-unit>
+            <trans-unit id="tab_control" xml:space="preserve">
+                <source>Overview</source>
+                <target>Überblick</target>
+            </trans-unit>
+            <trans-unit id="tab_addmatches" xml:space="preserve">
+                <source>Add matches</source>
+                <target>Spiele hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="tab_addteambets" xml:space="preserve">
+                <source>Manage teambets</source>
+                <target>Team Tips</target>
+            </trans-unit>
+            <trans-unit id="tab_bets" xml:space="preserve">
+                <source>Show bets</source>
+                <target>Tips anzeigen</target>
+            </trans-unit>
+            <trans-unit id="label_question" xml:space="preserve">
+                <source>Question</source>
+                <target>Frage</target>
+            </trans-unit>
+            <trans-unit id="msg_no_competition_in_betgame" xml:space="preserve">
+                <source>No competition in betgame found. You have to add one or more competitions in your betgame to enable this function.</source>
+                <target>Dem Tipspiel sind keine Wettbewerbe zugeordnet. Um diese Funktion zu aktivieren, muss dem Tipspiel mindestens ein Wettbewerb zugeordnet sein.</target>
+            </trans-unit>
+            <trans-unit id="msg_no_matches_in_betset" xml:space="preserve">
+                <source>No matches in betset found.</source>
+                <target>Der Tiprunde sind noch keine Spiele zugeordnet.</target>
+            </trans-unit>
+            <trans-unit id="msg_no_bets_found" xml:space="preserve">
+                <source>No bets found.</source>
+                <target>Es wurden keine Tips gefunden.</target>
+            </trans-unit>
+            <trans-unit id="msg_no_round_in_competition" xml:space="preserve">
+                <source>No round in competition found.</source>
+                <target/>
+            </trans-unit>
+            <trans-unit id="msg_match_already_joined" xml:space="preserve">
+                <source>Match already joined in betset.</source>
+                <target/>
+            </trans-unit>
+            <trans-unit id="msg_found_match" xml:space="preserve">
+                <source>match found</source>
+                <target>Spiel gefunden</target>
+            </trans-unit>
+            <trans-unit id="msg_found_matches" xml:space="preserve">
+                <source>matches found</source>
+                <target>Spiele gefunden</target>
+            </trans-unit>
+            <trans-unit id="msg_no_match_selected" xml:space="preserve">
+                <source>No match selected.</source>
+                <target>Keine Spiele ausgewählt.</target>
+            </trans-unit>
+            <trans-unit id="msg_matches_added" xml:space="preserve">
+                <source>matches added to betset.</source>
+                <target>Spiel(e) zur Tiprunde hinzugefügt.</target>
+            </trans-unit>
+            <trans-unit id="msg_bets_finished" xml:space="preserve">
+                <source>Number of finished bets</source>
+                <target>Anzahl ausgewerteter Tips</target>
+            </trans-unit>
+            <trans-unit id="msg_create_new_game" xml:space="preserve">
+                <source>Create a new bet game at this page now!</source>
+                <target>Auf dieser Seite ein neues Tipspiel erstellen!</target>
+            </trans-unit>
+            <trans-unit id="label_msg_no_items_found" xml:space="preserve">
+                <source>No items found.</source>
+                <target>Keine Einträge gefunden.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

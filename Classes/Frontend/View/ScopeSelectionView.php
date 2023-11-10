@@ -7,6 +7,7 @@ use Sys25\RnBase\Frontend\Marker\ListBuilder;
 use Sys25\RnBase\Frontend\Marker\Templates;
 use Sys25\RnBase\Frontend\Request\RequestInterface;
 use Sys25\RnBase\Frontend\View\ContextInterface;
+use Sys25\T3sportsbet\Frontend\Marker\BetSetMarker;
 use tx_rnbase;
 
 /***************************************************************
@@ -69,7 +70,7 @@ class ScopeSelectionView extends \Sys25\RnBase\Frontend\View\Marker\BaseView
             $betsets = array_values($betsets);
         }
         $listBuilder = tx_rnbase::makeInstance(ListBuilder::class);
-        $template = $listBuilder->render($betsets, $viewData, $template, 'tx_t3sportsbet_util_BetSetMarker', $confId, $markerName, $formatter, [
+        $template = $listBuilder->render($betsets, $viewData, $template, BetSetMarker::class, $confId, $markerName, $formatter, [
             'currItem' => $currItem,
         ]);
 

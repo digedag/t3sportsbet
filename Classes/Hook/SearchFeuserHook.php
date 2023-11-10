@@ -1,11 +1,13 @@
 <?php
 
+namespace Sys25\T3sportsbet\Hook;
+
 use Sys25\RnBase\Database\Query\Join;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2020 Rene Nitzsche
+ *  (c) 2008-2023 Rene Nitzsche
  *  Contact: rene@system25.de
  *  All rights reserved
  *
@@ -25,33 +27,25 @@ use Sys25\RnBase\Database\Query\Join;
  ***************************************************************/
 
 /**
- * Make additional join for match search to table tx_t3sportsbet_betsets_mm.
+ * Make additional join for feuser search to table tx_t3sportsbet_bets.
  *
  * @author Rene Nitzsche
  */
-class tx_t3sportsbet_hooks_Search
+class SearchFeuserHook
 {
-    public function getTableMappingMatch($params, $parent)
+    public function getTableMapping($params, $parent)
     {
-        $params['tableMapping']['BETSETMM'] = 'tx_t3sportsbet_betsets_mm';
+        $params['tableMapping']['BET'] = 'tx_t3sportsbet_bets';
+        $params['tableMapping']['BETSETRESULT'] = 'tx_t3sportsbet_betsetresults';
     }
 
-    public function getJoinsMatch($params, $parent)
+    public function getJoins($params, $parent)
     {
-        if (isset($params['tableAliases']['BETSETMM'])) {
-            $params['join'][] = new Join('MATCH', 'tx_t3sportsbet_betsets_mm', 'MATCH.uid = BETSETMM.uid_foreign', 'BETSETMM');
+        if (isset($params['tableAliases']['BET'])) {
+            $params['join'][] = new Join('FEUSER', 'tx_t3sportsbet_bets', 'FEUSER.uid = BET.fe_user', 'BET');
         }
-    }
-
-    public function getTableMappingTeam($params, $parent)
-    {
-        $params['tableMapping']['TEAMQUESTIONMM'] = 'tx_t3sportsbet_teamquestions_mm';
-    }
-
-    public function getJoinsTeam($params, $parent)
-    {
-        if (isset($params['tableAliases']['TEAMQUESTIONMM'])) {
-            $params['join'][] = new Join('TEAM', 'tx_t3sportsbet_teamquestions_mm', 'TEAM.uid = TEAMQUESTIONMM.uid_foreign', 'TEAMQUESTIONMM');
+        if (isset($params['tableAliases']['BETSETRESULT'])) {
+            $params['join'][] = new Join('FEUSER', 'tx_t3sportsbet_betsetresults', 'FEUSER.uid = BETSETRESULT.feuser', 'BETSETRESULT');
         }
     }
 }

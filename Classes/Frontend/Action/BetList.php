@@ -10,10 +10,10 @@ use Sys25\RnBase\Utility\T3General;
 use Sys25\T3sportsbet\Frontend\View\BetListView;
 use Sys25\T3sportsbet\Model\BetSet;
 use Sys25\T3sportsbet\Model\TeamQuestion;
+use Sys25\T3sportsbet\Utility\ScopeController;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use System25\T3sports\Model\Repository\MatchRepository;
 use tx_rnbase;
-use tx_t3sportsbet_util_ScopeController as ScopeController;
 
 /***************************************************************
  *  Copyright notice

@@ -1,5 +1,7 @@
 <?php
 
+namespace Sys25\T3sportsbet\Frontend\Marker;
+
 use Sys25\RnBase\Domain\Model\FeUser;
 use Sys25\RnBase\Frontend\Marker\FormatUtil;
 use Sys25\RnBase\Frontend\Marker\SimpleMarker;
@@ -31,7 +33,7 @@ use Sys25\RnBase\Frontend\Marker\Templates;
 /**
  * Diese Klasse ist für die Erstellung von Markerarrays für FE User verantwortlich.
  */
-class tx_t3sportsbet_util_FeUserMarker extends SimpleMarker
+class FeUserMarker extends SimpleMarker
 {
     /**
      * @param string $template das HTML-Template

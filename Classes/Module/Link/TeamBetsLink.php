@@ -1,5 +1,7 @@
 <?php
 
+namespace Sys25\T3sportsbet\Module\Link;
+
 use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\Linker\LinkerInterface;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
@@ -7,7 +9,7 @@ use Sys25\T3sportsbet\Utility\ServiceRegistry;
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2010-2023 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,7 +29,7 @@ use Sys25\T3sportsbet\Utility\ServiceRegistry;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class tx_t3sportsbet_mod1_link_TeamBets implements LinkerInterface
+class TeamBetsLink implements LinkerInterface
 {
     /**
      * Buttons for team bets.

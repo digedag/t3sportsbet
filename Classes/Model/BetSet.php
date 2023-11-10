@@ -7,7 +7,6 @@ use Sys25\RnBase\Domain\Model\BaseModel;
 use Sys25\T3sportsbet\Utility\ServiceRegistry as BetServiceRegistry;
 use System25\T3sports\Model\Fixture;
 use System25\T3sports\Utility\ServiceRegistry;
-use tx_t3sportsbet_util_library;
 
 /***************************************************************
  *  Copyright notice
@@ -72,7 +71,7 @@ class BetSet extends BaseModel
             return 'FINISHED';
         }
         $state = 'OPEN';
-        $now = tx_t3sportsbet_util_library::getNow();
+        $now = time();
         $lock = $this->getBetgame()->getLockMinutes() * 60;
 
         $matchDate = $match->getProperty('date');

@@ -3,6 +3,7 @@
 namespace Sys25\T3sportsbet\Frontend\Action;
 
 use Sys25\RnBase\Frontend\Request\RequestInterface;
+use Sys25\T3sportsbet\Frontend\View\SummaryView;
 
 /***************************************************************
  *  Copyright notice
@@ -51,6 +52,6 @@ class Summary extends \Sys25\RnBase\Frontend\Controller\AbstractAction
 
     protected function getViewClassName()
     {
-        return 'tx_t3sportsbet_views_Summary';
+        return SummaryView::class;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+namespace Sys25\T3sportsbet\Module\Link;
+
 use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\Linker\LinkerInterface;
 
@@ -25,7 +27,8 @@ use Sys25\RnBase\Backend\Module\Linker\LinkerInterface;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-class tx_t3sportsbet_mod1_link_MatchBets implements LinkerInterface
+
+class MatchBetsLink implements LinkerInterface
 {
     /**
      * Buttons for match bets.

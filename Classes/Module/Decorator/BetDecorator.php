@@ -1,6 +1,9 @@
 <?php
 
+namespace Sys25\T3sportsbet\Module\Decorator;
+
 use Sys25\RnBase\Domain\Repository\FeUserRepository;
+use System25\T3sports\Model\Fixture;
 use System25\T3sports\Model\Repository\MatchRepository;
 
 /***************************************************************
@@ -29,7 +32,7 @@ use System25\T3sports\Model\Repository\MatchRepository;
 /**
  * Diese Klasse ist für die Darstellung von Tips im Backend verantwortlich.
  */
-class tx_t3sportsbet_util_BetDecorator
+class BetDecorator
 {
     private $feuserRepo;
     private $matchRepo;
@@ -53,10 +56,12 @@ class tx_t3sportsbet_util_BetDecorator
             $ret = date('H:i d.m.Y', $value);
         } elseif ('t3matchresult' == $colName) {
             if (is_object($value)) {
+                /** @var Fixture $match */
                 $match = $this->matchRepo->findByUid($value->getProperty('t3match'));
                 $ret = $match->getResult();
             }
         } elseif ('t3match' == $colName) {
+            /** @var Fixture $match */
             $match = $this->matchRepo->findByUid($value);
             $ret = $match->getHomeNameShort().' - '.$match->getGuestNameShort();
             $ret .= $this->formTool->createEditLink('tx_cfcleague_games', $match->getUid(), '');

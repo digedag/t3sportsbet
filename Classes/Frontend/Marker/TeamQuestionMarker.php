@@ -1,5 +1,7 @@
 <?php
 
+namespace Sys25\T3sportsbet\Frontend\Marker;
+
 use Sys25\RnBase\Domain\Model\FeUser;
 use Sys25\RnBase\Frontend\Marker\BaseMarker;
 use Sys25\RnBase\Frontend\Marker\FormatUtil;
@@ -11,6 +13,8 @@ use Sys25\T3sportsbet\Model\TeamQuestion;
 use Sys25\T3sportsbet\Utility\ServiceRegistry as BetServiceRegistry;
 use System25\T3sports\Frontend\Marker\TeamMarker;
 use System25\T3sports\Utility\ServiceRegistry;
+use Throwable;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
@@ -38,7 +42,7 @@ use System25\T3sports\Utility\ServiceRegistry;
 /**
  * Handle team questions.
  */
-class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
+class TeamQuestionMarker extends BaseMarker
 {
     public static $simpleMarker;
 
@@ -85,7 +89,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
             $template = $this->addTrend($template, $item, $feuser, $formatter, $confId.'trend.', $marker.'_TREND');
         }
 
-        $wrappedSubpartArray = [];
+        $wrappedSubpartArray = $subpartArray = [];
         $wrappedSubpartArray['###'.$marker.'_TREND###'] = ['', ''];
         $out = Templates::substituteMarkerArrayCached($template, $markerArray, $subpartArray, $wrappedSubpartArray);
 
@@ -180,7 +184,7 @@ class tx_t3sportsbet_util_TeamQuestionMarker extends BaseMarker
                 $markerArray = [];
                 $markerArray['###'.$markerPrefix.'_CHART###'] = '';
                 $template = Templates::substituteMarkerArrayCached($template, $markerArray); // , $wrappedSubpartArray);
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 Logger::warn('Chart creation failed!', 'cfc_league_fe', [
                     'Exception' => $e->getMessage(),
                 ]);

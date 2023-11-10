@@ -10,6 +10,8 @@ use Sys25\RnBase\Frontend\Marker\Templates;
 use Sys25\RnBase\Frontend\Request\RequestInterface;
 use Sys25\RnBase\Frontend\View\ContextInterface;
 use Sys25\RnBase\Frontend\View\Marker\BaseView;
+use Sys25\T3sportsbet\Frontend\Marker\BetSetMarker;
+use Sys25\T3sportsbet\Frontend\Marker\FeUserMarker;
 use tx_rnbase;
 
 /***************************************************************
@@ -71,7 +73,7 @@ class HighScoreView extends BaseView
         // Wir haben jetzt erstmal nur die UIDs und die Punktezahl. Die Nutzerdaten müssen erst geladen werden
         $users = $this->getUsers($userPoints, $userSize);
         $listBuilder = tx_rnbase::makeInstance(ListBuilder::class);
-        $template = $listBuilder->render($users, $viewData, $template, 'tx_t3sportsbet_util_FeUserMarker', 'highscore.feuser.', 'FEUSER', $formatter);
+        $template = $listBuilder->render($users, $viewData, $template, FeUserMarker::class, 'highscore.feuser.', 'FEUSER', $formatter);
 
         // Anzeige des aktuellen Users
         $markerArray = $subpartArray = $wrappedSubpartArray = [];
@@ -149,7 +151,7 @@ class HighScoreView extends BaseView
             $betsets = array_values($betsets);
         }
         $listBuilder = tx_rnbase::makeInstance(ListBuilder::class);
-        $template = $listBuilder->render($betsets, $viewData, $template, 'tx_t3sportsbet_util_BetSetMarker', $confId.'selection.', $markerName.'_SELECTION', $formatter, [
+        $template = $listBuilder->render($betsets, $viewData, $template, BetSetMarker::class, $confId.'selection.', $markerName.'_SELECTION', $formatter, [
             'currItem' => $currItem,
         ]);
 

@@ -7,6 +7,8 @@ use Sys25\RnBase\Frontend\Marker\ListBuilder;
 use Sys25\RnBase\Frontend\Marker\Templates;
 use Sys25\RnBase\Frontend\Request\RequestInterface;
 use Sys25\RnBase\Frontend\View\ContextInterface;
+use Sys25\T3sportsbet\Frontend\Marker\BetSetMarker;
+use Sys25\T3sportsbet\Frontend\Marker\FeUserMarker;
 use tx_rnbase;
 
 /***************************************************************
@@ -88,10 +90,10 @@ class BetListView extends \Sys25\RnBase\Frontend\View\Marker\BaseView
         $betsets = $viewData->offsetGet('rounds');
         if (count($betsets)) {
             $listBuilder = tx_rnbase::makeInstance(ListBuilder::class);
-            $template = $listBuilder->render($betsets, $viewData, $template, 'tx_t3sportsbet_util_BetSetMarker', 'betlist.betset.', 'BETSET', $formatter, $params);
+            $template = $listBuilder->render($betsets, $viewData, $template, BetSetMarker::class, 'betlist.betset.', 'BETSET', $formatter, $params);
             // $markerArray['###ACTION_URI###'] = $this->createPageUri($configurations);
             $data['ACTION_URI'] = $this->createPageUri($request);
-            // Siehe tx_t3sportsbet_util_MatchMarker: Das ist nur ein Hack! Der Status sollte besser übergeben werden!
+            // Siehe \Sys25\T3sportsbet\Frontend\Marker\MatchMarker: Das ist nur ein Hack! Der Status sollte besser übergeben werden!
             $matchState = $request->getConfigurations()->getViewData()->offsetGet('MATCH_STATE');
             if ('OPEN' == $matchState) {
                 $wrappedSubpartArray['###SAVEBUTTON###'] = [
@@ -105,7 +107,7 @@ class BetListView extends \Sys25\RnBase\Frontend\View\Marker\BaseView
             $subpartArray['###BETSETS###'] = $request->getConfigurations()->getLL('msg_no_betsets_found');
         }
 
-        $userMarker = tx_rnbase::makeInstance('tx_t3sportsbet_util_FeUserMarker');
+        $userMarker = tx_rnbase::makeInstance(FeUserMarker::class);
         if ($feuser) {
             $template = $userMarker->parseTemplate($template, $feuser, $formatter, 'betlist.feuser.', 'FEUSER');
         }
@@ -141,7 +143,7 @@ class BetListView extends \Sys25\RnBase\Frontend\View\Marker\BaseView
             $betsets = array_values($betsets);
         }
         $listBuilder = tx_rnbase::makeInstance(ListBuilder::class);
-        $template = $listBuilder->render($betsets, $viewData, $template, 'tx_t3sportsbet_util_BetSetMarker', $confId.'selection.', $markerName.'_SELECTION', $formatter, [
+        $template = $listBuilder->render($betsets, $viewData, $template, BetSetMarker::class, $confId.'selection.', $markerName.'_SELECTION', $formatter, [
             'currItem' => $currItem,
         ]);
 

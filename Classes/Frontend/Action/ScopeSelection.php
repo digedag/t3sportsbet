@@ -4,7 +4,7 @@ namespace Sys25\T3sportsbet\Frontend\Action;
 
 use Sys25\RnBase\Frontend\Request\RequestInterface;
 use Sys25\T3sportsbet\Frontend\View\ScopeSelectionView;
-use tx_t3sportsbet_util_ScopeController as ScopeController;
+use Sys25\T3sportsbet\Utility\ScopeController;
 
 /***************************************************************
  *  Copyright notice

@@ -1,13 +1,17 @@
 <?php
 
+namespace Sys25\T3sportsbet\Module\Decorator;
+
+use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Domain\Repository\FeUserRepository;
 use Sys25\T3sportsbet\Model\TeamQuestion;
 use System25\T3sports\Model\Team;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +34,7 @@ use System25\T3sports\Model\Team;
 /**
  * Show team bets in BE module.
  */
-class tx_t3sportsbet_mod1_decorator_TeamBet
+class TeamBetDecorator
 {
     private $mod;
     private $feuserRepo;
@@ -44,7 +48,7 @@ class tx_t3sportsbet_mod1_decorator_TeamBet
     /**
      * Returns the module.
      *
-     * @return tx_rnbase_mod_IModule
+     * @return IModule
      */
     private function getModule()
     {

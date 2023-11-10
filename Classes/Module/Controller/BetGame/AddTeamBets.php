@@ -8,6 +8,9 @@ use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Utility\T3General;
 use Sys25\T3sportsbet\Model\BetSet;
 use Sys25\T3sportsbet\Model\TeamQuestion;
+use Sys25\T3sportsbet\Module\Link\TeamBetsLink;
+use Sys25\T3sportsbet\Module\Lister\TeamBetLister;
+use Sys25\T3sportsbet\Module\Lister\TeamQuestionLister;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use tx_rnbase;
 
@@ -81,9 +84,9 @@ class AddTeamBets
         $options = [];
         $options['title'] = '###LABEL_BTN_NEWTEAMBET###';
         $options['params'] = '&defVals[tx_t3sportsbet_teamquestions][betset]=tx_t3sportsbet_betsets_'.$this->currentRound->getUid();
-        $options['linker'][] = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_link_TeamBets');
+        $options['linker'][] = tx_rnbase::makeInstance(TeamBetsLink::class);
 
-        $lister = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_lister_TeamQuestion', $this->module, $options);
+        $lister = tx_rnbase::makeInstance(TeamQuestionLister::class, $this->module, $options);
         $lister->setBetSetUid($this->currentRound->getUid());
 
         $list = $lister->getResultList();
@@ -116,7 +119,7 @@ class AddTeamBets
         }
 
         $options = ['module' => $this->module];
-        $lister = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_lister_TeamBet', $this->module, $options);
+        $lister = tx_rnbase::makeInstance(TeamBetLister::class, $this->module, $options);
         $lister->setTeamQuestionUid($teamQuestionUid);
 
         $list = $lister->getResultList();

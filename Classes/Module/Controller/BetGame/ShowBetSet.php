@@ -9,9 +9,12 @@ use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
 use Sys25\T3sportsbet\Model\BetGame;
 use Sys25\T3sportsbet\Model\BetSet;
+use Sys25\T3sportsbet\Module\Handler\MatchMoveHandler;
+use Sys25\T3sportsbet\Module\Link\MatchBetsLink;
+use Sys25\T3sportsbet\Module\Lister\MatchBetLister;
+use Sys25\T3sportsbet\Module\Lister\MatchLister;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use tx_rnbase;
-use tx_t3sportsbet_mod1_handler_MatchMove;
 
 /***************************************************************
  *  Copyright notice
@@ -99,18 +102,18 @@ class ShowBetSet
     {
         $currBetSet = $this->currentRound;
         $options = [];
-        $options['linker'][] = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_link_MatchBets');
+        $options['linker'][] = tx_rnbase::makeInstance(MatchBetsLink::class);
         $options['module'] = $this->module;
         $out = '';
 
-        $pasteButton = tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->makePasteButton($this->currentRound, $this->module);
+        $pasteButton = MatchMoveHandler::getInstance()->makePasteButton($this->currentRound, $this->module);
         if ($pasteButton) {
             $out .= $this->doc->section('Info:', $pasteButton, 0, 1, IModFunc::ICON_INFO);
         }
 
-        /* @var $searcher \tx_t3sportsbet_mod1_matchsearcher */
+        /** @var MatchLister $searcher */
         $searcher = tx_rnbase::makeInstance(
-            'tx_t3sportsbet_mod1_matchsearcher',
+            MatchLister::class,
             $this->module,
             $this->currentRound,
             $options
@@ -140,7 +143,7 @@ class ShowBetSet
         }
 
         $options = ['module' => $this];
-        $lister = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_lister_MatchBet', $this->module, $options);
+        $lister = tx_rnbase::makeInstance(MatchBetLister::class, $this->module, $options);
         $lister->setMatchUids($matchUids);
         $lister->setBetSetUid($currBetSet->getUid());
 

@@ -1,15 +1,19 @@
 <?php
 
+namespace Sys25\T3sportsbet\Module\Lister;
+
 use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Utility\T3General;
 use Sys25\T3sportsbet\Model\BetSet;
+use Sys25\T3sportsbet\Module\Decorator\MatchDecorator;
 use System25\T3sports\Model\Competition;
 use System25\T3sports\Module\Utility\Selector;
 use System25\T3sports\Utility\MatchTableBuilder;
 use System25\T3sports\Utility\ServiceRegistry;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
@@ -38,7 +42,7 @@ use System25\T3sports\Utility\ServiceRegistry;
  * Search matches from competitions
  * We to it by showing to select boxes: one for competition and the other for round.
  */
-class tx_t3sportsbet_mod1_matchsearcher
+class MatchLister
 {
     private $mod;
 
@@ -114,7 +118,7 @@ class tx_t3sportsbet_mod1_matchsearcher
         // Wir zeigen zwei Selectboxen an
         $this->currComp = $this->selector->showLeagueSelector($out, $this->mod->id, $this->competitions);
         if (!$this->currComp) {
-            return $out.$this->mod->getDoc()->section('Info:', $LANG->getLL('msg_no_competition_in_betgame'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+            return $out.$this->mod->getDoc()->section('Info:', $LANG->getLL('msg_no_competition_in_betgame'), 0, 1, IModFunc::ICON_WARN);
         }
         // $out.=$this->mod->doc->spacer(5);
 
@@ -178,7 +182,7 @@ class tx_t3sportsbet_mod1_matchsearcher
             return;
         }
 
-        $decor = tx_rnbase::makeInstance('tx_t3sportsbet_util_MatchDecorator', $this->mod, $this->currentRound);
+        $decor = tx_rnbase::makeInstance(MatchDecorator::class, $this->mod, $this->currentRound);
         $columns = [
             'uid' => [
                 'title' => 'label_uid',

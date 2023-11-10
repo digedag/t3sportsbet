@@ -1,9 +1,11 @@
 <?php
 
+namespace Sys25\T3sportsbet\Module\Decorator;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,12 +27,14 @@
 
 use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\T3sportsbet\Model\BetSet;
+use Sys25\T3sportsbet\Module\Handler\MatchMoveHandler;
 use System25\T3sports\Model\Competition;
+use System25\T3sports\Model\Fixture;
 
 /**
  * Diese Klasse ist für die Darstellung von Spielen im Backend verantwortlich.
  */
-class tx_t3sportsbet_util_MatchDecorator
+class MatchDecorator
 {
     protected $module;
 
@@ -78,13 +82,11 @@ class tx_t3sportsbet_util_MatchDecorator
     }
 
     /**
-     * @param tx_cfcleague_models_Match $item
+     * @param Fixture $item
      */
     private function createMatchCutLink($item)
     {
-        tx_rnbase::load('tx_t3sportsbet_mod1_handler_MatchMove');
-
-        return tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->makeCutLink(
+        return MatchMoveHandler::getInstance()->makeCutLink(
             $item,
             $this->currentRound,
             $this->getModule()

@@ -62,7 +62,7 @@ class ServiceRegistry implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Returns the bet service.
      *
-     * @return tx_t3sportsbet_services_betcalculator
+     * @return BetCalculator
      */
     public static function getCalculatorService()
     {
@@ -72,7 +72,7 @@ class ServiceRegistry implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Returns the teambet service.
      *
-     * @return tx_t3sportsbet_services_teambet
+     * @return TeamBetService
      */
     public static function getTeamBetService()
     {

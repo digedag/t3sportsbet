@@ -1,8 +1,11 @@
 <?php
+
+namespace Sys25\T3sportsbet\Frontend\Marker;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,11 +32,12 @@ use Sys25\RnBase\Search\SearchBase;
 use Sys25\T3sportsbet\Model\BetSet;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use System25\T3sports\Utility\ServiceRegistry as UtilityServiceRegistry;
+use tx_rnbase;
 
 /**
  * Diese Klasse ist für die Erstellung von Markerarrays der Tipprunden verantwortlich.
  */
-class tx_t3sportsbet_util_BetSetMarker extends BaseMarker
+class BetSetMarker extends BaseMarker
 {
     private $options;
 
@@ -106,7 +110,7 @@ class tx_t3sportsbet_util_BetSetMarker extends BaseMarker
         $children = $srv->searchTeamQuestion($fields, $options);
         $markerParams = $this->options;
         $listBuilder = tx_rnbase::makeInstance(ListBuilder::class);
-        $out = $listBuilder->render($children, false, $template, 'tx_t3sportsbet_util_TeamQuestionMarker', $confId, $marker, $formatter, $markerParams);
+        $out = $listBuilder->render($children, false, $template, TeamQuestionMarker::class, $confId, $marker, $formatter, $markerParams);
 
         return $out;
     }
@@ -134,7 +138,7 @@ class tx_t3sportsbet_util_BetSetMarker extends BaseMarker
         $markerParams['betset'] = $betset;
 
         $listBuilder = tx_rnbase::makeInstance(ListBuilder::class);
-        $out = $listBuilder->render($children, false, $template, tx_t3sportsbet_util_MatchMarker::class, $confId, $marker, $formatter, $markerParams);
+        $out = $listBuilder->render($children, false, $template, MatchMarker::class, $confId, $marker, $formatter, $markerParams);
 
         return $out;
     }

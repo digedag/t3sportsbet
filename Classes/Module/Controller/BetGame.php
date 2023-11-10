@@ -13,10 +13,10 @@ use Sys25\RnBase\Frontend\Marker\FormatUtil;
 use Sys25\RnBase\Frontend\Marker\Templates;
 use Sys25\RnBase\Utility\Logger;
 use Sys25\T3sportsbet\Model\BetSet;
+use Sys25\T3sportsbet\Module\Handler\MatchMoveHandler;
 use Sys25\T3sportsbet\Module\Utility\AddCompetitionWizard;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use tx_rnbase;
-use tx_t3sportsbet_mod1_handler_MatchMove;
 
 /**
  * *************************************************************
@@ -65,7 +65,7 @@ class BetGame extends BaseModFunc
     public function init(IModule $module, $conf)
     {
         parent::init($module, $conf);
-        $GLOBALS['LANG']->includeLLFile('EXT:t3sportsbet/mod1/locallang.xml');
+        $GLOBALS['LANG']->includeLLFile('EXT:t3sportsbet/Resources/Private/Language/locallang_mod.xlf');
     }
 
     /**
@@ -110,7 +110,7 @@ class BetGame extends BaseModFunc
         //        $this->getModule()->selector = $selector;
 
         // RequestHandler aufrufen.
-        $content .= tx_t3sportsbet_mod1_handler_MatchMove::getInstance()->handleRequest($this->getModule());
+        $content .= MatchMoveHandler::getInstance()->handleRequest($this->getModule());
 
         $menu = $formTool->showTabMenu($this->getModule()
             ->getPid(), 'bettools', $this->getModule()

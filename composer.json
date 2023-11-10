@@ -37,12 +37,7 @@
 		"phpunit/phpunit": "^6.5.14 || ^7.5.20 || ^8.0 || ^9.0"
 	},
 	"autoload" : {
-		"classmap" : [
-			"hooks/",
-			"mod1/",
-			"util/"
-		],
-        "psr-4": {"Sys25\\T3sportsbet\\" : "Classes"}
+		"psr-4": {"Sys25\\T3sportsbet\\" : "Classes"}
 	},
 	"autoload-dev": {
 		"psr-4": {
@@ -64,7 +59,7 @@
  		}
 	},
 	"scripts": {
-		"test:phplint": "find *.php Classes Configuration Tests hooks mod1 models search services util views -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l",
+		"test:phplint": "find *.php Classes Configuration Tests -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l",
 		"test:phpcompat": ".Build/bin/phpcs --ignore=.Build/*,Resources/* -p . --standard=.Build/vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion ",
 		"post-autoload-dump": [
 			"mkdir -p .Build/Web/typo3conf/ext/",

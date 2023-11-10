@@ -1,4 +1,7 @@
 <?php
+
+namespace Sys25\T3sportsbet\Module\Handler;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -30,21 +33,23 @@ use Sys25\RnBase\Utility\T3General;
 use Sys25\T3sportsbet\Model\BetSet;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use System25\T3sports\Model\Fixture;
+use Throwable;
+use tx_rnbase;
 
-class tx_t3sportsbet_mod1_handler_MatchMove
+class MatchMoveHandler
 {
     /**
-     * @return tx_t3sportsbet_mod1_handler_MatchMove
+     * @return MatchMoveHandler
      */
     public static function getInstance()
     {
-        return tx_rnbase::makeInstance('tx_t3sportsbet_mod1_handler_MatchMove');
+        return tx_rnbase::makeInstance(self::class);
     }
 
     /**
-     * @param tx_rnbase_mod_IModule $mod
+     * @param IModule $mod
      */
-    public function handleRequest($mod)
+    public function handleRequest(IModule $mod)
     {
         $isCutted = T3General::_GP('doCutMatch');
         if ($isCutted) {
@@ -72,7 +77,7 @@ class tx_t3sportsbet_mod1_handler_MatchMove
 
         try {
             ServiceRegistry::getBetService()->moveMatch($newBetsetUid, $oldBetsetUid, $matchUid);
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             return $mod->getDoc()->section('###LABEL_ERROR###', $e->getMessage(), 0, 1, IModFunc::ICON_FATAL);
         }
         // Reset cutted matches
@@ -82,7 +87,7 @@ class tx_t3sportsbet_mod1_handler_MatchMove
     }
 
     /**
-     * @param tx_rnbase_mod_IModule $mod
+     * @param IModule $mod
      */
     private function handleCut($matchToken, $mod)
     {
@@ -128,7 +133,7 @@ class tx_t3sportsbet_mod1_handler_MatchMove
 
     /**
      * @param BetSet $item
-     * @param tx_rnbase_mod_IModule $mod
+     * @param IModule $mod
      */
     public function makePasteButton($item, $mod)
     {

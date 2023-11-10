@@ -1,9 +1,11 @@
 <?php
 
+namespace Sys25\T3sportsbet\Module\Lister;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -23,12 +25,21 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Backend\Utility\BEPager;
+use Sys25\RnBase\Backend\Utility\Tables;
+use Sys25\RnBase\Utility\T3General;
+use Sys25\T3sportsbet\Module\Decorator\BetDecorator;
+use Sys25\T3sportsbet\Module\Decorator\StaticBetDecorator;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
+use tx_rnbase;
 
 /**
  * Search match bets from database.
  */
-class tx_t3sportsbet_mod1_lister_MatchBet
+class MatchBetLister
 {
     /** @var \tx_rnbase_mod_IModule */
     private $mod;
@@ -40,6 +51,9 @@ class tx_t3sportsbet_mod1_lister_MatchBet
     private $betsetUid;
 
     private $matchUids;
+    private $options;
+    private $formTool;
+    private $resultSize;
 
     public function __construct($mod, $options = [])
     {
@@ -52,12 +66,12 @@ class tx_t3sportsbet_mod1_lister_MatchBet
         $this->mod = $mod;
         $this->formTool = $mod->getFormTool();
         $this->resultSize = 0;
-        $this->data = \Tx_Rnbase_Utility_T3General::_GP('searchdata');
+        $this->data = T3General::_GP('searchdata');
 
         if (!isset($options['nopersist'])) {
-            $this->SEARCH_SETTINGS = \Tx_Rnbase_Backend_Utility::getModuleData([
+            $this->SEARCH_SETTINGS = BackendUtility::getModuleData([
                 'searchterm' => '',
-            ], $this->data, $this->mod->getName());
+            ], $this->data, $this->getModule()->getName());
         } else {
             $this->SEARCH_SETTINGS = $this->data;
         }
@@ -91,8 +105,8 @@ class tx_t3sportsbet_mod1_lister_MatchBet
 
     public function getResultList()
     {
-        /* @var $pager \tx_rnbase_util_BEPager */
-        $pager = tx_rnbase::makeInstance('tx_rnbase_util_BEPager', 'matchBetPager', $this->getModule()->getName(), $this->getModule()->getPid());
+        /** @var BEPager $pager */
+        $pager = tx_rnbase::makeInstance(BEPager::class, 'matchBetPager', $this->getModule()->getName(), $this->getModule()->getPid());
         $srv = ServiceRegistry::getBetService();
 
         // Set options
@@ -145,10 +159,9 @@ class tx_t3sportsbet_mod1_lister_MatchBet
         if (empty($bets)) {
             $out = '<strong>'.$GLOBALS['LANG']->getLL('msg_no_bets_found').'</strong>';
 
-            return $this->mod->getDoc()->section('', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+            return $this->getModule()->getDoc()->section('', $out, 0, 1, IModFunc::ICON_INFO);
         }
-        tx_rnbase::load('tx_t3sportsbet_mod1_decorator');
-        $decor = tx_rnbase::makeInstance('tx_t3sportsbet_util_BetDecorator');
+        $decor = tx_rnbase::makeInstance(BetDecorator::class);
         $decor->setFormTool($this->formTool);
         $columns = [
             'uid' => [
@@ -180,16 +193,16 @@ class tx_t3sportsbet_mod1_lister_MatchBet
                 'title' => 'label_feuser',
             ],
         ];
-        $arr = tx_t3sportsbet_mod1_decorator::prepareRecords($bets, $columns, $this->formTool, $this->options);
-        /* @var $tables Tx_Rnbase_Backend_Utility_Tables */
-        $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
-        $out .= $tables->buildTable($arr[0]);
+        $arr = StaticBetDecorator::prepareRecords($bets, $columns, $this->formTool, $this->options);
+        /** @var Tables $tables */
+        $tables = tx_rnbase::makeInstance(Tables::class);
+        $out = $tables->buildTable($arr[0]);
 
         return $out;
     }
 
     /**
-     * @return tx_rnbase_mod_IModule
+     * @return IModule
      */
     private function getModule()
     {

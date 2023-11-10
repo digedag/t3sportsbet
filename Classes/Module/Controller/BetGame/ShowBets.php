@@ -4,6 +4,7 @@ namespace Sys25\T3sportsbet\Module\Controller\BetGame;
 
 use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\T3sportsbet\Model\BetSet;
+use Sys25\T3sportsbet\Module\Lister\MatchBetLister;
 use tx_rnbase;
 
 /***************************************************************
@@ -76,7 +77,7 @@ class ShowBets
     public function show()
     {
         // Alle Tips für dieses Betset suchen
-        $lister = tx_rnbase::makeInstance('tx_t3sportsbet_mod1_lister_MatchBet', $this->module, []);
+        $lister = tx_rnbase::makeInstance(MatchBetLister::class, $this->module, []);
         $lister->setBetSetUid($this->currentRound->getUid());
         $list = $lister->getResultList();
         $out = $list['pager']."\n".$list['table'];
