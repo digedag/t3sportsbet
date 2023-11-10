@@ -27,6 +27,8 @@ namespace Sys25\T3sportsbet\Model;
 
 use Sys25\RnBase\Domain\Model\BaseModel;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
+use System25\T3sports\Model\Team;
+use tx_rnbase;
 
 /**
  * Model for a bet.
@@ -76,10 +78,10 @@ class TeamBet extends BaseModel
     /**
      * Team.
      *
-     * @return tx_cfcleague_models_Team
+     * @return Team
      */
     public function getTeam()
     {
-        return tx_rnbase::makeInstance('tx_cfcleague_models_Team', $this->getProperty('team'));
+        return tx_rnbase::makeInstance(Team::class, $this->getProperty('team'));
     }
 }

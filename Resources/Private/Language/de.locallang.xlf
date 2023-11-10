@@ -36,8 +36,8 @@
 				<target>Punkte</target>
 			</trans-unit>
 			<trans-unit id="label_avgpoints" xml:space="preserve">
-				<source>&Oslash; Pts</source>
-				<target>&Oslash;</target>
+				<source>&amp;Oslash; Pts</source>
+				<target>&amp;Oslash;</target>
 			</trans-unit>
 			<trans-unit id="label_betcount" xml:space="preserve">
 				<source>Bets</source>

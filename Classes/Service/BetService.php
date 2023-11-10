@@ -420,13 +420,13 @@ GROUP BY feuser, betset
         $options['count'] = 1;
         $fields['BET.BETSET'][OP_EQ_INT] = $betset->getUid();
         $fields['BET.T3MATCH'][OP_EQ_INT] = $match->getUid();
-        $fields[SEARCH_FIELD_CUSTOM] = 'tx_t3sportsbet_bets.goals_home > tx_t3sportsbet_bets.goals_guest';
+        $fields[SEARCH_FIELD_CUSTOM] = 'BET.goals_home > BET.goals_guest';
 
         $ret = [];
         $ret['trendhome'] = $this->searchBet($fields, $options);
-        $fields[SEARCH_FIELD_CUSTOM] = 'tx_t3sportsbet_bets.goals_home = tx_t3sportsbet_bets.goals_guest';
+        $fields[SEARCH_FIELD_CUSTOM] = 'BET.goals_home = BET.goals_guest';
         $ret['trenddraw'] = $this->searchBet($fields, $options);
-        $fields[SEARCH_FIELD_CUSTOM] = 'tx_t3sportsbet_bets.goals_home < tx_t3sportsbet_bets.goals_guest';
+        $fields[SEARCH_FIELD_CUSTOM] = 'BET.goals_home < BET.goals_guest';
         $ret['trendguest'] = $this->searchBet($fields, $options);
         $sum = $ret['trendhome'] + $ret['trenddraw'] + $ret['trendguest'];
         $sum = $sum ? $sum : 1;
@@ -455,8 +455,8 @@ GROUP BY feuser, betset
         $options['count'] = 1;
         $fields['BET.BETSET'][OP_EQ_INT] = $betset->getUid();
         $fields['BET.T3MATCH'][OP_EQ_INT] = $match->getUid();
-        $fields[SEARCH_FIELD_CUSTOM] = 'tx_t3sportsbet_bets.goals_home = '.$goalsHome;
-        $fields[SEARCH_FIELD_CUSTOM] .= ' AND tx_t3sportsbet_bets.goals_guest = '.$goalsGuest;
+        $fields[SEARCH_FIELD_CUSTOM] = 'BET.goals_home = '.$goalsHome;
+        $fields[SEARCH_FIELD_CUSTOM] .= ' AND BET.goals_guest = '.$goalsGuest;
         $ret = [];
         $ret['stats_accurate'] = $this->searchBet($fields, $options);
 
@@ -499,8 +499,8 @@ GROUP BY feuser, betset
             }
             $fields['BET.FE_USER'][OP_GT_INT] = 0;
             $options['what'] = '
-				FEUSER.uid, sum(tx_t3sportsbet_bets.points) AS betpoints,
-				sum(tx_t3sportsbet_bets.finished) AS betcount
+				FEUSER.uid, sum(BET.points) AS betpoints,
+				sum(BET.finished) AS betcount
 				';
         } else {
             if ($betsetUids) {

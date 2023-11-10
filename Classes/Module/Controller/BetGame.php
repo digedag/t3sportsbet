@@ -97,7 +97,7 @@ class BetGame extends BaseModFunc
             return $content;
         }
         $content = '';
-        //        $this->getModule()->selector = $selector;
+        $this->getModule()->setSelector($selector);
 
         $currentRound = $this->selector->showRoundSelector($selector, $this->getModule()->getPid(), $currentGame);
         if (!$currentRound) {
@@ -107,7 +107,7 @@ class BetGame extends BaseModFunc
 
             return $content;
         }
-        //        $this->getModule()->selector = $selector;
+        $this->getModule()->setSelector($selector);
 
         // RequestHandler aufrufen.
         $content .= MatchMoveHandler::getInstance()->handleRequest($this->getModule());
