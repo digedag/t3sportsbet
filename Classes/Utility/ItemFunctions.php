@@ -51,7 +51,8 @@ class ItemFunctions
         }
         $flex = is_array($config[$rowName]['pi_flexform']) ? $config[$rowName]['pi_flexform'] :
             T3General::xml2array($config[$rowName]['pi_flexform']);
-        $betgameUid = $flex['data']['sDEF']['lDEF']['scope.betgame']['vDEF'];
+
+        $betgameUid = $flex['data']['sDEF']['lDEF']['scope.betgame']['vDEF'] ?? false;
         if (!$betgameUid) {
             return;
         }

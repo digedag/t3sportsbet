@@ -73,7 +73,7 @@ class BetListView extends \Sys25\RnBase\Frontend\View\Marker\BaseView
         }
 
         // Wenn Selectbox für Tiprunde gezeigt werden soll, dann Abschnitt erstellen
-        $selectItems = $viewData->offsetGet('betset_select');
+        $selectItems = $viewData->offsetExists('betset_select') ? $viewData->offsetGet('betset_select') : [];
         $selectItems = is_array($selectItems) ? $selectItems : [];
         $template = $this->addScope($template, $viewData, $selectItems, 'betlist.betset.', 'BETSET', $formatter);
 
@@ -94,7 +94,7 @@ class BetListView extends \Sys25\RnBase\Frontend\View\Marker\BaseView
             // $markerArray['###ACTION_URI###'] = $this->createPageUri($configurations);
             $data['ACTION_URI'] = $this->createPageUri($request);
             // Siehe \Sys25\T3sportsbet\Frontend\Marker\MatchMarker: Das ist nur ein Hack! Der Status sollte besser übergeben werden!
-            $matchState = $request->getConfigurations()->getViewData()->offsetGet('MATCH_STATE');
+            $matchState = $viewData->offsetExists('MATCH_STATE') ? $viewData->offsetGet('MATCH_STATE') : '';
             if ('OPEN' == $matchState) {
                 $wrappedSubpartArray['###SAVEBUTTON###'] = [
                     '',
@@ -136,6 +136,7 @@ class BetListView extends \Sys25\RnBase\Frontend\View\Marker\BaseView
 
     private function addScope($template, $viewData, $itemsArr, $confId, $markerName, $formatter)
     {
+        $currItem = '';
         if (!empty($itemsArr)) {
             $betsets = $itemsArr[0];
             $currItem = $betsets[$itemsArr[1]];

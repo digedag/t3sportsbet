@@ -49,7 +49,7 @@ class ScopeSelectionView extends \Sys25\RnBase\Frontend\View\Marker\BaseView
     {
         $viewData = $request->getViewContext();
         // Wenn Selectbox für Tiprunde gezeigt werden soll, dann Abschnitt erstellen
-        $selectItems = $viewData->offsetGet('betset_select');
+        $selectItems = $viewData->offsetExists('betset_select') ? $viewData->offsetGet('betset_select') : [];
         $selectItems = is_array($selectItems) ? $selectItems : [];
         $template = $this->addScope($template, $viewData, $selectItems, 'scope.betset.', 'BETSET', $formatter);
         $params = ['confid' => $request->getConfId()];
@@ -63,6 +63,7 @@ class ScopeSelectionView extends \Sys25\RnBase\Frontend\View\Marker\BaseView
 
     private function addScope($template, $viewData, $itemsArr, $confId, $markerName, $formatter)
     {
+        $currItem = '';
         if (!empty($itemsArr)) {
             $betsets = $itemsArr[0];
             $currItem = $betsets[$itemsArr[1]];

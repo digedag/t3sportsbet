@@ -137,7 +137,7 @@ class ScopeController
 
     public static function getRoundsFromScope($uids)
     {
-        $uids = Strings::intExplode(',', $uids);
+        $uids = $uids ? Strings::intExplode(',', $uids) : [];
         $rounds = [];
         for ($i = 0, $cnt = count($uids); $i < $cnt; ++$i) {
             $rounds[] = BetSet::getBetsetInstance($uids[$i]);

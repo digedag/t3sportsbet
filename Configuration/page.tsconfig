@@ -4,6 +4,9 @@ mod {
 		funcbetgame {
 			template = EXT:t3sportsbet/Resources/Private/Templates/module.html
 		}
+		languagefiles {
+			betgame = EXT:t3sportsbet/Resources/Private/Language/locallang_mod.xlf
+		}
 	}
 	wizards {
 		newContentElement.wizardItems.plugins {

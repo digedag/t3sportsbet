@@ -165,7 +165,7 @@ class BetSet extends BaseModel
         if (!$uid) {
             throw new Exception('Invalid uid for betset');
         }
-        if (!is_object(self::$instances[$uid])) {
+        if (!isset(self::$instances[$uid])) {
             self::$instances[$uid] = new self($uid);
         }
 

@@ -106,7 +106,7 @@ class MatchMoveHandler
             $key => '',
         ], [], $mod->getName());
 
-        return $arr[$key];
+        return $arr[$key] ?? null;
     }
 
     /**
@@ -157,7 +157,7 @@ class MatchMoveHandler
         $options['hover'] = $matchInfo;
         $label = '<span class="t3-icon t3-icon-actions t3-icon-actions-document t3-icon-document-paste-after"></span>';
         $label .= $matchInfo.'<br />';
-        $ret .= $mod->getFormTool()->createLink('&doPasteMatch='.$item->getUid(), $mod->getPid(), $label, $options);
+        $ret .= $mod->getFormTool()->createModuleLink(['doPasteMatch' => $item->getUid()], $mod->getPid(), $label, $options);
 
         return $ret;
     }

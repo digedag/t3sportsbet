@@ -61,6 +61,7 @@
 								<maxitems>1</maxitems>
 								<size>1</size>
 							</config>
+							<onChange>reload</onChange>
 						</TCEforms>
 					</scope.betgame>
 					<scope.betset>

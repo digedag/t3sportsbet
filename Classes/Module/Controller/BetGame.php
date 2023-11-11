@@ -12,6 +12,7 @@ use Sys25\RnBase\Configuration\ConfigurationInterface;
 use Sys25\RnBase\Frontend\Marker\FormatUtil;
 use Sys25\RnBase\Frontend\Marker\Templates;
 use Sys25\RnBase\Utility\Logger;
+use Sys25\RnBase\Utility\TYPO3;
 use Sys25\T3sportsbet\Model\BetSet;
 use Sys25\T3sportsbet\Module\Handler\MatchMoveHandler;
 use Sys25\T3sportsbet\Module\Utility\AddCompetitionWizard;
@@ -62,10 +63,17 @@ class BetGame extends BaseModFunc
         return 'funcbetgame';
     }
 
+    public function getModuleIdentifier()
+    {
+        return 'cfc_league';
+    }
+
     public function init(IModule $module, $conf)
     {
         parent::init($module, $conf);
-        $GLOBALS['LANG']->includeLLFile('EXT:t3sportsbet/Resources/Private/Language/locallang_mod.xlf');
+        if (!TYPO3::isTYPO121OrHigher()) {
+            $GLOBALS['LANG']->includeLLFile('EXT:t3sportsbet/Resources/Private/Language/locallang_mod.xlf');
+        }
     }
 
     /**
