@@ -4,7 +4,7 @@ services:
     autoconfigure: true
     public: false
 
-  Sys25\T3sportsbet:
+  Sys25\T3sportsbet\:
     resource: '../Classes/*'
     exclude: ['../Classes/Model/*']
 

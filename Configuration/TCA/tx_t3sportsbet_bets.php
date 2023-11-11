@@ -1,6 +1,6 @@
 <?php
 
-if (!defined('TYPO3_MODE')) {
+if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
     exit('Access denied.');
 }
 
@@ -14,7 +14,7 @@ $tx_t3sportsbet_bets = [
         'sortby' => 'tstamp',
         'delete' => 'deleted',
         'enablecolumns' => [],
-        'iconfile' => 'EXT:t3sportsbet/icon_table.gif',
+        'iconfile' => 'EXT:t3sportsbet/Resources/Public/Icons/icon_table.gif',
     ],
     'interface' => [
         'showRecordFieldList' => 't3match',
