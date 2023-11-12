@@ -27,7 +27,7 @@
 		"typo3/cms-core": "^8.7 || ^9.5.17 || ^10.4.3 || ^11.5.0 || ^12.4",
 		"digedag/cfc-league" : "^1.11.0",
 		"digedag/cfc-league-fe" : "^1.11.0",
-		"digedag/rn-base" : "^1.16"
+		"digedag/rn-base" : "^1.17"
 	},
 	"require-dev": {
 		"friendsofphp/php-cs-fixer": "^3.0",
