@@ -66,7 +66,7 @@ class HighScoreView extends BaseView
         $userSize = $viewData->offsetGet('userSize');
 
         // Wenn Selectbox für Tiprunde gezeigt werden soll, dann Abschnitt erstellen
-        $selectItems = $viewData->offsetGet('betset_select');
+        $selectItems = $viewData->offsetExists('betset_select') ? $viewData->offsetGet('betset_select') : [];
         $selectItems = is_array($selectItems) ? $selectItems : [];
         $template = $this->addScope($template, $viewData, $selectItems, 'highscore.betset.', 'BETSET', $formatter);
 
@@ -144,6 +144,7 @@ class HighScoreView extends BaseView
 
     private function addScope($template, $viewData, $itemsArr, $confId, $markerName, $formatter)
     {
+        $currItem = '';
         if (!empty($itemsArr)) {
             $betsets = $itemsArr[0];
             $currItem = $betsets[$itemsArr[1]];

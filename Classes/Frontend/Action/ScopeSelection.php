@@ -2,6 +2,7 @@
 
 namespace Sys25\T3sportsbet\Frontend\Action;
 
+use Exception;
 use Sys25\RnBase\Frontend\Request\RequestInterface;
 use Sys25\T3sportsbet\Frontend\View\ScopeSelectionView;
 use Sys25\T3sportsbet\Utility\ScopeController;
@@ -49,6 +50,9 @@ class ScopeSelection extends \Sys25\RnBase\Frontend\Controller\AbstractAction
         $betgames = ScopeController::getBetgamesFromScope($scopeArr['BETGAME_UIDS']);
         $rounds = ScopeController::getRoundsFromScope($scopeArr['BETSET_UIDS']);
 
+        if (empty($betgames)) {
+            throw new Exception('No betgame selected. Check your plugin configuration.');
+        }
         $viewData = $request->getViewContext();
         $viewData->offsetSet('betgame', $betgames[0]);
         $viewData->offsetSet('rounds', $rounds);

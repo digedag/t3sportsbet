@@ -1,6 +1,8 @@
 <?php
 
-defined('TYPO3_MODE') or exit;
+if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
+    exit('Access denied.');
+}
 
 call_user_func(function () {
     $extKey = 't3sportsbet';
@@ -14,8 +16,6 @@ call_user_func(function () {
 
     // Das tt_content-Feld pi_flexform einblenden
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['tx_t3sportsbet_main'] = 'pi_flexform';
-
-    $GLOBALS['TCA']['tt_content']['ctrl']['requestUpdate'] .= ',scope.betgame';
 
     \Sys25\RnBase\Utility\Extensions::addPiFlexFormValue(
         'tx_t3sportsbet_main',

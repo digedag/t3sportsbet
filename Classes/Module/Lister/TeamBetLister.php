@@ -141,7 +141,7 @@ class TeamBetLister
         $ret['table'] = $content;
         $ret['totalsize'] = $cnt;
         $pagerData = $pager->render();
-        $ret['pager'] .= '<div class="pager"><span class="col-md-2">'.$pagerData['limits'].'</span><span class="col-md-2">'.$pagerData['pages'].'</span></div>';
+        $ret['pager'] = '<div class="pager"><span class="col-md-2">'.$pagerData['limits'].'</span><span class="col-md-2">'.$pagerData['pages'].'</span></div>';
 
         return $ret;
     }

@@ -3,7 +3,7 @@
 
 ----
 
-![TYPO3 compatibility](https://img.shields.io/badge/TYPO3-8.7%20%7C%209.5%20%7C%2010.4%20%7C%2011.5-orange?maxAge=3600&style=flat-square&logo=typo3)
+![TYPO3 compatibility](https://img.shields.io/badge/TYPO3-8.7%20%7C%209.5%20%7C%2010.4%20%7C%2011.5%20%7C%2012.4-orange?maxAge=3600&style=flat-square&logo=typo3)
 <a href="https://github.com/digedag/t3sportsbet"><img src="ext_icon.svg" width="20"></a>
 [![Latest Stable Version](https://img.shields.io/packagist/v/digedag/t3sportsbet.svg?maxAge=3600)](https://packagist.org/packages/digedag/t3sportsbet)
 [![Total Downloads](https://img.shields.io/packagist/dt/digedag/t3sportsbet.svg?maxAge=3600)](https://packagist.org/packages/digedag/t3sportsbet)

@@ -90,7 +90,7 @@ class MatchLister
         $this->formTool = $this->mod->getFormTool();
         $this->resultSize = 0;
         $this->data = T3General::_GP('searchdata');
-        $this->competitions = $options['competitions'];
+        $this->competitions = $options['competitions'] ?? null;
         $this->selector = tx_rnbase::makeInstance(Selector::class);
         $this->selector->init($this->getModule()->getDoc(), $this->getModule());
         // $this->selector->init($mod->doc, $mod->MCONF['name']);
@@ -116,7 +116,7 @@ class MatchLister
         global $LANG;
         $out = '';
         // Wir zeigen zwei Selectboxen an
-        $this->currComp = $this->selector->showLeagueSelector($out, $this->mod->id, $this->competitions);
+        $this->currComp = $this->selector->showLeagueSelector($out, $this->mod->getPid(), $this->competitions);
         if (!$this->currComp) {
             return $out.$this->mod->getDoc()->section('Info:', $LANG->getLL('msg_no_competition_in_betgame'), 0, 1, IModFunc::ICON_WARN);
         }
@@ -129,7 +129,7 @@ class MatchLister
             return $out;
         }
         // Jetzt den Spieltag wählen lassen
-        $this->current_round = $this->selector->showRoundSelector($out, $this->mod->id, $this->currComp);
+        $this->current_round = $this->selector->showRoundSelector($out, $this->mod->getPid(), $this->currComp);
 
         $out .= '<div style="clear:both" />';
 

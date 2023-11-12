@@ -63,6 +63,14 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms.php']['get
 //     ]
 // );
 
-if (TYPO3_MODE === 'BE' && !\Sys25\RnBase\Utility\TYPO3::isTYPO121OrHigher()) {
-    \Sys25\RnBase\Utility\Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sportsbet/Configuration/page.tsconfig">');
+if (\Sys25\RnBase\Utility\Environment::isBackend()) {
+    \Sys25\RnBase\Backend\Utility\Icons::getIconRegistry()->registerIcon(
+        't3sportsbet_plugin',
+        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        ['source' => 'EXT:t3sportsbet/Resources/Public/Icons/ext_icon.svg']
+    );
+
+    if (!\Sys25\RnBase\Utility\TYPO3::isTYPO121OrHigher()) {
+        \Sys25\RnBase\Utility\Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3sportsbet/Configuration/page.tsconfig">');
+    }
 }

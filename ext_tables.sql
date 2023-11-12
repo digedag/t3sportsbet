@@ -15,8 +15,8 @@ CREATE TABLE tx_t3sportsbet_betgames (
 	starttime int(11) DEFAULT '0' NOT NULL,
 
 	name varchar(255) DEFAULT '' NOT NULL,
-	competition text NOT NULL,
-	comment text NOT NULL,
+	competition text,
+	comment text,
 
 	points_accurate tinyint(4) DEFAULT '0' NOT NULL,
 	points_goalsdiff tinyint(4) DEFAULT '0' NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE tx_t3sportsbet_betsets (
 	hasresults int(11) DEFAULT '0' NOT NULL,
 	t3matches int(11) DEFAULT '0' NOT NULL,
 	teamquestions int(11) DEFAULT '0' NOT NULL,
-	comment text NOT NULL,
+	comment text,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)

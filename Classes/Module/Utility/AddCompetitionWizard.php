@@ -13,7 +13,7 @@ use tx_rnbase;
  * *************************************************************
  * Copyright notice.
  *
- * (c) 2008-2019 Rene Nitzsche (rene@system25.de)
+ * (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -138,13 +138,14 @@ class AddCompetitionWizard
             $data['tx_t3sportsbet_betsets']['NEW'.$key]['t3matches'] = 'tx_cfcleague_games_'.implode(',tx_cfcleague_games_', $matchUids);
             $data['tx_t3sportsbet_betsets']['NEW'.$key]['status'] = 0;
             $data['tx_t3sportsbet_betsets']['NEW'.$key]['round'] = $key;
-            $data['tx_t3sportsbet_betsets']['NEW'.$key]['round_name'] = $key.' ###LABEL_ROUNDNAMEDEFAULT###';
+            $data['tx_t3sportsbet_betsets']['NEW'.$key]['round_name'] = $key.$GLOBALS['LANG']->getLL('label_roundnamedefault');
         }
+
         $tce = Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
         $out = $GLOBALS['LANG']->getLL('msg_add_competition_finished');
 
-        return (strlen($out)) ? $this->mod->doc->section('###LABEL_INFO###:', $out, 0, 1, IModFunc::ICON_INFO) : '';
+        return (strlen($out)) ? $this->doc->section('###LABEL_INFO###:', $out, 0, 1, IModFunc::ICON_INFO) : '';
     }
 
     private function loadMatches($compId)

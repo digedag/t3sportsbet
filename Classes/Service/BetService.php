@@ -493,7 +493,7 @@ GROUP BY feuser, betset
     public function getResults($betsetUids, $feuserUids = '0')
     {
         $fields = $options = [];
-        if ('old' == $_GET['resultmode']) {
+        if ('old' == ($_GET['resultmode'] ?? '')) {
             if ($betsetUids) {
                 $fields['BET.BETSET'][OP_IN_INT] = $betsetUids;
             }

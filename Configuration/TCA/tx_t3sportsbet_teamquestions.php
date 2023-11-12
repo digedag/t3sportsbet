@@ -1,6 +1,6 @@
 <?php
 
-if (!defined('TYPO3_MODE')) {
+if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
     exit('Access denied.');
 }
 
@@ -18,7 +18,7 @@ $tx_t3sportsbet_tq = [
         'enablecolumns' => [
             'disabled' => 'hidden',
         ],
-        'iconfile' => 'EXT:t3sportsbet/icon_table.gif',
+        'iconfile' => 'EXT:t3sportsbet/Resources/Public/Icons/icon_table.gif',
     ],
     'interface' => [
         'showRecordFieldList' => '',
@@ -62,6 +62,7 @@ $tx_t3sportsbet_tq = [
             'label' => 'LLL:EXT:t3sportsbet/Resources/Private/Language/locallang_db.xlf:tx_t3sportsbet_teamquestions_openuntil',
             'config' => [
                 'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'size' => '12',
                 'max' => '20',
                 'eval' => 'datetime',
@@ -100,6 +101,7 @@ FROM tx_cfcleague_teams t
   WHERE q.uid = ###THIS_UID###
 )
 				',
+                'renderType' => 'selectMultipleSideBySide',
                 'size' => 10,
                 'autoSizeMax' => 50,
                 'minitems' => 0,
@@ -116,6 +118,7 @@ FROM tx_cfcleague_teams t
             'config' => [
                 'type' => 'select',
                 'itemsProcFunc' => 'Sys25\T3sportsbet\Utility\ItemFunctions->getTeams4TeamBet',
+                'renderType' => 'selectMultipleSideBySide',
                 'size' => 5,
                 'minitems' => 0,
                 'maxitems' => 10,

@@ -1,10 +1,12 @@
 <?php
 
-defined('TYPO3_MODE') or exit;
+if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
+    exit('Access denied.');
+}
 
 call_user_func(function () {
     $extKey = 't3sportsbet';
 
     // list static templates in templates selection
-    tx_rnbase_util_Extensions::addStaticFile($extKey, 'Configuration/TypoScript/Plugin/', 'T3sports Bet-System');
+    \Sys25\RnBase\Utility\Extensions::addStaticFile($extKey, 'Configuration/TypoScript/Plugin/', 'T3sports Bet-System');
 });

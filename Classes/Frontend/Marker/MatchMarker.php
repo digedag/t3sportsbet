@@ -45,7 +45,6 @@ class MatchMarker extends BaseMarker
 {
     public static $betMarker;
 
-    private $request;
     private $matchMarker;
     private $options;
     private $feuserRepo;
@@ -55,7 +54,6 @@ class MatchMarker extends BaseMarker
     public function __construct($options = [])
     {
         $this->options = $options;
-        $this->request = $options['request'];
         $this->matchMarker = tx_rnbase::makeInstance(T3SMatchMarker::class);
         $this->feuserRepo = new FeUserRepository();
         $this->matchRepo = new MatchRepository();
