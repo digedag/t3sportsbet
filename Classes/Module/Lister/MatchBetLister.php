@@ -32,7 +32,6 @@ use Sys25\RnBase\Backend\Utility\BEPager;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Utility\T3General;
 use Sys25\T3sportsbet\Module\Decorator\BetDecorator;
-use Sys25\T3sportsbet\Module\Decorator\StaticBetDecorator;
 use Sys25\T3sportsbet\Utility\ServiceRegistry;
 use tx_rnbase;
 use tx_rnbase_mod_IModule;
@@ -194,10 +193,11 @@ class MatchBetLister
                 'title' => 'label_feuser',
             ],
         ];
-        $arr = StaticBetDecorator::prepareRecords($bets, $columns, $this->formTool, $this->options);
+
         /** @var Tables $tables */
         $tables = tx_rnbase::makeInstance(Tables::class);
-        $out = $tables->buildTable($arr[0]);
+        $rows = $tables->prepareTable($bets, $columns, $this->formTool, $this->options);
+        $out = $tables->buildTable($rows[0]);
 
         return $out;
     }

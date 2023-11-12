@@ -49,7 +49,7 @@ class BetDecorator
         $this->formTool = $formTool;
     }
 
-    public function format($value, $colName)
+    public function format($value, $colName, $record, $model)
     {
         $ret = $value;
         if ('tstamp' == $colName) {
@@ -74,7 +74,7 @@ class BetDecorator
             $ret = $value.' '.$this->formTool->createEditLink('tx_t3sportsbet_bets', $value, '');
         }
         if ('bet' == $colName) {
-            $ret = (is_object($value)) ? $value->getProperty('goals_home').':'.$value->getProperty('goals_guest') : '-';
+            $ret = $model->getProperty('goals_home').':'.$model->getProperty('goals_guest');
         }
 
         return $ret;

@@ -25,6 +25,7 @@ namespace Sys25\T3sportsbet\Utility;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Sys25\RnBase\Frontend\Request\Parameters;
 use Sys25\RnBase\Frontend\Request\RequestInterface;
 use Sys25\RnBase\Search\SearchBase;
 use Sys25\RnBase\Utility\Misc;
@@ -126,7 +127,7 @@ class ScopeController
 
     public static function getBetgamesFromScope($uids)
     {
-        $uids = Strings::intExplode(',', $uids);
+        $uids = $uids ? Strings::intExplode(',', $uids) : [];
         $rounds = [];
         for ($i = 0, $cnt = count($uids); $i < $cnt; ++$i) {
             $rounds[] = BetGame::getBetgameInstance($uids[$i]);
@@ -155,7 +156,7 @@ class ScopeController
      *            String leer ist, dann wird das gesamten Objekt als Wert verwendet.
      * @param int $defaultIdx
      */
-    protected static function _prepareSelect($objects, $parameters, $parameterName, $displayAttrName = 'name', $defaultIdx = 0)
+    protected static function _prepareSelect($objects, Parameters $parameters, $parameterName, $displayAttrName = 'name', $defaultIdx = 0)
     {
         $ret = [];
         if (count($objects)) {
@@ -163,12 +164,12 @@ class ScopeController
                 $ret[0][$object->getUid()] = 0 == strlen($displayAttrName) ? $object : $object->getProperty($displayAttrName);
             }
 
-            $paramValue = $parameters->offsetGet($parameterName);
+            $paramValue = $parameters->get($parameterName);
             // Der Wert im Parameter darf nur übernommen werden, wenn er in der SelectBox vorkommt
             if (isset($paramValue) && array_key_exists($paramValue, $ret[0])) {
                 $ret[1] = $paramValue;
             }
-            $ret[1] = $ret[1] ? $ret[1] : $objects[$defaultIdx]->getUid();
+            $ret[1] = $ret[1] ?? $objects[$defaultIdx]->getUid();
         }
 
         return $ret;

@@ -1,6 +1,9 @@
 Changelog
 ---------
 
+v1.3.0 (??.11.2023)
+ * Update for support of TYPO3 12.4 LTS
+
 v1.2.0 (10.11.2023)
  * Update to support T3sports 1.11.x
  * All classes moves to PSR-4 namespaces

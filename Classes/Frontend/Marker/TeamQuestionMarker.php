@@ -174,7 +174,7 @@ class TeamQuestionMarker extends BaseMarker
         }
         if ($this->containsMarker($template, $markerPrefix.'_TEAM_')) {
             $listBuilder = tx_rnbase::makeInstance(ListBuilder::class);
-            $template = $listBuilder->render($teams, false, $template, 'tx_cfcleaguefe_util_TeamMarker', $confId.'team.', $markerPrefix.'_TEAM', $formatter, $options);
+            $template = $listBuilder->render($teams, false, $template, TeamMarker::class, $confId.'team.', $markerPrefix.'_TEAM', $formatter);
         }
 
         if ($this->containsMarker($template, $markerPrefix.'_CHART')) {
