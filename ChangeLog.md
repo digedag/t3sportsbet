@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-v1.3.0 (??.11.2023)
+v1.3.0 (12.07.2024)
  * Update for support of TYPO3 12.4 LTS
 
 v1.2.0 (10.11.2023)
