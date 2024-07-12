@@ -33,8 +33,8 @@ $tx_t3sportsbet_bets = [
                 'size' => 1,
                 'minitems' => 1,
                 'maxitems' => 1,
-                ],
             ],
+        ],
         'fe_user' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cms/locallang_tca.php:fe_users',
@@ -122,7 +122,7 @@ $tx_t3sportsbet_bets = [
     ],
 ];
 
-if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+if (Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_t3sportsbet_bets['interface']['showRecordFieldList']);
 }
 

@@ -39,7 +39,7 @@ class BetCalculator
     /** MatchRepository $matchRepo */
     private $matchRepo;
 
-    public function __construct(MatchRepository $matchRepo = null)
+    public function __construct(?MatchRepository $matchRepo = null)
     {
         $this->matchRepo = $matchRepo ?? new MatchRepository();
     }
