@@ -123,11 +123,11 @@ class BetGame extends BaseModFunc
         $menu = $formTool->showTabMenu($this->getModule()
             ->getPid(), 'bettools', $this->getModule()
             ->getName(), [
-            '0' => $LANG->getLL('tab_control'),
-            '1' => $LANG->getLL('tab_addmatches'),
-            '2' => $LANG->getLL('tab_addteambets'),
-            '3' => $LANG->getLL('tab_bets'),
-        ]);
+                '0' => $LANG->getLL('tab_control'),
+                '1' => $LANG->getLL('tab_addmatches'),
+                '2' => $LANG->getLL('tab_addteambets'),
+                '3' => $LANG->getLL('tab_bets'),
+            ]);
 
         $content .= $menu['menu'];
 
@@ -137,24 +137,24 @@ class BetGame extends BaseModFunc
             $funcContent = '';
             switch ($menu['value']) {
                 case 0:
-                    $handler = tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\ShowBetSet::class, $this->getModule(), $currentRound, $currentGame);
+                    $handler = tx_rnbase::makeInstance(BetGame\ShowBetSet::class, $this->getModule(), $currentRound, $currentGame);
                     $funcContent .= $handler->handleRequest();
                     $funcContent .= $handler->show();
 
                     break;
                 case 1:
-                    $handler = tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\AddMatches::class, $this->getModule(), $currentRound);
+                    $handler = tx_rnbase::makeInstance(BetGame\AddMatches::class, $this->getModule(), $currentRound);
                     $funcContent .= $handler->show();
 
                     break;
                 case 2:
-                    $handler = tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\AddTeamBets::class, $this->getModule(), $currentRound);
+                    $handler = tx_rnbase::makeInstance(BetGame\AddTeamBets::class, $this->getModule(), $currentRound);
                     $funcContent .= $handler->handleRequest();
                     $funcContent .= $handler->show();
 
                     break;
                 case 3:
-                    $handler = tx_rnbase::makeInstance(\Sys25\T3sportsbet\Module\Controller\BetGame\ShowBets::class, $this->getModule(), $currentRound);
+                    $handler = tx_rnbase::makeInstance(BetGame\ShowBets::class, $this->getModule(), $currentRound);
                     $funcContent .= $handler->show();
                     // $funcContent .= $this->showBets($currentRound);
                     break;

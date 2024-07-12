@@ -42,9 +42,9 @@ class ServiceRegistry implements \TYPO3\CMS\Core\SingletonInterface
     private $teamBetService;
 
     public function __construct(
-        BetService $betService = null,
-        BetCalculator $betCalculator = null,
-        TeamBetService $teamBetService = null
+        ?BetService $betService = null,
+        ?BetCalculator $betCalculator = null,
+        ?TeamBetService $teamBetService = null
     ) {
         $this->betService = $betService ?? tx_rnbase::makeInstance(BetService::class);
         $this->betCalculator = $betCalculator ?? tx_rnbase::makeInstance(BetCalculator::class);

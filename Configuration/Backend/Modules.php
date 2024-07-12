@@ -12,7 +12,7 @@ return [
         ],
         'routes' => [
             '_default' => [
-                'target' => \Sys25\T3sportsbet\Module\Controller\BetGame::class.'::main',
+                'target' => Sys25\T3sportsbet\Module\Controller\BetGame::class.'::main',
             ],
         ],
         'moduleData' => [

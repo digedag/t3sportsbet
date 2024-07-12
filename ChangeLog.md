@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-v1.3.0 (??.11.2023)
+v1.3.0 (12.07.2024)
  * Update for support of TYPO3 12.4 LTS
 
 v1.2.0 (10.11.2023)
@@ -60,12 +60,13 @@ v0.3.1 (08.08.2009)
  * Searching of betsets can be joined to table tx_cfcleague_games. This makes it possible to betsets with finished matches only.
  * Search matches of a betset with SearchBase. This enables a lot of options by Typoscript.
 This will output finished matches ordered by date:
+```
 betlist.betset.match {
   fields.MATCH.STATUS.OP_EQ_INT = 2
   options.orderby.MATCH.DATE = asc
 #  options.debug =1
 }
-
+```
 v0.3.0 (13.12.2008)
  * Backend modified for TYPO3 4.2
  * Bugfix: Calculation for matches with extra time or penalty failed. Update of cfc_league_fe is required too!

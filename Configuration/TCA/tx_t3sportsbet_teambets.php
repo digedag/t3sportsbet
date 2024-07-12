@@ -107,7 +107,7 @@ $tx_t3sportsbet_tb = [
     ],
 ];
 
-if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+if (Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_t3sportsbet_tb['interface']['showRecordFieldList']);
 }
 

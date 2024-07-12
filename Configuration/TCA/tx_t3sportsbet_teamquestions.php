@@ -29,7 +29,7 @@ $tx_t3sportsbet_tq = [
     'columns' => [
         'hidden' => [
             'exclude' => 1,
-            'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
+            'label' => Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
             'config' => [
                 'type' => 'check',
                 'default' => '0',
@@ -133,7 +133,7 @@ FROM tx_cfcleague_teams t
     ],
 ];
 
-if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+if (Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_t3sportsbet_tq['interface']['showRecordFieldList']);
 }
 
