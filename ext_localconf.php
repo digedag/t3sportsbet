@@ -67,7 +67,7 @@ if (Sys25\RnBase\Utility\Environment::isBackend()) {
     Sys25\RnBase\Backend\Utility\Icons::getIconRegistry()->registerIcon(
         't3sportsbet_plugin',
         TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-        ['source' => 'EXT:t3sportsbet/Resources/Public/Icons/ext_icon.svg']
+        ['source' => 'EXT:t3sportsbet/Resources/Public/Icons/Extension.svg']
     );
 
     if (!Sys25\RnBase\Utility\TYPO3::isTYPO121OrHigher()) {
