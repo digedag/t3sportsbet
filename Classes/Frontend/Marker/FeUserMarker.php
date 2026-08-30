@@ -45,7 +45,7 @@ class FeUserMarker extends SimpleMarker
      *
      * @return string das geparste Template
      */
-    public function parseTemplate($template, &$feuser, &$formatter, $confId, $marker = 'FEUSER')
+    public function parseTemplate($template, $feuser, $formatter, $confId, $marker = 'FEUSER')
     {
         $template = parent::parseTemplate($template, $feuser, $formatter, $confId, $marker);
         $markerArray = [];

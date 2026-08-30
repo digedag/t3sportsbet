@@ -110,12 +110,11 @@ class ItemFunctions
             $row = $fieldData[0]['row'];
 
             return tx_rnbase::makeInstance(BetSet::class, $row);
-        } else {
-            $arr = Strings::trimExplode('|', $fieldData);
-            $arr = Strings::trimExplode('_', $arr[0]);
-            $uid = (int) $arr[count($arr) - 1];
-
-            return $uid ? tx_rnbase::makeInstance(BetSet::class, $uid) : false;
         }
+        $arr = Strings::trimExplode('|', $fieldData);
+        $arr = Strings::trimExplode('_', $arr[0]);
+        $uid = (int) $arr[count($arr) - 1];
+
+        return $uid ? tx_rnbase::makeInstance(BetSet::class, $uid) : false;
     }
 }

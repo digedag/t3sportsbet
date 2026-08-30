@@ -55,7 +55,7 @@ class BetSetMarker extends BaseMarker
      *
      * @return string das geparste Template
      */
-    public function parseTemplate($template, &$betset, &$formatter, $confId, $marker = 'BETSET')
+    public function parseTemplate($template, $betset, $formatter, $confId, $marker = 'BETSET')
     {
         if (!is_object($betset)) {
             $betset = self::getEmptyInstance(BetSet::class);

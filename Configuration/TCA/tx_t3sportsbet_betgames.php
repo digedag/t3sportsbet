@@ -52,13 +52,17 @@ $tx_t3sportsbet_betgame = [
         ],
         'fe_group' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.fe_group',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.fe_group',
             'config' => [
                 'type' => 'select',
-                'items' => [
-                    ['', 0],
-                    ['LLL:EXT:lang/locallang_general.xml:LGL.any_login', -2],
-                    ['LLL:EXT:lang/locallang_general.xml:LGL.usergroups', '--div--'],
+                'items' => !Sys25\RnBase\Utility\TYPO3::isTYPO121OrHigher() ? [
+                    ['LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hide_at_login', -1],
+                    ['LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.any_login', -2],
+                    ['LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.usergroups', '--div--'],
+                ] : [
+                    ['label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hide_at_login', 'value' => -1],
+                    ['label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.any_login', 'value' => -2],
+                    ['label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.usergroups', 'value' => '--div--'],
                 ],
                 'foreign_table' => 'fe_groups',
             ],

@@ -17,17 +17,17 @@ $EM_CONF[$_EXTKEY] = [
     'author_company' => 'System 25',
     'dependencies' => '',
     'module' => '',
-    'version' => '1.3.0',
+    'version' => '1.4.0',
     'state' => 'stable',
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 0,
     'constraints' => [
         'depends' => [
-            'typo3' => '8.7.0-12.4.99',
-            'rn_base' => '1.18.0-0.0.0',
-            'cfc_league' => '1.11.0-0.0.0',
-            'cfc_league_fe' => '1.11.0-0.0.0',
+            'typo3' => '11.4.0-13.4.99',
+            'rn_base' => '1.20.0-0.0.0',
+            'cfc_league' => '1.12.0-0.0.0',
+            'cfc_league_fe' => '1.12.0-0.0.0',
         ],
         'conflicts' => [
         ],
