@@ -23,7 +23,6 @@ $tx_t3sportsbet_betsets = [
         'iconfile' => 'EXT:t3sportsbet/Resources/Public/Icons/icon_table.gif',
     ],
     'interface' => [
-        'showRecordFieldList' => 'hidden,betgame, round, round_name, status',
     ],
     'feInterface' => [
         'fe_admin_fieldList' => '',
@@ -145,9 +144,5 @@ $tx_t3sportsbet_betsets = [
         '1' => ['showitem' => ''],
     ],
 ];
-
-if (Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
-    unset($tx_t3sportsbet_betsets['interface']['showRecordFieldList']);
-}
 
 return $tx_t3sportsbet_betsets;

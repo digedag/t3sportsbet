@@ -21,7 +21,6 @@ $tx_t3sportsbet_tq = [
         'iconfile' => 'EXT:t3sportsbet/Resources/Public/Icons/icon_table.gif',
     ],
     'interface' => [
-        'showRecordFieldList' => '',
     ],
     'feInterface' => [
         'fe_admin_fieldList' => '',
@@ -132,9 +131,5 @@ FROM tx_cfcleague_teams t
         '1' => ['showitem' => ''],
     ],
 ];
-
-if (Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
-    unset($tx_t3sportsbet_tq['interface']['showRecordFieldList']);
-}
 
 return $tx_t3sportsbet_tq;

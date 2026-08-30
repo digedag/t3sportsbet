@@ -234,7 +234,7 @@ class BetGame extends BaseModFunc
             $srv->getBetSize($currBetSet),
         ];
 
-        /** @var $tables Tables */
+        /** @var Tables $tables */
         $tables = tx_rnbase::makeInstance(Tables::class);
         $out = $tables->buildTable($row, $this->getInfoTableLayout());
 

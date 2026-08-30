@@ -19,7 +19,6 @@ $tx_t3sportsbet_betsetresults = [
         'iconfile' => 'EXT:t3sportsbet/Resources/Public/Icons/icon_table.gif',
     ],
     'interface' => [
-        'showRecordFieldList' => 'betset,feuser,points',
     ],
     'feInterface' => [
         'fe_admin_fieldList' => '',
@@ -39,7 +38,7 @@ $tx_t3sportsbet_betsetresults = [
         ],
         'feuser' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cms/locallang_tca.php:fe_users',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.feUser',
             'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -72,9 +71,5 @@ $tx_t3sportsbet_betsetresults = [
         '1' => ['showitem' => ''],
     ],
 ];
-
-if (Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
-    unset($tx_t3sportsbet_betsetresults['interface']['showRecordFieldList']);
-}
 
 return $tx_t3sportsbet_betsetresults;
